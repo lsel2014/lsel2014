@@ -49,7 +49,7 @@ int main(int argc, char** argv){
 	xmlString = malloc(sizeof(char)* fileSize);
 	fread(xmlString, 1, fileSize, xmlFile);
 	fclose(xmlFile);
-	remove(xmlFile);
+	remove("sunrise.xml");
 
 	char* buf1;
 	char* buf2;
