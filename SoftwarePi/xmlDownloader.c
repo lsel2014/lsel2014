@@ -16,19 +16,21 @@
 #define BUFF_ADDR 200
 
 
-int main(int argc, char** argv){
+char** xmlParser(char* date){
+
+	char** results;
 
 	FILE *xmlFile;
 	char* xmlString;
 	long fileSize;
 
-	char *unparsedDate = argv[1];
+	char *unparsedDate = date;
 	char *day = strtok(unparsedDate, "/");
 	char *month = strtok(NULL, "/");
 	//char *year = strtok(NULL, "/"); No usamos el año pero lo guardo por si acaso
 
 	const char address[BUFF_INIT_ADDR] = "http://www.earthtools.org/sun/40.71417/-74.00639";
-	char command[BUFF_ADDR] = "wget --output-document=sunrise.xml ";
+	char command[BUFF_ADDR] = "wget -q --output-document=sunrise.xml ";
 
 	strcat(command, address);
 	strcat(command, "/");
@@ -63,6 +65,7 @@ int main(int argc, char** argv){
 		for (i=0; i<8; i++){
 			sunriseHour[i] = cursor[i];
 		}
+		results[0] = sunriseHour;
 		printf("%s\n", sunriseHour);
 	}
 
@@ -75,13 +78,10 @@ int main(int argc, char** argv){
 		for (j=0; j<8; j++){
 			sunsetHour[j] = cursor2[j];
 		}
+		results[1] = sunsetHour;
 		printf("%s\n", sunsetHour);
 	}
 
-	// TO-DO
-	// Convertir esto a funciones separadas para integrarlo en el programa principal y
-	// realizar los cálculos necesarios para pasar las pruebas.
-
-	return(0);
+	return(results);
 }
 
