@@ -1,6 +1,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+
+
 // Define pins
 #define PIN_LED1    PB0
 #define PIN_LED2    PB1
@@ -32,7 +34,7 @@ int main(void) {
 	TCCR0A |=(1<<COM0A0); //Timer0 in toggle mode Table 11-2
 	TCCR0A |=(1<<WGM01); //Start timer 1 in CTC mode Table 11.5
 	TCCR0B |= (1 << CS00);// Prescaler table 11.6
-	OCR0A=208; //CTC Compare value 
+	OCR0A=104; //CTC Compare value 
 	
 	
 	
