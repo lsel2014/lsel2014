@@ -1,20 +1,12 @@
-# Name: Makefile
-# Project: hid-mouse example
-# Author: Christian Starkjohann
-# Creation Date: 2008-04-07
-# Tabsize: 4
-# Copyright: (c) 2008 by OBJECTIVE DEVELOPMENT Software GmbH
-# License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary (CommercialLicense.txt)
-# This Revision: $Id: Makefile 692 2008-11-07 15:07:40Z cs $
-
+# LSEL 2014 trainID TX module makefile
 DEVICE  = attiny85
-F_CPU   = 8000000	# in Hz
-FUSE_L  = 0xe2# see below for fuse values for particular devices
+F_CPU   = 8000000	
+FUSE_L  = 0xe2
 FUSE_H  = 0xdf
-AVRDUDE = avrdude -c usbasp -p $(DEVICE) # edit this line for your programmer
+AVRDUDE = avrdude -c usbasp -p $(DEVICE) 
 
 CFLAGS  = -I. -DDEBUG_LEVEL=0
-OBJECTS = main.o
+OBJECTS = main.o softuart.o
 
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(F_CPU) $(CFLAGS) -mmcu=$(DEVICE)
 
