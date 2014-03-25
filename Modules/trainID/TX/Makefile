@@ -1,4 +1,9 @@
-# LSEL 2014 trainID TX module makefile
+#
+#	LSEL 2014 trainID TX module Makefile
+#	@date March 2014
+#	@author Jose Martin
+#
+
 DEVICE  = attiny45
 F_CPU   = 8000000	
 FUSE_L  = 0xe2

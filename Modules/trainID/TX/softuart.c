@@ -154,7 +154,6 @@ V0.4 (10/2010)
 // startbit and stopbit parsed internally (see ISR)
 #define RX_NUM_OF_BITS (8)
 volatile static unsigned char  qin;
-static unsigned char           qout;
 volatile static unsigned char  flag_rx_off;
 volatile static unsigned char  flag_rx_ready;
 
@@ -171,14 +170,7 @@ volatile static unsigned short internal_tx_buffer; /* ! mt: was type uchar - thi
 
 ISR(SOFTUART_T_COMP_LABEL)
 {
-	static unsigned char flag_rx_waiting_for_stop_bit = SU_FALSE;
-	static unsigned char rx_mask;
 	
-	static unsigned char timer_rx_ctr;
-	static unsigned char bits_left_in_rx;
-	static unsigned char internal_rx_buffer;
-	
-	unsigned char start_bit, flag_in;
 	unsigned char tmp;
 	
 	// Transmitter Section
@@ -234,13 +226,6 @@ void softuart_init( void )
 
 	io_init();
 	timer_init();
-}
-
-static void idle(void)
-{
-	// timeout handling goes here 
-	// - but there is a "softuart_kbhit" in this code...
-	// add watchdog-reset here if needed
 }
 	
 unsigned char softuart_transmit_busy( void ) 
