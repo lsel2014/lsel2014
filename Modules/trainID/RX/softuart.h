@@ -8,11 +8,8 @@
 #if defined (__AVR_ATtiny25__) || defined (__AVR_ATtiny45__) || defined (__AVR_ATtiny85__)
     #define SOFTUART_RXPIN   PINB
     #define SOFTUART_RXDDR   DDRB
-    #define SOFTUART_RXBIT   PB2
+    #define SOFTUART_RXBIT   PB1
 
-    #define SOFTUART_TXPORT  PORTB
-    #define SOFTUART_TXDDR   DDRB
-    #define SOFTUART_TXBIT   PB0
 
     #define SOFTUART_T_COMP_LABEL      TIM0_COMPA_vect
     #define SOFTUART_T_COMP_REG        OCR0A
@@ -48,10 +45,6 @@
     #define SOFTUART_RXPIN   PIND
     #define SOFTUART_RXDDR   DDRD
     #define SOFTUART_RXBIT   PD0
-
-    #define SOFTUART_TXPORT  PORTD
-    #define SOFTUART_TXDDR   DDRD
-    #define SOFTUART_TXBIT   PD1
 
     #define SOFTUART_T_COMP_LABEL      TIMER0_COMPA_vect
     #define SOFTUART_T_COMP_REG        OCR0A
@@ -101,25 +94,9 @@ unsigned char softuart_kbhit( void );
 // Reads a character from the input buffer, waiting if necessary.
 char softuart_getchar( void );
 
-// To check if transmitter is busy
-unsigned char softuart_transmit_busy( void );
-
-// Writes a character to the serial port.
-void softuart_putchar( const char );
-
 // Turns on the receive function.
 void softuart_turn_rx_on( void );
 
 // Turns off the receive function.
 void softuart_turn_rx_off( void );
 
-// Write a NULL-terminated string from RAM to the serial port
-void softuart_puts( const char *s );
-
-// Write a NULL-terminated string from program-space (flash) 
-// to the serial port. example: softuart_puts_p(PSTR("test"))
-void softuart_puts_p( const char *prg_s );
-
-// Helper-Macro - "automatically" inserts PSTR
-// when used: include avr/pgmspace.h before this include-file
-#define softuart_puts_P(s___) softuart_puts_p(PSTR(s___))

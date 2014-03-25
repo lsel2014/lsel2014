@@ -1,6 +1,10 @@
 // softuart.c
 // AVR-port of the generic software uart written in C
 //
+// Modificated by J. Martin for Spring 2014 Electronic System Lab
+//
+//
+//
 // Generic code from
 // Colin Gittins, Software Engineer, Halliburton Energy Services
 // (has been available from iar.com web-site -> application notes)
@@ -149,7 +153,6 @@ V0.4 (10/2010)
 
 // startbit and stopbit parsed internally (see ISR)
 #define RX_NUM_OF_BITS (8)
-volatile static char           inbuf[SOFTUART_IN_BUF_SIZE];
 volatile static unsigned char  qin;
 static unsigned char           qout;
 volatile static unsigned char  flag_rx_off;
@@ -196,58 +199,12 @@ ISR(SOFTUART_T_COMP_LABEL)
 		}
 		timer_tx_ctr = tmp;
 	}
-
-	// Receiver Section
-	if ( flag_rx_off == SU_FALSE ) {
-		if ( flag_rx_waiting_for_stop_bit ) {
-			if ( --timer_rx_ctr == 0 ) {
-				flag_rx_waiting_for_stop_bit = SU_FALSE;
-				flag_rx_ready = SU_FALSE;
-				inbuf[qin] = internal_rx_buffer;
-				if ( ++qin >= SOFTUART_IN_BUF_SIZE ) {
-					// overflow - reset inbuf-index
-					qin = 0;
-				}
-			}
-		}
-		else {  // rx_test_busy
-			if ( flag_rx_ready == SU_FALSE ) {
-				start_bit = get_rx_pin_status();
-				// test for start bit
-				if ( start_bit == 0 ) {
-					flag_rx_ready      = SU_TRUE;
-					internal_rx_buffer = 0;
-					timer_rx_ctr       = 4;
-					bits_left_in_rx    = RX_NUM_OF_BITS;
-					rx_mask            = 1;
-				}
-			}
-			else {  // rx_busy
-				tmp = timer_rx_ctr;
-				if ( --tmp == 0 ) { // if ( --timer_rx_ctr == 0 ) {
-					// rcv
-					tmp = 3;
-					flag_in = get_rx_pin_status();
-					if ( flag_in ) {
-						internal_rx_buffer |= rx_mask;
-					}
-					rx_mask <<= 1;
-					if ( --bits_left_in_rx == 0 ) {
-						flag_rx_waiting_for_stop_bit = SU_TRUE;
-					}
-				}
-				timer_rx_ctr = tmp;
-			}
-		}
-	}
 }
 
 static void io_init(void)
 {
 	// TX-Pin as output
 	SOFTUART_TXDDR |=  ( 1 << SOFTUART_TXBIT );
-	// RX-Pin as input
-	SOFTUART_RXDDR &= ~( 1 << SOFTUART_RXBIT );
 }
 
 static void timer_init(void)
@@ -272,8 +229,6 @@ static void timer_init(void)
 void softuart_init( void )
 {
 	flag_tx_busy  = SU_FALSE;
-	flag_rx_ready = SU_FALSE;
-	flag_rx_off   = SU_FALSE;
 	
 	set_tx_pin_high(); /* mt: set to high to avoid garbage on init */
 
@@ -286,42 +241,6 @@ static void idle(void)
 	// timeout handling goes here 
 	// - but there is a "softuart_kbhit" in this code...
 	// add watchdog-reset here if needed
-}
-
-void softuart_turn_rx_on( void )
-{
-	flag_rx_off = SU_FALSE;
-}
-
-void softuart_turn_rx_off( void )
-{
-	flag_rx_off = SU_TRUE;
-}
-
-char softuart_getchar( void )
-{
-	char ch;
-
-	while ( qout == qin ) {
-		idle();
-	}
-	ch = inbuf[qout];
-	if ( ++qout >= SOFTUART_IN_BUF_SIZE ) {
-		qout = 0;
-	}
-	
-	return( ch );
-}
-
-unsigned char softuart_kbhit( void )
-{
-	return( qin != qout );
-}
-
-void softuart_flush_input_buffer( void )
-{
-	qin  = 0;
-	qout = 0;
 }
 	
 unsigned char softuart_transmit_busy( void ) 

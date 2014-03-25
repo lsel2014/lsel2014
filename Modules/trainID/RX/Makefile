@@ -1,5 +1,5 @@
 # LSEL 2014 trainID TX module makefile
-DEVICE  = attiny85
+DEVICE  = attiny45
 F_CPU   = 8000000	
 FUSE_L  = 0xe2
 FUSE_H  = 0xdf
