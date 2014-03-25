@@ -1,0 +1,350 @@
+[p LITE_MODE AUTOSTATIC PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 12LF1822 ]
+[d frameptr 6 ]
+"4 /opt/microchip/xc8/v1.30/sources/common/abdiv.c
+[v ___abdiv __abdiv `(c  1 e 1 0 ]
+"4 /opt/microchip/xc8/v1.30/sources/common/abmod.c
+[v ___abmod __abmod `(c  1 e 1 0 ]
+"33 /opt/microchip/xc8/v1.30/sources/common/abtoft.c
+[v ___abtoft __abtoft `(f  1 e 3 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
+"5 /opt/microchip/xc8/v1.30/sources/common/almod.c
+[v ___almod __almod `(l  1 e 4 0 ]
+"42 /opt/microchip/xc8/v1.30/sources/common/altoft.c
+[v ___altoft __altoft `(f  1 e 3 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/atdiv.c
+[v ___atdiv __atdiv `(m  1 e 3 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/atmod.c
+[v ___atmod __atmod `(m  1 e 3 0 ]
+"37 /opt/microchip/xc8/v1.30/sources/common/attoft.c
+[v ___attoft __attoft `(f  1 e 3 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+"32 /opt/microchip/xc8/v1.30/sources/common/awtoft.c
+[v ___awtoft __awtoft `(f  1 e 3 0 ]
+"2 /opt/microchip/xc8/v1.30/sources/common/bmul.c
+[v ___bmul __bmul `(uc  1 e 1 0 ]
+"62 /opt/microchip/xc8/v1.30/sources/common/float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"86 /opt/microchip/xc8/v1.30/sources/common/ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+"4 /opt/microchip/xc8/v1.30/sources/common/ftge.c
+[v ___ftge __ftge `(b  1 e 0 0 ]
+"51 /opt/microchip/xc8/v1.30/sources/common/ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+"15 /opt/microchip/xc8/v1.30/sources/common/ftneg.c
+[v ___ftneg __ftneg `(f  1 e 3 0 ]
+"18 /opt/microchip/xc8/v1.30/sources/common/ftsub.c
+[v ___ftsub __ftsub `(f  1 e 3 0 ]
+"44 /opt/microchip/xc8/v1.30/sources/common/fttol.c
+[v ___fttol __fttol `(l  1 e 4 0 ]
+"4 /opt/microchip/xc8/v1.30/sources/common/lbdiv.c
+[v ___lbdiv __lbdiv `(uc  1 e 1 0 ]
+"4 /opt/microchip/xc8/v1.30/sources/common/lbmod.c
+[v ___lbmod __lbmod `(uc  1 e 1 0 ]
+"27 /opt/microchip/xc8/v1.30/sources/common/lbtoft.c
+[v ___lbtoft __lbtoft `(f  1 e 3 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/lldiv.c
+[v ___lldiv __lldiv `(ul  1 e 4 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/llmod.c
+[v ___llmod __llmod `(ul  1 e 4 0 ]
+"35 /opt/microchip/xc8/v1.30/sources/common/lltoft.c
+[v ___lltoft __lltoft `(f  1 e 3 0 ]
+"2 /opt/microchip/xc8/v1.30/sources/common/lmul.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/ltdiv.c
+[v ___ltdiv __ltdiv `(um  1 e 3 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/ltmod.c
+[v ___ltmod __ltmod `(um  1 e 3 0 ]
+"30 /opt/microchip/xc8/v1.30/sources/common/lttoft.c
+[v ___lttoft __lttoft `(f  1 e 3 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/common/lwmod.c
+[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+"28 /opt/microchip/xc8/v1.30/sources/common/lwtoft.c
+[v ___lwtoft __lwtoft `(f  1 e 3 0 ]
+"2 /opt/microchip/xc8/v1.30/sources/common/tmul.c
+[v ___tmul __tmul `(um  1 e 3 0 ]
+"4 /opt/microchip/xc8/v1.30/sources/common/wmul.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+"6 /opt/microchip/xc8/v1.30/sources/pic/eeprom.c
+[v _eecpymem eecpymem `(v  1 e 0 0 ]
+"24
+[v _memcpyee memcpyee `(v  1 e 0 0 ]
+"48
+[v ___eetoc __eetoc `(uc  1 e 1 0 ]
+"56
+[v ___eetoi __eetoi `(ui  1 e 2 0 ]
+"64
+[v ___eetom __eetom `(um  1 e 3 0 ]
+"72
+[v ___eetol __eetol `(ul  1 e 4 0 ]
+"80
+[v ___ctoee __ctoee `(uc  1 e 1 0 ]
+"87
+[v ___itoee __itoee `(ui  1 e 2 0 ]
+"94
+[v ___mtoee __mtoee `(um  1 e 3 0 ]
+"101
+[v ___ltoee __ltoee `(ul  1 e 4 0 ]
+"108
+[v ___eetoft __eetoft `(f  1 e 3 0 ]
+"116
+[v ___eetofl __eetofl `(d  1 e 3 0 ]
+"124
+[v ___fttoee __fttoee `(f  1 e 3 0 ]
+"131
+[v ___fltoee __fltoee `(d  1 e 3 0 ]
+"49 /opt/microchip/xc8/v1.30/sources/pic/ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+"29 /home/javi/MPLABXProjects/PICsun.X/PICsun_main.c
+[v _i2c_rcv i2c_rcv `(v  1 e 0 0 ]
+"94
+[v _calc_times calc_times `(v  1 e 0 0 ]
+"116
+[v _ready_pwm ready_pwm `(v  1 e 0 0 ]
+"164
+[v _check_segment check_segment `(v  1 e 0 0 ]
+"185
+[v _simulate simulate `(v  1 e 0 0 ]
+"201
+[v ___init __init `(v  1 e 0 0 ]
+"251
+[v _main main `(i  1 e 2 0 ]
+[s S253 . 1 `uc 1 IOCIF 1 0 :1:0 
+`uc 1 INTF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 IOCIE 1 0 :1:3 
+`uc 1 INTE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"355 /opt/microchip/xc8/v1.30/include/pic12lf1822.h
+[s S262 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 T0IE 1 0 :1:5 
+]
+[u S267 . 1 `S253 1 . 1 0 `S262 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES267  1 e 1 @11 ]
+[s S20 . 1 `uc 1 BF 1 0 :1:0 
+`uc 1 UA 1 0 :1:1 
+`uc 1 R_nW 1 0 :1:2 
+`uc 1 S 1 0 :1:3 
+`uc 1 P 1 0 :1:4 
+`uc 1 D_nA 1 0 :1:5 
+`uc 1 CKE 1 0 :1:6 
+`uc 1 SMP 1 0 :1:7 
+]
+"715
+[u S29 . 1 `S20 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES29  1 e 1 @17 ]
+"1027
+[v _PR2 PR2 `VEuc  1 e 1 @27 ]
+[s S93 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+`uc 1 T2CKPS1 1 0 :1:1 
+`uc 1 TMR2ON 1 0 :1:2 
+`uc 1 T2OUTPS0 1 0 :1:3 
+`uc 1 T2OUTPS1 1 0 :1:4 
+`uc 1 T2OUTPS2 1 0 :1:5 
+`uc 1 T2OUTPS3 1 0 :1:6 
+]
+"1067
+[s S101 . 1 `uc 1 T2CKPS 1 0 :2:0 
+`uc 1 . 1 0 :1:2 
+`uc 1 T2OUTPS 1 0 :4:3 
+]
+[u S105 . 1 `S93 1 . 1 0 `S101 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES105  1 e 1 @28 ]
+[s S121 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 TRISA4 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+]
+"1223
+[u S128 . 1 `S121 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES128  1 e 1 @140 ]
+"1274
+[v _PIE1bits PIE1bits `VES29  1 e 1 @145 ]
+"1357
+[v _OPTION_REG OPTION_REG `VEuc  1 e 1 @149 ]
+[s S144 . 1 `uc 1 SCS0 1 0 :1:0 
+`uc 1 SCS1 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 IRCF0 1 0 :1:3 
+`uc 1 IRCF1 1 0 :1:4 
+`uc 1 IRCF2 1 0 :1:5 
+`uc 1 IRCF3 1 0 :1:6 
+`uc 1 SPLLEN 1 0 :1:7 
+]
+"1626
+[s S153 . 1 `uc 1 SCS 1 0 :2:0 
+`uc 1 . 1 0 :1:2 
+`uc 1 IRCF 1 0 :4:3 
+]
+[u S157 . 1 `S144 1 . 1 0 `S153 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES157  1 e 1 @153 ]
+"1933
+[v _LATA LATA `VEuc  1 e 1 @268 ]
+[s S175 . 1 `uc 1 CCP1SEL 1 0 :1:0 
+`uc 1 P1BSEL 1 0 :1:1 
+`uc 1 TXCKSEL 1 0 :1:2 
+`uc 1 T1GSEL 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 SSSEL 1 0 :1:5 
+`uc 1 SDOSEL 1 0 :1:6 
+`uc 1 RXDTSEL 1 0 :1:7 
+]
+"2459
+[s S184 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 SS1SEL 1 0 :1:5 
+`uc 1 SDO1SEL 1 0 :1:6 
+]
+[u S188 . 1 `S175 1 . 1 0 `S184 1 . 1 0 ]
+[v _APFCONbits APFCONbits `VES188  1 e 1 @285 ]
+"2573
+[v _ANSELA ANSELA `VEuc  1 e 1 @396 ]
+"2619
+[v _EEADR EEADR `VEus  1 e 2 @401 ]
+"2674
+[v _EEDATA EEDATA `VEuc  1 e 1 @403 ]
+"2725
+[v _EECON1 EECON1 `VEuc  1 e 1 @405 ]
+"2786
+[v _EECON2 EECON2 `VEuc  1 e 1 @406 ]
+"3112
+[v _WPUA WPUA `VEuc  1 e 1 @524 ]
+"3174
+[v _SSPBUF SSPBUF `VEuc  1 e 1 @529 ]
+"3206
+[v _SSP1ADD SSP1ADD `VEuc  1 e 1 @530 ]
+"3357
+[v _SSPSTATbits SSPSTATbits `VES29  1 e 1 @532 ]
+"3401
+[v _SSP1CON1 SSP1CON1 `VEuc  1 e 1 @533 ]
+"3626
+[v _SSP1CON2bits SSP1CON2bits `VES29  1 e 1 @534 ]
+"3852
+[v _CCPR1L CCPR1L `VEuc  1 e 1 @657 ]
+[s S63 . 1 `uc 1 CCP1M0 1 0 :1:0 
+`uc 1 CCP1M1 1 0 :1:1 
+`uc 1 CCP1M2 1 0 :1:2 
+`uc 1 CCP1M3 1 0 :1:3 
+`uc 1 DC1B0 1 0 :1:4 
+`uc 1 DC1B1 1 0 :1:5 
+`uc 1 P1M0 1 0 :1:6 
+`uc 1 P1M1 1 0 :1:7 
+]
+"3912
+[s S72 . 1 `uc 1 CCP1M 1 0 :4:0 
+`uc 1 DC1B 1 0 :2:4 
+`uc 1 P1M 1 0 :2:6 
+]
+[u S76 . 1 `S63 1 . 1 0 `S72 1 . 1 0 ]
+[v _CCP1CONbits CCP1CONbits `VES76  1 e 1 @659 ]
+"5059
+[v _CARRY CARRY `VEb  1 e 0 @24 ]
+"5205
+[v _GIE GIE `VEb  1 e 0 @95 ]
+"5421
+[v _RD RD `VEb  1 e 0 @3240 ]
+"5697
+[v _WR WR `VEb  1 e 0 @3241 ]
+"5699
+[v _WREN WREN `VEb  1 e 0 @3242 ]
+"22 /home/javi/MPLABXProjects/PICsun.X/PICsun_main.c
+[v _sunrise_hms sunrise_hms `VE[3]ui  1 e 6 0 ]
+[v _sunset_hms sunset_hms `VE[3]ui  1 e 6 0 ]
+"23
+[v _real_time real_time `VEui  1 e 2 0 ]
+"24
+[v _light_segments light_segments `VE[20]ui  1 e 40 0 ]
+"25
+[v _present_segment present_segment `VEui  1 e 2 0 ]
+"251
+[v _main main `(i  1 e 2 0 ]
+{
+"279
+} 0
+"185
+[v _simulate simulate `(v  1 e 0 0 ]
+{
+"186
+[v simulate@simulation_time simulation_time `i  1 a 2 8 ]
+"199
+} 0
+"116
+[v _ready_pwm ready_pwm `(v  1 e 0 0 ]
+{
+[v ready_pwm@segment segment `i  1 p 2 0 ]
+"162
+} 0
+"164
+[v _check_segment check_segment `(v  1 e 0 0 ]
+{
+"165
+[v check_segment@i i `i  1 a 2 4 ]
+"164
+[v check_segment@check_time check_time `i  1 p 2 0 ]
+"183
+} 0
+"29
+[v _i2c_rcv i2c_rcv `(v  1 e 0 0 ]
+{
+"31
+[v i2c_rcv@rcvd_bytes rcvd_bytes `i  1 a 2 4 ]
+"32
+[v i2c_rcv@trash trash `i  1 a 2 2 ]
+"92
+} 0
+"94
+[v _calc_times calc_times `(v  1 e 0 0 ]
+{
+"105
+[v calc_times@i i `i  1 a 2 8 ]
+"101
+[v calc_times@sunrise_seconds sunrise_seconds `i  1 a 2 6 ]
+"104
+[v calc_times@segment_duration segment_duration `ui  1 a 2 4 ]
+"103
+[v calc_times@light_time light_time `ui  1 a 2 2 ]
+"102
+[v calc_times@sunset_seconds sunset_seconds `i  1 a 2 0 ]
+"114
+} 0
+"4 /opt/microchip/xc8/v1.30/sources/common/wmul.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"6
+[v ___wmul@product product `ui  1 a 2 4 ]
+"4
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"31
+} 0
+"6 /opt/microchip/xc8/v1.30/sources/common/lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+{
+"11
+[v ___lwdiv@quotient quotient `ui  1 a 2 5 ]
+"12
+[v ___lwdiv@counter counter `uc  1 a 1 7 ]
+"6
+[v ___lwdiv@divisor divisor `ui  1 p 2 0 ]
+[v ___lwdiv@dividend dividend `ui  1 p 2 2 ]
+"31
+} 0
+"201 /home/javi/MPLABXProjects/PICsun.X/PICsun_main.c
+[v ___init __init `(v  1 e 0 0 ]
+{
+"248
+} 0

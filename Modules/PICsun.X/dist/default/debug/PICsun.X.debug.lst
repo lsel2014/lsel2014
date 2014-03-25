@@ -1,0 +1,2095 @@
+
+
+Microchip Technology PIC LITE Macro Assembler V1.30 build 55553 
+                                                                                               Tue Mar 25 00:35:23 2014
+
+Microchip Technology Omniscient Code Generator (Lite mode) build 55553
+     1                           	processor	12LF1822
+     2                           	opt	pw 120
+     3                           	opt	lm
+     4                           	psect	text0,local,class=CODE,merge=1,delta=2
+     5                           	psect	cinit,global,class=CODE,merge=1,delta=2
+     6                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1
+     7                           	psect	clrtext,global,class=CODE,delta=2
+     8                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1
+     9                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1
+    10                           	psect	maintext,global,class=CODE,merge=1,split=1,delta=2
+    11                           	psect	text1,local,class=CODE,merge=1,delta=2
+    12                           	psect	text2,local,class=CODE,merge=1,delta=2
+    13                           	psect	text3,local,class=CODE,merge=1,delta=2
+    14                           	psect	text4,local,class=CODE,merge=1,delta=2
+    15                           	psect	text5,local,class=CODE,merge=1,delta=2
+    16                           	psect	text6,local,class=CODE,merge=1,delta=2
+    17                           	psect	text7,local,class=CODE,merge=1,delta=2
+    18                           	psect	text8,local,class=CODE,merge=1,delta=2
+    19                           	dabs	1,0x7E,2
+    20  0000                     	;# 
+    21  0001                     	;# 
+    22  0002                     	;# 
+    23  0003                     	;# 
+    24  0004                     	;# 
+    25  0005                     	;# 
+    26  0006                     	;# 
+    27  0007                     	;# 
+    28  0008                     	;# 
+    29  0009                     	;# 
+    30  000A                     	;# 
+    31  000B                     	;# 
+    32  000C                     	;# 
+    33  0011                     	;# 
+    34  0012                     	;# 
+    35  0015                     	;# 
+    36  0016                     	;# 
+    37  0016                     	;# 
+    38  0017                     	;# 
+    39  0018                     	;# 
+    40  0019                     	;# 
+    41  001A                     	;# 
+    42  001B                     	;# 
+    43  001C                     	;# 
+    44  001E                     	;# 
+    45  001F                     	;# 
+    46  008C                     	;# 
+    47  0091                     	;# 
+    48  0092                     	;# 
+    49  0095                     	;# 
+    50  0096                     	;# 
+    51  0097                     	;# 
+    52  0098                     	;# 
+    53  0099                     	;# 
+    54  009A                     	;# 
+    55  009B                     	;# 
+    56  009B                     	;# 
+    57  009C                     	;# 
+    58  009D                     	;# 
+    59  009E                     	;# 
+    60  010C                     	;# 
+    61  0111                     	;# 
+    62  0112                     	;# 
+    63  0115                     	;# 
+    64  0116                     	;# 
+    65  0117                     	;# 
+    66  0118                     	;# 
+    67  0119                     	;# 
+    68  011A                     	;# 
+    69  011B                     	;# 
+    70  011D                     	;# 
+    71  011D                     	;# 
+    72  018C                     	;# 
+    73  0191                     	;# 
+    74  0191                     	;# 
+    75  0192                     	;# 
+    76  0193                     	;# 
+    77  0193                     	;# 
+    78  0193                     	;# 
+    79  0194                     	;# 
+    80  0195                     	;# 
+    81  0196                     	;# 
+    82  0199                     	;# 
+    83  019A                     	;# 
+    84  019B                     	;# 
+    85  019B                     	;# 
+    86  019B                     	;# 
+    87  019B                     	;# 
+    88  019C                     	;# 
+    89  019C                     	;# 
+    90  019D                     	;# 
+    91  019E                     	;# 
+    92  019F                     	;# 
+    93  020C                     	;# 
+    94  0211                     	;# 
+    95  0211                     	;# 
+    96  0212                     	;# 
+    97  0212                     	;# 
+    98  0213                     	;# 
+    99  0213                     	;# 
+   100  0214                     	;# 
+   101  0214                     	;# 
+   102  0215                     	;# 
+   103  0215                     	;# 
+   104  0215                     	;# 
+   105  0216                     	;# 
+   106  0216                     	;# 
+   107  0217                     	;# 
+   108  0217                     	;# 
+   109  0291                     	;# 
+   110  0291                     	;# 
+   111  0292                     	;# 
+   112  0293                     	;# 
+   113  0294                     	;# 
+   114  0295                     	;# 
+   115  0295                     	;# 
+   116  0296                     	;# 
+   117  0391                     	;# 
+   118  0392                     	;# 
+   119  0393                     	;# 
+   120  039A                     	;# 
+   121  039C                     	;# 
+   122  039D                     	;# 
+   123  039E                     	;# 
+   124  039F                     	;# 
+   125  0FE4                     	;# 
+   126  0FE5                     	;# 
+   127  0FE6                     	;# 
+   128  0FE7                     	;# 
+   129  0FE8                     	;# 
+   130  0FE9                     	;# 
+   131  0FEA                     	;# 
+   132  0FEB                     	;# 
+   133  0FED                     	;# 
+   134  0FEE                     	;# 
+   135  0FEF                     	;# 
+   136  000B                     _INTCONbits	set	11
+   137  0011                     _PIR1bits	set	17
+   138  001B                     _PR2	set	27
+   139  001C                     _T2CONbits	set	28
+   140  0095                     _OPTION_REG	set	149
+   141  0099                     _OSCCONbits	set	153
+   142  0091                     _PIE1bits	set	145
+   143  008C                     _TRISAbits	set	140
+   144  011D                     _APFCONbits	set	285
+   145  010C                     _LATA	set	268
+   146  018C                     _ANSELA	set	396
+   147  0212                     _SSP1ADD	set	530
+   148  0215                     _SSP1CON1	set	533
+   149  0216                     _SSP1CON2bits	set	534
+   150  0211                     _SSPBUF	set	529
+   151  0214                     _SSPSTATbits	set	532
+   152  020C                     _WPUA	set	524
+   153  0293                     _CCP1CONbits	set	659
+   154  0291                     _CCPR1L	set	657
+   155                           
+   156                           	psect	text0
+   157  0000                     __ptext0:	
+   158                           ; #config settings
+   159                           
+   160                           
+   161                           ;psect for function ___init
+   162  0000                     
+   163                           	psect	cinit
+   164  07F8                     start_initialization:	
+   165  07F8                     __initialization:	
+   166                           
+   167                           ; Clear objects allocated to BANK0
+   168  07F8  3020               	movlw	low __pbssBANK0
+   169  07F9  0084               	movwf	4
+   170  07FA  3000               	movlw	high __pbssBANK0
+   171  07FB  0085               	movwf	5
+   172  07FC  3038               	movlw	56
+   173  07FD  24C8               	fcall	clear_ram0
+   174  07FE                     end_of_initialization:	
+   175                           ;End of C runtime variable initialization code
+   176                           
+   177  07FE                     __end_of__initialization:	
+   178  07FE  0020               	movlb	0
+   179  07FF  2CEB               	ljmp	_main	;jump to C main() function
+   180                           
+   181                           	psect	bssBANK0
+   182  0020                     __pbssBANK0:	
+   183  0020                     _light_segments:	
+   184  0020                     	ds	40
+   185  0048                     _sunrise_hms:	
+   186  0048                     	ds	6
+   187  004E                     _sunset_hms:	
+   188  004E                     	ds	6
+   189  0054                     _present_segment:	
+   190  0054                     	ds	2
+   191  0056                     _real_time:	
+   192  0056                     	ds	2
+   193                           
+   194                           	psect	clrtext
+   195  04C8                     clear_ram0:	
+   196                           ;	Called with FSR0 containing the base address, and
+   197                           ;	WREG with the size to clear
+   198                           
+   199  04C8  0064               	clrwdt	;clear the watchdog before getting into this loop
+   200  04C9                     clrloop0:	
+   201  04C9  0180               	clrf	0	;clear RAM location pointed to by FSR
+   202  04CA  3101               	addfsr 0,1
+   203  04CB  0B89               	decfsz	9,f	;Have we reached the end of clearing yet?
+   204  04CC  2CC9               	goto	clrloop0	;have we reached the end yet?
+   205  04CD  3400               	retlw	0	;all done for this memory range, return
+   206                           
+   207                           	psect	cstackCOMMON
+   208  0070                     __pcstackCOMMON:	
+   209  0070                     ?_i2c_rcv:	
+   210  0070                     ??_i2c_rcv:	
+   211                           ; 0 bytes @ 0x0
+   212                           
+   213  0070                     ?_calc_times:	
+   214                           ; 0 bytes @ 0x0
+   215                           
+   216  0070                     ?_ready_pwm:	
+   217                           ; 0 bytes @ 0x0
+   218                           
+   219  0070                     ?_check_segment:	
+   220                           ; 0 bytes @ 0x0
+   221                           
+   222  0070                     ?_simulate:	
+   223                           ; 0 bytes @ 0x0
+   224                           
+   225  0070                     ?___init:	
+   226                           ; 0 bytes @ 0x0
+   227                           
+   228  0070                     ??___init:	
+   229                           ; 0 bytes @ 0x0
+   230                           
+   231  0070                     ?_main:	
+   232                           ; 0 bytes @ 0x0
+   233                           
+   234  0070                     ?___lwdiv:	
+   235                           ; 2 bytes @ 0x0
+   236                           
+   237  0070                     ?___wmul:	
+   238                           ; 2 bytes @ 0x0
+   239                           
+   240  0070                     ready_pwm@segment:	
+   241                           ; 2 bytes @ 0x0
+   242                           
+   243  0070                     check_segment@check_time:	
+   244                           ; 2 bytes @ 0x0
+   245                           
+   246  0070                     ___lwdiv@divisor:	
+   247                           ; 2 bytes @ 0x0
+   248                           
+   249  0070                     ___wmul@multiplier:	
+   250                           ; 2 bytes @ 0x0
+   251                           
+   252                           
+   253                           ; 2 bytes @ 0x0
+   254  0070                     	ds	2
+   255  0072                     ??_ready_pwm:	
+   256  0072                     ??_check_segment:	
+   257                           ; 0 bytes @ 0x2
+   258                           
+   259  0072                     i2c_rcv@trash:	
+   260                           ; 0 bytes @ 0x2
+   261                           
+   262  0072                     ___lwdiv@dividend:	
+   263                           ; 2 bytes @ 0x2
+   264                           
+   265  0072                     ___wmul@multiplicand:	
+   266                           ; 2 bytes @ 0x2
+   267                           
+   268                           
+   269                           ; 2 bytes @ 0x2
+   270  0072                     	ds	2
+   271  0074                     ??___lwdiv:	
+   272  0074                     ??___wmul:	
+   273                           ; 0 bytes @ 0x4
+   274                           
+   275  0074                     i2c_rcv@rcvd_bytes:	
+   276                           ; 0 bytes @ 0x4
+   277                           
+   278  0074                     check_segment@i:	
+   279                           ; 2 bytes @ 0x4
+   280                           
+   281  0074                     ___wmul@product:	
+   282                           ; 2 bytes @ 0x4
+   283                           
+   284                           
+   285                           ; 2 bytes @ 0x4
+   286  0074                     	ds	1
+   287  0075                     ___lwdiv@quotient:	
+   288                           
+   289                           ; 2 bytes @ 0x5
+   290  0075                     	ds	1
+   291  0076                     ??_simulate:	
+   292                           
+   293                           ; 0 bytes @ 0x6
+   294  0076                     	ds	1
+   295  0077                     ___lwdiv@counter:	
+   296                           
+   297                           ; 1 bytes @ 0x7
+   298  0077                     	ds	1
+   299  0078                     ??_calc_times:	
+   300  0078                     simulate@simulation_time:	
+   301                           ; 0 bytes @ 0x8
+   302                           
+   303                           
+   304                           ; 2 bytes @ 0x8
+   305  0078                     	ds	6
+   306  007E                     ??_main:	
+   307                           
+   308                           	psect	cstackBANK0
+   309  0058                     __pcstackBANK0:	
+   310                           ; 0 bytes @ 0xE
+   311                           
+   312  0058                     calc_times@sunset_seconds:	
+   313                           
+   314                           ; 2 bytes @ 0x0
+   315  0058                     	ds	2
+   316  005A                     calc_times@light_time:	
+   317                           
+   318                           ; 2 bytes @ 0x2
+   319  005A                     	ds	2
+   320  005C                     calc_times@segment_duration:	
+   321                           
+   322                           ; 2 bytes @ 0x4
+   323  005C                     	ds	2
+   324  005E                     calc_times@sunrise_seconds:	
+   325                           
+   326                           ; 2 bytes @ 0x6
+   327  005E                     	ds	2
+   328  0060                     calc_times@i:	
+   329                           
+   330                           ; 2 bytes @ 0x8
+   331  0060                     	ds	2
+   332                           
+   333                           	psect	maintext
+   334  04EB                     __pmaintext:	
+   335 ;;
+   336 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   337 ;;
+   338 ;; *************** function _main *****************
+   339 ;; Defined at:
+   340 ;;		line 251 in file "PICsun_main.c"
+   341 ;; Parameters:    Size  Location     Type
+   342 ;;		None
+   343 ;; Auto vars:     Size  Location     Type
+   344 ;;		None
+   345 ;; Return value:  Size  Location     Type
+   346 ;;                  2  109[COMMON] int 
+   347 ;; Registers used:
+   348 ;;		wreg, fsr1l, fsr1h, status,2, status,0, btemp+1, pclath, cstack
+   349 ;; Tracked objects:
+   350 ;;		On entry : 17F/0
+   351 ;;		On exit  : 0/0
+   352 ;;		Unchanged: 0/0
+   353 ;; Data sizes:     COMMON   BANK0   BANK1
+   354 ;;      Params:         0       0       0
+   355 ;;      Locals:         0       0       0
+   356 ;;      Temps:          0       0       0
+   357 ;;      Totals:         0       0       0
+   358 ;;Total ram usage:        0 bytes
+   359 ;; Hardware stack levels required when called:    2
+   360 ;; This function calls:
+   361 ;;		___init
+   362 ;;		_calc_times
+   363 ;;		_i2c_rcv
+   364 ;;		_simulate
+   365 ;; This function is called by:
+   366 ;;		Startup code after reset
+   367 ;; This function uses a non-reentrant model
+   368 ;;
+   369                           
+   370                           
+   371                           ;psect for function _main
+   372  04EB                     _main:	
+   373                           
+   374                           ;PICsun_main.c: 253: __init();
+   375                           
+   376                           ;incstack = 0
+   377                           ; Regs used in _main: [wreg+fsr1l+fsr1h+status,2+status,0+btemp+1+pclath+cstack]
+   378  04EB  257C               	fcall	___init
+   379                           
+   380                           ;PICsun_main.c: 256: sunrise_hms[0] = 6;
+   381  04EC  3006               	movlw	6
+   382  04ED  0020               	movlb	0	; select bank0
+   383  04EE  00C8               	movwf	_sunrise_hms	;volatile
+   384  04EF  3000               	movlw	0
+   385  04F0  00C9               	movwf	_sunrise_hms+1	;volatile
+   386                           
+   387                           ;PICsun_main.c: 257: sunrise_hms[1] = 0;
+   388  04F1  01CA               	clrf	_sunrise_hms+2	;volatile
+   389  04F2  01CB               	clrf	_sunrise_hms+3	;volatile
+   390                           
+   391                           ;PICsun_main.c: 258: sunrise_hms[2] = 0;
+   392  04F3  01CC               	clrf	_sunrise_hms+4	;volatile
+   393  04F4  01CD               	clrf	_sunrise_hms+5	;volatile
+   394                           
+   395                           ;PICsun_main.c: 259: sunset_hms[0] = 18;
+   396  04F5  3012               	movlw	18
+   397  04F6  00CE               	movwf	_sunset_hms	;volatile
+   398  04F7  3000               	movlw	0
+   399  04F8  00CF               	movwf	_sunset_hms+1	;volatile
+   400                           
+   401                           ;PICsun_main.c: 260: sunset_hms[1] = 0;
+   402  04F9  01D0               	clrf	_sunset_hms+2	;volatile
+   403  04FA  01D1               	clrf	_sunset_hms+3	;volatile
+   404                           
+   405                           ;PICsun_main.c: 261: sunset_hms[2] = 0;
+   406  04FB  01D2               	clrf	_sunset_hms+4	;volatile
+   407  04FC  01D3               	clrf	_sunset_hms+5	;volatile
+   408  04FD  2D03               	goto	L1
+   409  04FE                     l1287:	
+   410                           ;PICsun_main.c: 262: calc_times();
+   411                           
+   412  04FE  0024               	movlb	4	; select bank4
+   413  04FF  1814               	btfsc	20,0	;volatile
+   414  0500  1A94               	btfsc	20,5	;volatile
+   415  0501  2D07               	goto	l1293
+   416                           
+   417                           ;PICsun_main.c: 266: i2c_rcv();
+   418  0502  25B4               	fcall	_i2c_rcv
+   419  0503                     L1:	
+   420                           
+   421                           ;PICsun_main.c: 267: calc_times();
+   422  0503  2737               	fcall	_calc_times
+   423  0504                     l1285:	
+   424                           ;PICsun_main.c: 264: while(1) {
+   425                           
+   426                           ;PICsun_main.c: 268: } else {
+   427                           
+   428                           
+   429                           ;PICsun_main.c: 265: if((PIR1bits.SSP1IF == 1) && (SSPSTATbits.BF == 1) && (SSPSTATbits.
+      +                          D_nA == 0)) {
+   430  0504  0020               	movlb	0	; select bank0
+   431  0505  1991               	btfsc	17,3	;volatile
+   432  0506  2CFE               	goto	l1287
+   433  0507                     l1293:	
+   434                           
+   435                           ;PICsun_main.c: 269: simulate();
+   436  0507  2515               	fcall	_simulate
+   437                           
+   438                           ;PICsun_main.c: 271: if(++real_time == 60){
+   439  0508  3001               	movlw	1
+   440  0509  0020               	movlb	0	; select bank0
+   441  050A  07D6               	addwf	_real_time,f	;volatile
+   442  050B  3000               	movlw	0
+   443  050C  3DD7               	addwfc	_real_time+1,f	;volatile
+   444  050D  303C               	movlw	60
+   445  050E  0656               	xorwf	_real_time,w	;volatile
+   446  050F  0457               	iorwf	_real_time+1,w	;volatile
+   447  0510  1D03               	skipz
+   448  0511  2D04               	goto	l1285
+   449                           
+   450                           ;PICsun_main.c: 272: real_time = 0;
+   451  0512  01D6               	clrf	_real_time	;volatile
+   452  0513  01D7               	clrf	_real_time+1	;volatile
+   453  0514  2D04               	goto	l1285
+   454  0515                     __end_of_main:	
+   455                           ;PICsun_main.c: 273: }
+   456                           ;PICsun_main.c: 274: }
+   457                           ;PICsun_main.c: 275: }
+   458                           ;PICsun_main.c: 278: return (0);
+   459                           ;	Return value of _main is never used
+   460                           
+   461                           
+   462                           	psect	text1
+   463  0515                     __ptext1:	
+   464 ;; *************** function _simulate *****************
+   465 ;; Defined at:
+   466 ;;		line 185 in file "PICsun_main.c"
+   467 ;; Parameters:    Size  Location     Type
+   468 ;;		None
+   469 ;; Auto vars:     Size  Location     Type
+   470 ;;  simulation_t    2    8[COMMON] int 
+   471 ;; Return value:  Size  Location     Type
+   472 ;;		None               void
+   473 ;; Registers used:
+   474 ;;		wreg, fsr1l, fsr1h, status,2, status,0, btemp+1, pclath, cstack
+   475 ;; Tracked objects:
+   476 ;;		On entry : 0/0
+   477 ;;		On exit  : 0/0
+   478 ;;		Unchanged: 0/0
+   479 ;; Data sizes:     COMMON   BANK0   BANK1
+   480 ;;      Params:         0       0       0
+   481 ;;      Locals:         2       0       0
+   482 ;;      Temps:          2       0       0
+   483 ;;      Totals:         4       0       0
+   484 ;;Total ram usage:        4 bytes
+   485 ;; Hardware stack levels used:    1
+   486 ;; Hardware stack levels required when called:    1
+   487 ;; This function calls:
+   488 ;;		___wmul
+   489 ;;		_check_segment
+   490 ;;		_ready_pwm
+   491 ;; This function is called by:
+   492 ;;		_main
+   493 ;; This function uses a non-reentrant model
+   494 ;;
+   495                           
+   496                           
+   497                           ;psect for function _simulate
+   498  0515                     _simulate:	
+   499                           
+   500                           ;PICsun_main.c: 186: int simulation_time = real_time * 1440;
+   501                           
+   502                           ;incstack = 0
+   503                           ; Regs used in _simulate: [wreg+fsr1l+fsr1h+status,2+status,0+btemp+1+pclath+cstack]
+   504  0515  0020               	movlb	0	; select bank0
+   505  0516  0857               	movf	_real_time+1,w	;volatile
+   506  0517  01F1               	clrf	___wmul@multiplier+1
+   507  0518  07F1               	addwf	___wmul@multiplier+1,f
+   508  0519  0856               	movf	_real_time,w	;volatile
+   509  051A  01F0               	clrf	___wmul@multiplier
+   510  051B  07F0               	addwf	___wmul@multiplier,f
+   511  051C  30A0               	movlw	160
+   512  051D  00F2               	movwf	___wmul@multiplicand
+   513  051E  3005               	movlw	5
+   514  051F  00F3               	movwf	___wmul@multiplicand+1
+   515  0520  24CE               	fcall	___wmul
+   516  0521  0871               	movf	?___wmul+1,w
+   517  0522  01F9               	clrf	simulate@simulation_time+1
+   518  0523  07F9               	addwf	simulate@simulation_time+1,f
+   519  0524  0870               	movf	?___wmul,w
+   520  0525  01F8               	clrf	simulate@simulation_time
+   521  0526  07F8               	addwf	simulate@simulation_time,f
+   522                           
+   523                           ;PICsun_main.c: 188: check_segment(simulation_time);
+   524  0527  0879               	movf	simulate@simulation_time+1,w
+   525  0528  01F1               	clrf	check_segment@check_time+1
+   526  0529  07F1               	addwf	check_segment@check_time+1,f
+   527  052A  0878               	movf	simulate@simulation_time,w
+   528  052B  01F0               	clrf	check_segment@check_time
+   529  052C  07F0               	addwf	check_segment@check_time,f
+   530  052D  269A               	fcall	_check_segment
+   531                           
+   532                           ;PICsun_main.c: 189: ready_pwm(present_segment);
+   533  052E  0020               	movlb	0	; select bank0
+   534  052F  0855               	movf	_present_segment+1,w	;volatile
+   535  0530  01F1               	clrf	ready_pwm@segment+1
+   536  0531  07F1               	addwf	ready_pwm@segment+1,f
+   537  0532  0854               	movf	_present_segment,w	;volatile
+   538  0533  01F0               	clrf	ready_pwm@segment
+   539  0534  07F0               	addwf	ready_pwm@segment,f
+   540  0535  2621               	fcall	_ready_pwm
+   541                           
+   542                           ;PICsun_main.c: 191: PIR1bits.TMR2IF = 0;
+   543  0536  0020               	movlb	0	; select bank0
+   544  0537  1091               	bcf	17,1	;volatile
+   545                           
+   546                           ;PICsun_main.c: 192: T2CONbits.TMR2ON = 1;
+   547  0538  151C               	bsf	28,2	;volatile
+   548                           
+   549                           ;PICsun_main.c: 193: TRISAbits.TRISA5 = 0;
+   550  0539  0021               	movlb	1	; select bank1
+   551  053A  128C               	bcf	12,5	;volatile
+   552                           
+   553                           ;PICsun_main.c: 195: _delay((unsigned long)((5)*(16000000/16000.0)));
+   554  053B  3007               	movlw	7
+   555  053C  00F7               	movwf	??_simulate+1
+   556  053D  307D               	movlw	125
+   557  053E  00F6               	movwf	??_simulate
+   558  053F                     u937:	
+   559  053F  0BF6               	decfsz	??_simulate,f
+   560  0540  2D3F               	goto	u937
+   561  0541  0BF7               	decfsz	??_simulate+1,f
+   562  0542  2D3F               	goto	u937
+   563                           
+   564                           ;PICsun_main.c: 197: TRISAbits.TRISA5 = 1;
+   565  0543  0021               	movlb	1	; select bank1
+   566  0544  168C               	bsf	12,5	;volatile
+   567  0545  0008               	return
+   568  0546                     __end_of_simulate:	
+   569                           
+   570                           	psect	text2
+   571  0621                     __ptext2:	
+   572 ;; *************** function _ready_pwm *****************
+   573 ;; Defined at:
+   574 ;;		line 116 in file "PICsun_main.c"
+   575 ;; Parameters:    Size  Location     Type
+   576 ;;  segment         2    0[COMMON] int 
+   577 ;; Auto vars:     Size  Location     Type
+   578 ;;		None
+   579 ;; Return value:  Size  Location     Type
+   580 ;;		None               void
+   581 ;; Registers used:
+   582 ;;		wreg, status,2, status,0
+   583 ;; Tracked objects:
+   584 ;;		On entry : 0/0
+   585 ;;		On exit  : 0/0
+   586 ;;		Unchanged: 0/0
+   587 ;; Data sizes:     COMMON   BANK0   BANK1
+   588 ;;      Params:         2       0       0
+   589 ;;      Locals:         0       0       0
+   590 ;;      Temps:          0       0       0
+   591 ;;      Totals:         2       0       0
+   592 ;;Total ram usage:        2 bytes
+   593 ;; Hardware stack levels used:    1
+   594 ;; This function calls:
+   595 ;;		Nothing
+   596 ;; This function is called by:
+   597 ;;		_simulate
+   598 ;; This function uses a non-reentrant model
+   599 ;;
+   600                           
+   601                           
+   602                           ;psect for function _ready_pwm
+   603  0621                     _ready_pwm:	
+   604                           
+   605                           ;PICsun_main.c: 117: if (segment == 0) {
+   606                           
+   607                           ;incstack = 0
+   608                           ; Regs used in _ready_pwm: [wreg+status,2+status,0]
+   609  0621  0871               	movf	ready_pwm@segment+1,w
+   610  0622  0470               	iorwf	ready_pwm@segment,w
+   611  0623  1D03               	skipz
+   612  0624  2E2B               	goto	l1047
+   613                           
+   614                           ;PICsun_main.c: 119: CCPR1L = 0b11111111;
+   615  0625  30FF               	movlw	255
+   616  0626  0025               	movlb	5	; select bank5
+   617  0627  0091               	movwf	17	;volatile
+   618                           
+   619                           ;PICsun_main.c: 120: CCP1CONbits.DC1B = 0b11;
+   620  0628  3030               	movlw	48
+   621  0629  0493               	iorwf	19,f	;volatile
+   622                           
+   623                           ;PICsun_main.c: 121: } else if (segment == 1) {
+   624  062A  0008               	return
+   625  062B                     l1047:	
+   626  062B  3001               	movlw	1
+   627  062C  0670               	xorwf	ready_pwm@segment,w
+   628  062D  0471               	iorwf	ready_pwm@segment+1,w
+   629  062E  1D03               	skipz
+   630  062F  2E36               	goto	l1053
+   631                           
+   632                           ;PICsun_main.c: 123: CCPR1L = 0b11110100;
+   633  0630  30F4               	movlw	244
+   634  0631  0025               	movlb	5	; select bank5
+   635  0632  0091               	movwf	17	;volatile
+   636                           
+   637                           ;PICsun_main.c: 124: CCP1CONbits.DC1B = 0b00;
+   638  0633  30CF               	movlw	-49
+   639  0634  0593               	andwf	19,f	;volatile
+   640                           
+   641                           ;PICsun_main.c: 125: } else if (segment == 2) {
+   642  0635  0008               	return
+   643  0636                     l1053:	
+   644  0636  3002               	movlw	2
+   645  0637  0670               	xorwf	ready_pwm@segment,w
+   646  0638  0471               	iorwf	ready_pwm@segment+1,w
+   647  0639  1D03               	skipz
+   648  063A  2E41               	goto	l1059
+   649                           
+   650                           ;PICsun_main.c: 127: CCPR1L = 0b11100111;
+   651  063B  30E7               	movlw	231
+   652  063C  0025               	movlb	5	; select bank5
+   653  063D  0091               	movwf	17	;volatile
+   654                           
+   655                           ;PICsun_main.c: 128: CCP1CONbits.DC1B = 0b00;
+   656  063E  30CF               	movlw	-49
+   657  063F  0593               	andwf	19,f	;volatile
+   658                           
+   659                           ;PICsun_main.c: 129: } else if (segment == 3) {
+   660  0640  0008               	return
+   661  0641                     l1059:	
+   662  0641  3003               	movlw	3
+   663  0642  0670               	xorwf	ready_pwm@segment,w
+   664  0643  0471               	iorwf	ready_pwm@segment+1,w
+   665  0644  1D03               	skipz
+   666  0645  2E4C               	goto	l1065
+   667                           
+   668                           ;PICsun_main.c: 131: CCPR1L = 0b11011000;
+   669  0646  30D8               	movlw	216
+   670  0647  0025               	movlb	5	; select bank5
+   671  0648  0091               	movwf	17	;volatile
+   672                           
+   673                           ;PICsun_main.c: 132: CCP1CONbits.DC1B = 0b00;
+   674  0649  30CF               	movlw	-49
+   675  064A  0593               	andwf	19,f	;volatile
+   676                           
+   677                           ;PICsun_main.c: 133: } else if (segment == 4) {
+   678  064B  0008               	return
+   679  064C                     l1065:	
+   680  064C  3004               	movlw	4
+   681  064D  0670               	xorwf	ready_pwm@segment,w
+   682  064E  0471               	iorwf	ready_pwm@segment+1,w
+   683  064F  1D03               	skipz
+   684  0650  2E57               	goto	l1071
+   685                           
+   686                           ;PICsun_main.c: 135: CCPR1L = 0b11000111;
+   687  0651  30C7               	movlw	199
+   688  0652  0025               	movlb	5	; select bank5
+   689  0653  0091               	movwf	17	;volatile
+   690                           
+   691                           ;PICsun_main.c: 136: CCP1CONbits.DC1B = 0b00;
+   692  0654  30CF               	movlw	-49
+   693  0655  0593               	andwf	19,f	;volatile
+   694                           
+   695                           ;PICsun_main.c: 137: } else if (segment == 5) {
+   696  0656  0008               	return
+   697  0657                     l1071:	
+   698  0657  3005               	movlw	5
+   699  0658  0670               	xorwf	ready_pwm@segment,w
+   700  0659  0471               	iorwf	ready_pwm@segment+1,w
+   701  065A  1D03               	skipz
+   702  065B  2E62               	goto	l1077
+   703                           
+   704                           ;PICsun_main.c: 139: CCPR1L = 0b10110010;
+   705  065C  30B2               	movlw	178
+   706  065D  0025               	movlb	5	; select bank5
+   707  065E  0091               	movwf	17	;volatile
+   708                           
+   709                           ;PICsun_main.c: 140: CCP1CONbits.DC1B = 0b11;
+   710  065F  3030               	movlw	48
+   711  0660  0493               	iorwf	19,f	;volatile
+   712                           
+   713                           ;PICsun_main.c: 141: } else if (segment == 6) {
+   714  0661  0008               	return
+   715  0662                     l1077:	
+   716  0662  3006               	movlw	6
+   717  0663  0670               	xorwf	ready_pwm@segment,w
+   718  0664  0471               	iorwf	ready_pwm@segment+1,w
+   719  0665  1D03               	skipz
+   720  0666  2E6D               	goto	l1083
+   721                           
+   722                           ;PICsun_main.c: 143: CCPR1L = 0b10011010;
+   723  0667  309A               	movlw	154
+   724  0668  0025               	movlb	5	; select bank5
+   725  0669  0091               	movwf	17	;volatile
+   726                           
+   727                           ;PICsun_main.c: 144: CCP1CONbits.DC1B = 0b00;
+   728  066A  30CF               	movlw	-49
+   729  066B  0593               	andwf	19,f	;volatile
+   730                           
+   731                           ;PICsun_main.c: 145: } else if (segment == 7) {
+   732  066C  0008               	return
+   733  066D                     l1083:	
+   734  066D  3007               	movlw	7
+   735  066E  0670               	xorwf	ready_pwm@segment,w
+   736  066F  0471               	iorwf	ready_pwm@segment+1,w
+   737  0670  1D03               	skipz
+   738  0671  2E78               	goto	l1089
+   739                           
+   740                           ;PICsun_main.c: 147: CCPR1L = 0b01111010;
+   741  0672  307A               	movlw	122
+   742  0673  0025               	movlb	5	; select bank5
+   743  0674  0091               	movwf	17	;volatile
+   744                           
+   745                           ;PICsun_main.c: 148: CCP1CONbits.DC1B = 0b00;
+   746  0675  30CF               	movlw	-49
+   747  0676  0593               	andwf	19,f	;volatile
+   748                           
+   749                           ;PICsun_main.c: 149: } else if (segment == 8) {
+   750  0677  0008               	return
+   751  0678                     l1089:	
+   752  0678  3008               	movlw	8
+   753  0679  0670               	xorwf	ready_pwm@segment,w
+   754  067A  0471               	iorwf	ready_pwm@segment+1,w
+   755  067B  1D03               	skipz
+   756  067C  2E83               	goto	l1095
+   757                           
+   758                           ;PICsun_main.c: 151: CCPR1L = 0b11111111;
+   759  067D  30FF               	movlw	255
+   760  067E  0025               	movlb	5	; select bank5
+   761  067F  0091               	movwf	17	;volatile
+   762                           
+   763                           ;PICsun_main.c: 152: CCP1CONbits.DC1B = 0b11;
+   764  0680  3030               	movlw	48
+   765  0681  0493               	iorwf	19,f	;volatile
+   766                           
+   767                           ;PICsun_main.c: 153: } else if (segment == 9) {
+   768  0682  0008               	return
+   769  0683                     l1095:	
+   770  0683  3009               	movlw	9
+   771  0684  0670               	xorwf	ready_pwm@segment,w
+   772  0685  0471               	iorwf	ready_pwm@segment+1,w
+   773  0686  1D03               	skipz
+   774  0687  2E90               	goto	l1101
+   775                           
+   776                           ;PICsun_main.c: 155: CCPR1L = 0b00001010;
+   777  0688  300A               	movlw	10
+   778  0689  0025               	movlb	5	; select bank5
+   779  068A  0091               	movwf	17	;volatile
+   780                           
+   781                           ;PICsun_main.c: 156: CCP1CONbits.DC1B = 0b10;
+   782  068B  0813               	movf	19,w	;volatile
+   783  068C  39CF               	andlw	-49
+   784  068D  3820               	iorlw	32
+   785  068E  0093               	movwf	19	;volatile
+   786                           
+   787                           ;PICsun_main.c: 157: } else if (segment == 10) {
+   788  068F  0008               	return
+   789  0690                     l1101:	
+   790  0690  300A               	movlw	10
+   791  0691  0670               	xorwf	ready_pwm@segment,w
+   792  0692  0471               	iorwf	ready_pwm@segment+1,w
+   793  0693  1D03               	skipz
+   794  0694  0008               	return
+   795                           
+   796                           ;PICsun_main.c: 159: CCPR1L = 0b00000000;
+   797  0695  0025               	movlb	5	; select bank5
+   798  0696  0191               	clrf	17	;volatile
+   799                           
+   800                           ;PICsun_main.c: 160: CCP1CONbits.DC1B = 0b00;
+   801  0697  30CF               	movlw	-49
+   802  0698  0593               	andwf	19,f	;volatile
+   803  0699  0008               	return
+   804  069A                     __end_of_ready_pwm:	
+   805                           
+   806                           	psect	text3
+   807  069A                     __ptext3:	
+   808 ;; *************** function _check_segment *****************
+   809 ;; Defined at:
+   810 ;;		line 164 in file "PICsun_main.c"
+   811 ;; Parameters:    Size  Location     Type
+   812 ;;  check_time      2    0[COMMON] int 
+   813 ;; Auto vars:     Size  Location     Type
+   814 ;;  i               2    4[COMMON] int 
+   815 ;; Return value:  Size  Location     Type
+   816 ;;		None               void
+   817 ;; Registers used:
+   818 ;;		wreg, fsr1l, fsr1h, status,2, status,0, btemp+1
+   819 ;; Tracked objects:
+   820 ;;		On entry : 0/0
+   821 ;;		On exit  : 0/0
+   822 ;;		Unchanged: 0/0
+   823 ;; Data sizes:     COMMON   BANK0   BANK1
+   824 ;;      Params:         2       0       0
+   825 ;;      Locals:         2       0       0
+   826 ;;      Temps:          2       0       0
+   827 ;;      Totals:         6       0       0
+   828 ;;Total ram usage:        6 bytes
+   829 ;; Hardware stack levels used:    1
+   830 ;; This function calls:
+   831 ;;		Nothing
+   832 ;; This function is called by:
+   833 ;;		_simulate
+   834 ;; This function uses a non-reentrant model
+   835 ;;
+   836                           
+   837                           
+   838                           ;psect for function _check_segment
+   839  069A                     _check_segment:	
+   840                           
+   841                           ;PICsun_main.c: 165: int i;
+   842                           ;PICsun_main.c: 167: if (check_time < light_segments[0] || check_time > light_segments[1
+      +                          9]) {
+   843                           
+   844                           ;incstack = 0
+   845                           ; Regs used in _check_segment: [wreg+fsr1l+fsr1h+status,2+status,0+btemp+1]
+   846  069A  0020               	movlb	0	; select bank0
+   847  069B  0821               	movf	_light_segments+1,w	;volatile
+   848  069C  0271               	subwf	check_segment@check_time+1,w
+   849  069D  1D03               	skipz
+   850  069E  2EA1               	goto	u665
+   851  069F  0820               	movf	_light_segments,w	;volatile
+   852  06A0  0270               	subwf	check_segment@check_time,w
+   853  06A1                     u665:	
+   854  06A1  1C03               	skipc
+   855  06A2  2EAB               	goto	l1111
+   856  06A3  0871               	movf	check_segment@check_time+1,w
+   857  06A4  0247               	subwf	_light_segments+39,w	;volatile
+   858  06A5  1D03               	skipz
+   859  06A6  2EA9               	goto	u675
+   860  06A7  0870               	movf	check_segment@check_time,w
+   861  06A8  0246               	subwf	_light_segments+38,w	;volatile
+   862  06A9                     u675:	
+   863  06A9  1803               	skipnc
+   864  06AA  2EAE               	goto	l1113
+   865  06AB                     l1111:	
+   866                           
+   867                           ;PICsun_main.c: 168: present_segment = 0;
+   868  06AB  01D4               	clrf	_present_segment	;volatile
+   869  06AC  01D5               	clrf	_present_segment+1	;volatile
+   870                           
+   871                           ;PICsun_main.c: 169: } else {
+   872  06AD  0008               	return
+   873  06AE                     l1113:	
+   874                           
+   875                           ;PICsun_main.c: 170: for (i = 0; i < 10; i++) {
+   876  06AE  01F4               	clrf	check_segment@i
+   877  06AF  01F5               	clrf	check_segment@i+1
+   878  06B0  0875               	movf	check_segment@i+1,w
+   879  06B1  3A80               	xorlw	128
+   880  06B2  00FF               	movwf	127
+   881  06B3  3080               	movlw	128
+   882  06B4  027F               	subwf	127,w
+   883  06B5  1D03               	skipz
+   884  06B6  2EB9               	goto	u685
+   885  06B7  300A               	movlw	10
+   886  06B8  0274               	subwf	check_segment@i,w
+   887  06B9                     u685:	
+   888  06B9  1803               	btfsc	3,0
+   889  06BA  2EF3               	goto	l1129
+   890  06BB                     l1119:	
+   891                           
+   892                           ;PICsun_main.c: 171: if (check_time > light_segments[i] && check_time < light_segments[i
+      +                          +1]) {
+   893  06BB  3574               	lslf	check_segment@i,w
+   894  06BC  3E20               	addlw	_light_segments& (0+255)
+   895  06BD  0086               	movwf	6
+   896  06BE  0187               	clrf	7
+   897  06BF  3F40               	moviw [0]fsr1
+   898  06C0  00F2               	movwf	??_check_segment
+   899  06C1  3F41               	moviw [1]fsr1
+   900  06C2  00F3               	movwf	??_check_segment+1
+   901  06C3  0871               	movf	check_segment@check_time+1,w
+   902  06C4  0273               	subwf	??_check_segment+1,w
+   903  06C5  1D03               	skipz
+   904  06C6  2EC9               	goto	u695
+   905  06C7  0870               	movf	check_segment@check_time,w
+   906  06C8  0272               	subwf	??_check_segment,w
+   907  06C9                     u695:	
+   908  06C9  1803               	skipnc
+   909  06CA  2EE4               	goto	l1125
+   910  06CB  3574               	lslf	check_segment@i,w
+   911  06CC  3E02               	addlw	2
+   912  06CD  3E20               	addlw	_light_segments& (0+255)
+   913  06CE  0086               	movwf	6
+   914  06CF  0187               	clrf	7
+   915  06D0  3F40               	moviw [0]fsr1
+   916  06D1  00F2               	movwf	??_check_segment
+   917  06D2  3F41               	moviw [1]fsr1
+   918  06D3  00F3               	movwf	??_check_segment+1
+   919  06D4  0873               	movf	??_check_segment+1,w
+   920  06D5  0271               	subwf	check_segment@check_time+1,w
+   921  06D6  1D03               	skipz
+   922  06D7  2EDA               	goto	u705
+   923  06D8  0872               	movf	??_check_segment,w
+   924  06D9  0270               	subwf	check_segment@check_time,w
+   925  06DA                     u705:	
+   926  06DA  1803               	skipnc
+   927  06DB  2EE4               	goto	l1125
+   928                           
+   929                           ;PICsun_main.c: 172: present_segment = i+1;
+   930  06DC  0874               	movf	check_segment@i,w
+   931  06DD  3E01               	addlw	1
+   932  06DE  0020               	movlb	0	; select bank0
+   933  06DF  00D4               	movwf	_present_segment	;volatile
+   934  06E0  3000               	movlw	0
+   935  06E1  3D75               	addwfc	check_segment@i+1,w
+   936  06E2  00D5               	movwf	_present_segment+1	;volatile
+   937                           
+   938                           ;PICsun_main.c: 173: break;
+   939  06E3  2EF3               	goto	l1129
+   940  06E4                     l1125:	
+   941  06E4  3001               	movlw	1
+   942  06E5  07F4               	addwf	check_segment@i,f
+   943  06E6  3000               	movlw	0
+   944  06E7  3DF5               	addwfc	check_segment@i+1,f
+   945  06E8  0875               	movf	check_segment@i+1,w
+   946  06E9  3A80               	xorlw	128
+   947  06EA  00FF               	movwf	127
+   948  06EB  3080               	movlw	128
+   949  06EC  027F               	subwf	127,w
+   950  06ED  1D03               	skipz
+   951  06EE  2EF1               	goto	u715
+   952  06EF  300A               	movlw	10
+   953  06F0  0274               	subwf	check_segment@i,w
+   954  06F1                     u715:	
+   955  06F1  1C03               	skipc
+   956  06F2  2EBB               	goto	l1119
+   957  06F3                     l1129:	
+   958                           
+   959                           ;PICsun_main.c: 174: }
+   960                           ;PICsun_main.c: 175: }
+   961                           ;PICsun_main.c: 176: for (i = 10; i < 19; i++) {
+   962  06F3  300A               	movlw	10
+   963  06F4  00F4               	movwf	check_segment@i
+   964  06F5  3000               	movlw	0
+   965  06F6  00F5               	movwf	check_segment@i+1
+   966  06F7                     L2:	
+   967  06F7  0875               	movf	check_segment@i+1,w
+   968  06F8  3A80               	xorlw	128
+   969  06F9  00FF               	movwf	127
+   970  06FA  3080               	movlw	128
+   971  06FB  027F               	subwf	127,w
+   972  06FC  1D03               	skipz
+   973  06FD  2F00               	goto	u725
+   974  06FE  3013               	movlw	19
+   975  06FF  0274               	subwf	check_segment@i,w
+   976  0700                     u725:	
+   977  0700  1803               	btfsc	3,0
+   978  0701  0008               	return
+   979                           
+   980                           ;PICsun_main.c: 177: if (check_time > light_segments[i] && check_time < light_segments[i
+      +                          +1]) {
+   981  0702  3574               	lslf	check_segment@i,w
+   982  0703  3E20               	addlw	_light_segments& (0+255)
+   983  0704  0086               	movwf	6
+   984  0705  0187               	clrf	7
+   985  0706  3F40               	moviw [0]fsr1
+   986  0707  00F2               	movwf	??_check_segment
+   987  0708  3F41               	moviw [1]fsr1
+   988  0709  00F3               	movwf	??_check_segment+1
+   989  070A  0871               	movf	check_segment@check_time+1,w
+   990  070B  0273               	subwf	??_check_segment+1,w
+   991  070C  1D03               	skipz
+   992  070D  2F10               	goto	u735
+   993  070E  0870               	movf	check_segment@check_time,w
+   994  070F  0272               	subwf	??_check_segment,w
+   995  0710                     u735:	
+   996  0710  1803               	skipnc
+   997  0711  2F32               	goto	l1141
+   998  0712  3574               	lslf	check_segment@i,w
+   999  0713  3E02               	addlw	2
+  1000  0714  3E20               	addlw	_light_segments& (0+255)
+  1001  0715  0086               	movwf	6
+  1002  0716  0187               	clrf	7
+  1003  0717  3F40               	moviw [0]fsr1
+  1004  0718  00F2               	movwf	??_check_segment
+  1005  0719  3F41               	moviw [1]fsr1
+  1006  071A  00F3               	movwf	??_check_segment+1
+  1007  071B  0873               	movf	??_check_segment+1,w
+  1008  071C  0271               	subwf	check_segment@check_time+1,w
+  1009  071D  1D03               	skipz
+  1010  071E  2F21               	goto	u745
+  1011  071F  0872               	movf	??_check_segment,w
+  1012  0720  0270               	subwf	check_segment@check_time,w
+  1013  0721                     u745:	
+  1014  0721  1803               	skipnc
+  1015  0722  2F32               	goto	l1141
+  1016                           
+  1017                           ;PICsun_main.c: 178: present_segment = 19-i;
+  1018  0723  0974               	comf	check_segment@i,w
+  1019  0724  00F2               	movwf	??_check_segment
+  1020  0725  0975               	comf	check_segment@i+1,w
+  1021  0726  00F3               	movwf	??_check_segment+1
+  1022  0727  0AF2               	incf	??_check_segment,f
+  1023  0728  1903               	skipnz
+  1024  0729  0AF3               	incf	??_check_segment+1,f
+  1025  072A  0872               	movf	??_check_segment,w
+  1026  072B  3E13               	addlw	19
+  1027  072C  0020               	movlb	0	; select bank0
+  1028  072D  00D4               	movwf	_present_segment	;volatile
+  1029  072E  3000               	movlw	0
+  1030  072F  3D73               	addwfc	??_check_segment+1,w
+  1031  0730  00D5               	movwf	_present_segment+1	;volatile
+  1032                           
+  1033                           ;PICsun_main.c: 179: break;
+  1034  0731  0008               	return
+  1035  0732                     l1141:	
+  1036  0732  3001               	movlw	1
+  1037  0733  07F4               	addwf	check_segment@i,f
+  1038  0734  3000               	movlw	0
+  1039  0735  3DF5               	addwfc	check_segment@i+1,f
+  1040  0736  2EF7               	goto	L2
+  1041  0737                     __end_of_check_segment:	
+  1042                           
+  1043                           	psect	text4
+  1044  05B4                     __ptext4:	
+  1045 ;; *************** function _i2c_rcv *****************
+  1046 ;; Defined at:
+  1047 ;;		line 29 in file "PICsun_main.c"
+  1048 ;; Parameters:    Size  Location     Type
+  1049 ;;		None
+  1050 ;; Auto vars:     Size  Location     Type
+  1051 ;;  rcvd_bytes      2    4[COMMON] int 
+  1052 ;;  trash           2    2[COMMON] int 
+  1053 ;; Return value:  Size  Location     Type
+  1054 ;;		None               void
+  1055 ;; Registers used:
+  1056 ;;		wreg, fsr1l, fsr1h, status,2, status,0, btemp+1
+  1057 ;; Tracked objects:
+  1058 ;;		On entry : 0/0
+  1059 ;;		On exit  : 0/0
+  1060 ;;		Unchanged: 0/0
+  1061 ;; Data sizes:     COMMON   BANK0   BANK1
+  1062 ;;      Params:         0       0       0
+  1063 ;;      Locals:         4       0       0
+  1064 ;;      Temps:          2       0       0
+  1065 ;;      Totals:         6       0       0
+  1066 ;;Total ram usage:        6 bytes
+  1067 ;; Hardware stack levels used:    1
+  1068 ;; This function calls:
+  1069 ;;		Nothing
+  1070 ;; This function is called by:
+  1071 ;;		_main
+  1072 ;; This function uses a non-reentrant model
+  1073 ;;
+  1074                           
+  1075                           
+  1076                           ;psect for function _i2c_rcv
+  1077  05B4                     _i2c_rcv:	
+  1078                           
+  1079                           ;PICsun_main.c: 31: int rcvd_bytes;
+  1080                           ;PICsun_main.c: 32: int trash;
+  1081                           ;PICsun_main.c: 34: trash = SSPBUF;
+  1082                           
+  1083                           ;incstack = 0
+  1084                           ; Regs used in _i2c_rcv: [wreg+fsr1l+fsr1h+status,2+status,0+btemp+1]
+  1085  05B4  0024               	movlb	4	; select bank4
+  1086  05B5  0811               	movf	17,w	;volatile
+  1087  05B6  00F0               	movwf	??_i2c_rcv
+  1088  05B7  01F1               	clrf	??_i2c_rcv+1
+  1089  05B8  0870               	movf	??_i2c_rcv,w
+  1090  05B9  00F2               	movwf	i2c_rcv@trash
+  1091  05BA  0871               	movf	??_i2c_rcv+1,w
+  1092  05BB  00F3               	movwf	i2c_rcv@trash+1
+  1093                           
+  1094                           ;PICsun_main.c: 72: for (rcvd_bytes = 0; rcvd_bytes <= 2; rcvd_bytes++) {
+  1095  05BC  01F4               	clrf	i2c_rcv@rcvd_bytes
+  1096  05BD  01F5               	clrf	i2c_rcv@rcvd_bytes+1
+  1097  05BE  0875               	movf	i2c_rcv@rcvd_bytes+1,w
+  1098  05BF  3A80               	xorlw	128
+  1099  05C0  00FF               	movwf	127
+  1100  05C1  3080               	movlw	128
+  1101  05C2  027F               	subwf	127,w
+  1102  05C3  1D03               	skipz
+  1103  05C4  2DC7               	goto	u475
+  1104  05C5  3003               	movlw	3
+  1105  05C6  0274               	subwf	i2c_rcv@rcvd_bytes,w
+  1106  05C7                     u475:	
+  1107  05C7  1803               	btfsc	3,0
+  1108  05C8  2DED               	goto	l1021
+  1109  05C9                     l53:	
+  1110                           
+  1111                           ;PICsun_main.c: 73: if (SSPSTATbits.BF == 1 && SSPSTATbits.D_nA == 1) {
+  1112  05C9  0024               	movlb	4	; select bank4
+  1113  05CA  1814               	btfsc	20,0	;volatile
+  1114  05CB  1E94               	btfss	20,5	;volatile
+  1115  05CC  2DDE               	goto	l1017
+  1116                           
+  1117                           ;PICsun_main.c: 74: sunrise_hms[rcvd_bytes] = SSPBUF;
+  1118  05CD  0811               	movf	17,w	;volatile
+  1119  05CE  00F0               	movwf	??_i2c_rcv
+  1120  05CF  01F1               	clrf	??_i2c_rcv+1
+  1121  05D0  3574               	lslf	i2c_rcv@rcvd_bytes,w
+  1122  05D1  3E48               	addlw	_sunrise_hms& (0+255)
+  1123  05D2  0086               	movwf	6
+  1124  05D3  0187               	clrf	7
+  1125  05D4  0870               	movf	??_i2c_rcv,w
+  1126  05D5  3FC0               	movwi [0]fsr1
+  1127  05D6  0871               	movf	??_i2c_rcv+1,w
+  1128  05D7  3FC1               	movwi [1]fsr1
+  1129                           
+  1130                           ;PICsun_main.c: 75: SSPSTATbits.BF = 0;
+  1131  05D8  1014               	bcf	20,0	;volatile
+  1132                           
+  1133                           ;PICsun_main.c: 76: SSPSTATbits.D_nA = 0;
+  1134  05D9  1294               	bcf	20,5	;volatile
+  1135                           
+  1136                           ;PICsun_main.c: 77: rcvd_bytes++;
+  1137  05DA  3001               	movlw	1
+  1138  05DB  07F4               	addwf	i2c_rcv@rcvd_bytes,f
+  1139  05DC  3000               	movlw	0
+  1140  05DD  3DF5               	addwfc	i2c_rcv@rcvd_bytes+1,f
+  1141  05DE                     l1017:	
+  1142  05DE  3001               	movlw	1
+  1143  05DF  07F4               	addwf	i2c_rcv@rcvd_bytes,f
+  1144  05E0  3000               	movlw	0
+  1145  05E1  3DF5               	addwfc	i2c_rcv@rcvd_bytes+1,f
+  1146  05E2  0875               	movf	i2c_rcv@rcvd_bytes+1,w
+  1147  05E3  3A80               	xorlw	128
+  1148  05E4  00FF               	movwf	127
+  1149  05E5  3080               	movlw	128
+  1150  05E6  027F               	subwf	127,w
+  1151  05E7  1D03               	skipz
+  1152  05E8  2DEB               	goto	u505
+  1153  05E9  3003               	movlw	3
+  1154  05EA  0274               	subwf	i2c_rcv@rcvd_bytes,w
+  1155  05EB                     u505:	
+  1156  05EB  1C03               	skipc
+  1157  05EC  2DC9               	goto	l53
+  1158  05ED                     l1021:	
+  1159                           
+  1160                           ;PICsun_main.c: 78: }
+  1161                           ;PICsun_main.c: 79: }
+  1162                           ;PICsun_main.c: 81: for (rcvd_bytes = 0; rcvd_bytes <= 2; rcvd_bytes++) {
+  1163  05ED  01F4               	clrf	i2c_rcv@rcvd_bytes
+  1164  05EE  01F5               	clrf	i2c_rcv@rcvd_bytes+1
+  1165  05EF  0875               	movf	i2c_rcv@rcvd_bytes+1,w
+  1166  05F0  3A80               	xorlw	128
+  1167  05F1  00FF               	movwf	127
+  1168  05F2  3080               	movlw	128
+  1169  05F3  027F               	subwf	127,w
+  1170  05F4  1D03               	skipz
+  1171  05F5  2DF8               	goto	u515
+  1172  05F6  3003               	movlw	3
+  1173  05F7  0274               	subwf	i2c_rcv@rcvd_bytes,w
+  1174  05F8                     u515:	
+  1175  05F8  1803               	btfsc	3,0
+  1176  05F9  2E1E               	goto	l57
+  1177  05FA                     l56:	
+  1178                           
+  1179                           ;PICsun_main.c: 82: if (SSPSTATbits.BF == 1 && SSPSTATbits.D_nA == 1) {
+  1180  05FA  0024               	movlb	4	; select bank4
+  1181  05FB  1814               	btfsc	20,0	;volatile
+  1182  05FC  1E94               	btfss	20,5	;volatile
+  1183  05FD  2E0F               	goto	l1037
+  1184                           
+  1185                           ;PICsun_main.c: 83: sunset_hms[rcvd_bytes] = SSPBUF;
+  1186  05FE  0811               	movf	17,w	;volatile
+  1187  05FF  00F0               	movwf	??_i2c_rcv
+  1188  0600  01F1               	clrf	??_i2c_rcv+1
+  1189  0601  3574               	lslf	i2c_rcv@rcvd_bytes,w
+  1190  0602  3E4E               	addlw	_sunset_hms& (0+255)
+  1191  0603  0086               	movwf	6
+  1192  0604  0187               	clrf	7
+  1193  0605  0870               	movf	??_i2c_rcv,w
+  1194  0606  3FC0               	movwi [0]fsr1
+  1195  0607  0871               	movf	??_i2c_rcv+1,w
+  1196  0608  3FC1               	movwi [1]fsr1
+  1197                           
+  1198                           ;PICsun_main.c: 84: SSPSTATbits.BF = 0;
+  1199  0609  1014               	bcf	20,0	;volatile
+  1200                           
+  1201                           ;PICsun_main.c: 85: SSPSTATbits.D_nA = 0;
+  1202  060A  1294               	bcf	20,5	;volatile
+  1203                           
+  1204                           ;PICsun_main.c: 86: rcvd_bytes++;
+  1205  060B  3001               	movlw	1
+  1206  060C  07F4               	addwf	i2c_rcv@rcvd_bytes,f
+  1207  060D  3000               	movlw	0
+  1208  060E  3DF5               	addwfc	i2c_rcv@rcvd_bytes+1,f
+  1209  060F                     l1037:	
+  1210  060F  3001               	movlw	1
+  1211  0610  07F4               	addwf	i2c_rcv@rcvd_bytes,f
+  1212  0611  3000               	movlw	0
+  1213  0612  3DF5               	addwfc	i2c_rcv@rcvd_bytes+1,f
+  1214  0613  0875               	movf	i2c_rcv@rcvd_bytes+1,w
+  1215  0614  3A80               	xorlw	128
+  1216  0615  00FF               	movwf	127
+  1217  0616  3080               	movlw	128
+  1218  0617  027F               	subwf	127,w
+  1219  0618  1D03               	skipz
+  1220  0619  2E1C               	goto	u545
+  1221  061A  3003               	movlw	3
+  1222  061B  0274               	subwf	i2c_rcv@rcvd_bytes,w
+  1223  061C                     u545:	
+  1224  061C  1C03               	skipc
+  1225  061D  2DFA               	goto	l56
+  1226  061E                     l57:	
+  1227                           
+  1228                           ;PICsun_main.c: 87: }
+  1229                           ;PICsun_main.c: 88: }
+  1230                           ;PICsun_main.c: 90: PIR1bits.SSP1IF = 0;
+  1231  061E  0020               	movlb	0	; select bank0
+  1232  061F  1191               	bcf	17,3	;volatile
+  1233  0620  0008               	return
+  1234  0621                     __end_of_i2c_rcv:	
+  1235                           
+  1236                           	psect	text5
+  1237  0737                     __ptext5:	
+  1238 ;; *************** function _calc_times *****************
+  1239 ;; Defined at:
+  1240 ;;		line 94 in file "PICsun_main.c"
+  1241 ;; Parameters:    Size  Location     Type
+  1242 ;;		None
+  1243 ;; Auto vars:     Size  Location     Type
+  1244 ;;  i               2    8[BANK0 ] int 
+  1245 ;;  sunrise_seco    2    6[BANK0 ] int 
+  1246 ;;  segment_dura    2    4[BANK0 ] unsigned int 
+  1247 ;;  light_time      2    2[BANK0 ] unsigned int 
+  1248 ;;  sunset_secon    2    0[BANK0 ] int 
+  1249 ;; Return value:  Size  Location     Type
+  1250 ;;		None               void
+  1251 ;; Registers used:
+  1252 ;;		wreg, fsr1l, fsr1h, status,2, status,0, btemp+1, pclath, cstack
+  1253 ;; Tracked objects:
+  1254 ;;		On entry : 0/0
+  1255 ;;		On exit  : 0/0
+  1256 ;;		Unchanged: 0/0
+  1257 ;; Data sizes:     COMMON   BANK0   BANK1
+  1258 ;;      Params:         0       0       0
+  1259 ;;      Locals:         0      10       0
+  1260 ;;      Temps:          6       0       0
+  1261 ;;      Totals:         6      10       0
+  1262 ;;Total ram usage:       16 bytes
+  1263 ;; Hardware stack levels used:    1
+  1264 ;; Hardware stack levels required when called:    1
+  1265 ;; This function calls:
+  1266 ;;		___lwdiv
+  1267 ;;		___wmul
+  1268 ;; This function is called by:
+  1269 ;;		_main
+  1270 ;; This function uses a non-reentrant model
+  1271 ;;
+  1272                           
+  1273                           
+  1274                           ;psect for function _calc_times
+  1275  0737                     _calc_times:	
+  1276                           
+  1277                           ;PICsun_main.c: 101: int sunrise_seconds = sunrise_hms[0] * 3600 + sunrise_hms[1] * 60 +
+      +                           sunrise_hms[2];
+  1278                           
+  1279                           ;incstack = 0
+  1280                           ; Regs used in _calc_times: [wreg+fsr1l+fsr1h+status,2+status,0+btemp+1+pclath+cstack]
+  1281  0737  3004               	movlw	4
+  1282  0738  3E48               	addlw	_sunrise_hms& (0+255)
+  1283  0739  0086               	movwf	6
+  1284  073A  0187               	clrf	7
+  1285  073B  0020               	movlb	0	; select bank0
+  1286  073C  0849               	movf	_sunrise_hms+1,w	;volatile
+  1287  073D  01F1               	clrf	___wmul@multiplier+1
+  1288  073E  07F1               	addwf	___wmul@multiplier+1,f
+  1289  073F  0848               	movf	_sunrise_hms,w	;volatile
+  1290  0740  01F0               	clrf	___wmul@multiplier
+  1291  0741  07F0               	addwf	___wmul@multiplier,f
+  1292  0742  3010               	movlw	16
+  1293  0743  00F2               	movwf	___wmul@multiplicand
+  1294  0744  300E               	movlw	14
+  1295  0745  00F3               	movwf	___wmul@multiplicand+1
+  1296  0746  24CE               	fcall	___wmul
+  1297  0747  0870               	movf	?___wmul,w
+  1298  0748  00F8               	movwf	??_calc_times
+  1299  0749  0871               	movf	?___wmul+1,w
+  1300  074A  00F9               	movwf	??_calc_times+1
+  1301  074B  0020               	movlb	0	; select bank0
+  1302  074C  084B               	movf	_sunrise_hms+3,w	;volatile
+  1303  074D  01F1               	clrf	___wmul@multiplier+1
+  1304  074E  07F1               	addwf	___wmul@multiplier+1,f
+  1305  074F  084A               	movf	_sunrise_hms+2,w	;volatile
+  1306  0750  01F0               	clrf	___wmul@multiplier
+  1307  0751  07F0               	addwf	___wmul@multiplier,f
+  1308  0752  303C               	movlw	60
+  1309  0753  00F2               	movwf	___wmul@multiplicand
+  1310  0754  3000               	movlw	0
+  1311  0755  00F3               	movwf	___wmul@multiplicand+1
+  1312  0756  24CE               	fcall	___wmul
+  1313  0757  0870               	movf	?___wmul,w
+  1314  0758  0778               	addwf	??_calc_times,w
+  1315  0759  00FA               	movwf	??_calc_times+2
+  1316  075A  0871               	movf	?___wmul+1,w
+  1317  075B  3D79               	addwfc	??_calc_times+1,w
+  1318  075C  00FB               	movwf	??_calc_times+3
+  1319  075D  3F40               	moviw [0]fsr1
+  1320  075E  077A               	addwf	??_calc_times+2,w
+  1321  075F  00FC               	movwf	??_calc_times+4
+  1322  0760  3F41               	moviw [1]fsr1
+  1323  0761  3D7B               	addwfc	??_calc_times+3,w
+  1324  0762  00FD               	movwf	??_calc_times+5
+  1325  0763  087C               	movf	??_calc_times+4,w
+  1326  0764  0020               	movlb	0	; select bank0
+  1327  0765  00DE               	movwf	calc_times@sunrise_seconds
+  1328  0766  087D               	movf	??_calc_times+5,w
+  1329  0767  00DF               	movwf	calc_times@sunrise_seconds+1
+  1330                           
+  1331                           ;PICsun_main.c: 102: int sunset_seconds = sunset_hms[0] * 3600 + sunset_hms[1] * 60 + su
+      +                          nset_hms[2];
+  1332  0768  3004               	movlw	4
+  1333  0769  3E4E               	addlw	_sunset_hms& (0+255)
+  1334  076A  0086               	movwf	6
+  1335  076B  0187               	clrf	7
+  1336  076C  084F               	movf	_sunset_hms+1,w	;volatile
+  1337  076D  01F1               	clrf	___wmul@multiplier+1
+  1338  076E  07F1               	addwf	___wmul@multiplier+1,f
+  1339  076F  084E               	movf	_sunset_hms,w	;volatile
+  1340  0770  01F0               	clrf	___wmul@multiplier
+  1341  0771  07F0               	addwf	___wmul@multiplier,f
+  1342  0772  3010               	movlw	16
+  1343  0773  00F2               	movwf	___wmul@multiplicand
+  1344  0774  300E               	movlw	14
+  1345  0775  00F3               	movwf	___wmul@multiplicand+1
+  1346  0776  24CE               	fcall	___wmul
+  1347  0777  0870               	movf	?___wmul,w
+  1348  0778  00F8               	movwf	??_calc_times
+  1349  0779  0871               	movf	?___wmul+1,w
+  1350  077A  00F9               	movwf	??_calc_times+1
+  1351  077B  0020               	movlb	0	; select bank0
+  1352  077C  0851               	movf	_sunset_hms+3,w	;volatile
+  1353  077D  01F1               	clrf	___wmul@multiplier+1
+  1354  077E  07F1               	addwf	___wmul@multiplier+1,f
+  1355  077F  0850               	movf	_sunset_hms+2,w	;volatile
+  1356  0780  01F0               	clrf	___wmul@multiplier
+  1357  0781  07F0               	addwf	___wmul@multiplier,f
+  1358  0782  303C               	movlw	60
+  1359  0783  00F2               	movwf	___wmul@multiplicand
+  1360  0784  3000               	movlw	0
+  1361  0785  00F3               	movwf	___wmul@multiplicand+1
+  1362  0786  24CE               	fcall	___wmul
+  1363  0787  0870               	movf	?___wmul,w
+  1364  0788  0778               	addwf	??_calc_times,w
+  1365  0789  00FA               	movwf	??_calc_times+2
+  1366  078A  0871               	movf	?___wmul+1,w
+  1367  078B  3D79               	addwfc	??_calc_times+1,w
+  1368  078C  00FB               	movwf	??_calc_times+3
+  1369  078D  3F40               	moviw [0]fsr1
+  1370  078E  077A               	addwf	??_calc_times+2,w
+  1371  078F  00FC               	movwf	??_calc_times+4
+  1372  0790  3F41               	moviw [1]fsr1
+  1373  0791  3D7B               	addwfc	??_calc_times+3,w
+  1374  0792  00FD               	movwf	??_calc_times+5
+  1375  0793  087C               	movf	??_calc_times+4,w
+  1376  0794  0020               	movlb	0	; select bank0
+  1377  0795  00D8               	movwf	calc_times@sunset_seconds
+  1378  0796  087D               	movf	??_calc_times+5,w
+  1379  0797  00D9               	movwf	calc_times@sunset_seconds+1
+  1380                           
+  1381                           ;PICsun_main.c: 103: unsigned int light_time = sunset_seconds - sunrise_seconds;
+  1382  0798  095E               	comf	calc_times@sunrise_seconds,w
+  1383  0799  00F8               	movwf	??_calc_times
+  1384  079A  095F               	comf	calc_times@sunrise_seconds+1,w
+  1385  079B  00F9               	movwf	??_calc_times+1
+  1386  079C  0AF8               	incf	??_calc_times,f
+  1387  079D  1903               	skipnz
+  1388  079E  0AF9               	incf	??_calc_times+1,f
+  1389  079F  0858               	movf	calc_times@sunset_seconds,w
+  1390  07A0  0778               	addwf	??_calc_times,w
+  1391  07A1  00DA               	movwf	calc_times@light_time
+  1392  07A2  0859               	movf	calc_times@sunset_seconds+1,w
+  1393  07A3  3D79               	addwfc	??_calc_times+1,w
+  1394  07A4  00DB               	movwf	calc_times@light_time+1
+  1395                           
+  1396                           ;PICsun_main.c: 104: unsigned int segment_duration = light_time/19;
+  1397  07A5  3013               	movlw	19
+  1398  07A6  00F0               	movwf	___lwdiv@divisor
+  1399  07A7  3000               	movlw	0
+  1400  07A8  00F1               	movwf	___lwdiv@divisor+1
+  1401  07A9  085B               	movf	calc_times@light_time+1,w
+  1402  07AA  01F3               	clrf	___lwdiv@dividend+1
+  1403  07AB  07F3               	addwf	___lwdiv@dividend+1,f
+  1404  07AC  085A               	movf	calc_times@light_time,w
+  1405  07AD  01F2               	clrf	___lwdiv@dividend
+  1406  07AE  07F2               	addwf	___lwdiv@dividend,f
+  1407  07AF  2546               	fcall	___lwdiv
+  1408  07B0  0871               	movf	?___lwdiv+1,w
+  1409  07B1  0020               	movlb	0	; select bank0
+  1410  07B2  01DD               	clrf	calc_times@segment_duration+1
+  1411  07B3  07DD               	addwf	calc_times@segment_duration+1,f
+  1412  07B4  0870               	movf	?___lwdiv,w
+  1413  07B5  01DC               	clrf	calc_times@segment_duration
+  1414  07B6  07DC               	addwf	calc_times@segment_duration,f
+  1415                           
+  1416                           ;PICsun_main.c: 105: int i = 0;
+  1417  07B7  01E0               	clrf	calc_times@i
+  1418  07B8  01E1               	clrf	calc_times@i+1
+  1419                           
+  1420                           ;PICsun_main.c: 107: for (i = 0; i <= 19; i++) {
+  1421  07B9  01E0               	clrf	calc_times@i
+  1422  07BA  01E1               	clrf	calc_times@i+1
+  1423  07BB  0861               	movf	calc_times@i+1,w
+  1424  07BC  3A80               	xorlw	128
+  1425  07BD  00FF               	movwf	127
+  1426  07BE  3080               	movlw	128
+  1427  07BF  027F               	subwf	127,w
+  1428  07C0  1D03               	skipz
+  1429  07C1  2FC4               	goto	u875
+  1430  07C2  3014               	movlw	20
+  1431  07C3  0260               	subwf	calc_times@i,w
+  1432  07C4                     u875:	
+  1433  07C4  1803               	btfsc	3,0
+  1434  07C5  2FF2               	goto	l1203
+  1435  07C6                     l1197:	
+  1436                           
+  1437                           ;PICsun_main.c: 108: light_segments[i] = sunrise_seconds + i*segment_duration;
+  1438  07C6  0020               	movlb	0	; select bank0
+  1439  07C7  0861               	movf	calc_times@i+1,w
+  1440  07C8  01F1               	clrf	___wmul@multiplier+1
+  1441  07C9  07F1               	addwf	___wmul@multiplier+1,f
+  1442  07CA  0860               	movf	calc_times@i,w
+  1443  07CB  01F0               	clrf	___wmul@multiplier
+  1444  07CC  07F0               	addwf	___wmul@multiplier,f
+  1445  07CD  085D               	movf	calc_times@segment_duration+1,w
+  1446  07CE  01F3               	clrf	___wmul@multiplicand+1
+  1447  07CF  07F3               	addwf	___wmul@multiplicand+1,f
+  1448  07D0  085C               	movf	calc_times@segment_duration,w
+  1449  07D1  01F2               	clrf	___wmul@multiplicand
+  1450  07D2  07F2               	addwf	___wmul@multiplicand,f
+  1451  07D3  24CE               	fcall	___wmul
+  1452  07D4  0020               	movlb	0	; select bank0
+  1453  07D5  085E               	movf	calc_times@sunrise_seconds,w
+  1454  07D6  0770               	addwf	?___wmul,w
+  1455  07D7  00F8               	movwf	??_calc_times
+  1456  07D8  085F               	movf	calc_times@sunrise_seconds+1,w
+  1457  07D9  3D71               	addwfc	?___wmul+1,w
+  1458  07DA  00F9               	movwf	??_calc_times+1
+  1459  07DB  3560               	lslf	calc_times@i,w
+  1460  07DC  3E20               	addlw	_light_segments& (0+255)
+  1461  07DD  0086               	movwf	6
+  1462  07DE  0187               	clrf	7
+  1463  07DF  0878               	movf	??_calc_times,w
+  1464  07E0  3FC0               	movwi [0]fsr1
+  1465  07E1  0879               	movf	??_calc_times+1,w
+  1466  07E2  3FC1               	movwi [1]fsr1
+  1467  07E3  3001               	movlw	1
+  1468  07E4  07E0               	addwf	calc_times@i,f
+  1469  07E5  3000               	movlw	0
+  1470  07E6  3DE1               	addwfc	calc_times@i+1,f
+  1471  07E7  0861               	movf	calc_times@i+1,w
+  1472  07E8  3A80               	xorlw	128
+  1473  07E9  00FF               	movwf	127
+  1474  07EA  3080               	movlw	128
+  1475  07EB  027F               	subwf	127,w
+  1476  07EC  1D03               	skipz
+  1477  07ED  2FF0               	goto	u885
+  1478  07EE  3014               	movlw	20
+  1479  07EF  0260               	subwf	calc_times@i,w
+  1480  07F0                     u885:	
+  1481  07F0  1C03               	skipc
+  1482  07F1  2FC6               	goto	l1197
+  1483  07F2                     l1203:	
+  1484                           
+  1485                           ;PICsun_main.c: 109: }
+  1486                           ;PICsun_main.c: 111: real_time = 0;
+  1487  07F2  0020               	movlb	0	; select bank0
+  1488  07F3  01D6               	clrf	_real_time	;volatile
+  1489  07F4  01D7               	clrf	_real_time+1	;volatile
+  1490                           
+  1491                           ;PICsun_main.c: 112: present_segment = 0;
+  1492  07F5  01D4               	clrf	_present_segment	;volatile
+  1493  07F6  01D5               	clrf	_present_segment+1	;volatile
+  1494  07F7  0008               	return
+  1495  07F8                     __end_of_calc_times:	
+  1496                           
+  1497                           	psect	text6
+  1498  04CE                     __ptext6:	
+  1499 ;; *************** function ___wmul *****************
+  1500 ;; Defined at:
+  1501 ;;		line 4 in file "/opt/microchip/xc8/v1.30/sources/common/wmul.c"
+  1502 ;; Parameters:    Size  Location     Type
+  1503 ;;  multiplier      2    0[COMMON] unsigned int 
+  1504 ;;  multiplicand    2    2[COMMON] unsigned int 
+  1505 ;; Auto vars:     Size  Location     Type
+  1506 ;;  product         2    4[COMMON] unsigned int 
+  1507 ;; Return value:  Size  Location     Type
+  1508 ;;                  2    0[COMMON] unsigned int 
+  1509 ;; Registers used:
+  1510 ;;		wreg, status,2, status,0
+  1511 ;; Tracked objects:
+  1512 ;;		On entry : 0/0
+  1513 ;;		On exit  : 0/0
+  1514 ;;		Unchanged: 0/0
+  1515 ;; Data sizes:     COMMON   BANK0   BANK1
+  1516 ;;      Params:         4       0       0
+  1517 ;;      Locals:         2       0       0
+  1518 ;;      Temps:          0       0       0
+  1519 ;;      Totals:         6       0       0
+  1520 ;;Total ram usage:        6 bytes
+  1521 ;; Hardware stack levels used:    1
+  1522 ;; This function calls:
+  1523 ;;		Nothing
+  1524 ;; This function is called by:
+  1525 ;;		_calc_times
+  1526 ;;		_simulate
+  1527 ;; This function uses a non-reentrant model
+  1528 ;;
+  1529                           
+  1530                           
+  1531                           ;psect for function ___wmul
+  1532  04CE                     ___wmul:	
+  1533                           
+  1534                           ;incstack = 0
+  1535                           ; Regs used in ___wmul: [wreg+status,2+status,0]
+  1536  04CE  01F4               	clrf	___wmul@product
+  1537  04CF  01F5               	clrf	___wmul@product+1
+  1538  04D0                     l1173:	
+  1539  04D0  1C70               	btfss	___wmul@multiplier,0
+  1540  04D1  2CD6               	goto	l549
+  1541  04D2  0872               	movf	___wmul@multiplicand,w
+  1542  04D3  07F4               	addwf	___wmul@product,f
+  1543  04D4  0873               	movf	___wmul@multiplicand+1,w
+  1544  04D5  3DF5               	addwfc	___wmul@product+1,f
+  1545  04D6                     l549:	
+  1546  04D6  3001               	movlw	1
+  1547  04D7                     u845:	
+  1548  04D7  35F2               	lslf	___wmul@multiplicand,f
+  1549  04D8  0DF3               	rlf	___wmul@multiplicand+1,f
+  1550  04D9  0B89               	decfsz	9,f
+  1551  04DA  2CD7               	goto	u845
+  1552  04DB  3001               	movlw	1
+  1553  04DC                     u855:	
+  1554  04DC  36F1               	lsrf	___wmul@multiplier+1,f
+  1555  04DD  0CF0               	rrf	___wmul@multiplier,f
+  1556  04DE  0B89               	decfsz	9,f
+  1557  04DF  2CDC               	goto	u855
+  1558  04E0  0871               	movf	___wmul@multiplier+1,w
+  1559  04E1  0470               	iorwf	___wmul@multiplier,w
+  1560  04E2  1D03               	skipz
+  1561  04E3  2CD0               	goto	l1173
+  1562  04E4  0875               	movf	___wmul@product+1,w
+  1563  04E5  01F1               	clrf	?___wmul+1
+  1564  04E6  07F1               	addwf	?___wmul+1,f
+  1565  04E7  0874               	movf	___wmul@product,w
+  1566  04E8  01F0               	clrf	?___wmul
+  1567  04E9  07F0               	addwf	?___wmul,f
+  1568  04EA  0008               	return
+  1569  04EB                     __end_of___wmul:	
+  1570                           
+  1571                           	psect	text7
+  1572  0546                     __ptext7:	
+  1573 ;; *************** function ___lwdiv *****************
+  1574 ;; Defined at:
+  1575 ;;		line 6 in file "/opt/microchip/xc8/v1.30/sources/common/lwdiv.c"
+  1576 ;; Parameters:    Size  Location     Type
+  1577 ;;  divisor         2    0[COMMON] unsigned int 
+  1578 ;;  dividend        2    2[COMMON] unsigned int 
+  1579 ;; Auto vars:     Size  Location     Type
+  1580 ;;  quotient        2    5[COMMON] unsigned int 
+  1581 ;;  counter         1    7[COMMON] unsigned char 
+  1582 ;; Return value:  Size  Location     Type
+  1583 ;;                  2    0[COMMON] unsigned int 
+  1584 ;; Registers used:
+  1585 ;;		wreg, status,2, status,0
+  1586 ;; Tracked objects:
+  1587 ;;		On entry : 0/0
+  1588 ;;		On exit  : 0/0
+  1589 ;;		Unchanged: 0/0
+  1590 ;; Data sizes:     COMMON   BANK0   BANK1
+  1591 ;;      Params:         4       0       0
+  1592 ;;      Locals:         3       0       0
+  1593 ;;      Temps:          1       0       0
+  1594 ;;      Totals:         8       0       0
+  1595 ;;Total ram usage:        8 bytes
+  1596 ;; Hardware stack levels used:    1
+  1597 ;; This function calls:
+  1598 ;;		Nothing
+  1599 ;; This function is called by:
+  1600 ;;		_calc_times
+  1601 ;; This function uses a non-reentrant model
+  1602 ;;
+  1603                           
+  1604                           
+  1605                           ;psect for function ___lwdiv
+  1606  0546                     ___lwdiv:	
+  1607                           
+  1608                           ;incstack = 0
+  1609                           ; Regs used in ___lwdiv: [wreg+status,2+status,0]
+  1610  0546  01F5               	clrf	___lwdiv@quotient
+  1611  0547  01F6               	clrf	___lwdiv@quotient+1
+  1612  0548  0871               	movf	___lwdiv@divisor+1,w
+  1613  0549  0470               	iorwf	___lwdiv@divisor,w
+  1614  054A  1903               	skipnz
+  1615  054B  2D75               	goto	l1167
+  1616  054C  01F7               	clrf	___lwdiv@counter
+  1617  054D  0AF7               	incf	___lwdiv@counter,f
+  1618  054E                     l1155:	
+  1619  054E  1BF1               	btfsc	___lwdiv@divisor+1,7
+  1620  054F  2D5A               	goto	l1157
+  1621  0550  3001               	movlw	1
+  1622  0551                     u775:	
+  1623  0551  35F0               	lslf	___lwdiv@divisor,f
+  1624  0552  0DF1               	rlf	___lwdiv@divisor+1,f
+  1625  0553  0B89               	decfsz	9,f
+  1626  0554  2D51               	goto	u775
+  1627  0555  3001               	movlw	1
+  1628  0556  00F4               	movwf	??___lwdiv
+  1629  0557  0874               	movf	??___lwdiv,w
+  1630  0558  07F7               	addwf	___lwdiv@counter,f
+  1631  0559  2D4E               	goto	l1155
+  1632  055A                     l1157:	
+  1633  055A  3001               	movlw	1
+  1634  055B                     u795:	
+  1635  055B  35F5               	lslf	___lwdiv@quotient,f
+  1636  055C  0DF6               	rlf	___lwdiv@quotient+1,f
+  1637  055D  0B89               	decfsz	9,f
+  1638  055E  2D5B               	goto	u795
+  1639  055F  0871               	movf	___lwdiv@divisor+1,w
+  1640  0560  0273               	subwf	___lwdiv@dividend+1,w
+  1641  0561  1D03               	skipz
+  1642  0562  2D65               	goto	u805
+  1643  0563  0870               	movf	___lwdiv@divisor,w
+  1644  0564  0272               	subwf	___lwdiv@dividend,w
+  1645  0565                     u805:	
+  1646  0565  1C03               	skipc
+  1647  0566  2D6C               	goto	l1163
+  1648  0567  0870               	movf	___lwdiv@divisor,w
+  1649  0568  02F2               	subwf	___lwdiv@dividend,f
+  1650  0569  0871               	movf	___lwdiv@divisor+1,w
+  1651  056A  3BF3               	subwfb	___lwdiv@dividend+1,f
+  1652  056B  1475               	bsf	___lwdiv@quotient,0
+  1653  056C                     l1163:	
+  1654  056C  3001               	movlw	1
+  1655  056D                     u815:	
+  1656  056D  36F1               	lsrf	___lwdiv@divisor+1,f
+  1657  056E  0CF0               	rrf	___lwdiv@divisor,f
+  1658  056F  0B89               	decfsz	9,f
+  1659  0570  2D6D               	goto	u815
+  1660  0571  3001               	movlw	1
+  1661  0572  02F7               	subwf	___lwdiv@counter,f
+  1662  0573  1D03               	btfss	3,2
+  1663  0574  2D5A               	goto	l1157
+  1664  0575                     l1167:	
+  1665  0575  0876               	movf	___lwdiv@quotient+1,w
+  1666  0576  01F1               	clrf	?___lwdiv+1
+  1667  0577  07F1               	addwf	?___lwdiv+1,f
+  1668  0578  0875               	movf	___lwdiv@quotient,w
+  1669  0579  01F0               	clrf	?___lwdiv
+  1670  057A  07F0               	addwf	?___lwdiv,f
+  1671  057B  0008               	return
+  1672  057C                     __end_of___lwdiv:	
+  1673                           
+  1674                           	psect	text8
+  1675  057C                     __ptext8:	
+  1676 ;; *************** function ___init *****************
+  1677 ;; Defined at:
+  1678 ;;		line 201 in file "PICsun_main.c"
+  1679 ;; Parameters:    Size  Location     Type
+  1680 ;;		None
+  1681 ;; Auto vars:     Size  Location     Type
+  1682 ;;		None
+  1683 ;; Return value:  Size  Location     Type
+  1684 ;;		None               void
+  1685 ;; Registers used:
+  1686 ;;		wreg, status,2, status,0
+  1687 ;; Tracked objects:
+  1688 ;;		On entry : 0/0
+  1689 ;;		On exit  : 0/0
+  1690 ;;		Unchanged: 0/0
+  1691 ;; Data sizes:     COMMON   BANK0   BANK1
+  1692 ;;      Params:         0       0       0
+  1693 ;;      Locals:         0       0       0
+  1694 ;;      Temps:          2       0       0
+  1695 ;;      Totals:         2       0       0
+  1696 ;;Total ram usage:        2 bytes
+  1697 ;; Hardware stack levels used:    1
+  1698 ;; This function calls:
+  1699 ;;		Nothing
+  1700 ;; This function is called by:
+  1701 ;;		_main
+  1702 ;; This function uses a non-reentrant model
+  1703 ;;
+  1704                           
+  1705                           
+  1706                           ;psect for function ___init
+  1707  057C                     ___init:	
+  1708                           
+  1709                           ;PICsun_main.c: 204: OSCCONbits.SPLLEN=0;
+  1710                           
+  1711                           ;incstack = 0
+  1712                           ; Regs used in ___init: [wreg+status,2+status,0]
+  1713  057C  0021               	movlb	1	; select bank1
+  1714  057D  1399               	bcf	25,7	;volatile
+  1715                           
+  1716                           ;PICsun_main.c: 205: OSCCONbits.IRCF=0x0F;
+  1717  057E  3078               	movlw	120
+  1718  057F  0499               	iorwf	25,f	;volatile
+  1719                           
+  1720                           ;PICsun_main.c: 206: OSCCONbits.SCS=0x02;
+  1721  0580  0819               	movf	25,w	;volatile
+  1722  0581  39FC               	andlw	-4
+  1723  0582  3802               	iorlw	2
+  1724  0583  0099               	movwf	25	;volatile
+  1725                           
+  1726                           ;PICsun_main.c: 210: TRISAbits.TRISA0 = 0;
+  1727  0584  100C               	bcf	12,0	;volatile
+  1728                           
+  1729                           ;PICsun_main.c: 211: TRISAbits.TRISA1 = 1;
+  1730  0585  148C               	bsf	12,1	;volatile
+  1731                           
+  1732                           ;PICsun_main.c: 212: TRISAbits.TRISA2 = 1;
+  1733  0586  150C               	bsf	12,2	;volatile
+  1734                           
+  1735                           ;PICsun_main.c: 213: TRISAbits.TRISA3 = 0;
+  1736  0587  118C               	bcf	12,3	;volatile
+  1737                           
+  1738                           ;PICsun_main.c: 214: TRISAbits.TRISA4 = 0;
+  1739  0588  120C               	bcf	12,4	;volatile
+  1740                           
+  1741                           ;PICsun_main.c: 215: TRISAbits.TRISA5 = 1;
+  1742  0589  168C               	bsf	12,5	;volatile
+  1743                           
+  1744                           ;PICsun_main.c: 218: ANSELA=0x00;
+  1745  058A  0023               	movlb	3	; select bank3
+  1746  058B  018C               	clrf	12	;volatile
+  1747                           
+  1748                           ;PICsun_main.c: 221: APFCONbits.CCP1SEL = 1;
+  1749  058C  0022               	movlb	2	; select bank2
+  1750  058D  141D               	bsf	29,0	;volatile
+  1751                           
+  1752                           ;PICsun_main.c: 224: OPTION_REG = 0b00000000;
+  1753  058E  0021               	movlb	1	; select bank1
+  1754  058F  0195               	clrf	21	;volatile
+  1755                           
+  1756                           ;PICsun_main.c: 227: WPUA = 0b00000000;
+  1757  0590  0024               	movlb	4	; select bank4
+  1758  0591  018C               	clrf	12	;volatile
+  1759                           
+  1760                           ;PICsun_main.c: 230: LATA = 0b00000000;
+  1761  0592  0022               	movlb	2	; select bank2
+  1762  0593  018C               	clrf	12	;volatile
+  1763                           
+  1764                           ;PICsun_main.c: 232: SSP1CON1 = 0b00110110;
+  1765  0594  3036               	movlw	54
+  1766  0595  0024               	movlb	4	; select bank4
+  1767  0596  0095               	movwf	21	;volatile
+  1768                           
+  1769                           ;PICsun_main.c: 233: SSP1CON2bits.SEN = 1;
+  1770  0597  1416               	bsf	22,0	;volatile
+  1771                           
+  1772                           ;PICsun_main.c: 234: SSP1ADD = 0x20 << 1;
+  1773  0598  3040               	movlw	64
+  1774  0599  0092               	movwf	18	;volatile
+  1775                           
+  1776                           ;PICsun_main.c: 237: PR2 = 0xFF;
+  1777  059A  30FF               	movlw	255
+  1778  059B  0020               	movlb	0	; select bank0
+  1779  059C  009B               	movwf	27	;volatile
+  1780                           
+  1781                           ;PICsun_main.c: 238: CCP1CONbits.CCP1M = 0b1100;
+  1782  059D  0025               	movlb	5	; select bank5
+  1783  059E  0813               	movf	19,w	;volatile
+  1784  059F  39F0               	andlw	-16
+  1785  05A0  380C               	iorlw	12
+  1786  05A1  0093               	movwf	19	;volatile
+  1787                           
+  1788                           ;PICsun_main.c: 239: T2CONbits.T2CKPS = 0b11;
+  1789  05A2  3003               	movlw	3
+  1790  05A3  0020               	movlb	0	; select bank0
+  1791  05A4  049C               	iorwf	28,f	;volatile
+  1792                           
+  1793                           ;PICsun_main.c: 241: PIR1bits.SSP1IF = 0;
+  1794  05A5  1191               	bcf	17,3	;volatile
+  1795                           
+  1796                           ;PICsun_main.c: 242: PIE1bits.SSP1IE = 1;
+  1797  05A6  0021               	movlb	1	; select bank1
+  1798  05A7  1591               	bsf	17,3	;volatile
+  1799                           
+  1800                           ;PICsun_main.c: 244: INTCONbits.GIE = 1;
+  1801  05A8  178B               	bsf	11,7	;volatile
+  1802                           
+  1803                           ;PICsun_main.c: 245: INTCONbits.PEIE = 1;
+  1804  05A9  170B               	bsf	11,6	;volatile
+  1805                           
+  1806                           ;PICsun_main.c: 247: _delay((unsigned long)((100)*(16000000/16000.0)));
+  1807  05AA  3082               	movlw	130
+  1808  05AB  00F1               	movwf	??___init+1
+  1809  05AC  30DD               	movlw	221
+  1810  05AD  00F0               	movwf	??___init
+  1811  05AE                     u947:	
+  1812  05AE  0BF0               	decfsz	??___init,f
+  1813  05AF  2DAE               	goto	u947
+  1814  05B0  0BF1               	decfsz	??___init+1,f
+  1815  05B1  2DAE               	goto	u947
+  1816  05B2  2DB3               	nop2
+  1817  05B3  0008               	return
+  1818  05B4                     __end_of___init:	
+  1819  007E                     btemp	set	126	;btemp
+  1820  007E                     wtemp	set	126
+  1821  007E                     wtemp0	set	126
+  1822  0080                     wtemp1	set	128
+  1823  0082                     wtemp2	set	130
+  1824  0084                     wtemp3	set	132
+  1825  0086                     wtemp4	set	134
+  1826  0088                     wtemp5	set	136
+  1827  007F                     wtemp6	set	127
+  1828  007E                     ttemp	set	126
+  1829  007E                     ttemp0	set	126
+  1830  0081                     ttemp1	set	129
+  1831  0084                     ttemp2	set	132
+  1832  0087                     ttemp3	set	135
+  1833  007F                     ttemp4	set	127
+  1834  007E                     ltemp	set	126
+  1835  007E                     ltemp0	set	126
+  1836  0082                     ltemp1	set	130
+  1837  0086                     ltemp2	set	134
+  1838  0080                     ltemp3	set	128
+
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         56
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14     14      14
+    BANK0            80     10      66
+    BANK1            32      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    _main->_calc_times
+    _simulate->___wmul
+    _simulate->_check_segment
+    _calc_times->___lwdiv
+
+Critical Paths under _main in BANK0
+
+    _main->_calc_times
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 0     0      0    2795
+                             ___init
+                         _calc_times
+                            _i2c_rcv
+                           _simulate
+ ---------------------------------------------------------------------------------
+ (1) _simulate                                             4     4      0    1455
+                                              6 COMMON     4     4      0
+                             ___wmul
+                      _check_segment
+                          _ready_pwm
+ ---------------------------------------------------------------------------------
+ (2) _ready_pwm                                            2     0      2     295
+                                              0 COMMON     2     0      2
+ ---------------------------------------------------------------------------------
+ (2) _check_segment                                        6     4      2     409
+                                              0 COMMON     6     4      2
+ ---------------------------------------------------------------------------------
+ (1) _i2c_rcv                                              6     6      0     139
+                                              0 COMMON     6     6      0
+ ---------------------------------------------------------------------------------
+ (1) _calc_times                                          16    16      0    1201
+                                              8 COMMON     6     6      0
+                                              0 BANK0     10    10      0
+                            ___lwdiv
+                             ___wmul
+ ---------------------------------------------------------------------------------
+ (2) ___wmul                                               6     2      4     728
+                                              0 COMMON     6     2      4
+ ---------------------------------------------------------------------------------
+ (2) ___lwdiv                                              8     4      4     268
+                                              0 COMMON     8     4      4
+ ---------------------------------------------------------------------------------
+ (1) ___init                                               2     2      0       0
+                                              0 COMMON     2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   ___init
+   _calc_times
+     ___lwdiv
+     ___wmul
+   _i2c_rcv
+   _simulate
+     ___wmul
+     _check_segment
+     _ready_pwm
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM              70      0       0       0        0.0%
+EEDATA             100      0       0       0        0.0%
+NULL                 0      0       0       0        0.0%
+CODE                 0      0       0       0        0.0%
+BITCOMMON            E      0       0       1        0.0%
+BITSFR0              0      0       0       1        0.0%
+SFR0                 0      0       0       1        0.0%
+COMMON               E      E       E       2      100.0%
+BITSFR1              0      0       0       2        0.0%
+SFR1                 0      0       0       2        0.0%
+BITSFR2              0      0       0       3        0.0%
+SFR2                 0      0       0       3        0.0%
+STACK                0      0       0       3        0.0%
+BITSFR3              0      0       0       4        0.0%
+SFR3                 0      0       0       4        0.0%
+ABS                  0      0      50       4        0.0%
+BITBANK0            50      0       0       5        0.0%
+BITSFR4              0      0       0       5        0.0%
+SFR4                 0      0       0       5        0.0%
+BANK0               50      A      42       6       82.5%
+BITSFR5              0      0       0       6        0.0%
+SFR5                 0      0       0       6        0.0%
+BITBANK1            20      0       0       7        0.0%
+BITSFR6              0      0       0       7        0.0%
+SFR6                 0      0       0       7        0.0%
+BANK1               20      0       0       8        0.0%
+BITSFR7              0      0       0       8        0.0%
+SFR7                 0      0       0       8        0.0%
+BITSFR8              0      0       0       9        0.0%
+SFR8                 0      0       0       9        0.0%
+DATA                 0      0      50       9        0.0%
+BITSFR9              0      0       0      10        0.0%
+SFR9                 0      0       0      10        0.0%
+BITSFR10             0      0       0      11        0.0%
+SFR10                0      0       0      11        0.0%
+BITSFR11             0      0       0      12        0.0%
+SFR11                0      0       0      12        0.0%
+BITSFR12             0      0       0      13        0.0%
+SFR12                0      0       0      13        0.0%
+BITSFR13             0      0       0      14        0.0%
+SFR13                0      0       0      14        0.0%
+BITSFR14             0      0       0      15        0.0%
+SFR14                0      0       0      15        0.0%
+BITSFR15             0      0       0      16        0.0%
+SFR15                0      0       0      16        0.0%
+BITSFR16             0      0       0      17        0.0%
+SFR16                0      0       0      17        0.0%
+BITSFR17             0      0       0      18        0.0%
+SFR17                0      0       0      18        0.0%
+BITSFR18             0      0       0      19        0.0%
+SFR18                0      0       0      19        0.0%
+BITSFR19             0      0       0      20        0.0%
+SFR19                0      0       0      20        0.0%
+BITSFR20             0      0       0      21        0.0%
+SFR20                0      0       0      21        0.0%
+BITSFR21             0      0       0      22        0.0%
+SFR21                0      0       0      22        0.0%
+BITSFR22             0      0       0      23        0.0%
+SFR22                0      0       0      23        0.0%
+BITSFR23             0      0       0      24        0.0%
+SFR23                0      0       0      24        0.0%
+BITSFR24             0      0       0      25        0.0%
+SFR24                0      0       0      25        0.0%
+BITSFR25             0      0       0      26        0.0%
+SFR25                0      0       0      26        0.0%
+BITSFR26             0      0       0      27        0.0%
+SFR26                0      0       0      27        0.0%
+BITSFR27             0      0       0      28        0.0%
+SFR27                0      0       0      28        0.0%
+BITSFR28             0      0       0      29        0.0%
+SFR28                0      0       0      29        0.0%
+BITSFR29             0      0       0      30        0.0%
+SFR29                0      0       0      30        0.0%
+BITSFR30             0      0       0      31        0.0%
+SFR30                0      0       0      31        0.0%
+BITSFR31             0      0       0      32        0.0%
+SFR31                0      0       0      32        0.0%
+
+
+Microchip Technology PIC Macro Assembler V1.30 build 55553 
+Symbol Table                                                                                   Tue Mar 25 00:35:23 2014
+
+               __CFG_CP$OFF 0000                 _SSPSTATbits 0214                          l53 05C9  
+                        l56 05FA                          l57 061E         ___wmul@multiplicand 0072  
+                       l549 04D6                         _PR2 001B                         u505 05EB  
+              __CFG_CPD$OFF 0000                         u515 05F8                         u545 061C  
+                       u705 06DA                         u475 05C7                         u715 06F1  
+                       u805 0565                         u725 0700                         u815 056D  
+                       u735 0710                         u745 0721                         u665 06A1  
+                       u675 06A9                         u845 04D7                         u685 06B9  
+                       u775 0551                         u855 04DC                         u695 06C9  
+                       u937 053F                         u947 05AE                         u795 055B  
+                       u875 07C4                         u885 07F0                __CFG_BORV$LO 0000  
+                       wreg 0009                __CFG_LVP$OFF 0000                        l1021 05ED  
+                      l1101 0690                        l1111 06AB                        l1017 05DE  
+                      l1113 06AE                        l1203 07F2                        l1037 060F  
+                      l1141 0732                        l1125 06E4                        l1053 0636  
+                      l1119 06BB                        l1071 0657                        l1047 062B  
+                      l1129 06F3                        l1065 064C                        l1163 056C  
+                      l1155 054E                        l1083 066D                        l1059 0641  
+                      l1157 055A                        l1173 04D0                        l1077 0662  
+                      l1167 0575                        l1095 0683                        l1089 0678  
+                      l1197 07C6                        l1293 0507                        l1285 0504  
+                      l1287 04FE                        _LATA 010C                        _WPUA 020C  
+              __CFG_WRT$OFF 0000       __end_of_check_segment 0737                        _main 04EB  
+                      fsr0h 0005                        fsr1h 0007                        fsr0l 0004  
+                      indf0 0000                        fsr1l 0006                        btemp 007E  
+                      ltemp 007E                        start 0001                        ttemp 007E  
+                      wtemp 007E               __CFG_IESO$OFF 0000             __end_of_i2c_rcv 0621  
+               _sunrise_hms 0048                       ?_main 0070               __CFG_WDTE$OFF 0000  
+           __end_of___lwdiv 057C           i2c_rcv@rcvd_bytes 0074              __CFG_FCMEN$OFF 0000  
+            __CFG_BOREN$OFF 0000                       ltemp0 007E                       ltemp1 0082  
+                     ltemp2 0086                       ltemp3 0080                       ttemp0 007E  
+                     ttemp1 0081                       ttemp2 0084                       ttemp3 0087  
+                     ttemp4 007F                       status 0003                       wtemp0 007E  
+                     wtemp1 0080                       wtemp2 0082                       wtemp3 0084  
+                     wtemp4 0086                       wtemp5 0088                       wtemp6 007F  
+            __CFG_MCLRE$OFF 0000             __initialization 07F8                __end_of_main 0515  
+                    ??_main 007E              __CFG_PLLEN$OFF 0000            ready_pwm@segment 0070  
+                    _CCPR1L 0291                      _ANSELA 018C                      _SSPBUF 0211  
+                 ??_i2c_rcv 0070                i2c_rcv@trash 0072                      ___init 057C  
+                    ___wmul 04CE              __CFG_STVREN$ON 0000                   ??___lwdiv 0074  
+          __end_of_simulate 0546     __end_of__initialization 07FE              __pcstackCOMMON 0070  
+   simulate@simulation_time 0078                  _calc_times 0737                  __pbssBANK0 0020  
+                __pmaintext 04EB          __size_of_ready_pwm 0079                     ?___init 0070  
+                   ?___wmul 0070                     _SSP1ADD 0212                     _i2c_rcv 05B4  
+                 ?_simulate 0070             __size_of___init 0038             __size_of___wmul 001D  
+                   ___lwdiv 0546                     __ptext0 0000                     __ptext1 0515  
+                   __ptext2 0621                     __ptext3 069A                     __ptext4 05B4  
+                   __ptext5 0737                     __ptext6 04CE                     __ptext7 0546  
+                   __ptext8 057C      __size_of_check_segment 009D                   _T2CONbits 001C  
+               ?_calc_times 0070           __end_of_ready_pwm 069A    calc_times@sunset_seconds 0058  
+                   clrloop0 04C9        end_of_initialization 07FE                  ??_simulate 0076  
+ calc_times@sunrise_seconds 005E            __CFG_FOSC$INTOSC 0000                   _TRISAbits 008C  
+               _CCP1CONbits 0293               _check_segment 069A             _present_segment 0054  
+       __size_of_calc_times 00C1                  _sunset_hms 004E              __end_of___init 05B4  
+            __end_of___wmul 04EB     check_segment@check_time 0070              _light_segments 0020  
+       start_initialization 07F8              ?_check_segment 0070                    ??___init 0070  
+                  ??___wmul 0074              check_segment@i 0074                   ___latbits 0000  
+             __pcstackBANK0 0058                    ?_i2c_rcv 0070            ___lwdiv@dividend 0072  
+                  ?___lwdiv 0070           __size_of_simulate 0031                ??_calc_times 0078  
+          ___lwdiv@quotient 0075             ??_check_segment 0072                   _real_time 0056  
+                 _ready_pwm 0621              ___wmul@product 0074                   clear_ram0 04C8  
+                  _PIE1bits 0091                    _PIR1bits 0011          __end_of_calc_times 07F8  
+                  _SSP1CON1 0215           ___wmul@multiplier 0070                 calc_times@i 0060  
+                ?_ready_pwm 0070            __size_of_i2c_rcv 006D                  _APFCONbits 011D  
+          __size_of___lwdiv 0036        calc_times@light_time 005A             ___lwdiv@divisor 0070  
+           ___lwdiv@counter 0077                _SSP1CON2bits 0216  calc_times@segment_duration 005C  
+             __size_of_main 002A                    _simulate 0515                  _INTCONbits 000B  
+               ??_ready_pwm 0072           __CFG_CLKOUTEN$OFF 0000                  _OSCCONbits 0099  
+                _OPTION_REG 0095  
