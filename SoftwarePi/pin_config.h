@@ -15,7 +15,7 @@
 #define GPIO_SEMAFORO 9
 
 #define IRT_PERIOD 75000000 // IRtracking period: 75ms
-#define IDLE_COUNT 6
+#define IDLE_COUNT 2
 #define REFRESH_PERIOD 500000000 // Periodo de refresco de pantalla
 
 #define ZERO_DEGREE 9		// Originalmente 12

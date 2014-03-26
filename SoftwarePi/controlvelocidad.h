@@ -3,7 +3,7 @@
 #ifndef CONTROLVELOCIDAD_H
 #define CONTROLVELOCIDAD_H
 
-#define	LINE_OUT	8
+#define	LINE_OUT	12
 #define DELAY		58
 #define CABECERA_LENGHT	12	
 #define	N_TRENES	2
