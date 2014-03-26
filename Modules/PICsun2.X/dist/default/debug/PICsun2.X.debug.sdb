@@ -1,0 +1,401 @@
+[p LITE_MODE AUTOSTATIC PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 12F1822 ]
+"36 C:/Users/David/MPLABXProjects/PICsun2.X/PICsun_main.c
+[v _delay_ms delay_ms `(v  1 e 0 0 ]
+"43
+[v _setPWMdc setPWMdc `(v  1 e 0 0 ]
+"48
+[v _I2CWrite I2CWrite `(v  1 e 0 0 ]
+"57
+[v _isr isr `II(v  1 e 0 0 ]
+"130
+[v _calc_times calc_times `(v  1 e 0 0 ]
+"153
+[v _ready_pwm ready_pwm `(v  1 e 0 0 ]
+"190
+[v _check_segment check_segment `(v  1 e 0 0 ]
+"211
+[v _simulate simulate `(v  1 e 0 0 ]
+"218
+[v ___init __init `(v  1 e 0 0 ]
+"268
+[v _main main `(i  1 e 2 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\abdiv.c
+[v ___abdiv __abdiv `(c  1 e 1 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\abmod.c
+[v ___abmod __abmod `(c  1 e 1 0 ]
+"34 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\abtoft.c
+[v ___abtoft __abtoft `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\almod.c
+[v ___almod __almod `(l  1 e 4 0 ]
+"43 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\altoft.c
+[v ___altoft __altoft `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\atdiv.c
+[v ___atdiv __atdiv `(m  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\atmod.c
+[v ___atmod __atmod `(m  1 e 3 0 ]
+"38 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\attoft.c
+[v ___attoft __attoft `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+"33 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\awtoft.c
+[v ___awtoft __awtoft `(f  1 e 3 0 ]
+"3 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\bmul.c
+[v ___bmul __bmul `(uc  1 e 1 0 ]
+"7 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\eeprom.c
+[v _eecpymem eecpymem `(v  1 e 0 0 ]
+"25
+[v _memcpyee memcpyee `(v  1 e 0 0 ]
+"49
+[v ___eetoc __eetoc `(uc  1 e 1 0 ]
+"57
+[v ___eetoi __eetoi `(ui  1 e 2 0 ]
+"65
+[v ___eetom __eetom `(um  1 e 3 0 ]
+"73
+[v ___eetol __eetol `(ul  1 e 4 0 ]
+"81
+[v ___ctoee __ctoee `(uc  1 e 1 0 ]
+"88
+[v ___itoee __itoee `(ui  1 e 2 0 ]
+"95
+[v ___mtoee __mtoee `(um  1 e 3 0 ]
+"102
+[v ___ltoee __ltoee `(ul  1 e 4 0 ]
+"109
+[v ___eetoft __eetoft `(f  1 e 3 0 ]
+"117
+[v ___eetofl __eetofl `(d  1 e 3 0 ]
+"125
+[v ___fttoee __fttoee `(f  1 e 3 0 ]
+"132
+[v ___fltoee __fltoee `(d  1 e 3 0 ]
+"63 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"87 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+"50 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\ftge.c
+[v ___ftge __ftge `(b  1 e 0 0 ]
+"52 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+"16 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\ftneg.c
+[v ___ftneg __ftneg `(f  1 e 3 0 ]
+"17 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 3 0 ]
+"45 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\fttol.c
+[v ___fttol __fttol `(l  1 e 4 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lbdiv.c
+[v ___lbdiv __lbdiv `(uc  1 e 1 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lbmod.c
+[v ___lbmod __lbmod `(uc  1 e 1 0 ]
+"28 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lbtoft.c
+[v ___lbtoft __lbtoft `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lldiv.c
+[v ___lldiv __lldiv `(ul  1 e 4 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\llmod.c
+[v ___llmod __llmod `(ul  1 e 4 0 ]
+"36 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lltoft.c
+[v ___lltoft __lltoft `(f  1 e 3 0 ]
+"3 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lmul.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\ltdiv.c
+[v ___ltdiv __ltdiv `(um  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\ltmod.c
+[v ___ltmod __ltmod `(um  1 e 3 0 ]
+"31 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lttoft.c
+[v ___lttoft __lttoft `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lwmod.c
+[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+"29 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lwtoft.c
+[v ___lwtoft __lwtoft `(f  1 e 3 0 ]
+"3 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\tmul.c
+[v ___tmul __tmul `(um  1 e 3 0 ]
+"3 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\wmul.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+"28 C:/Users/David/MPLABXProjects/PICsun2.X/PICsun_main.c
+[v _real_time real_time `VEui  1 e 2 0 ]
+"29
+[v _light_segments light_segments `VE[16]ui  1 e 32 0 ]
+"30
+[v _present_segment present_segment `VEui  1 e 2 0 ]
+"31
+[v _rcvd_byte rcvd_byte `VEuc  1 e 1 0 ]
+"32
+[v _rcv_buffer rcv_buffer `VE[6]uc  1 e 6 0 ]
+"33
+[v _buffer_valid buffer_valid `VEuc  1 e 1 0 ]
+[v _newcmd newcmd `VEuc  1 e 1 0 ]
+"34
+[v _msec msec `VEui  1 e 2 0 ]
+[s S238 . 1 `uc 1 IOCIF 1 0 :1:0 
+`uc 1 INTF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 IOCIE 1 0 :1:3 
+`uc 1 INTE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"355 C:\Program Files (x86)\Microchip\xc8\v1.20\include\pic12f1822.h
+[s S247 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 T0IE 1 0 :1:5 
+]
+[u S252 . 1 `S238 1 . 1 0 `S247 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES252  1 e 1 @11 ]
+[s S115 . 1 `uc 1 SEN 1 0 :1:0 
+`uc 1 RSEN 1 0 :1:1 
+`uc 1 PEN 1 0 :1:2 
+`uc 1 RCEN 1 0 :1:3 
+`uc 1 ACKEN 1 0 :1:4 
+`uc 1 ACKDT 1 0 :1:5 
+`uc 1 ACKSTAT 1 0 :1:6 
+`uc 1 GCEN 1 0 :1:7 
+]
+"715
+[u S124 . 1 `S115 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES124  1 e 1 @17 ]
+"798
+[v _TMR0 TMR0 `VEuc  1 e 1 @21 ]
+"1027
+[v _PR2 PR2 `VEuc  1 e 1 @27 ]
+[s S168 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+`uc 1 T2CKPS1 1 0 :1:1 
+`uc 1 TMR2ON 1 0 :1:2 
+`uc 1 T2OUTPS0 1 0 :1:3 
+`uc 1 T2OUTPS1 1 0 :1:4 
+`uc 1 T2OUTPS2 1 0 :1:5 
+`uc 1 T2OUTPS3 1 0 :1:6 
+]
+"1067
+[s S176 . 1 `uc 1 T2CKPS 1 0 :2:0 
+`uc 1 . 1 0 :1:2 
+`uc 1 T2OUTPS 1 0 :4:3 
+]
+[u S180 . 1 `S168 1 . 1 0 `S176 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES180  1 e 1 @28 ]
+[s S63 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 TRISA4 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+]
+"1223
+[u S70 . 1 `S63 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES70  1 e 1 @140 ]
+"1274
+[v _PIE1bits PIE1bits `VES124  1 e 1 @145 ]
+"1357
+[v _OPTION_REG OPTION_REG `VEuc  1 e 1 @149 ]
+[s S33 . 1 `uc 1 SCS0 1 0 :1:0 
+`uc 1 SCS1 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 IRCF0 1 0 :1:3 
+`uc 1 IRCF1 1 0 :1:4 
+`uc 1 IRCF2 1 0 :1:5 
+`uc 1 IRCF3 1 0 :1:6 
+`uc 1 SPLLEN 1 0 :1:7 
+]
+"1626
+[s S42 . 1 `uc 1 SCS 1 0 :2:0 
+`uc 1 . 1 0 :1:2 
+`uc 1 IRCF 1 0 :4:3 
+]
+[u S46 . 1 `S33 1 . 1 0 `S42 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES46  1 e 1 @153 ]
+"1933
+[v _LATA LATA `VEuc  1 e 1 @268 ]
+[s S81 . 1 `uc 1 CCP1SEL 1 0 :1:0 
+`uc 1 P1BSEL 1 0 :1:1 
+`uc 1 TXCKSEL 1 0 :1:2 
+`uc 1 T1GSEL 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 SSSEL 1 0 :1:5 
+`uc 1 SDOSEL 1 0 :1:6 
+`uc 1 RXDTSEL 1 0 :1:7 
+]
+"2459
+[s S90 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 SS1SEL 1 0 :1:5 
+`uc 1 SDO1SEL 1 0 :1:6 
+]
+[u S94 . 1 `S81 1 . 1 0 `S90 1 . 1 0 ]
+[v _APFCONbits APFCONbits `VES94  1 e 1 @285 ]
+"2573
+[v _ANSELA ANSELA `VEuc  1 e 1 @396 ]
+"2619
+[v _EEADR EEADR `VEus  1 e 2 @401 ]
+"2674
+[v _EEDATA EEDATA `VEuc  1 e 1 @403 ]
+"2725
+[v _EECON1 EECON1 `VEuc  1 e 1 @405 ]
+"2786
+[v _EECON2 EECON2 `VEuc  1 e 1 @406 ]
+"3072
+[v _WPUA WPUA `VEuc  1 e 1 @524 ]
+"3129
+[v _SSP1BUF SSP1BUF `VEuc  1 e 1 @529 ]
+"3134
+[v _SSPBUF SSPBUF `VEuc  1 e 1 @529 ]
+"3166
+[v _SSP1ADD SSP1ADD `VEuc  1 e 1 @530 ]
+"3245
+[v _SSPSTAT SSPSTAT `VEuc  1 e 1 @532 ]
+"3361
+[v _SSP1CON1 SSP1CON1 `VEuc  1 e 1 @533 ]
+"3586
+[v _SSP1CON2bits SSP1CON2bits `VES124  1 e 1 @534 ]
+"3806
+[v _CCPR1L CCPR1L `VEuc  1 e 1 @657 ]
+"3844
+[v _CCP1CON CCP1CON `VEuc  1 e 1 @659 ]
+[s S138 . 1 `uc 1 CCP1M0 1 0 :1:0 
+`uc 1 CCP1M1 1 0 :1:1 
+`uc 1 CCP1M2 1 0 :1:2 
+`uc 1 CCP1M3 1 0 :1:3 
+`uc 1 DC1B0 1 0 :1:4 
+`uc 1 DC1B1 1 0 :1:5 
+`uc 1 P1M0 1 0 :1:6 
+`uc 1 P1M1 1 0 :1:7 
+]
+"3866
+[s S147 . 1 `uc 1 CCP1M 1 0 :4:0 
+`uc 1 DC1B 1 0 :2:4 
+`uc 1 P1M 1 0 :2:6 
+]
+[u S151 . 1 `S138 1 . 1 0 `S147 1 . 1 0 ]
+[v _CCP1CONbits CCP1CONbits `VES151  1 e 1 @659 ]
+"4961
+[v _BF BF `VEb  1 e 0 @4256 ]
+"5013
+[v _CARRY CARRY `VEb  1 e 0 @24 ]
+"5055
+[v _CKP CKP `VEb  1 e 0 @4268 ]
+"5159
+[v _GIE GIE `VEb  1 e 0 @95 ]
+"5375
+[v _RD RD `VEb  1 e 0 @3240 ]
+"5413
+[v _SEN SEN `VEb  1 e 0 @4272 ]
+"5463
+[v _SSP1IF SSP1IF `VEb  1 e 0 @139 ]
+"5475
+[v _SSPOV SSPOV `VEb  1 e 0 @4270 ]
+"5555
+[v _TMR0IE TMR0IE `VEb  1 e 0 @93 ]
+"5557
+[v _TMR0IF TMR0IF `VEb  1 e 0 @90 ]
+"5627
+[v _WCOL WCOL `VEb  1 e 0 @4271 ]
+"5651
+[v _WR WR `VEb  1 e 0 @3241 ]
+"5653
+[v _WREN WREN `VEb  1 e 0 @3242 ]
+"268 C:/Users/David/MPLABXProjects/PICsun2.X/PICsun_main.c
+[v _main main `(i  1 e 2 0 ]
+{
+"297
+} 0
+"218
+[v ___init __init `(v  1 e 0 0 ]
+{
+"266
+} 0
+"36
+[v _delay_ms delay_ms `(v  1 e 0 0 ]
+{
+[v delay_ms@ms ms `ui  1 p 2 0 ]
+"42
+} 0
+"211
+[v _simulate simulate `(v  1 e 0 0 ]
+{
+"212
+[v simulate@simulation_time simulation_time `i  1 a 2 6 ]
+"216
+} 0
+"190
+[v _check_segment check_segment `(v  1 e 0 0 ]
+{
+"191
+[v check_segment@i i `i  1 a 2 4 ]
+"190
+[v check_segment@check_time check_time `i  1 p 2 0 ]
+"209
+} 0
+"153
+[v _ready_pwm ready_pwm `(v  1 e 0 0 ]
+{
+[v ready_pwm@segment segment `i  1 p 2 4 ]
+"188
+} 0
+"43
+[v _setPWMdc setPWMdc `(v  1 e 0 0 ]
+{
+[v setPWMdc@dc dc `ui  1 p 2 0 ]
+"46
+} 0
+"130
+[v _calc_times calc_times `(v  1 e 0 0 ]
+{
+"137
+[v calc_times@sunrise_seconds sunrise_seconds `l  1 a 4 36 ]
+"140
+[v calc_times@segment_duration segment_duration `ul  1 a 4 32 ]
+"139
+[v calc_times@light_time light_time `ul  1 a 4 28 ]
+"138
+[v calc_times@sunset_seconds sunset_seconds `l  1 a 4 24 ]
+"141
+[v calc_times@i i `i  1 a 2 40 ]
+"151
+} 0
+"3 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\wmul.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"4
+[v ___wmul@product product `ui  1 a 2 4 ]
+"3
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"13
+} 0
+"5 C:\Program Files (x86)\Microchip\xc8\v1.20\sources\pic\lldiv.c
+[v ___lldiv __lldiv `(ul  1 e 4 0 ]
+{
+"6
+[v ___lldiv@quotient quotient `ul  1 a 4 9 ]
+"7
+[v ___lldiv@counter counter `uc  1 a 1 13 ]
+"5
+[v ___lldiv@divisor divisor `ul  1 p 4 0 ]
+[v ___lldiv@dividend dividend `ul  1 p 4 4 ]
+"26
+} 0
+"57 C:/Users/David/MPLABXProjects/PICsun2.X/PICsun_main.c
+[v _isr isr `II(v  1 e 0 0 ]
+{
+"66
+[v isr@value value `uc  1 a 1 4 ]
+[v isr@i2cStatus i2cStatus `uc  1 a 1 3 ]
+"128
+} 0
+"48
+[v _I2CWrite I2CWrite `(v  1 e 0 0 ]
+{
+[v I2CWrite@data data `uc  1 a 1 0 ]
+[v I2CWrite@data data `uc  1 a 1 0 ]
+"55
+} 0

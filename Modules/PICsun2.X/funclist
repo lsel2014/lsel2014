@@ -1,0 +1,19 @@
+___ftneg: CODE, 1480 0 9
+___awdiv: CODE, 1106 0 84
+_simulate: CODE, 887 0 122
+___init: CODE, 1190 0 63
+___ftpack: CODE, 1009 0 97
+_main: CODE, 1253 0 53
+___lwtoft: CODE, 1434 0 20
+___ftadd: CODE, 116 0 245
+__initialization: CODE, 1454 0 11
+_isr: CODE, 4 0 111
+_setPWMdc: CODE, 1306 0 41
+_I2CWrite: CODE, 1467 0 13
+___awtoft: CODE, 1347 0 33
+_calc_times: CODE, 361 0 223
+___wmul: CODE, 1380 0 30
+___fttol: CODE, 752 0 135
+___ftsub: CODE, 1410 0 24
+___ftdiv: CODE, 584 0 168
+Total: 1482
