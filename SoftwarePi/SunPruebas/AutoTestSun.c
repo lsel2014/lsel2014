@@ -14,7 +14,8 @@ int testSun() {
 
 	int v1, v2, v3, v4;
 	int compare;
-	int successes, result;
+	int successes = 0;
+	int result;
 
 	v1 = (random() % 27)+1;
 	v2 = (random() % 11)+1;
@@ -94,7 +95,7 @@ int testSun() {
 		successes++;
 	}
 
-	if (successess != 6) {
+	if (successes != 6) {
 		result=0;
 	} else {
 		result=1;
