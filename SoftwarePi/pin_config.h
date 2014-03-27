@@ -12,7 +12,7 @@
 #define GPIO_CAMBIO_VIA 10
 #define GPIO_BARRIER_PWM 11
 #define	GPIO_SBARRIER 15
-#define GPIO_SEMAFORO 9
+#define GPIO_SEMAFORO 13
 
 #define IRT_PERIOD 75000000 // IRtracking period: 75ms
 #define IDLE_COUNT 2
