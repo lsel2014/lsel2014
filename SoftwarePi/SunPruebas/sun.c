@@ -1,5 +1,8 @@
+
 #include "sun.h"
 #include "sunparse.h"
+
+//Archivo sun.c
 
 //static pthread_t t_sun;
 
