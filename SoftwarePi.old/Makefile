@@ -3,7 +3,7 @@ CFLAGS = -g -Wall $(shell xeno-config --skin native --cflags)
 LDFLAGS = $(shell xeno-config --skin native --ldflags)
 LDLIBS = -lwiringPi -lpthread -lncurses -lm
 
-daemon: daemon.o
+main_VelBar: main_VelBar.o controlvelocidad.o
 
 clean:
-	$(RM) *.o *~ daemon
+	$(RM) *.o *~ main_VelBar
