@@ -89,12 +89,20 @@ sensorIR_clear_GPIOflag (sensor_t* this)
 }
 
 void
-sensorIR_readSensor(sensor_t* this)
+sensorIR_storeSensor(sensor_t* this)
 {
 	//pthread_mutex_lock(&this->mutex_sensor);
 	this->GPIOflag = digitalRead(this->GPIOline);
 	//pthread_mutex_unlock(&this->mutex_sensor);
 }
 
+int
+sensorIR_readSensor(sensor_t* this)
+{
+	//pthread_mutex_lock(&this->mutex_sensor);
+	sensorIR_storeSensor(this);
+	return this->GPIOflag;
+	//pthread_mutex_unlock(&this->mutex_sensor);
+}
 
 
