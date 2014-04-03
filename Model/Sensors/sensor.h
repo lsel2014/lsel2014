@@ -35,7 +35,8 @@ void sensorIR_set_GPIOflag (sensor_t* this, int newGPIOflag);
 void sensorIR_rise_GPIOflag (sensor_t* this);
 void sensorIR_clear_GPIOflag (sensor_t* this);
 
-void sensorIR_readSensor(sensor_t* this);
+void sensorIR_storeSensor(sensor_t* this);
+int sensorIR_readSensor(sensor_t* this);
 
 // sensorI2C -- to substitute with proper data
 /*
