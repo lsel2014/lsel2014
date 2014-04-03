@@ -41,8 +41,7 @@ int main() {
 	sensorIR_set_GPIOflag(s1,LOW);
 	flag = sensorIR_get_GPIOflag(s1);
 	printf("%d\n", flag);
-	sensorIR_readSensor(s1);
-	flag = sensorIR_get_GPIOflag(s1);
+	flag = sensorIR_readSensor(s1);
 	printf("%d\n", flag);
 
 
