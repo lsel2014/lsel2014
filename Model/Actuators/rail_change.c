@@ -1,45 +1,37 @@
-#include "actuator.h"
-
-typedef enum {LEFT, RIGHT} direction_t;
-
-typedef struct actuator_rail_change_t
-{
-	actuator_t actuator;
-	direction_t direction;
-
-} actuator_rail_change_t;
-
-
-//----------------------------
+#include "rail_change.h"
 
 void
-actuator_rail_change_init (actuator_t* this, int id, direction_t direction)
+rail_change_init (rail_change_t* this, direction_t direction)
 {
-	actuator_rail_change_t* rail_change = (actuator_rail_change_t*) this;
-	this->id = id;
-	rail_change->direction = direction;
+	this->direction = direction;
+	pthread_mutex_init (&this->mutex, NULL);
 
 }
 
-actuator_t*
-actuator_rail_change_new (int id, direction_t direction)
+rail_change_t*
+rail_change_new (direction_t direction)
 {
-	actuator_t* this = (actuator_t*) malloc (sizeof (actuator_rail_change_t));
-	actuator_rail_change_init (this, id, direction);
+	rail_change_t* this = (rail_change_t*) malloc (sizeof (rail_change_t));
+	rail_change_init (this, direction);
 
 	return this;
 
 }
 
 
-direction
-actuator_rail_change_get_direction ()
+direction_t
+rail_change_get_direction (rail_change_t* this)
 {
+return this->direction;
 
 }
 
+
 void
-actuator_rail_change_set_direction (direction_t direction)
+rail_change_set_direction (rail_change_t* this, direction_t direction)
 {
+pthread_mutex_lock (&this->mutex);
+this->direction = direction;
+pthread_mutex_unlock (&this->mutex);
 
 }
