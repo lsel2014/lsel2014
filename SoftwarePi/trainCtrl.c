@@ -18,7 +18,7 @@ void trainCtrl_periodic() {
 
 	char bufferBit = 0xFF;
 
-	rt_task_set_periodic(NULL, TM_NOW, 58000);
+	rt_task_set_periodic(NULL, TM_NOW, TASK_TRAINCTRL_PERIOD);
 
 	while (1) {
 		rt_task_wait_period(NULL );
