@@ -7,12 +7,11 @@
 #include <native/task.h>
 #include <native/timer.h>
 
-//Modules
-#include "trainCtrl.h"
+//Tasks
+#include "Tasks/trainCtrl.h"
+#include "Tasks/poll.h"
+#include "Tasks/sun.c"
 
-/* Move to headers */
-#define TASK_POLL_PERIOD 100000000
-#define TASK_SUN_PERIOD 2000000000
 
 void initializeModel(void) {
 
@@ -39,33 +38,6 @@ void initializeWiringPi(void) {
 	//pinModes ....
 }
 
-void daemon_poll_sensors(void *arg) {
-	/*
-	 * Arguments: &task (NULL=self),
-	 * start time,
-	 * period (here: 1 s)
-	 */
-	rt_task_set_periodic(NULL, TM_NOW, TASK_POLL_PERIOD);
-
-	while (1) {
-		rt_task_wait_period(NULL );
-		printf("Poll!\n");
-	}
-}
-
-void daemon_update_sun(void *arg) {
-	/*
-	 * Arguments: &task (NULL=self),
-	 * start time,
-	 * period (here: 1 s)
-	 */
-	rt_task_set_periodic(NULL, TM_NOW, TASK_SUN_PERIOD);
-
-	while (1) {
-		rt_task_wait_period(NULL );
-		printf("Sun!\n");
-	}
-}
 
 void catch_signal(int sig) {
 }
