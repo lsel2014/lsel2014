@@ -59,7 +59,7 @@ int trainCtrl_init() {
 		}
 		trama[k].control.field_ctr.un2 = 0b01;
 		trama[k].control.field_ctr.dir = FORWARD;
-		trama[k].control.field_ctr.vel = getVelocidadCode(0);
+		trama[k].control.field_ctr.vel = trainCtrl_getVelocidadCode(0);
 		trama[k].error = trama[k].address.all_add ^ trama[k].control.all_ctr;
 	}
 

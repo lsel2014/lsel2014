@@ -7,11 +7,16 @@
 #include <native/task.h>
 #include <native/timer.h>
 
+//RT compilant print library
+#include <rtdk.h>
+
 //Tasks
 #include "Tasks/trainCtrl.h"
 #include "Tasks/poll.h"
-#include "Tasks/sun.c"
+#include "Tasks/sun.h"
 
+
+void catch_signal () {}
 
 void initializeModel(void) {
 
@@ -32,15 +37,15 @@ void initializeXenomaiEnv(void) {
 void initializeWiringPi(void) {
 	//variableInit();
 
+	wiringPiSetup();
+
 	// Replace with proper I2C modules load on kernel
-	system("gpio load i2c");
+	//system("gpio load i2c");
 
 	//pinModes ....
 }
 
 
-void catch_signal(int sig) {
-}
 
 int main(int argc, char* argv[]) {
 	RT_TASK task_poll, task_trainctrl, task_sun;

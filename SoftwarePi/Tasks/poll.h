@@ -1,5 +1,5 @@
-#ifndef POLLSENSORS_H
-#define POLLSENSORS_H
+#ifndef POLL_H
+#define POLL_H
 
 #define TASK_POLL_PERIOD 100000000
 
