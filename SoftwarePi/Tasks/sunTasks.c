@@ -3,7 +3,7 @@
 #include <native/task.h>
 #include <native/timer.h>
 
-#include "sun.h"
+#include "sunTasks.h"
 
 void daemon_update_sun(void *arg) {
 	/*
