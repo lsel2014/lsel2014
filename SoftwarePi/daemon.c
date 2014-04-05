@@ -7,19 +7,24 @@
 #include <native/task.h>
 #include <native/timer.h>
 
-//RT compilant print library
+// RT compilant print library
 #include <rtdk.h>
 
-//Tasks
+// Tasks
 #include "Tasks/trainCtrl.h"
 #include "Tasks/poll.h"
 #include "Tasks/sun.h"
 
+// Interpreter
+#include "Interpreter/interp.h"
 
+#include "daemon.h"
+
+// Dummy function to catch signals
 void catch_signal () {}
 
 void initializeModel(void) {
-
+	// TODO
 }
 
 void initializeXenomaiEnv(void) {
@@ -35,7 +40,6 @@ void initializeXenomaiEnv(void) {
 }
 
 void initializeWiringPi(void) {
-	//variableInit();
 
 	wiringPiSetup();
 
@@ -45,10 +49,13 @@ void initializeWiringPi(void) {
 	//pinModes ....
 }
 
-
+void initializeInterpreter(void) {
+	// TODO Add all the commands
+	// interp_addcmd(...
+}
 
 int main(int argc, char* argv[]) {
-	RT_TASK task_poll, task_trainctrl, task_sun;
+	RT_TASK task_poll, task_trainctrl, task_sun, task_interpreter;
 
 	// Initialize the model
 	initializeModel();
@@ -62,6 +69,9 @@ int main(int argc, char* argv[]) {
 	// Initialize the train controller
 	trainCtrl_init();
 
+	// Configure the command line interpreter
+	initializeInterpreter();
+
 	/*
 	 * Arguments: &task,
 	 * name,
@@ -69,18 +79,25 @@ int main(int argc, char* argv[]) {
 	 * priority,
 	 * mode (FPU, start suspended, ...)
 	 */
-	rt_task_create(&task_poll, "polling", 0, 50, 0);
-	rt_task_create(&task_trainctrl, "trainCtrl", 0, 55, 0);
-	rt_task_create(&task_sun, "sun", 0, 20, 0);
+	rt_task_create(&task_trainctrl, "trainCtrl", 0, TASK_TRAINCTRL_PRIORITY, 0);
+	rt_task_create(&task_poll, "polling", 0, TASK_POLL_PRIORITY, 0);
+	rt_task_create(&task_sun, "sun", 0, TASK_SUN_PRIORITY, 0);
+	rt_task_create(&task_interpreter, "interpreter", 0, TASK_INTERPRETER_PRIORITY, 0);
 	/*
 	 * Arguments: &task,
 	 * task function,
 	 * function argument*/
-	rt_task_start(&task_poll, &daemon_poll_sensors, NULL );
 	rt_task_start(&task_trainctrl, &trainCtrl_periodic, NULL );
+	rt_task_start(&task_poll, &daemon_poll_sensors, NULL );
 	rt_task_start(&task_sun, &daemon_update_sun, NULL );
+	rt_task_start(&task_interpreter, &interp_run, NULL );
 
-	pause();  //REMOVE, replace by a join to the socket thread
+
+
+	// Wait to the interpreter to end
+	rt_task_join(&task_interpreter);
+
+	// Remove the permanent tasks
 	rt_task_delete(&task_poll);
 	rt_task_delete(&task_trainctrl);
 	rt_task_delete(&task_sun);
