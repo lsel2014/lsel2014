@@ -12,7 +12,12 @@ static train_t* trains[MAXTRAINS];
 static int ntrains = 0;
 static train_t* current_train;
 
-void trains
+/*This will be integrated with the interpreter*/
+void trains_setup(void){
+	dcc_new()
+
+}
+
 int train_cmd(char* arg) {
 	if (0 == strcmp(arg, "list")) {
 		printf("ID\tNAME\tPOWER\tDIRECTION\t");
