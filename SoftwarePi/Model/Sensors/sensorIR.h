@@ -23,8 +23,8 @@ typedef struct sensorIR_t {
 
 } sensorIR_t;
 
-sensorIR_t* sensorIR_new (int id, int prio, int ceil);
-void sensorIR_init (sensorIR_t* this, int id, int prio, int ceil);
+sensorIR_t* sensorIR_new (int id, int ceil);
+void sensorIR_init (sensorIR_t* this, int id, int ceil);
 void sensorIR_destroy (sensorIR_t* this);
 
 int sensorIR_get_id (sensorIR_t* this);
