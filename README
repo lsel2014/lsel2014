@@ -1,4 +1,16 @@
 LSEL 2014
+
+Build-deps
+-libreadline-dev
+-xenomai kernel with headers
+
+
+
+
+
+
+
+
 Roses are gray
 Violets are gray
 Everything is gray
