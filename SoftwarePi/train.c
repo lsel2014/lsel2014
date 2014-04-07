@@ -7,6 +7,8 @@
 
 #include "train.h"
 #include "dcc.h"
+#include <rtdk.h>
+#include <stdlib.h>
 
 static train_t* trains[MAXTRAINS];
 static int ntrains = 0;
@@ -14,16 +16,20 @@ static train_t* current_train;
 
 /*This will be integrated with the interpreter*/
 void trains_setup(void){
-	dcc_new()
+	dcc_sender_t* dccobject = dcc_new(12,40,50);
 
+	trains[0] = train_new ("Diesel", 0b0000100, '0', 20, dccobject);
+	trains[1] = train_new ("Vapor", 0b0000011, '0', 25, dccobject);
+
+	interp_addcmd ("t", train_cmd, "Set train parameters");
 }
 
 int train_cmd(char* arg) {
 	if (0 == strcmp(arg, "list")) {
-		printf("ID\tNAME\tPOWER\tDIRECTION\t");
+		rt_printf("ID\tNAME\tPOWER\tDIRECTION\t");
 		int i;
 		for (i = 0; i < ntrains; ++i) {
-			printf("%d\t%s\t%d\t%s\r\n", trains[i]->ID, trains[i]->name,
+			rt_printf("%d\t%s\t%d\t%s\r\n", trains[i]->ID, trains[i]->name,
 					trains[i]->power,
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE");
 		}
@@ -50,9 +56,12 @@ int train_cmd(char* arg) {
 }
 
 train_t* train_new(char* name, char ID, char n_wagon, char length,
-		dcc_sender_t* dcc, telemetry_t telemetry) {
-	train_t this = (train_t*) malloc(sizeof(train_t));
-	train_init(this, name, ID, n_wagon, length, telemetry);
+		dcc_sender_t* dcc) {
+	train_t* this = (train_t*) malloc(sizeof(train_t));
+
+	telemetry_t* telemetry = (telemetry_t*) malloc(sizeof(telemetry_t));
+
+	train_init(this, name, ID, n_wagon, length, dcc, telemetry);
 	if (ntrains < MAXTRAINS) {
 		trains[ntrains++] = this;
 	}
@@ -60,7 +69,7 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
 }
 
 void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
-		dcc_sender_t* dcc, telemetry_t telemetry) {
+		dcc_sender_t* dcc, telemetry_t* telemetry) {
 	this->name = name;
 	this->ID = ID;
 	this->power = 0;
@@ -68,6 +77,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->direction = FORWARD;
 	this->n_wagon = n_wagon;
 	this->length = length;
+	this->dcc = dcc;
 	this->telemetry = telemetry;
 	rt_mutex_create(&this->mutex, NULL);
 }
@@ -88,7 +98,11 @@ void train_set_ID(train_t* this, char ID) {
 
 void train_set_power(train_t* this, int power) {
 	this->power = power;
-	train_set_direcion(this, (power < 0) ? REVERSE : FORWARD);
+	if (power < 0){
+		train_set_direction (this, REVERSE);
+	}else{
+		train_set_direction (this, FORWARD);
+	}
 	dcc_add_speed_packet(this->dcc, this->ID, this->power);
 }
 
@@ -101,7 +115,7 @@ void train_set_target_power(train_t* this, int power) {
 	train_set_power(this, power);
 }
 
-void train_set_direction(train_t* this, char direction) {
+void train_set_direction(train_t* this, train_direction_t direction) {
 	this->direction = direction;
 }
 
@@ -113,7 +127,7 @@ void train_set_length(train_t* this, char length) {
 	this->length = length;
 }
 
-void train_set_telemetry(train_t* this, telemetry_t telemetry) {
+void train_set_telemetry(train_t* this, telemetry_t* telemetry) {
 	this->telemetry = telemetry;
 }
 
@@ -125,11 +139,11 @@ char train_get_ID(train_t* this) {
 	return this->ID;
 }
 
-char train_get_power(train_t* this) {
+int train_get_power(train_t* this) {
 	return this->power;
 }
 
-char train_get_direction(train_t* this) {
+train_direction_t train_get_direction(train_t* this) {
 	return this->direction;
 }
 
@@ -141,6 +155,6 @@ char train_get_length(train_t* this) {
 	return this->length;
 }
 
-telemetry_t train_get_telemetry(train_t* this) {
+telemetry_t* train_get_telemetry(train_t* this) {
 	return this->telemetry;
 }

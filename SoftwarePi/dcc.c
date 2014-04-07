@@ -1,5 +1,7 @@
 #include "dcc.h"
 #include <native/mutex.h>
+#include <native/task.h>
+#include <stdlib.h>
 #include "daemon.h"
 #include <wiringPi.h>
 
@@ -9,25 +11,33 @@ const char train_speed_codes[29] = { 0b00000, 0b00010, 0b10010, 0b00011,
 		0b11011, 0b01100, 0b11100, 0b01101, 0b11101, 0b01110, 0b11110, 0b01111,
 		0b11111 };
 
+void packet_init (dcc_packet_t packet){
+	packet.preamble = 0xF;
+	packet.packet_start = 0;
+	packet.adseparator = 0; 
+	packet.deseparator = 0;
+	packet.packet_end = 1;
+}
+
 dcc_sender_t* dcc_new(int gpio, int prio, int deadline) {
-	dcc_sender_t* this = (dcc_sender_t*) malloc(sizeof(dcc_sender_t));
-	dcc_init(this, gpio, prio);
+	dcc_sender_t* this = (dcc_sender_t*) malloc (sizeof(dcc_sender_t));
+	dcc_init(this, gpio, prio, deadline);
 	return this;
 }
 
-dcc_init(dcc_sender_t* this, int dcc_gpio, int prio, int deadline) {
+void dcc_init (dcc_sender_t* this, int dcc_gpio, int prio, int deadline) {
 	pinMode(dcc_gpio, OUTPUT);
 	this->dcc_gpio = dcc_gpio;
 	this->pending_packets = 0;
-	this->state = NEW_PACKET;
 	this->buffer.readPointer = 0;
 	this->buffer.writePointer = 0;
 	this->buffer.pending_packets = 0;
 	rt_mutex_create(&(this->dcc_mutex), "dcc_mutex");
 	/*REGISTRAR TAREA EN DAEMON*/
 
+
 }
-dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
+void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
 	/*
 	 * Circular buffer with overtake prevention. Old packets get discarded if
 	 * buffer is full;
@@ -45,8 +55,9 @@ dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
 	rt_mutex_release(&(this->dcc_mutex));
 }
 
-dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed) {
+void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed) {
 	dcc_packet_t dcc_packet;
+	packet_init (dcc_packet);
 	dcc_packet.address = address;
 	if (speed>0) {
 		dcc_packet.data = 0b01100000 | train_speed_codes[abs(speed)];
@@ -58,7 +69,7 @@ dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed) {
 }
 ;
 
-dcc_send(void* arg) {
+void dcc_send(void* arg) {
 	dcc_sender_t* this = (dcc_sender_t*) arg;
 	static dcc_packet_t current_packet;
 	unsigned char buffer_bit = 0xFF;
@@ -71,15 +82,15 @@ dcc_send(void* arg) {
 		if (buffer_bit == 0xFF) {
 			if (buffer == 0) {
 				if (this->buffer.pending_packets) {
-					rt_mutex_acquire(this->dcc_mutex, TM_INFINITE);
+					rt_mutex_acquire(&(this->dcc_mutex), TM_INFINITE);
 					current_packet =
 							this->buffer.packet_buffer[this->buffer.readPointer];
 					this->buffer.readPointer++;
 					this->buffer.readPointer %= PACKET_BUFFER_SIZE;
 					this->buffer.pending_packets--;
-					rt_mutex_release(this->dcc_mutex);
+					rt_mutex_release(&(this->dcc_mutex));
 					buffer = 0xFFFC000000000000ULL
-							| (((unsigned long long) current_packet) << 22);
+							| (((unsigned long long) current_packet.packet) << 22);
 					idle_packet = buffer;
 				} else {
 					buffer = idle_packet;

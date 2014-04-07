@@ -5,8 +5,6 @@
 
 #include "poll.h"
 
-#include "../Model/Sensors/sensorIR.h"
-
 void daemon_poll_sensors(sensorIR_t *sensors) {
 	/*
 	 * Arguments: &task (NULL=self),

@@ -7,21 +7,24 @@
 #include <native/task.h>
 #include <native/timer.h>
 
+// WiringPi
+#include <wiringPi.h>
+
 // RT compilant print library
 #include <rtdk.h>
 
 // Tasks
-#include "Tasks/trainCtrl.h"
-#include "Tasks/poll.h"
-#include "Tasks/sunTasks.h"
+#include "dcc.h"
+//#include "poll.h"
+#include "sunTasks.h"
 
 // Interpreter
-#include "Interpreter/interp.h"
+#include "interp.h"
 
 #include "daemon.h"
 
 // Wrong in so many ways
-sensorIR_t* IRsensors[4];
+//sensorIR_t* IRsensors[4];
 
 
 // Dummy function to catch signals
@@ -33,7 +36,7 @@ void initializeModel(void) {
 	
 	for (i=0;i<4;i++)
 	{
-		IRsensors[i] = sensorIR_new(i);
+		//IRsensors[i] = sensorIR_new(i);
 	}
 }
 
@@ -60,7 +63,7 @@ void initializeWiringPi(void) {
 }
 
 int main(int argc, char* argv[]) {
-	RT_TASK task_poll, task_trainctrl, task_sun;
+	RT_TASK task_poll, task_dcc, task_sun;
 
 	// Initialize Xenomai RT enviroment
 	initializeXenomaiEnv();
@@ -72,7 +75,7 @@ int main(int argc, char* argv[]) {
 	initializeModel();
 
 	// Initialize the train controller
-	trainCtrl_init();
+	//trainCtrl_init();
 
 	/*
 	 * Arguments: &task,
@@ -81,23 +84,24 @@ int main(int argc, char* argv[]) {
 	 * priority,
 	 * mode (FPU, start suspended, ...)
 	 */
-	rt_task_create(&task_trainctrl, "trainCtrl", 0, TASK_TRAINCTRL_PRIORITY, 0);
-	rt_task_create(&task_poll, "polling", 0, TASK_POLL_PRIORITY, 0);
+	rt_task_create(&task_dcc, "dccSend", 0, TASK_DCC_PRIORITY, 0);
+	//rt_task_create(&task_poll, "polling", 0, TASK_POLL_PRIORITY, 0);
 	rt_task_create(&task_sun, "sun", 0, TASK_SUN_PRIORITY, 0);
-
 	/*
 	 * Arguments: &task,
 	 * task function,
 	 * function argument*/
-	rt_task_start(&task_trainctrl, &trainCtrl_periodic, NULL );
-	rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
+
+	// TODO Hay que darle argumentos a la tarea!
+	rt_task_start(&task_dcc, &dcc_send, NULL );
+	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
 	rt_task_start(&task_sun, &daemon_update_sun, NULL );
 
 	interp_run();
 
 	// Remove the permanent tasks
-	rt_task_delete(&task_poll);
-	rt_task_delete(&task_trainctrl);
+	//rt_task_delete(&task_poll);
+	rt_task_delete(&task_dcc);
 	rt_task_delete(&task_sun);
 	return 0;
 }

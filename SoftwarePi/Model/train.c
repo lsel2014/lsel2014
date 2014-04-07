@@ -6,32 +6,86 @@
  */
 
 #include "train.h"
-model_trains_t model_trains;
+#include "dcc.h"
+#include <rtdk.h>
+#include <stdlib.h>
 
-train_t* train_new (char* name, char ID,char power,char direction,
-					 char n_wagon, char length, telemetry_t telemetry) {
-	train_t this = (train_t*) malloc (sizeof (train_t));
-	train_init (this, name, ID, n_wagon,  length, telemetry);
-	if(model_trains.ntrains<MAXTRAINS){
-	model_trains.trains[model_trains.ntrains++]=this;
+static train_t* trains[MAXTRAINS];
+static int ntrains = 0;
+static train_t* current_train;
+
+/*This will be integrated with the interpreter*/
+void trains_setup(void){
+	dcc_sender_t* dccobject = dcc_new(12,40,50);
+
+	trains[0] = train_new ("Diesel", 0b0000100, '0', 20, dccobject);
+	trains[1] = train_new ("Vapor", 0b0000011, '0', 25, dccobject);
+
+	interp_addcmd ("t", train_cmd, "Set train parameters");
+}
+
+int train_cmd(char* arg) {
+	if (0 == strcmp(arg, "list")) {
+		rt_printf("ID\tNAME\tPOWER\tDIRECTION\t");
+		int i;
+		for (i = 0; i < ntrains; ++i) {
+			rt_printf("%d\t%s\t%d\t%s\r\n", trains[i]->ID, trains[i]->name,
+					trains[i]->power,
+					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE");
+		}
+		return 0;
+	}
+	if (0 == strncmp(arg, "select ", strlen("select "))) {
+		int train_id, i;
+		train_id = atoi(arg + strlen("select "));
+		for (i = 0; i < ntrains; i++) {
+			if (trains[i]->ID == train_id) {
+				current_train = trains[i];
+				return 0;
+			}
+		}
+		return 1;
+	}
+	if (0 == strncmp(arg, "speed ", strlen("speed "))) {
+		int target_speed;
+		target_speed = atoi(arg + strlen("speed "));
+		train_set_target_power(current_train, target_speed);
+		return 0;
+	}
+	return 1;
+}
+
+train_t* train_new(char* name, char ID, char n_wagon, char length,
+		dcc_sender_t* dcc) {
+	train_t* this = (train_t*) malloc(sizeof(train_t));
+
+	telemetry_t* telemetry = (telemetry_t*) malloc(sizeof(telemetry_t));
+
+	train_init(this, name, ID, n_wagon, length, dcc, telemetry);
+	if (ntrains < MAXTRAINS) {
+		trains[ntrains++] = this;
+	}
 	return this;
 }
 
-void train_init (train_t* this, char* name, char ID,char power,char direction,
-					char n_wagon, char length, telemetry_t telemetry) {
+void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
+		dcc_sender_t* dcc, telemetry_t* telemetry) {
 	this->name = name;
 	this->ID = ID;
-	this->power = power;
-	this->direction = direction;
+	this->power = 0;
+	this->target_power = 0;
+	this->direction = FORWARD;
 	this->n_wagon = n_wagon;
 	this->length = length;
+	this->dcc = dcc;
 	this->telemetry = telemetry;
-	pthread_mutex_init (&this->mutex, NULL);
+	rt_mutex_create(&this->mutex, NULL);
 }
 
-void train_destroy (train_t* this) {
-	if (this->telemetry) free (this->telemetry);
-	free (this);
+void train_destroy(train_t* this) {
+	if (this->telemetry)
+		free(this->telemetry);
+	free(this);
 }
 
 void train_set_name(train_t* this, char* name) {
@@ -42,11 +96,26 @@ void train_set_ID(train_t* this, char ID) {
 	this->ID = ID;
 }
 
-void train_set_power(train_t* this, char power) {
+void train_set_power(train_t* this, int power) {
 	this->power = power;
+	if (power < 0){
+		train_set_direction (this, REVERSE);
+	}else{
+		train_set_direction (this, FORWARD);
+	}
+	dcc_add_speed_packet(this->dcc, this->ID, this->power);
 }
 
-void train_set_direction(train_t* this, char direction) {
+void train_set_target_power(train_t* this, int power) {
+	this->target_power = power;
+	/*
+	 * In the future anti-collision system will take care of this,
+	 * for now just blindly obey the user.
+	 */
+	train_set_power(this, power);
+}
+
+void train_set_direction(train_t* this, train_direction_t direction) {
 	this->direction = direction;
 }
 
@@ -58,7 +127,7 @@ void train_set_length(train_t* this, char length) {
 	this->length = length;
 }
 
-void train_set_telemetry(train_t* this, telemetry_t telemetry) {
+void train_set_telemetry(train_t* this, telemetry_t* telemetry) {
 	this->telemetry = telemetry;
 }
 
@@ -70,11 +139,11 @@ char train_get_ID(train_t* this) {
 	return this->ID;
 }
 
-char train_get_power(train_t* this) {
+int train_get_power(train_t* this) {
 	return this->power;
 }
 
-char train_get_direction(train_t* this) {
+train_direction_t train_get_direction(train_t* this) {
 	return this->direction;
 }
 
@@ -86,6 +155,6 @@ char train_get_length(train_t* this) {
 	return this->length;
 }
 
-telemetry_t train_get_telemetry(train_t* this) {
+telemetry_t* train_get_telemetry(train_t* this) {
 	return this->telemetry;
 }
