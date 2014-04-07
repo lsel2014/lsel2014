@@ -3,6 +3,7 @@
 #include <native/task.h>
 #include <stdlib.h>
 #include "daemon.h"
+#include "tasks.h"
 #include <wiringPi.h>
 
 const char train_speed_codes[29] = { 0b00000, 0b00010, 0b10010, 0b00011,
@@ -21,11 +22,11 @@ void packet_init (dcc_packet_t packet){
 
 dcc_sender_t* dcc_new(int gpio, int prio, int deadline) {
 	dcc_sender_t* this = (dcc_sender_t*) malloc (sizeof(dcc_sender_t));
-	dcc_init(this, gpio, prio, deadline);
+	dcc_init(this, gpio, deadline);
 	return this;
 }
 
-void dcc_init (dcc_sender_t* this, int dcc_gpio, int prio, int deadline) {
+void dcc_init (dcc_sender_t* this, int dcc_gpio, int deadline) {
 	pinMode(dcc_gpio, OUTPUT);
 	this->dcc_gpio = dcc_gpio;
 	this->pending_packets = 0;
@@ -33,8 +34,7 @@ void dcc_init (dcc_sender_t* this, int dcc_gpio, int prio, int deadline) {
 	this->buffer.writePointer = 0;
 	this->buffer.pending_packets = 0;
 	rt_mutex_create(&(this->dcc_mutex), "dcc_mutex");
-	/*REGISTRAR TAREA EN DAEMON*/
-
+	task_add("DCC sender",63000,dcc_send,this);
 
 }
 void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
@@ -75,7 +75,6 @@ void dcc_send(void* arg) {
 	unsigned char buffer_bit = 0xFF;
 	unsigned long long buffer = 0;
 	unsigned long long idle_packet = 0xFFFDFE007FC00000ULL;
-
 	rt_task_set_periodic(NULL, TM_NOW, DCC_PERIOD);
 	while (1) {
 		rt_task_wait_period(NULL);

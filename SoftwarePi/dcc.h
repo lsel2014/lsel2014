@@ -47,8 +47,8 @@
 
 
 	void packet_init (dcc_packet_t packet);
-	dcc_sender_t* dcc_new (int gpio, int prio, int deadline);
-	void dcc_init(dcc_sender_t* this, int dcc_gpio, int prio, int deadline);
+	dcc_sender_t* dcc_new (int gpio, int deadline);
+	void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline);
 	void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet);
 	void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed);
 	void dcc_send(void* arg);

@@ -22,6 +22,7 @@
 #include "interp.h"
 
 #include "daemon.h"
+#include "tasks.h"
 
 // Wrong in so many ways
 //sensorIR_t* IRsensors[4];
@@ -96,12 +97,13 @@ int main(int argc, char* argv[]) {
 	rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
 	rt_task_start(&task_sun, &daemon_update_sun, NULL );
-
+	task_start_all()
 	interp_run();
 
 	// Remove the permanent tasks
 	//rt_task_delete(&task_poll);
 	rt_task_delete(&task_dcc);
 	rt_task_delete(&task_sun);
+	task_delete_all()
 	return 0;
 }
