@@ -13,18 +13,28 @@
 // Tasks
 #include "Tasks/trainCtrl.h"
 #include "Tasks/poll.h"
-#include "Tasks/sun.h"
+#include "Tasks/sunTasks.h"
 
 // Interpreter
 #include "Interpreter/interp.h"
 
 #include "daemon.h"
 
+// Wrong in so many ways
+sensorIR_t* IRsensors[4];
+
+
 // Dummy function to catch signals
 void catch_signal () {}
 
 void initializeModel(void) {
 	// TODO
+	int i;
+	
+	for (i=0;i<4;i++)
+	{
+		IRsensors[i] = sensorIR_new(i);
+	}
 }
 
 void initializeXenomaiEnv(void) {
@@ -57,14 +67,15 @@ void initializeInterpreter(void) {
 int main(int argc, char* argv[]) {
 	RT_TASK task_poll, task_trainctrl, task_sun, task_interpreter;
 
-	// Initialize the model
-	initializeModel();
 
 	// Initialize Xenomai RT enviroment
 	initializeXenomaiEnv();
 
 	// Initialize wiringPi lib, configure IO
 	initializeWiringPi();
+	
+	// Initialize the model
+	initializeModel();
 
 	// Initialize the train controller
 	trainCtrl_init();
@@ -88,7 +99,7 @@ int main(int argc, char* argv[]) {
 	 * task function,
 	 * function argument*/
 	rt_task_start(&task_trainctrl, &trainCtrl_periodic, NULL );
-	rt_task_start(&task_poll, &daemon_poll_sensors, NULL );
+	rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
 	rt_task_start(&task_sun, &daemon_update_sun, NULL );
 	rt_task_start(&task_interpreter, &interp_run, NULL );
 

@@ -5,7 +5,9 @@
 
 #include "poll.h"
 
-void daemon_poll_sensors(void *arg) {
+#include "../Model/Sensors/sensorIR.h"
+
+void daemon_poll_sensors(sensorIR_t *sensors) {
 	/*
 	 * Arguments: &task (NULL=self),
 	 * start time,
@@ -14,7 +16,14 @@ void daemon_poll_sensors(void *arg) {
 	rt_task_set_periodic(NULL, TM_NOW, TASK_POLL_PERIOD);
 
 	while (1) {
+		int i;
 		rt_task_wait_period(NULL );
-		printf("Poll!\n");
+		rt_printf("Poll!\n");
+		
+		for (i=0;i<4;i++) {
+			int read = sensorIR_trainPassing(sensors[i]);
+			if (read >= 0)
+				rt_printf("Detected train %i", read);
+		}
 	}
 }

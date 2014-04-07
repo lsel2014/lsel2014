@@ -41,15 +41,15 @@ static void (*sensorIR_isr[]) (void) = {
 
 */
 sensorIR_t*
-sensorIR_new(int id, int ceil)
+sensorIR_new(int id)
 {
 	sensorIR_t* this = (sensorIR_t*) malloc(sizeof(sensorIR_t));
-	sensorIR_init(this, id, ceil);
+	sensorIR_init(this, id);
 	return this;
 }
 
 void
-sensorIR_init(sensorIR_t* this, int id, int ceil)
+sensorIR_init(sensorIR_t* this, int id)
 {
 	int i;
 
