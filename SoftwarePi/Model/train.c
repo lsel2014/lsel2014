@@ -6,14 +6,14 @@
  */
 
 #include "train.h"
-
-
+model_trains_t model_trains;
 
 train_t* train_new (char* name, char ID,char power,char direction,
 					 char n_wagon, char length, telemetry_t telemetry) {
 	train_t this = (train_t*) malloc (sizeof (train_t));
-	train_init (this, name, ID, power, direction,
-			 n_wagon,  length, telemetry);
+	train_init (this, name, ID, n_wagon,  length, telemetry);
+	if(model_trains.ntrains<MAXTRAINS){
+	model_trains.trains[model_trains.ntrains++]=this;
 	return this;
 }
 
