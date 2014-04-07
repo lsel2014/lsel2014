@@ -59,14 +59,8 @@ void initializeWiringPi(void) {
 	//pinModes ....
 }
 
-void initializeInterpreter(void) {
-	// TODO Add all the commands
-	// interp_addcmd(...
-}
-
 int main(int argc, char* argv[]) {
-	RT_TASK task_poll, task_trainctrl, task_sun, task_interpreter;
-
+	RT_TASK task_poll, task_trainctrl, task_sun;
 
 	// Initialize Xenomai RT enviroment
 	initializeXenomaiEnv();
@@ -80,9 +74,6 @@ int main(int argc, char* argv[]) {
 	// Initialize the train controller
 	trainCtrl_init();
 
-	// Configure the command line interpreter
-	initializeInterpreter();
-
 	/*
 	 * Arguments: &task,
 	 * name,
@@ -93,7 +84,7 @@ int main(int argc, char* argv[]) {
 	rt_task_create(&task_trainctrl, "trainCtrl", 0, TASK_TRAINCTRL_PRIORITY, 0);
 	rt_task_create(&task_poll, "polling", 0, TASK_POLL_PRIORITY, 0);
 	rt_task_create(&task_sun, "sun", 0, TASK_SUN_PRIORITY, 0);
-	rt_task_create(&task_interpreter, "interpreter", 0, TASK_INTERPRETER_PRIORITY, 0);
+
 	/*
 	 * Arguments: &task,
 	 * task function,
@@ -101,12 +92,8 @@ int main(int argc, char* argv[]) {
 	rt_task_start(&task_trainctrl, &trainCtrl_periodic, NULL );
 	rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
 	rt_task_start(&task_sun, &daemon_update_sun, NULL );
-	rt_task_start(&task_interpreter, &interp_run, NULL );
 
-
-
-	// Wait to the interpreter to end
-	rt_task_join(&task_interpreter);
+	interp_run();
 
 	// Remove the permanent tasks
 	rt_task_delete(&task_poll);
