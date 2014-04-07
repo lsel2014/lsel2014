@@ -1,8 +1,8 @@
 /*
- * File: PICsun_main.c
- * Author: Javier Gonzalez Recio
- *
- */
+* File: PICsun_main.c
+* Author: Javier Gonzalez Recio
+*
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,9 +36,12 @@ int16_t light_peak;
 float delta;
 float pwmdc;
 
+uint8_t send_buffer[I2C_SEND_BUF_SIZE];
+uint8_t send_index=0;
+volatile uint8_t daynight;
 volatile uint8_t rcvd_byte;
 volatile uint8_t rcv_buffer[I2C_BUF_SIZE];
-volatile bool buffer_valid, newcmd;
+volatile bool buffer_valid, newcmd,stream;
 
 void setPWMdc(uint16_t dc) {
     if (dc > 1023)dc = 1023;
@@ -46,8 +49,8 @@ void setPWMdc(uint16_t dc) {
     CCP1CON = ((CCP1CON & 0b11001111) | ((dc << 4)&0b00110000));
 }
 
-void I2CWrite(unsigned uint8_t data) {
-    while (BF); //wait while buffer is full
+void I2CWrite(uint8_t data) {
+    while(BF); //wait while buffer is full
     do {
         WCOL = 0; //clear write collision flag
         SSP1BUF = data;
@@ -59,7 +62,7 @@ void interrupt isr(void) {
     if (SSP1IF) //I2C interrupt handler
     {
         SSP1IF = 0; //Clear interrupt flag
-        unsigned uint8_t i2cStatus, value;
+        uint8_t i2cStatus, value;
 
 
         if (i2cStatus != 0x30) {
@@ -81,7 +84,19 @@ void interrupt isr(void) {
                     if (value == 0xFF) {
                         newcmd = true;
                         rcvd_byte = 0;
-                    } else {
+                    } else if (value== 0xFE){
+                        *((uint16_t*)send_buffer)=simulated_time;
+                        send_buffer[2]=daynight;
+                        send_buffer[3]=rcv_buffer[0];
+                        send_buffer[4]=rcv_buffer[1];
+                        send_buffer[5]=rcv_buffer[2];
+                        send_buffer[6]=rcv_buffer[3];
+                        send_buffer[7]=rcv_buffer[4];
+                        send_buffer[8]=rcv_buffer[5];
+                        send_buffer[9]=0xFF;
+                        send_index=0;
+                    }else
+                    {
                         if (newcmd && !buffer_valid) {
                             rcv_buffer[rcvd_byte++] = value;
                         }
@@ -94,19 +109,23 @@ void interrupt isr(void) {
                     break;
                 case STATE3: // STATE 3 master read last byte was address
                     //SSPSTAT bits: D/A = 0, S=1, R/W=1, BF=0
+
                     value = SSPBUF; //dummy read
-                    if (rcvd_byte >= I2C_BUF_SIZE)
-                        rcvd_byte = 0;
-                    I2CWrite(rcv_buffer[rcvd_byte]); //write back the index of status requested
-                    rcvd_byte++;
+                    if (send_index >= I2C_SEND_BUF_SIZE)
+                        send_index= 0;
+                    I2CWrite(send_buffer[send_index]); //write back the index of status requested
+                    send_index++;
+                    stream=false;
                     break;
 
                 case STATE4: // STATE 4 last byte was data
                     //SSPSTAT bits: D/A=1, S=1, R/W=1, BF=0
-                    if (rcvd_byte >= I2C_BUF_SIZE)
-                        rcvd_byte = 0;
-                    I2CWrite(rcv_buffer[rcvd_byte]); //write back the index of status requested
-                    rcvd_byte++;
+
+                    if (send_index>= I2C_SEND_BUF_SIZE)
+                        send_index = 0;
+                    I2CWrite(send_buffer[send_index]); //write back the index of status requested
+                   if(stream)send_index++;
+                   stream=true;
                     break;
 
                 case STATE5: // STATE 5 logic reset by NACK from master
@@ -140,10 +159,13 @@ void simulate(void) {
 
     if (simulated_time < sunrise_seconds || simulated_time > sunset_seconds) {
         pwmdc = 0;
+        daynight=0;
     } else if (simulated_time < peak_light_time) {
         pwmdc += delta;
+        daynight=1;
     } else if (simulated_time > peak_light_time) {
         pwmdc -= delta;
+        daynight=1;
     }
 
     setPWMdc((uint16_t)(1023.0 - pwmdc));
