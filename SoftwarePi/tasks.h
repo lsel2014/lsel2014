@@ -20,5 +20,6 @@ typedef struct{
 void task_add(char* name, int deadline, void (*f)(void *),void* arg);
 void task_start_all();
 void task_delete_all();
+int task_cmd(char* arg);
 int task_cmp(const void* t1, const void* t2);
 #endif

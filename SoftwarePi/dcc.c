@@ -27,7 +27,7 @@ void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline) {
 	this->buffer.writePointer = 0;
 	this->buffer.pending_packets = 0;
 	rt_mutex_create(&(this->dcc_mutex), "dcc_mutex");
-	task_add("DCC sender", 63000, dcc_send, this);
+	task_add("DCC sender", DCC_DEADLINE, dcc_send, this);
 
 }
 void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {

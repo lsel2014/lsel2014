@@ -10,7 +10,7 @@
 sun_t* sun;
 
 void sun_setup(void) {
-	sun = sun_new (DEFAULT_DATE,0x20,1000000000);
+	sun = sun_new (DEFAULT_DATE,0x20,SUN_DEADLINE);
 	interp_addcmd("sun", sun_cmd, "Set sun parameters\n");
 }
 
@@ -74,12 +74,13 @@ void sun_task(void* arg) {
 		}
 
 		FILE *fp;
-		if ((fp = fopen("/var/www/HoraVirtual.txt", "w+")) < 0) {
+		if ((fp = fopen("/var/www/HoraVirtual.txt.new", "w+")) < 0) {
 			rt_printf("Error en archivo destino");
 		}
 		fprintf(fp, "%s", buffer);
 		//printf("%s\n", buffer);
 		fclose(fp);
+		system("mv /var/www/HoraVirtual.txt.new /var/www/HoraVirtual.txt");
 	}
 }
 
@@ -96,7 +97,7 @@ void sun_init(sun_t* this, sun_date_t date, char i2c_address, int deadline
 	this->i2c_fd = wiringPiI2CSetup(i2c_address);
 	sun_set_date(this, date);
 	rt_mutex_create(&(this->mutex), "sun_mutex");
-	task_add("Sun", 1000000000, sun_task, this);
+	task_add("Sun", deadline, sun_task, this);
 }
 
 void sun_set_date(sun_t* this, sun_date_t date) {

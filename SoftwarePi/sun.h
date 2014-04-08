@@ -7,6 +7,7 @@
 #include <rtdk.h>
 
 #define SUN_PERIOD 1000000000
+#define SUN_DEADLINE 1000000000
 #define DEFAULT_DATE "11/11/2011"
 typedef const char* sun_date_t;
 typedef struct{
