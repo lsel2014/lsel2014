@@ -6,7 +6,6 @@
 #include <sys/mman.h>
 #include <native/task.h>
 #include <native/timer.h>
-#include "train.h"
 // WiringPi
 #include <wiringPi.h>
 
@@ -20,12 +19,12 @@
 
 // Interpreter
 #include "Interpreter/interp.h"
-
 #include "daemon.h"
 #include "tasks.h"
 
-// Wrong in so many ways
-//sensorIR_t* IRsensors[4];
+//Model
+#include "train.h"
+#include "sun.h"
 
 
 // Dummy function to catch signals
@@ -93,6 +92,7 @@ int main(int argc, char* argv[]) {
 	 * task function,
 	 * function argument*/
 	trains_setup();
+	sun_setup();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);

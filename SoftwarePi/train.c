@@ -21,7 +21,7 @@ void trains_setup(void) {
 	trains[0] = train_new("Diesel", 0b0000100, '0', 20, dccobject);
 	trains[1] = train_new("Vapor", 0b0000011, '0', 25, dccobject);
 	current_train = trains[0];
-	interp_addcmd("t", train_cmd, "Set train parameters\n");
+	interp_addcmd("train", train_cmd, "Set train parameters\n");
 }
 
 int train_cmd(char* arg) {
@@ -46,7 +46,7 @@ int train_cmd(char* arg) {
 			}
 		}
 		printf(
-				"Train not found. Use t list to see a list of available trains\n");
+				"Train not found. Use train list to see a list of available trains\n");
 		return 1;
 	}
 	if (0 == strncmp(arg, "speed ", strlen("speed "))) {
