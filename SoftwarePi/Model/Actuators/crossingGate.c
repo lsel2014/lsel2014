@@ -40,7 +40,7 @@ crossingGate_destroy (crossingGate_t* this)
 	free(this);
 }
 
-position_t*
+position_t
 crossingGate_get_position (crossingGate_t* this)
 {
     return this->position;
@@ -49,12 +49,12 @@ crossingGate_get_position (crossingGate_t* this)
 void
 crossingGate_set_position (crossingGate_t* this, position_t position)
 {
-    rt_mutex_aquire (&this->mutex);
+    rt_mutex_acquire(&(this->mutex), TM_INFINITE);
     this->position = position;
     rt_mutex_release (&this->mutex);
 }
 
-int
+char
 crossingGate_get_sectorCrossing (crossingGate_t* this)
 {
 	return this->sectorCrossing;
@@ -63,7 +63,7 @@ crossingGate_get_sectorCrossing (crossingGate_t* this)
 void
 crossingGate_set_sectorCrossing (crossingGate_t* this, char sectorCrossing)
 {
-	rt_mutex_aquire (&this->mutex);
+	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
     this->sectorCrossing = sectorCrossing;
     rt_mutex_release (&this->mutex);
 }
@@ -88,8 +88,8 @@ crossingGate_notify (observer_t* this, observable_t* observable)
 {
 	train_t* train = (train_t*) observable;
 	crossingGate_t* thisCG = (crossingGate_t*) this;
-	telemetry_t telemetry = train->telemetry;
-	char sector = telemetry->sector;
+	//telemetry_t telemetry = train->telemetry;
+	char sector = train->telemetry->sector;
 
 	//Check if a train has just entered the crossing gate sector
 	if (sector == thisCG->sectorCrossing) {
