@@ -1,4 +1,4 @@
-include "observer.h"
+#include "observer.h"
 
 void
 observer_init (observer_t* this, observer_notify_func_t notify)

@@ -3,6 +3,7 @@
 
 #include "../observer.h"
 
+
 typedef void (*actuator_notify_func_t) (observer_t*, observable_t*);
 
 typedef struct actuator_t

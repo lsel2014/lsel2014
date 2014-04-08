@@ -1,16 +1,14 @@
 #include <stdbool.h>
 #include "trafficLight.h"
 
-#include <../train.h>
-
-#include <native/mutex.h>
+#include "actuator.h"
 
 #include <wiringPi.h>
 
 void
 trafficLight_init (trafficLight_t* this, int id, int GPIOline, state_t state)
 {
-	actuator_init ((actuator_t*) this, id, traffic_light_notify);
+	actuator_init ((actuator_t*) this, id, trafficLight_notify);
 	
 	this->state = state;
 	this->GPIOline = GPIOline;
@@ -19,7 +17,7 @@ trafficLight_init (trafficLight_t* this, int id, int GPIOline, state_t state)
 	rt_mutex_create (&this->mutex, NULL);
 	
 	// Set GPIO line as output
-	pinMode (this->GPIOline, OUT);
+	pinMode (this->GPIOline, 1);
 	trafficLight_set_state (this, state);
 	
 }
@@ -69,18 +67,19 @@ trafficLight_set_state (trafficLight_t* this, state_t state)
 }
 
 void
-traffic_light_notify (observer_t* this, observable_t* observable)
+trafficLight_notify (observer_t* this, observable_t* observable)
 {
     train_t *tren = (train_t *) observable;
-    char sector = tren->telemetry.sector;
+    char sector = tren->telemetry->sector;
     train_direction_t direction = tren->direction;
     int i;
     int inside = -1;
-    
+    trafficLight_t* me = (trafficLight_t* ) this;
+
     // Check if the train is in the active train list
-    for (i=0;i<this->activeTrainsCount;i++)
+    for (i=0;i<(me->activeTrainsCount);i++)
     {
-    	if (this->activeTrains[i] == tren->ID)
+    	if ((me->activeTrains[i]) == (tren->ID))
     	{
     		inside=i;
     	}
@@ -91,9 +90,9 @@ traffic_light_notify (observer_t* this, observable_t* observable)
     {
     	// Check if it still has to be active
     	bool keep=false;
-    	for (i=0; i<this->sectors.sectorCount; i++)
+    	for (i=0; i<(me->sectors.sectorCount); i++)
     	{
-    		if (sector == this->sectors.sectors[i] && direction == this=->sectors.directions)
+    		if (sector == (me->sectors.sectors[i]) && direction == (me->sectors.directions[i]))
     		{
     			keep = true;
     		}
@@ -102,15 +101,15 @@ traffic_light_notify (observer_t* this, observable_t* observable)
     	// If not, remove it from the array, by moving the following ellements.
     	if (keep == false)
     	{
-    		for (i=inside; i<this->activeTrainsCount-1;i++)
+    		for (i=inside; i<(me->activeTrainsCount-1);i++)
     		{
-    			activeTrains[i] = activeTrains[i+1];
+    			me->activeTrains[i] = me->activeTrains[i+1];
     		}
-    		this->activeTrainsCount--;
+    		me->activeTrainsCount--;
     		
     		// If there are no active trains, turn off the lights.
-    		if this->activeTrainCount == 0) 
-    			trafficLight_set (this, OFF);
+    		if (me->activeTrainsCount == 0) 
+    			trafficLight_set_state (me, OFF);
     	}
     }
     // If it was not in the list...
@@ -118,9 +117,9 @@ traffic_light_notify (observer_t* this, observable_t* observable)
     {
     	// Check if it has to be active
     	bool keep=false;
-    	for (i=0; i<this->sectors.sectorCount)
+    	for (i=0; i<(me->sectors.sectorCount);i++)
     	{
-    		if (sector == this->sectors.sectors[i] && direction == this=->sectors.directions)
+    		if (sector == me->sectors.sectors[i] && direction == me->sectors.directions[i])
     		{
     			keep = true;
     		}
@@ -128,11 +127,11 @@ traffic_light_notify (observer_t* this, observable_t* observable)
     	
     	if (keep == true)
     	{
-    		this->activeTrains[activeTrainsCount] = tren->ID;
-    		this->activeTrainsCount++;
+    		me->activeTrains[me->activeTrainsCount] = tren->ID;
+    		me->activeTrainsCount++;
     		
-    		if this->activeTrainCount == 1) 
-    			trafficLight_set (this, ON);
+    		if (me->activeTrainsCount == 1) 
+    			trafficLight_set_state (me, ON);
     	}
     }			
     

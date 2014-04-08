@@ -67,7 +67,7 @@ int train_cmd(char* arg) {
 	if (0 == strncmp(arg, "function ", strlen("function "))) {
 		int function,state;
 		sscanf(arg + strlen("function "), "%d %d", &function, &state);
-		if (function < 13 && function > 0) {
+		if (function < 13 && function >= 0) {
 			dcc_add_function_packet(current_train->dcc, current_train->ID,
 					function, state);
 			return 0;
