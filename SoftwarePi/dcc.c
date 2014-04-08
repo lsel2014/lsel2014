@@ -13,14 +13,13 @@ const char train_speed_codes[29] = { 0b00000, 0b00010, 0b10010, 0b00011,
 		0b11011, 0b01100, 0b11100, 0b01101, 0b11101, 0b01110, 0b11110, 0b01111,
 		0b11111 };
 
-
 dcc_sender_t* dcc_new(int gpio, int deadline) {
-	dcc_sender_t* this = (dcc_sender_t*) malloc (sizeof(dcc_sender_t));
+	dcc_sender_t* this = (dcc_sender_t*) malloc(sizeof(dcc_sender_t));
 	dcc_init(this, gpio, deadline);
 	return this;
 }
 
-void dcc_init (dcc_sender_t* this, int dcc_gpio, int deadline) {
+void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline) {
 	pinMode(dcc_gpio, OUTPUT);
 	this->dcc_gpio = dcc_gpio;
 	this->pending_packets = 0;
@@ -28,7 +27,7 @@ void dcc_init (dcc_sender_t* this, int dcc_gpio, int deadline) {
 	this->buffer.writePointer = 0;
 	this->buffer.pending_packets = 0;
 	rt_mutex_create(&(this->dcc_mutex), "dcc_mutex");
-	task_add("DCC sender",63000,dcc_send,this);
+	task_add("DCC sender", 63000, dcc_send, this);
 
 }
 void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
@@ -47,8 +46,20 @@ void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
 		this->buffer.pending_packets++;
 	}
 	rt_mutex_release(&(this->dcc_mutex));
-	rt_printf("%x\n",packet);
+	rt_printf("%x\n", packet);
 }
+
+void dcc_add_function_packet(dcc_sender_t* this, unsigned char address, unsigned char data){
+	dcc_packet_t dcc_packet;
+		char dcc_packet_ecc;
+		dcc_packet = 0b11110000000000000000000000000001;
+		dcc_packet |= ((unsigned int) address) << 19;
+		dcc_packet |= ((unsigned int) data) << 10;
+		dcc_packet_ecc = address ^ data;
+		dcc_packet |= ((unsigned int) dcc_packet_ecc) << 1;
+		dcc_add_packet(this, dcc_packet);
+};
+
 
 /*
  * DCC packet structure.
@@ -64,17 +75,21 @@ void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
 
 void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed) {
 	dcc_packet_t dcc_packet;
+	char dcc_packet_data, dcc_packet_ecc;
 	dcc_packet = 0b11110000000000000000000000000001;
-	dcc_packet|= ((unsigned int)address)<<19;
-	char dcc_packet_data,dcc_packet_ecc;
-	if (speed>0) {
+	dcc_packet |= ((unsigned int) address) << 19;
+	if (speed > 28)
+		speed = 28;
+	if (speed < -28)
+		speed = -28;
+	if (speed > 0) {
 		dcc_packet_data = 0b01100000 | train_speed_codes[abs(speed)];
 	} else {
 		dcc_packet_data = 0b01000000 | train_speed_codes[abs(speed)];
 	}
-	dcc_packet|= ((unsigned int)dcc_packet_data)<<10;
+	dcc_packet |= ((unsigned int) dcc_packet_data) << 10;
 	dcc_packet_ecc = address ^ dcc_packet_data;
-	dcc_packet|= ((unsigned int)dcc_packet_ecc)<<1;
+	dcc_packet |= ((unsigned int) dcc_packet_ecc) << 1;
 	dcc_add_packet(this, dcc_packet);
 }
 ;
@@ -100,7 +115,7 @@ void dcc_send(void* arg) {
 					rt_mutex_release(&(this->dcc_mutex));
 					buffer = 0xFFFC000000000000ULL
 							| (((unsigned long long) current_packet) << 22);
-					rt_printf("%llx, %x\n",buffer,current_packet);
+					rt_printf("%llx, %x\n", buffer, current_packet);
 					idle_packet = buffer;
 				} else {
 					buffer = idle_packet;

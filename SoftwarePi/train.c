@@ -15,23 +15,24 @@ static int ntrains = 0;
 static train_t* current_train;
 
 /*This will be integrated with the interpreter*/
-void trains_setup(void){
-	dcc_sender_t* dccobject = dcc_new(12,50);
+void trains_setup(void) {
+	dcc_sender_t* dccobject = dcc_new(12, 50);
 
-	trains[0] = train_new ("Diesel", 0b0000100, '0', 20, dccobject);
-	trains[1] = train_new ("Vapor", 0b0000011, '0', 25, dccobject);
+	trains[0] = train_new("Diesel", 0b0000100, '0', 20, dccobject);
+	trains[1] = train_new("Vapor", 0b0000011, '0', 25, dccobject);
 	current_train = trains[0];
-	interp_addcmd ("t", train_cmd, "Set train parameters");
+	interp_addcmd("t", train_cmd, "Set train parameters\n");
 }
 
 int train_cmd(char* arg) {
 	if (0 == strcmp(arg, "list")) {
-		printf("ID\tNAME\tPOWER\tDIRECTION\t\n");
+		printf("ID\tNAME\tPOWER\tDIRECTION\tACTIVE\n");
 		int i;
 		for (i = 0; i < ntrains; ++i) {
-			printf("%d\t%s\t%d\t%s\r\n", trains[i]->ID, trains[i]->name,
+			printf("%d\t%s\t%d\t%s\t%s\r\n", trains[i]->ID, trains[i]->name,
 					trains[i]->power,
-					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE");
+					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE",
+					(trains[i]->ID == current_train->ID) ? "<" : " ");
 		}
 		return 0;
 	}
@@ -44,12 +45,19 @@ int train_cmd(char* arg) {
 				return 0;
 			}
 		}
+		printf(
+				"Train not found. Use t list to see a list of available trains\n");
 		return 1;
 	}
 	if (0 == strncmp(arg, "speed ", strlen("speed "))) {
 		int target_speed;
 		target_speed = atoi(arg + strlen("speed "));
-		train_set_target_power(current_train, target_speed);
+		if (abs(target_speed) > 28) {
+			printf("Speed must be between -28 and 28\n");
+			return 1;
+		} else {
+			train_set_target_power(current_train, target_speed);
+		}
 		return 0;
 	}
 	return 1;
@@ -98,10 +106,10 @@ void train_set_ID(train_t* this, char ID) {
 
 void train_set_power(train_t* this, int power) {
 	this->power = power;
-	if (power < 0){
-		train_set_direction (this, REVERSE);
-	}else{
-		train_set_direction (this, FORWARD);
+	if (power < 0) {
+		train_set_direction(this, REVERSE);
+	} else {
+		train_set_direction(this, FORWARD);
 	}
 	dcc_add_speed_packet(this->dcc, this->ID, this->power);
 }

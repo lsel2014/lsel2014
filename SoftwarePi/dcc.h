@@ -4,7 +4,6 @@
 #define DCC_PERIOD 58000
 #include <native/mutex.h>
 
-
 /*
  * DCC packet structure.
  * 14bit preamble (only 4 here to fit in 32bit)
@@ -16,27 +15,27 @@
  * 8 bit error checking code (address XOR data)
  * 1 bit packet end (always 1)
  */
-	typedef unsigned int dcc_packet_t;
+typedef unsigned int dcc_packet_t;
 
-	typedef struct{
-		dcc_packet_t packet_buffer[PACKET_BUFFER_SIZE];
-		int writePointer;
-		int readPointer;
-		int pending_packets;
-	}dcc_buffer;
+typedef struct {
+	dcc_packet_t packet_buffer[PACKET_BUFFER_SIZE];
+	int writePointer;
+	int readPointer;
+	int pending_packets;
+} dcc_buffer;
 
+typedef struct {
+	int dcc_gpio;
+	int pending_packets;
+	dcc_buffer buffer;
+	RT_MUTEX dcc_mutex;
+} dcc_sender_t;
 
-	typedef struct {
-		int dcc_gpio;
-		int pending_packets;
-		dcc_buffer buffer;
-		RT_MUTEX dcc_mutex;
-	}dcc_sender_t;
-
-	dcc_sender_t* dcc_new (int gpio, int deadline);
-	void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline);
-	void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet);
-	void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed);
-	void dcc_send(void* arg);
+dcc_sender_t* dcc_new(int gpio, int deadline);
+void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline);
+void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet);
+void dcc_add_function_packet(dcc_sender_t* this, unsigned char address, unsigned char data);
+void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed);
+void dcc_send(void* arg);
 
 #endif
