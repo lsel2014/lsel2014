@@ -74,7 +74,7 @@ sensorIR_init(sensor_t* this, int id)
 
 	thisIR->last_reading=-1;
 
-	rt_mutex_create (&this->mutex_sensorIR, NULL);
+	rt_mutex_create (&thisIR->mutex, NULL);
 
 }
 
@@ -101,13 +101,13 @@ sensorIR_readLine(sensorIR_t* this, int trainLine) //trainLine: 0 for diesel, 1 
 	int r;
 
 	// Adquire mutex
-	rt_mutex_aquire(&this->mutex_sensorIR);
+	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
 	// Read sensor line
 	r = digitalRead(this->GPIOlines[trainLine]);
 
 	// Release mutex
-	rt_mutex_release(&this->mutex_sensorIR);
+	rt_mutex_release(&this->mutex);
 	return r;
 }
 
@@ -118,7 +118,7 @@ sensorIR_trainPassing(sensorIR_t* this)
 	r=-1;
 
 	// Adquire mutex
-	rt_mutex_aquire(&this->mutex_sensorIR);
+	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
 	for (i = 0; i < NUMBER_OF_TRAINS; i++) {
 			// Read sensor line and check its state
@@ -130,10 +130,10 @@ sensorIR_trainPassing(sensorIR_t* this)
 	this->last_reading = r; // 0 if diesel is passing, 1 if renfe is passing, or -1 if no one
 
 	// Release mutex
-	rt_mutex_release(&this->mutex_sensorIR);
+	rt_mutex_release(&this->mutex);
 
 	if (this->last_reading >= 0) {
-		sensorIR_process_data (this);
+		sensorIR_process_data ((sensor_t*)this);
 	}
 }
 

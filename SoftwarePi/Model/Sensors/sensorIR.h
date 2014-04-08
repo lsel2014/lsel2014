@@ -8,7 +8,7 @@
 #ifndef SENSORIR_H
 #define SENSORIR_H
 
-#include <pthread.h>
+#include <native/mutex.h>
 #include "sensor.h"
 
 #define NUMBER_OF_TRAINS 2 //esto habr�a que sacarlo de aqu� cuanto antes
@@ -22,7 +22,7 @@ typedef struct sensorIR_t {
 	int GPIOlines[NUMBER_OF_TRAINS];
 	int last_reading;
 
-	pthread_mutex_t mutex_sensorIR;
+	RT_MUTEX mutex;
 
 } sensorIR_t;
 
@@ -31,7 +31,7 @@ void sensorIR_init (sensor_t* this, int id);
 void sensorIR_destroy (sensor_t* this);
 
 int sensorIR_readLine(sensorIR_t* this, int trainLine);
-int sensorIR_trainPassing(sensorIR_t* this);
+void sensorIR_trainPassing(sensorIR_t* this);
 
 void sensorIR_process_data (sensor_t* this);
 
