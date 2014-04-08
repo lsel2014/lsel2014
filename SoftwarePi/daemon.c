@@ -63,7 +63,6 @@ void initializeWiringPi(void) {
 }
 
 int main(int argc, char* argv[]) {
-	RT_TASK task_poll, task_dcc, task_sun;
 
 	// Initialize Xenomai RT enviroment
 	initializeXenomaiEnv();

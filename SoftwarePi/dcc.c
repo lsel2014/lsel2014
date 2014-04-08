@@ -49,8 +49,8 @@ void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
 	//rt_printf("%x\n", packet);
 }
 
-void dcc_add_function_packet(dcc_sender_t* this, unsigned char address, unsigned char data){
-	dcc_packet_t dcc_packet;
+void dcc_add_data_packet(dcc_sender_t* this, unsigned char address, unsigned char data){
+		dcc_packet_t dcc_packet;
 		char dcc_packet_ecc;
 		dcc_packet = 0b11110000000000000000000000000001;
 		dcc_packet |= ((unsigned int) address) << 19;
@@ -58,8 +58,40 @@ void dcc_add_function_packet(dcc_sender_t* this, unsigned char address, unsigned
 		dcc_packet_ecc = address ^ data;
 		dcc_packet |= ((unsigned int) dcc_packet_ecc) << 1;
 		dcc_add_packet(this, dcc_packet);
-};
+}
 
+
+void dcc_add_function_packet(dcc_sender_t* this, unsigned char address,
+		unsigned char function, unsigned char state) {
+	dcc_packet_t dcc_packet;
+	char dcc_packet_ecc;
+	char data = 0;
+	if (function < 5) {
+		data |= 0b10000000;
+		if (state) {
+			data |= 1 << (function - 1);
+		}
+	}
+	if (function >= 5 && function < 9) {
+		data |= 0b10110000;
+		if (state) {
+			data |= 1 << (function - 5);
+		}
+	}
+	if (function >= 9 && function < 12) {
+		data |= 0b10100000;
+		if (state) {
+			data |= 1 << (function - 9);
+		}
+	}
+	dcc_packet = 0b11110000000000000000000000000001;
+	dcc_packet |= ((unsigned int) address) << 19;
+	dcc_packet |= ((unsigned int) data) << 10;
+	dcc_packet_ecc = address ^ data;
+	dcc_packet |= ((unsigned int) dcc_packet_ecc) << 1;
+	dcc_add_packet(this, dcc_packet);
+}
+;
 
 /*
  * DCC packet structure.

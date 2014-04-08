@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <native/mutex.h>
 #include "dcc.h"
+#define ESTOP_CMD 0b01000001
 #include "Interpreter/interp.h"
 
 typedef struct telemetry_t {

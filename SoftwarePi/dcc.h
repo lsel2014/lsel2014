@@ -35,8 +35,9 @@ typedef struct {
 dcc_sender_t* dcc_new(int gpio, int deadline);
 void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline);
 void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet);
-void dcc_add_function_packet(dcc_sender_t* this, unsigned char address, unsigned char data);
+void dcc_add_function_packet(dcc_sender_t* this, unsigned char address, unsigned char function, unsigned char state);
 void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed);
+void dcc_add_data_packet(dcc_sender_t* this, unsigned char address, unsigned char data);
 void dcc_send(void* arg);
 
 #endif
