@@ -19,98 +19,98 @@
 #define COLOR_GREEN "\x1b[32m"
 #define COLOR_RESET "\x1b[0m"
 
-
 static void sensorIR_isr0 (void)
 {
-	rt_printf(COLOR_GREEN"Detectado diesel\n"COLOR_RESET);
+	printf(COLOR_GREEN"Detectado diesel\n"COLOR_RESET);
+	//we will probably need to control rebounds and false calls
 	//detected diesel train, do something
+
+	//process data?
+	//notify observers?
+	//maybe just 1 isr?
 }
 
 static void sensorIR_isr1 (void)
 {
-	rt_printf(COLOR_GREEN"Detectado renfe\n"COLOR_RESET);
+	printf(COLOR_GREEN"Detectado renfe\n"COLOR_RESET);
+	//we will probably need to control rebounds and false calls
 	//detected renfe train, do something
 }
-
-
 
 static void (*sensorIR_isr[]) (void) = {
   sensorIR_isr0,
   sensorIR_isr1,
 };
-
 */
-sensorIR_t*
+
+sensor_t*
 sensorIR_new(int id)
 {
-	sensorIR_t* this = (sensorIR_t*) malloc(sizeof(sensorIR_t));
+	sensor_t* this = (sensor_t*) malloc (sizeof(sensorIR_t));
 	sensorIR_init(this, id);
 	return this;
 }
 
 void
-sensorIR_init(sensorIR_t* this, int id)
+sensorIR_init(sensor_t* this, int id)
 {
 	int i;
+	sensorIR_t* thisIR = (sensorIR_t*) this;
 
-	this->id = id;
+	sensor_init(this, sensorIR_process_data, id);
 
 	for (i = 0; i < NUMBER_OF_TRAINS; i++) {
 		// Set the associated train line for that sensor
-		this->GPIOlines[i] = (id * 2) + i;
-		
+		thisIR->GPIOlines[i] = (id * NUMBER_OF_TRAINS) + i;
+
 		// Set the line as input
-		pinMode (this->GPIOlines[i], INPUT);
+		pinMode (thisIR->GPIOlines[i], INPUT);
 
 		/*if (wiringPiISR (this->GPIOlines[i], INT_EDGE_RISING, sensorIR_isr[i]) < 0) {
-		    fprintf (stderr, "Unable to setup ISR: %s\n", strerror (errno)) ;
+			fprintf (stderr, "Unable to setup ISR: %s\n", strerror (errno)) ;
 		}*/
 	}
-	
-	// Initialize mutex
-	pthread_mutex_init(&this->mutex_sensorIR, NULL);
+
+	thisIR->last_reading=-1;
+
+	pthread_mutex_init(&thisIR->mutex_sensorIR, NULL);
+
 }
 
 void
-sensorIR_destroy(sensorIR_t* this)
+sensorIR_destroy(sensor_t* this)
 {
+	sensorIR_t* thisIR = (sensorIR_t*) this;
+
+	// TODO -> REPAIR
+	//free((observable_t*) this->observable);
 	if (this->id)
 		free((int*) this->id);
-	if (this->GPIOlines)
-		free((int*) this->GPIOlines);
-	pthread_mutex_destroy(&this->mutex_sensorIR);
+	if (thisIR->GPIOlines)
+		free((int*) thisIR->GPIOlines);
+	if (thisIR->last_reading)
+			free((int*) thisIR->last_reading);
+	pthread_mutex_destroy(&thisIR->mutex_sensorIR);
 	free(this);
 }
 
 int
-sensorIR_get_id(sensorIR_t* this)
-{
-	return this->id;
-}
-
-void
-sensorIR_set_id(sensorIR_t* this, int newid)
-{
-	this->id = newid;
-}
-
-int
-sensorIR_readLine(sensorIR_t* this, int trainLine) //train: 0 for diesel, 1 for renfe
+sensorIR_readLine(sensorIR_t* this, int trainLine) //trainLine: 0 for diesel, 1 for renfe
 {
 	int r;
-	
+
 	// Adquire mutex
 	pthread_mutex_lock(&this->mutex_sensorIR);
-	
+
 	// Read sensor line
 	r = digitalRead(this->GPIOlines[trainLine]);
-	
+
 	// Release mutex
 	pthread_mutex_unlock(&this->mutex_sensorIR);
 	return r;
 }
 
-int
+void
 sensorIR_trainPassing(sensorIR_t* this)
 {
 	int i, r;
@@ -118,17 +118,27 @@ sensorIR_trainPassing(sensorIR_t* this)
 
 	// Adquire mutex
 	pthread_mutex_lock(&this->mutex_sensorIR);
-	
+
 	for (i = 0; i < NUMBER_OF_TRAINS; i++) {
-		// Read sensor line and check its state
-		if (digitalRead(this->GPIOlines[i]) == HIGH) {
-			r=i;
-		}
+			// Read sensor line and check its state
+			if (digitalRead(this->GPIOlines[i]) == HIGH) {
+				r=i;
+			}
 	}
-	
+
+	this->last_reading = r; // 0 if diesel is passing, 1 if renfe is passing, or -1 if no one
+
 	// Release mutex
 	pthread_mutex_unlock(&this->mutex_sensorIR);
 
-	return r; //returns 0 if diesel is passing, 1 if renfe is passing, or -1 if no one
+	if (this->last_reading >= 0) {
+		sensorIR_process_data (this);
+	}
+}
+
+void
+sensorIR_process_data (sensor_t* this)
+{
+	observable_notify_observers ((observable_t*) this);
 }
 

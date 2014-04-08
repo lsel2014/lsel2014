@@ -9,28 +9,30 @@
 #define SENSORIR_H
 
 #include <pthread.h>
+#include "sensor.h"
 
-#define NUMBER_OF_TRAINS 2 //esto habría que sacarlo de aquí cuanto antes
+#define NUMBER_OF_TRAINS 2 //esto habrï¿½a que sacarlo de aquï¿½ cuanto antes
 
 struct sensorIR_t;
 
 typedef struct sensorIR_t {
 
-	int id;
-	int GPIOlines[NUMBER_OF_TRAINS];
+	struct sensor_t sensor;
 
-	pthread_mutex_t mutex_sensorIR;
+	int GPIOlines[NUMBER_OF_TRAINS];
+	int last_reading;
+
+	RT_MUTEX mutex_sensorIR;
 
 } sensorIR_t;
 
-sensorIR_t* sensorIR_new (int id);
-void sensorIR_init (sensorIR_t* this, int id);
-void sensorIR_destroy (sensorIR_t* this);
-
-int sensorIR_get_id (sensorIR_t* this);
-void sensorIR_set_id (sensorIR_t* this, int newid);
+sensor_t* sensorIR_new (int id);
+void sensorIR_init (sensor_t* this, int id);
+void sensorIR_destroy (sensor_t* this);
 
 int sensorIR_readLine(sensorIR_t* this, int trainLine);
 int sensorIR_trainPassing(sensorIR_t* this);
+
+void sensorIR_process_data (sensor_t* this);
 
 #endif
