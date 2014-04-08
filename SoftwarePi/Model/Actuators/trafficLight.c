@@ -1,3 +1,14 @@
+/*
+	LSEL 2014
+
+	@authors _____, J. Martin
+	@date April 2014
+
+	Represents a traffic semaphore that activates when some trains are in certain sectors with a certain direction.
+	
+*/
+
+
 #include <stdbool.h>
 #include "trafficLight.h"
 
@@ -125,6 +136,7 @@ trafficLight_notify (observer_t* this, observable_t* observable)
     		}
     	}
     	
+    	// If it has to be active, add to the active trains
     	if (keep == true)
     	{
     		me->activeTrains[me->activeTrainsCount] = tren->ID;

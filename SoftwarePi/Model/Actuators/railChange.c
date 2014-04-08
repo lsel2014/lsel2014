@@ -1,10 +1,22 @@
-#include "rail_change.h"
+/*
+	LSEL 2014
+
+	@authors _____, J. Martin
+	@date April 2014
+
+	Represents a electrical rail changer.
+	
+*/
+
+#include "railChange.h"
+
 
 void
 rail_change_init (rail_change_t* this, direction_t direction)
 {
 	this->direction = direction;
-	pthread_mutex_init (&this->mutex, NULL);
+	
+	rt_mutex_create (&this->mutex, NULL);
 
 }
 
@@ -22,16 +34,16 @@ rail_change_new (direction_t direction)
 direction_t
 rail_change_get_direction (rail_change_t* this)
 {
-return this->direction;
-
+	return this->direction;
 }
 
 
 void
 rail_change_set_direction (rail_change_t* this, direction_t direction)
 {
-pthread_mutex_lock (&this->mutex);
-this->direction = direction;
-pthread_mutex_unlock (&this->mutex);
-
+	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
+	
+	this->direction = direction;
+	
+	rt_mutex_release(&(this->mutex));
 }

@@ -1,3 +1,9 @@
+/*
+	LSEL 2014
+
+	@authors _____, J. Martin
+
+*/
 #ifndef TRAFFIC_LIGHT_H
 #define TRAFFIC_LIGHT_H
 #include <stdlib.h>
