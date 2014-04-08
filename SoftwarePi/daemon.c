@@ -6,7 +6,7 @@
 #include <sys/mman.h>
 #include <native/task.h>
 #include <native/timer.h>
-
+#include "train.h"
 // WiringPi
 #include <wiringPi.h>
 
@@ -16,10 +16,10 @@
 // Tasks
 #include "dcc.h"
 //#include "poll.h"
-#include "sunTasks.h"
+//#include "sunTasks.h"
 
 // Interpreter
-#include "interp.h"
+#include "Interpreter/interp.h"
 
 #include "daemon.h"
 #include "tasks.h"
@@ -85,25 +85,25 @@ int main(int argc, char* argv[]) {
 	 * priority,
 	 * mode (FPU, start suspended, ...)
 	 */
-	rt_task_create(&task_dcc, "dccSend", 0, TASK_DCC_PRIORITY, 0);
+	//rt_task_create(&task_dcc, "dccSend", 0, TASK_DCC_PRIORITY, 0);
 	//rt_task_create(&task_poll, "polling", 0, TASK_POLL_PRIORITY, 0);
-	rt_task_create(&task_sun, "sun", 0, TASK_SUN_PRIORITY, 0);
+	//rt_task_create(&task_sun, "sun", 0, TASK_SUN_PRIORITY, 0);
 	/*
 	 * Arguments: &task,
 	 * task function,
 	 * function argument*/
-
+	trains_setup();
 	// TODO Hay que darle argumentos a la tarea!
-	rt_task_start(&task_dcc, &dcc_send, NULL );
+	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
-	rt_task_start(&task_sun, &daemon_update_sun, NULL );
-	task_start_all()
+	// rt_task_start(&task_sun, &daemon_update_sun, NULL );
+	task_start_all();
 	interp_run();
 
 	// Remove the permanent tasks
 	//rt_task_delete(&task_poll);
-	rt_task_delete(&task_dcc);
-	rt_task_delete(&task_sun);
-	task_delete_all()
+	//rt_task_delete(&task_dcc);
+	//rt_task_delete(&task_sun);
+	task_delete_all();
 	return 0;
 }

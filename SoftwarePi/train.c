@@ -20,16 +20,16 @@ void trains_setup(void){
 
 	trains[0] = train_new ("Diesel", 0b0000100, '0', 20, dccobject);
 	trains[1] = train_new ("Vapor", 0b0000011, '0', 25, dccobject);
-
+	current_train = trains[0];
 	interp_addcmd ("t", train_cmd, "Set train parameters");
 }
 
 int train_cmd(char* arg) {
 	if (0 == strcmp(arg, "list")) {
-		rt_printf("ID\tNAME\tPOWER\tDIRECTION\t");
+		printf("ID\tNAME\tPOWER\tDIRECTION\t\n");
 		int i;
 		for (i = 0; i < ntrains; ++i) {
-			rt_printf("%d\t%s\t%d\t%s\r\n", trains[i]->ID, trains[i]->name,
+			printf("%d\t%s\t%d\t%s\r\n", trains[i]->ID, trains[i]->name,
 					trains[i]->power,
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE");
 		}

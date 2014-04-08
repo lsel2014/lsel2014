@@ -1,9 +1,10 @@
 #include <sys/mman.h>
 #include <native/task.h>
 #include <native/timer.h>
+#include "tasks.h"
 
 taskinfo_t* tasks[MAX_TASKS];
-int numasks=0;
+int numtasks=0;
 
 void task_add(char* name, int deadline, void (*f)(void *),void* arg){
 	RT_TASK* new_task = malloc(sizeof(RT_TASK));
@@ -34,7 +35,9 @@ void task_delete_all(){
 };
 
 int task_cmp(const void* t1, const void* t2){
-	if((taskinfo_t*)t1->deadline < (taskinfo_t*)t2->deadline) return 1; 
-	if((taskinfo_t*)t1->deadline == (taskinfo_t*)t2->deadline) return 0; 
+	taskinfo_t* task1 = (taskinfo_t*)t1;
+	taskinfo_t* task2 = (taskinfo_t*)t2;
+	if(task1->deadline < task2->deadline) return 1;
+	if(task1->deadline < task2->deadline) return 0;
 	return -1;
 }

@@ -16,19 +16,7 @@
  * 8 bit error checking code (address XOR data)
  * 1 bit packet end (always 1)
  */
-	typedef union{
-		struct {
-			unsigned char preamble		:4;
-			unsigned char packet_start	:1;
-			unsigned char address 		:8;
-			unsigned char adseparator	:1;
-			unsigned char data		:8;
-			unsigned char deseparator 	:1;
-			unsigned char ecc		:8;
-			unsigned char packet_end    	:1;
-		};
-		unsigned int packet;
-	}dcc_packet_t;
+	typedef unsigned int dcc_packet_t;
 
 	typedef struct{
 		dcc_packet_t packet_buffer[PACKET_BUFFER_SIZE];
@@ -45,8 +33,6 @@
 		RT_MUTEX dcc_mutex;
 	}dcc_sender_t;
 
-
-	void packet_init (dcc_packet_t packet);
 	dcc_sender_t* dcc_new (int gpio, int deadline);
 	void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline);
 	void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet);

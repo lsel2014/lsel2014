@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <native/mutex.h>
 #include "dcc.h"
-#include "interp.h"
+#include "Interpreter/interp.h"
 
 typedef struct telemetry_t {
 	char sector;
