@@ -46,7 +46,7 @@ void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
 		this->buffer.pending_packets++;
 	}
 	rt_mutex_release(&(this->dcc_mutex));
-	rt_printf("%x\n", packet);
+	//rt_printf("%x\n", packet);
 }
 
 void dcc_add_function_packet(dcc_sender_t* this, unsigned char address, unsigned char data){
@@ -115,7 +115,7 @@ void dcc_send(void* arg) {
 					rt_mutex_release(&(this->dcc_mutex));
 					buffer = 0xFFFC000000000000ULL
 							| (((unsigned long long) current_packet) << 22);
-					rt_printf("%llx, %x\n", buffer, current_packet);
+					//rt_printf("%llx, %x\n", buffer, current_packet);
 					idle_packet = buffer;
 				} else {
 					buffer = idle_packet;

@@ -28,15 +28,10 @@ void sun_parse_data(sun_t* this) {
 	fclose(f);
 	remove("sunrise.xml");
 	/* TODO: ADD CHECKS or this WILL blow up*/
-	if (this->sunrise)
-		free((char*) this->sunrise);
 	this->sunrise.hours = atoi(strtok(xml_find(buf, "<sunrise>"), ":"));
-	this->sunrise.hours = atoi(strtok(NULL, ":"));
-	this->sunrise.hours = atoi(strtok(NULL, ":"));
-
-	if (this->sunset)
-		free((char*) this->sunset);
+	this->sunrise.minutes= atoi(strtok(NULL, ":"));
+	this->sunrise.seconds = atoi(strtok(NULL, ":"));
 	this->sunset.hours = atoi(strtok(xml_find(buf, "<sunset>"), ":"));
-	this->sunset.hours = atoi(strtok(NULL, ":"));
-	this->sunset.hours = atoi(strtok(NULL, ":"));
+	this->sunset.minutes = atoi(strtok(NULL, ":"));
+	this->sunset.seconds = atoi(strtok(NULL, ":"));
 }

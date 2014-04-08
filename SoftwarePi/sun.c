@@ -4,31 +4,32 @@
 #include <string.h>
 #include <wiringPiI2C.h>
 #include "sun.h"
+#include "sunparse.h"
 #include "tasks.h"
+#include "Interpreter/interp.h"
+sun_t* sun;
 
 void sun_setup(void) {
-	sun_t* sun = sun_new (DEFAULT_DATE,0x20,1000000000);
+	sun = sun_new (DEFAULT_DATE,0x20,1000000000);
 	interp_addcmd("sun", sun_cmd, "Set sun parameters\n");
 }
 
 int sun_cmd(char* arg) {
-	sun_t* this = (sun_t*) arg;
 	if (0 == strncmp(arg, "date ", strlen("date "))) {
 		char* date = arg + strlen("date ");
 		if (strlen(date) != 10) {
 			printf("Incorrect date. Use format dd/mm/yyyy\n");
 			return 1;
 		}
-		sun_set_date(this, date);
-		printf("Sunrise: %d:%d:%d\n", this->sunrise.hours,
-				this->sunrise.minutes, this->sunrise.seconds);
-		printf("Sunset: %d:%d:%d\n", this->sunset.hours,
-						this->sunset.minutes, this->sunset.seconds);
+		sun_set_date(sun, date);
+		printf("Sunrise: %d:%d:%d\n", sun->sunrise.hours,
+				sun->sunrise.minutes, sun->sunrise.seconds);
+		printf("Sunset: %d:%d:%d\n", sun->sunset.hours,
+				sun->sunset.minutes, sun->sunset.seconds);
 		return 0;
 	}
-	if (0 == strncmp(arg, "current ", strlen("current "))) {
-			char* date = arg + strlen("current ");
-			printf("%d\n",this->current_simulated_time);
+	if (0 == strncmp(arg, "current", strlen("current"))) {
+			printf("%d\n",sun->current_simulated_time);
 			return 0;
 		}
 
@@ -83,16 +84,14 @@ void sun_task(void* arg) {
 }
 
 sun_t*
-sun_new(sun_date_t date, char i2c_address, int deadline,) {
+sun_new(sun_date_t date, char i2c_address, int deadline) {
 	sun_t* this = (sun_t*) malloc(sizeof(sun_t));
 	sun_init(this, date, i2c_address, deadline);
 	return this;
 }
 
-void sun_init(sun_t* this, sun_date_t date, char i2c_address, int deadline,
+void sun_init(sun_t* this, sun_date_t date, char i2c_address, int deadline
 ) {
-	this->sunrise = NULL;
-	this->sunset = NULL;
 	this->i2c_address = i2c_address;
 	this->i2c_fd = wiringPiI2CSetup(i2c_address);
 	sun_set_date(this, date);
@@ -141,11 +140,5 @@ int sun_get_simulated_time(sun_t* this) {
 ;
 
 void sun_destroy(sun_t* this) {
-	if (this->date)
-		free((sun_date_t*) this->date);
-	if (this->sunrise)
-		free((sun_time_t*) this->sunrise);
-	if (this->sunset)
-		free((sun_time_t*) this->sunset);
 	free(this);
 }
