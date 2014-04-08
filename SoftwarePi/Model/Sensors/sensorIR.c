@@ -12,6 +12,7 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#include <native/mutex.h>
 #include <wiringPi.h>
 
 /*
@@ -73,7 +74,7 @@ sensorIR_init(sensor_t* this, int id)
 
 	thisIR->last_reading=-1;
 
-	pthread_mutex_init(&thisIR->mutex_sensorIR, NULL);
+	rt_mutex_create (&this->mutex_sensorIR, NULL);
 
 }
 
@@ -90,7 +91,7 @@ sensorIR_destroy(sensor_t* this)
 		free((int*) thisIR->GPIOlines);
 	if (thisIR->last_reading)
 			free((int*) thisIR->last_reading);
-	pthread_mutex_destroy(&thisIR->mutex_sensorIR);
+	//pthread_mutex_destroy(&thisIR->mutex_sensorIR);
 	free(this);
 }
 
@@ -100,13 +101,13 @@ sensorIR_readLine(sensorIR_t* this, int trainLine) //trainLine: 0 for diesel, 1 
 	int r;
 
 	// Adquire mutex
-	pthread_mutex_lock(&this->mutex_sensorIR);
+	rt_mutex_aquire(&this->mutex_sensorIR);
 
 	// Read sensor line
 	r = digitalRead(this->GPIOlines[trainLine]);
 
 	// Release mutex
-	pthread_mutex_unlock(&this->mutex_sensorIR);
+	rt_mutex_release(&this->mutex_sensorIR);
 	return r;
 }
 
@@ -117,7 +118,7 @@ sensorIR_trainPassing(sensorIR_t* this)
 	r=-1;
 
 	// Adquire mutex
-	pthread_mutex_lock(&this->mutex_sensorIR);
+	rt_mutex_aquire(&this->mutex_sensorIR);
 
 	for (i = 0; i < NUMBER_OF_TRAINS; i++) {
 			// Read sensor line and check its state
@@ -129,7 +130,7 @@ sensorIR_trainPassing(sensorIR_t* this)
 	this->last_reading = r; // 0 if diesel is passing, 1 if renfe is passing, or -1 if no one
 
 	// Release mutex
-	pthread_mutex_unlock(&this->mutex_sensorIR);
+	rt_mutex_release(&this->mutex_sensorIR);
 
 	if (this->last_reading >= 0) {
 		sensorIR_process_data (this);

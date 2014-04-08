@@ -22,7 +22,7 @@ typedef struct sensorIR_t {
 	int GPIOlines[NUMBER_OF_TRAINS];
 	int last_reading;
 
-	RT_MUTEX mutex_sensorIR;
+	pthread_mutex_t mutex_sensorIR;
 
 } sensorIR_t;
 
