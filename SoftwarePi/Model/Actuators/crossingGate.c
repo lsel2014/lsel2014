@@ -1,27 +1,60 @@
 #include <stdlib.h>
-#include <pthread.h>
+
+#include <native/task.h>
+
 #include <native/mutex.h>
 #include <stdbool.h>
 
 #include "crossingGate.h"
 
+#include <wiringPi.h>
+#include <softPwm.h>
+
+static crossingGate_t* barrier;
+
+void setup_crossingGate (void) {
+	barrier = crossingGate_new (0, 11, 2);
+	
+	
+	interp_addcmd("barrier", crossingGate_cmd, "Set barrier state\n");
+}
+
+int crossingGate_cmd(char* arg) {
+	if (0 == strcmp(arg, "list")) {
+		printf("Gate\t%s\r\n", (barrier->position) == UP ? "UP" : "DOWN");
+		
+		return 0;
+	}
+	if (0 == strncmp(arg, "set ", strlen("set "))) {
+		int state;
+		state = atoi(arg + strlen("set "));
+		crossingGate_set_position (barrier, state==1 ? UP : DOWN);
+		return 1;
+	}
+	return 1;
+}
+
+
+
+
 
 crossingGate_t*
-crossingGate_new (int id, char sectorCrossing)
+crossingGate_new (int id, int GPIOline, char sectorCrossing)
 {
 	crossingGate_t* this = (crossingGate_t*) malloc (sizeof (crossingGate_t));
-	crossingGate_init (this, id, sectorCrossing, DOWN);
+	crossingGate_init (this, id, GPIOline, sectorCrossing, DOWN);
 
 	return this;
 }
 
 void
-crossingGate_init (crossingGate_t* this, int id, char sectorCrossing, position_t position)
+crossingGate_init (crossingGate_t* this, int id, int GPIOline, char sectorCrossing, position_t position)
 {
 	int i;
 
     actuator_init ((actuator_t*) this, id, crossingGate_notify);
-
+	
+	this->GPIOline = GPIOline;
     this->sectorCrossing = sectorCrossing;
 	this->position = position;
 
@@ -29,8 +62,12 @@ crossingGate_init (crossingGate_t* this, int id, char sectorCrossing, position_t
 		this->trainsInside[i] = 0;
 	}
 	this->trainsInsideIndex = 0;
-
+	
+	pinMode (GPIOline, OUTPUT);
+	softPwmCreate(GPIOline, 0, 200);
+	
 	rt_mutex_create (&this->mutex, NULL);
+	crossingGate_set_position (this, position);
 }
 
 void
@@ -50,7 +87,15 @@ void
 crossingGate_set_position (crossingGate_t* this, position_t position)
 {
     rt_mutex_acquire(&(this->mutex), TM_INFINITE);
-    this->position = position;
+    if (this->position != position)
+    {
+    	RT_TASK servoTask;
+    	
+    	
+    	this->position = position;
+    	rt_task_create(&servoTask, "servo", 0, 40, 0);
+    	rt_task_start(&servoTask, &crossingGate_move_task, this);
+    }
     rt_mutex_release (&this->mutex);
 }
 
@@ -64,7 +109,31 @@ void
 crossingGate_set_sectorCrossing (crossingGate_t* this, char sectorCrossing)
 {
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
+	
     this->sectorCrossing = sectorCrossing;
+    
+    rt_mutex_release (&this->mutex);
+}
+
+void
+crossingGate_move_task (void *args)
+{
+	crossingGate_t* this = (crossingGate_t* ) args;
+	
+	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
+	
+	if (this->position == DOWN)
+	{
+		softPwmWrite (this->GPIOline, 18);
+	}
+	else
+	{
+		softPwmWrite (this->GPIOline, 9);
+	}
+	rt_task_sleep (500000000);
+	
+	softPwmWrite (this->GPIOline, 0);
+    
     rt_mutex_release (&this->mutex);
 }
 

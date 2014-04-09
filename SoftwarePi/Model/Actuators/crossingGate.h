@@ -13,6 +13,7 @@ typedef struct crossingGate_t
     actuator_t actuator;
 
     //Attributes
+    int GPIOline;
 	position_t position;
 	char sectorCrossing;
 
@@ -25,11 +26,13 @@ typedef struct crossingGate_t
 } crossingGate_t;
 
 
+void setup_crossingGate (void);
+int crossingGate_cmd(char* arg);
 /*
  * Object creation / destruction
  */
-crossingGate_t* crossingGate_new (int id, char sectorCrossing);
-void crossingGate_init (crossingGate_t* this, int id, char sectorCrossing, position_t position);
+crossingGate_t* crossingGate_new (int id, int GPIOline, char sectorCrossing);
+void crossingGate_init (crossingGate_t* this, int id, int GPIOline, char sectorCrossing, position_t position);
 void crossingGate_destroy (crossingGate_t* this);
 
 /*
@@ -37,7 +40,7 @@ void crossingGate_destroy (crossingGate_t* this);
  */
 position_t crossingGate_get_position (crossingGate_t* this);
 void crossingGate_set_position (crossingGate_t* this, position_t position);
-
+void crossingGate_move_task (void *args);
 char crossingGate_get_sectorCrossing (crossingGate_t* this);
 void crossingGate_set_sectorCrossing (crossingGate_t* this, char sectorCrossing);
 
