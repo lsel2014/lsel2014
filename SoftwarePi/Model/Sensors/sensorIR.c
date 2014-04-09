@@ -90,10 +90,11 @@ void sensorIR_init(sensorIR_t* this, int id) {
 	int i;
 	observable_init((observable_t *) this);
 	this->id = id;
-	for (i = 0; i < ntrains; i++) {
+	for (i = 0; i < 2; i++) {
+
 		// Set the associated train line for that sensor
-		this->GPIOlines[i] = (id * ntrains) + i;
-		rt_printf("%d gpio\n",this->GPIOlines[i]);
+		this->GPIOlines[i] = (id * 2) + i;
+		
 		// Set the line as input
 		pinMode(this->GPIOlines[i], INPUT);
 
@@ -134,21 +135,21 @@ void sensorIR_trainPassing(sensorIR_t* this) {
 	// Adquire mutex
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
-	for (i = 0; i < ntrains; i++) {
+	for (i = 0; i < 2; i++) {
 		// Read sensor line and check its state
 		if (digitalRead(this->GPIOlines[i]) == HIGH) {
-			r = i;
+			r = i+3;
 		}
 	}
 
-	this->last_reading = r; // 0 if diesel is passing, 1 if renfe is passing, or -1 if no one
+	this->last_reading = r; // 4 if diesel is passing, 3 if renfe is passing, or 2 if no one
 
 	// Release mutex
 	rt_mutex_release(&this->mutex);
 
-	if (this->last_reading >= 0) {
-		rt_printf("Calling observers");
-		//observable_notify_observers((observable_t*) this);
+	if (this->last_reading >= 3) {
+		
+		observable_notify_observers((observable_t*) this);
 	}
 }
 

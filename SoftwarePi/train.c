@@ -23,7 +23,6 @@ void trains_setup(void) {
 	train_new("Renfe", 0b0000011, '0', 25, dccobject);
 	for (i = 0; i < ntrains; i++) {
 		for (j = 0; j < nsensors; j++) {
-			rt_printf("registering observer %i , %i", i, j);
 			observable_register_observer((observable_t*) sensors[j],
 					(observer_t*) trains[i]);
 		}
@@ -48,13 +47,13 @@ int train_emergency_cmd(char*arg) {
 
 int train_cmd(char* arg) {
 	if (0 == strcmp(arg, "list")) {
-		printf("ID\tNAME\tPOWER\tDIRECTION\tACTIVE\n");
+		printf("ID\tNAME\tPOWER\tDIRECTION\tSECTOR\tACTIVE\n");
 		int i;
 		for (i = 0; i < ntrains; ++i) {
-			printf("%d\t%s\t%d\t%s\t%s\r\n", trains[i]->ID, trains[i]->name,
+			printf("%d\t%s\t%d\t%s\t%s\t%d\r\n", trains[i]->ID, trains[i]->name,
 					trains[i]->power,
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE",
-					(trains[i]->ID == current_train->ID) ? "<" : " ");
+					(trains[i]->ID == current_train->ID) ? "<" : " ",trains[i]->telemetry->sector);
 		}
 		return 0;
 	}
@@ -150,7 +149,30 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 }
 
 void train_notify(observer_t* this, observable_t* observed) {
-	rt_printf("Hi");
+	sensorIR_t* sensor = (sensorIR_t*)observed;
+	train_t* thisTrain = (train_t*)this;
+	
+	if(sensor->last_reading == thisTrain->ID) {
+		int newSector;
+		switch (thisTrain->direction)
+		{
+			case FORWARD:
+				newSector = sensor->id;
+				break;
+			case REVERSE:
+				newSector = sensor->id -1;
+				if (newSector == -1)
+					newSector = 3;
+				break;
+		}
+		if (thisTrain->telemetry->sector != newSector)
+		{
+			train_set_current_sector (thisTrain, newSector);
+			rt_printf ("Train %i passed to sector %i\n", thisTrain->ID, newSector);
+		}
+		
+	
+	}
 }
 
 void train_destroy(train_t* this) {
@@ -201,7 +223,7 @@ void train_set_length(train_t* this, char length) {
 void train_set_current_sector(train_t* this, char sector) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->sector = sector;
-	observable_notify_observers(&(this->observable));
+	//observable_notify_observers(&this->observable);
 	rt_mutex_release(&this->mutex);
 }
 
