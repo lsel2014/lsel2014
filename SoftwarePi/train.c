@@ -57,23 +57,38 @@ int train_cmd(char* arg) {
 			return 1;
 		} else {
 			train_set_target_power(current_train, target_speed);
+			printf("Train %d %s speed set to %d\n", current_train->ID,
+					current_train->name, target_speed);
 		}
 		return 0;
 	}
 	if (0 == strncmp(arg, "estop", strlen("estop"))) {
 		dcc_add_data_packet(current_train->dcc, current_train->ID, ESTOP_CMD);
+		train_set_target_power(current_train, 0);
+		printf("Train %d %s stopped\n", current_train->ID, current_train->name);
 		return 0;
 	}
 	if (0 == strncmp(arg, "function ", strlen("function "))) {
-		int function,state;
+		int function, state;
 		sscanf(arg + strlen("function "), "%d %d", &function, &state);
 		if (function < 13 && function >= 0) {
 			dcc_add_function_packet(current_train->dcc, current_train->ID,
 					function, state);
+			printf("Train %d %s function %d\n", current_train->ID,
+					current_train->name, function);
 			return 0;
 		}
+		printf("Only functions F0 to F12 available\n")
 		return 1;
 	}
+	if (0 == strncmp(arg, "help", strlen("help"))) {
+		printf(
+				"Available commands:\nselect <n>\tSelects train with ID <n>\nspeed <n>\tSets current train speed to <n>\nestop\tEmergency stop\nfunction <n> <s>\t<s>=1 enables DCC function <n>\n<s>=0 disables it");
+		return 0;
+	}
+
+	printf(
+			"Incorrect command. Use train help to see a list of available commands\n");
 	return 1;
 }
 

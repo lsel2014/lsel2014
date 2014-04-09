@@ -6,6 +6,7 @@
 #include "dcc.h"
 #define ESTOP_CMD 0b01000001
 #include "Interpreter/interp.h"
+#include "Model/observer.h"
 
 typedef struct telemetry_t {
 	char sector;
@@ -17,6 +18,8 @@ typedef enum {
 } train_direction_t;
 
 typedef struct train_t {
+	observer_t observer;
+	observable_t observable;
 	char* name;
 	char ID;
 	int target_power;
