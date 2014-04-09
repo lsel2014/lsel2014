@@ -12,6 +12,7 @@
 #include <native/mutex.h>
 #include "../../tasks.h"
 #include "../../train.h"
+#include "../../Interpreter/interp.h"
 #define MAXSENSORS 4
 
 #define IR_DEADLINE 20000000
@@ -35,7 +36,7 @@ extern int nsensors;
 
 void IRsensors_setup(void);
 void IRsensors_poll (void* arg);
-
+int sensors_cmd(char*arg);
 sensorIR_t* sensorIR_new (int id);
 void sensorIR_init (sensorIR_t* this, int id);
 void sensorIR_destroy (sensorIR_t* this);

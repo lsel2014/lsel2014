@@ -47,17 +47,25 @@
 sensorIR_t* sensors[MAXSENSORS];
 int nsensors = 0;
 
+int sensors_cmd(char*arg){
+	int i;
+	for(i=0;i<nsensors;i++){
+		printf("Sensor %d\n",sensors[i]->id);
+	}
+	return 0;
+}
+
 void IRsensors_setup(void) {
 	int i;
 	for (i = 0; i < 4; i++) {
 		sensorIR_new(i);
 	}
 	task_add("IR polling", IR_DEADLINE, IRsensors_poll, sensors);
+	interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
 }
 
 void IRsensors_poll(void* arg) {
-	// sensorIR_t* sensors = (sensorIR_t*) arg;
-
+	sensorIR_t** sensors = (sensorIR_t**) arg;
 	rt_task_set_periodic(NULL, TM_NOW, IR_PERIOD);
 	while (1) {
 		int i = 0;
@@ -82,7 +90,6 @@ void sensorIR_init(sensorIR_t* this, int id) {
 	int i;
 	observable_init((observable_t *) this);
 	this->id = id;
-
 	for (i = 0; i < ntrains; i++) {
 		// Set the associated train line for that sensor
 		this->GPIOlines[i] = (id * ntrains) + i;
@@ -141,7 +148,7 @@ void sensorIR_trainPassing(sensorIR_t* this) {
 
 	if (this->last_reading >= 0) {
 		rt_printf("Calling observers");
-		observable_notify_observers((observable_t*) this);
+		//observable_notify_observers((observable_t*) this);
 	}
 }
 

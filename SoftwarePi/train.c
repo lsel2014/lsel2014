@@ -84,6 +84,14 @@ int train_cmd(char* arg) {
 		}
 		return 0;
 	}
+
+	if (0 == strncmp(arg, "sector ", strlen("sector "))) {
+			int sector;
+			sector = atoi(arg + strlen("sector "));
+			train_set_current_sector(current_train, sector);
+			return 0;
+		}
+
 	if (0 == strncmp(arg, "estop", strlen("estop"))) {
 		dcc_add_data_packet(current_train->dcc, current_train->ID, ESTOP_CMD);
 		train_set_target_power(current_train, 0);

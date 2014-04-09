@@ -10,7 +10,7 @@
 sun_t* sun;
 
 void sun_setup(void) {
-	sun = sun_new (DEFAULT_DATE,0x20,SUN_DEADLINE);
+	sun = sun_new(DEFAULT_DATE, 0x20, SUN_DEADLINE);
 	interp_addcmd("sun", sun_cmd, "Set sun parameters\n");
 }
 
@@ -22,45 +22,41 @@ int sun_cmd(char* arg) {
 			return 1;
 		}
 		sun_set_date(sun, date);
-		printf("Sunrise: %d:%d:%d\n", sun->sunrise.hours,
-				sun->sunrise.minutes, sun->sunrise.seconds);
-		printf("Sunset: %d:%d:%d\n", sun->sunset.hours,
-				sun->sunset.minutes, sun->sunset.seconds);
+		printf("Sunrise: %d:%d:%d\n", sun->sunrise.hours, sun->sunrise.minutes,
+				sun->sunrise.seconds);
+		printf("Sunset: %d:%d:%d\n", sun->sunset.hours, sun->sunset.minutes,
+				sun->sunset.seconds);
 		return 0;
 	}
 	if (0 == strncmp(arg, "current", strlen("current"))) {
-			printf("%d\n",sun->current_simulated_time);
-			return 0;
-		}
+		printf("%d\n", sun->current_simulated_time);
+		return 0;
+	}
 
 	if (0 == strncmp(arg, "test", strlen("test"))) {
-			int i;
-			int flag = 1;
-			int buffer = -1;
-			int x;
-			for(i=0; i<5; i++){
-				x = sun->current_simulated_time;
-				if((x > buffer) && (x>=0) && (x<1201){
-					buffer = x;
-				}
-				else{
-					flag = 0;
-				}
-				sleep (2);
-
+		int i;
+		int flag = 1;
+		int buffer = -1;
+		int x;
+		for (i = 0; i < 5; i++) {
+			x = sun->current_simulated_time;
+			if ((x > buffer) && (x >= 0) && (x < 1201)) {
+				buffer = x;
+			} else {
+				flag = 0;
 			}
-
-			if(flag == 1){
-				printf("Test Reloj Virtual OK");
-				return 0;
-			}
-			else{
-				printf("Test Reloj Virtual NOK");
-				return 1;
-			}
-
-			return 0;
+			sleep(2);
 		}
+		if (flag == 1) {
+			printf("Test Reloj Virtual OK\n");
+			return 0;
+		} else {
+			printf("Test Reloj Virtual NOK\n");
+			return 1;
+		}
+
+		return 0;
+	}
 
 	return 1;
 }
@@ -120,8 +116,7 @@ sun_new(sun_date_t date, char i2c_address, int deadline) {
 	return this;
 }
 
-void sun_init(sun_t* this, sun_date_t date, char i2c_address, int deadline
-) {
+void sun_init(sun_t* this, sun_date_t date, char i2c_address, int deadline) {
 	this->i2c_address = i2c_address;
 	this->i2c_fd = wiringPiI2CSetup(i2c_address);
 	sun_set_date(this, date);
