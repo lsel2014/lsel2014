@@ -1,37 +1,62 @@
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Reloj de hora virtual LSEL</title>
-    <style type="text/css">
-        .centro {
-            width: 400px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: blue; 
-            color: white; 
-            font-family: Verdana, Arial, Helvetica; 
-            font-size: 30pt; 
-            text-align: center;
-        }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script>
-        function mueveReloj(){   
-            $(document).ready(function () {
-                setInterval("update_content();", 1000);
-            });
-        }
-        function update_content() {
-            $.get("text.txt", function(data) {
-                var content = data;
-                console.log(content); //Linea opcional
-                $("#refresh").html(content);
-            });
-        }
-    </script>
-</head>
-<body onload="mueveReloj()">
-    <div class="centro" id="refresh"></div>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>Reloj de hora virtual LSEL</title>
+		<style type="text/css">
+			.centro {
+				width: 600px;
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				background-color: blue; 
+				color: white; 
+				font-family: Verdana, Arial, Helvetica; 
+				font-size: 90pt; 
+				text-align: center;
+			}
+			.icono {
+				display: block;
+				background-color: blue; 
+				color: white; 
+				font-family: Verdana, Arial, Helvetica; 
+				font-size: 40pt; 
+				text-align: left;
+			}
+		</style>
+		<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+		</script>
+		<script>
+			function mueveReloj(){   
+				$(document).ready(function () {
+       				setInterval("update_content();", 742);
+       			});
+			}
+   			function update_content() {
+   				$.get("HoraVirtual.txt", function(data) {
+       				var content = data;
+           			console.log(content); //Linea opcional
+           			var hora_dia = content.replace(/.*( [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2} ).*/, "$1");
+           			hora_dia = hora_dia.replace(/ /, "");
+           			var hora = hora_dia.replace(/(^[0-9]{1,2}).*/, "$1");
+           			var minutos = hora_dia.replace(/[0-9]{1,2}:([0-9]{1,2}):[0-9]{1,2}/, "$1");
+           			hora = parseInt(hora);
+           			minutos = parseInt(minutos);
+           			var offset = 550*(hora*60+minutos)/1440 // 600 Tamaño del bloque
+           			if (hora < 7 || hora >= 20) {
+           				$("#solecito").html('&#9789;');
+           			} else {
+           				$("#solecito").html('&#9788;');
+           			}
+           			$("#solecito").css("margin-left", offset + "px");
+           			$("#refresh").html(content);
+ 				});
+			}
+		</script>
+	</head>
+	<body onload="mueveReloj()">
+		<div class="centro" id="refresh"></div>
+		<div class="centro">
+			<div class="icono" id="solecito"></div>
+		</div>
+	</body>
 </html>
