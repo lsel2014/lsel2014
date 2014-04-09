@@ -5,6 +5,8 @@
 #include "actuator.h"
 #include "../../train.h"
 
+#define GATE_PERIOD 500000000
+#define GATE_DEADLINE 500000000
 typedef enum {UP, DOWN} position_t;
 
 typedef struct crossingGate_t
@@ -16,7 +18,7 @@ typedef struct crossingGate_t
     int GPIOline;
 	position_t position;
 	char sectorCrossing;
-
+	int needsService;
 	//Private
 	char trainsInside[MAXTRAINS];
 	int trainsInsideIndex;

@@ -11,7 +11,7 @@
 #include <stdbool.h>
 #include "trafficLight.h"
 #include "actuator.h"
-#include "../train.h"
+#include "../../train.h"
 #include <wiringPi.h>
 
 static trafficLight_t* light;
@@ -22,8 +22,8 @@ void setup_trafficLight(void) {
 	trafficLight_set_sensibleSector(light, '3', REVERSE);
 	int i;
 	for (i = 0; i < ntrains; i++) {
-		observable_register_observer((observable_t) trains[i],
-				(observer_t) light);
+		observable_register_observer((observable_t*) trains[i],
+				(observer_t*) light);
 	}
 
 	interp_addcmd("semaphore", trafficLight_cmd, "Set semaphore state\n");
