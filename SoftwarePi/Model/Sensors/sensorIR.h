@@ -8,8 +8,11 @@
 #ifndef SENSORIR_H
 #define SENSORIR_H
 
+
 #include <native/mutex.h>
 #include "sensor.h"
+
+#define MAXSENSORS 4
 
 #define NUMBER_OF_TRAINS 2 //esto habr�a que sacarlo de aqu� cuanto antes
 
@@ -26,7 +29,11 @@ typedef struct sensorIR_t {
 
 } sensorIR_t;
 
-sensor_t* sensorIR_new (int id);
+extern sensorIR_t* sensors[MAXSENSORS];
+
+void IRsensors_setup(void);
+
+sensorIR_t* sensorIR_new (int id);
 void sensorIR_init (sensor_t* this, int id);
 void sensorIR_destroy (sensor_t* this);
 

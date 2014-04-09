@@ -44,7 +44,22 @@ static void (*sensorIR_isr[]) (void) = {
 };
 */
 
-sensor_t*
+sensorIR_t* sensors[MAXSENSORS];
+
+void IRsensors_setup (void) 
+{
+	int i;
+	
+	for (i=0;i<MAXSENSORS;i++)
+	{
+		sensors[i] = sensorIR_new(i);
+	}
+	
+}
+
+
+
+sensorIR_t*
 sensorIR_new(int id)
 {
 	sensor_t* this = (sensor_t*) malloc (sizeof(sensorIR_t));
