@@ -6,31 +6,35 @@
 	
 */
 
-#ifndef RAIL_CHANGE_H
-#define RAIL_CHANGE_H
+#ifndef railChange_H
+#define railChange_H
 #include <stdlib.h>
 #include <native/mutex.h>
-
+#include "../../Interpreter/interp.h"
 typedef enum {LEFT, RIGHT} direction_t;
 
-typedef struct rail_change_t
+typedef struct railChange_t
 {
+	int GPIOline;
 	direction_t direction;
 
 	RT_MUTEX mutex;
 
-} rail_change_t;
+} railChange_t;
 
 
 //----------------------------
-
-void rail_change_init (rail_change_t* this, direction_t direction);
-
-rail_change_t* rail_change_new (direction_t direction);
+void setupRailChange(void);
+int railChange_cmd(char* arg);
 
 
-direction_t rail_change_get_direction ();
+void railChange_init (railChange_t* this, int GPIOline, direction_t direction);
 
-void rail_change_set_direction (rail_change_t* this, direction_t direction);
+railChange_t* railChange_new (int GPIOline, direction_t direction);
+
+
+direction_t railChange_get_direction ();
+
+void railChange_set_direction (railChange_t* this, direction_t direction);
 
 #endif

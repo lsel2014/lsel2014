@@ -25,6 +25,7 @@
 //Model
 #include "train.h"
 #include "sun.h"
+#include "Model/Actuators/railChange.h"
 
 
 // Dummy function to catch signals
@@ -91,6 +92,7 @@ int main(int argc, char* argv[]) {
 	 * task function,
 	 * function argument*/
 	trains_setup();
+	setupRailChange();
 	sun_setup();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );

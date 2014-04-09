@@ -28,7 +28,7 @@ trafficLight_init (trafficLight_t* this, int id, int GPIOline, state_t state)
 	rt_mutex_create (&this->mutex, NULL);
 	
 	// Set GPIO line as output
-	pinMode (this->GPIOline, 1);
+	pinMode (this->GPIOline, OUTPUT);
 	trafficLight_set_state (this, state);
 	
 }
