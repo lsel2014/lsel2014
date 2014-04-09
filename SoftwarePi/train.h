@@ -10,7 +10,7 @@
 
 typedef struct{
 	char sector;
-	char speed;
+	float speed;
 } telemetry_t;
 
 typedef enum {
@@ -50,7 +50,8 @@ void train_set_power(train_t* this, int power);
 void train_set_direction(train_t* this, train_direction_t direction);
 void train_set_n_wagon(train_t* this, char n_wagon);
 void train_set_length(train_t* this, char length);
-void train_set_telemetry(train_t* this, telemetry_t* telemetry);
+void train_set_current_sector(train_t* this, char sector);
+void train_set_current_speed(train_t* this, float speed);
 char* train_get_name(train_t* this);
 char train_get_ID(train_t* this);
 int train_get_power(train_t* this);

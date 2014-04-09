@@ -22,7 +22,7 @@ void setup_trafficLight(void) {
 	trafficLight_set_sensibleSector(light, '3', REVERSE);
 	int i;
 	for (i = 0; i < ntrains; i++) {
-		observable_register_observer((observable_t*) trains[i],
+		observable_register_observer(&(trains[i]->observable),
 				(observer_t*) light);
 	}
 
