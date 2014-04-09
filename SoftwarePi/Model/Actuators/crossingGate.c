@@ -14,7 +14,6 @@ static crossingGate_t* barrier;
 
 void setup_crossingGate (void) {
 	barrier = crossingGate_new (0, 11, 2);
-	
 	interp_addcmd("barrier", crossingGate_cmd, "Set barrier state\n");
 }
 
