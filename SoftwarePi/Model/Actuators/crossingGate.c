@@ -15,6 +15,11 @@ static crossingGate_t* barrier;
 void setup_crossingGate(void) {
 	barrier = crossingGate_new(0, 11, 2);
 	interp_addcmd("barrier", crossingGate_cmd, "Set barrier state\n");
+	int i;
+	for (i = 0; i < ntrains; i++) {
+		observable_register_observer(&(trains[i]->observable),
+				(observer_t*) barrier);
+	}
 }
 
 int crossingGate_cmd(char* arg) {

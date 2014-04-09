@@ -25,7 +25,6 @@ void setup_trafficLight(void) {
 		observable_register_observer(&(trains[i]->observable),
 				(observer_t*) light);
 	}
-
 	interp_addcmd("semaphore", trafficLight_cmd, "Set semaphore state\n");
 }
 

@@ -192,6 +192,7 @@ void train_set_current_sector(train_t* this, char sector){
 	observable_notify_observers(&(this->observable));
 	rt_mutex_release(&this->mutex);
 }
+
 void train_set_current_speed(train_t* this, float speed){
 	rt_mutex_acquire(&this->mutex,TM_INFINITE);
 	this->telemetry->speed =speed;

@@ -55,8 +55,8 @@ int task_cmp(const void* t1, const void* t2) {
 	taskinfo_t* task1 = (taskinfo_t*) t1;
 	taskinfo_t* task2 = (taskinfo_t*) t2;
 	if (task1->deadline < task2->deadline)
-		return 1;
-	if (task1->deadline < task2->deadline)
+		return -1;
+	if (task1->deadline == task2->deadline)
 		return 0;
-	return -1;
+	return 1;
 }
