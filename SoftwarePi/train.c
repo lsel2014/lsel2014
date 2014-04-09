@@ -10,9 +10,9 @@
 #include <rtdk.h>
 #include <stdlib.h>
 
-static train_t* trains[MAXTRAINS];
-static int ntrains = 0;
-static train_t* current_train;
+ train_t* trains[MAXTRAINS];
+ int ntrains = 0;
+ train_t* current_train;
 
 /*This will be integrated with the interpreter*/
 void trains_setup(void) {
@@ -92,12 +92,12 @@ int train_cmd(char* arg) {
 					current_train->name, function);
 			return 0;
 		}
-		printf("Only functions F0 to F12 available\n")
+		printf("Only functions F0 to F12 available\n");
 		return 1;
 	}
 	if (0 == strncmp(arg, "help", strlen("help"))) {
 		printf(
-				"Available commands:\nselect <n>\tSelects train with ID <n>\nspeed <n>\tSets current train speed to <n>\nestop\tEmergency stop\nfunction <n> <s>\t<s>=1 enables DCC function <n>\n<s>=0 disables it");
+				"Available commands:\nselect <n>\t\tSelects train with ID <n>\nspeed <n>\t\tSets current train speed to <n>\nestop\t\tEmergency stop\nfunction <n> <s>\t\t<s>=1 enables DCC function <n>\n\t\t\t<s>=0 disables it\n");
 		return 0;
 	}
 
