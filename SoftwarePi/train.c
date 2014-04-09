@@ -179,15 +179,15 @@ void train_set_length(train_t* this, char length) {
 }
 
 void train_set_current_sector(train_t* this, char sector){
-	rt_mutex_acquire(this->mutex,TM_INFINITE);
+	rt_mutex_acquire(&this->mutex,TM_INFINITE);
 	this->telemetry->sector =sector;
 	observable_notify_observers(&(this->observable));
-	rt_mutex_release(this->mutex);
+	rt_mutex_release(&this->mutex);
 }
 void train_set_current_speed(train_t* this, float speed){
-	rt_mutex_acquire(this->mutex,TM_INFINITE);
+	rt_mutex_acquire(&this->mutex,TM_INFINITE);
 	this->telemetry->speed =speed;
-	rt_mutex_release(this->mutex);
+	rt_mutex_release(&this->mutex);
 }
 
 char* train_get_name(train_t* this) {
