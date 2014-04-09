@@ -33,6 +33,35 @@ int sun_cmd(char* arg) {
 			return 0;
 		}
 
+	if (0 == strncmp(arg, "test", strlen("test"))) {
+			int i;
+			int flag = 1;
+			int buffer = -1;
+			int x;
+			for(i=0; i<5; i++){
+				x = sun->current_simulated_time;
+				if((x > buffer) && (x>=0) && (x<1201){
+					buffer = x;
+				}
+				else{
+					flag = 0;
+				}
+				sleep (2);
+
+			}
+
+			if(flag == 1){
+				printf("Test Reloj Virtual OK");
+				return 0;
+			}
+			else{
+				printf("Test Reloj Virtual NOK");
+				return 1;
+			}
+
+			return 0;
+		}
+
 	return 1;
 }
 
