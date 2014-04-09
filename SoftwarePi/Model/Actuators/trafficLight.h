@@ -13,7 +13,7 @@
 #include "../../Interpreter/interp.h"
 #include "../observer.h"
 
-#define MAXSENSIBLESECTORS 2
+#define MAXSENSIBLESECTORS 4
 
 typedef struct sensibleSectors_t {
 	int sectorCount;
