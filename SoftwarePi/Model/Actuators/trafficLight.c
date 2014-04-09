@@ -10,10 +10,8 @@
 
 #include <stdbool.h>
 #include "trafficLight.h"
-
 #include "actuator.h"
 #include "train.h"
-
 #include <wiringPi.h>
 
 static trafficLight_t* light;

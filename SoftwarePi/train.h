@@ -9,9 +9,9 @@
 #include "Model/observer.h"
 
 extern train_t* trains[MAXTRAINS];
-extern int ntrains = 0;
+extern int ntrains;
 
-typedef struct telemetry_t {
+typedef struct{
 	char sector;
 	char speed;
 } telemetry_t;
@@ -20,7 +20,7 @@ typedef enum {
 	FORWARD, REVERSE
 } train_direction_t;
 
-typedef struct train_t {
+typedef struct {
 	observer_t observer;
 	observable_t observable;
 	char* name;
