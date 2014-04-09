@@ -7,6 +7,7 @@
 #define ESTOP_CMD 0b01000001
 #include "Interpreter/interp.h"
 #include "Model/observer.h"
+#include "Model/Sensors/sensorIR.h"
 
 typedef struct{
 	char sector;

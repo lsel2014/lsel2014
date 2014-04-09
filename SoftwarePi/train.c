@@ -16,10 +16,18 @@
 
 /*This will be integrated with the interpreter*/
 void trains_setup(void) {
+	int i, j;
 	dcc_sender_t* dccobject = dcc_new(12, 50);
 
 	trains[0] = train_new("Diesel", 0b0000100, '0', 20, dccobject);
 	trains[1] = train_new("Vapor", 0b0000011, '0', 25, dccobject);
+	for (i=0;i<MAXTRAINS; i++)
+	{
+		for (j=0;j<MAXSENSORS;j++)
+		{
+			observable_register_observer ((observable_t*) sensors[j], (observer_t*) trains[i]);
+		}
+	}
 	current_train = trains[0];
 	interp_addcmd("train", train_cmd, "Set train parameters\n");
 	interp_addcmd("s",train_emergency_cmd,"Emergency stop all trains");

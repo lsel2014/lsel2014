@@ -54,15 +54,29 @@ void IRsensors_setup (void)
 	{
 		sensors[i] = sensorIR_new(i);
 	}
-	
+	task_add ("IR polling", IR_DEADLINE, sensorIR_poll, sensors);
 }
 
+void IRsensors_dcc (void* arg) {
+	sensorsIR_t* this = (sensorIR_t*) arg;
+	
+	rt_task_set_periodic (NULL, TM_NOW, IR_PERIOD);
+	while (1)
+	{
+		int i=0;
+		rt_task_wait_period (NULL);
+		for  (i=0;i<MAXSENSORS;i++)
+		{
+			sensorIR_trainPassing(sensors[i]);
+		}
+	}
+}
 
 
 sensorIR_t*
 sensorIR_new(int id)
 {
-	sensor_t* this = (sensor_t*) malloc (sizeof(sensorIR_t));
+	sensorIR_t* this = (sensorIR_t*) malloc (sizeof(sensorIR_t));
 	sensorIR_init(this, id);
 	return this;
 }
