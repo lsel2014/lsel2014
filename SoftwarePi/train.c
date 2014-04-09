@@ -168,7 +168,7 @@ void train_notify(observer_t* this, observable_t* observed) {
 		if (thisTrain->telemetry->sector != newSector)
 		{
 			train_set_current_sector (thisTrain, newSector);
-			rt_printf ("Train %i passed to sector %i\n", thisTrain->ID, newSector);
+			//rt_printf ("Train %i passed to sector %i\n", thisTrain->ID, newSector);
 		}
 		
 	
@@ -223,7 +223,7 @@ void train_set_length(train_t* this, char length) {
 void train_set_current_sector(train_t* this, char sector) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->sector = sector;
-	rt_printf ("Starting notify\n");
+	//rt_printf ("Starting notify\n");
 	observable_notify_observers(&this->observable);
 	rt_mutex_release(&this->mutex);
 }

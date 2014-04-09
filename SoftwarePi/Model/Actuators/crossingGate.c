@@ -164,4 +164,5 @@ void crossingGate_notify(observer_t* this, observable_t* observable) {
 				crossingGate_set_position(thisCG, UP);
 		}
 	}
+	
 }
