@@ -16,6 +16,32 @@
 
 #include <wiringPi.h>
 
+static trafficLight_t* light;
+
+void setup_trafficLight (void) {
+	light = trafficLight_new (0, 13);
+	
+	trafficLight_set_sensibleSector(light, '1', FORWARD);
+	trafficLight_set_sensibleSector(light, '3', REVERSE);
+	
+	interp_addcmd("semaphore", trafficLight_cmd, "Set semaphore state\n");
+}
+
+int trafficLight_cmd(char* arg) {
+	if (0 == strcmp(arg, "list")) {
+		printf("Semaphore\t%s\r\n", (light->state) == ON ? "ON" : "OFF");
+		
+		return 0;
+	}
+	if (0 == strncmp(arg, "set ", strlen("set "))) {
+		int state;
+		state = atoi(arg + strlen("set "));
+		trafficLight_set_state (light, state==1 ? ON : OFF);
+		return 1;
+	}
+	return 1;
+}
+
 void
 trafficLight_init (trafficLight_t* this, int id, int GPIOline, state_t state)
 {

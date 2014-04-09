@@ -38,6 +38,6 @@ void sun_update_simulated_time(sun_t* this);
 int sun_get_simulated_time(sun_t* this);
 void sendHour (sun_t* this);
 void sun_destroy (sun_t* this);
-
+void sun_setup(void);
 
 #endif

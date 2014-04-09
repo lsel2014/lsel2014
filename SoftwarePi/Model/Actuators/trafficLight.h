@@ -11,7 +11,7 @@
 #include <native/mutex.h>
 #include "../../train.h"
 #include "actuator.h"
-
+#include "../../Interpreter/interp.h"
 
 #define MAXSENSIBLESECTORS 2
 
@@ -46,6 +46,8 @@ typedef struct trafficLight_t
 } trafficLight_t;
 
 
+void setup_trafficLight (void);
+int trafficLight_cmd(char* arg);
 /*
  * Object creation / destruction
  */

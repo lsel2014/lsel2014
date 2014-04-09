@@ -26,7 +26,7 @@
 #include "train.h"
 #include "sun.h"
 #include "Model/Actuators/railChange.h"
-
+#include "Model/Actuators/trafficLight.h"
 
 // Dummy function to catch signals
 void catch_signal () {}
@@ -94,6 +94,7 @@ int main(int argc, char* argv[]) {
 	trains_setup();
 	setupRailChange();
 	sun_setup();
+	setup_trafficLight();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
