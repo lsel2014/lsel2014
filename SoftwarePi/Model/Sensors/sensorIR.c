@@ -6,8 +6,8 @@
  */
 
 #include "sensorIR.h"
+#include <rtdk.h>
 
-#include <pthread.h>
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
@@ -54,11 +54,11 @@ void IRsensors_setup (void)
 	{
 		sensors[i] = sensorIR_new(i);
 	}
-	task_add ("IR polling", IR_DEADLINE, sensorIR_poll, sensors);
+	task_add ("IR polling", IR_DEADLINE, IRsensors_poll, sensors);
 }
 
-void IRsensors_dcc (void* arg) {
-	sensorsIR_t* this = (sensorIR_t*) arg;
+void IRsensors_poll (void* arg) {
+	// sensorIR_t* sensors = (sensorIR_t*) arg;
 	
 	rt_task_set_periodic (NULL, TM_NOW, IR_PERIOD);
 	while (1)
@@ -82,45 +82,33 @@ sensorIR_new(int id)
 }
 
 void
-sensorIR_init(sensor_t* this, int id)
+sensorIR_init(sensorIR_t* this, int id)
 {
 	int i;
-	sensorIR_t* thisIR = (sensorIR_t*) this;
-
-	sensor_init(this, sensorIR_process_data, id);
+	observable_init ((observable_t *) this);
+	this->id = id;
 
 	for (i = 0; i < NUMBER_OF_TRAINS; i++) {
 		// Set the associated train line for that sensor
-		thisIR->GPIOlines[i] = (id * NUMBER_OF_TRAINS) + i;
+		this->GPIOlines[i] = (id * NUMBER_OF_TRAINS) + i;
 
 		// Set the line as input
-		pinMode (thisIR->GPIOlines[i], INPUT);
+		pinMode (this->GPIOlines[i], INPUT);
 
 		/*if (wiringPiISR (this->GPIOlines[i], INT_EDGE_RISING, sensorIR_isr[i]) < 0) {
 			fprintf (stderr, "Unable to setup ISR: %s\n", strerror (errno)) ;
 		}*/
 	}
 
-	thisIR->last_reading=-1;
+	this->last_reading=-1;
 
-	rt_mutex_create (&thisIR->mutex, NULL);
+	rt_mutex_create (&this->mutex, NULL);
 
 }
 
 void
-sensorIR_destroy(sensor_t* this)
+sensorIR_destroy(sensorIR_t* this)
 {
-	sensorIR_t* thisIR = (sensorIR_t*) this;
-
-	// TODO -> REPAIR
-	//free((observable_t*) this->observable);
-	if (this->id)
-		free((int*) this->id);
-	if (thisIR->GPIOlines)
-		free((int*) thisIR->GPIOlines);
-	if (thisIR->last_reading)
-			free((int*) thisIR->last_reading);
-	//pthread_mutex_destroy(&thisIR->mutex_sensorIR);
 	free(this);
 }
 
@@ -162,13 +150,8 @@ sensorIR_trainPassing(sensorIR_t* this)
 	rt_mutex_release(&this->mutex);
 
 	if (this->last_reading >= 0) {
-		sensorIR_process_data ((sensor_t*)this);
+		rt_printf ("Calling observers");
+		observable_notify_observers ((observable_t*) this);
 	}
-}
-
-void
-sensorIR_process_data (sensor_t* this)
-{
-	observable_notify_observers ((observable_t*) this);
 }
 

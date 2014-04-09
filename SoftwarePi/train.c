@@ -21,10 +21,11 @@ void trains_setup(void) {
 
 	trains[0] = train_new("Diesel", 0b0000100, '0', 20, dccobject);
 	trains[1] = train_new("Vapor", 0b0000011, '0', 25, dccobject);
-	for (i=0;i<MAXTRAINS; i++)
+	for (i=0;i<2; i++)
 	{
 		for (j=0;j<MAXSENSORS;j++)
 		{
+			rt_printf ("registering observer %i , %i", i, j);
 			observable_register_observer ((observable_t*) sensors[j], (observer_t*) trains[i]);
 		}
 	}
@@ -127,8 +128,14 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
 	return this;
 }
 
+void train_notify (observer_t* this, observable_t* observed) 
+{
+	rt_printf ("Hi");
+}
+
 void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc, telemetry_t* telemetry) {
+	observer_init ((observer_t *) this, train_notify);
 	this->name = name;
 	this->ID = ID;
 	this->power = 0;
