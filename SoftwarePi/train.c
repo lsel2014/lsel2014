@@ -22,6 +22,20 @@ void trains_setup(void) {
 	trains[1] = train_new("Vapor", 0b0000011, '0', 25, dccobject);
 	current_train = trains[0];
 	interp_addcmd("train", train_cmd, "Set train parameters\n");
+	interp_addcmd("s",train_emergency_cmd,"Emergency stop all trains");
+}
+
+int train_emergency_cmd(char*arg){
+	int i;
+	for(i=0;i<ntrains;i++){
+		dcc_add_data_packet(trains[i]->dcc, current_train->ID, ESTOP_CMD);
+	}
+	for(i=0;i<ntrains;i++){
+		train_set_target_power(trains[i], 0);
+
+	}
+	printf("All trains stopped\n");
+	return 0;
 }
 
 int train_cmd(char* arg) {

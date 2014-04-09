@@ -39,6 +39,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc, telemetry_t* telemetry);
 void train_destroy(train_t* this);
 int train_cmd(char* arg);
+int train_emergency_cmd(char*arg);
 void train_set_name(train_t* this, char* name);
 void train_set_ID(train_t* this, char ID);
 void train_set_target_power(train_t* this, int power);
