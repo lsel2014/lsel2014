@@ -132,9 +132,10 @@ int crossingGate_getIDIndex(crossingGate_t* this, char trainID) {
 }
 
 void crossingGate_notify(observer_t* this, observable_t* observable) {
-	train_t* train = (train_t*) observable;
+	train_t* train = (train_t*) ((void*) observable - sizeof(observer_t));
 	crossingGate_t* thisCG = (crossingGate_t*) this;
 	//telemetry_t telemetry = train->telemetry;
+	
 	char sector = train->telemetry->sector;
 
 	//Check if a train has just entered the crossing gate sector

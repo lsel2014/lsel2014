@@ -17,7 +17,7 @@
 
 typedef struct sensibleSectors_t {
 	int sectorCount;
-	char sectors[MAXSENSIBLESECTORS];
+	int sectors[MAXSENSIBLESECTORS];
 	train_direction_t directions[MAXSENSIBLESECTORS];
 } sensibleSectors_t;
 
@@ -49,7 +49,7 @@ trafficLight_t* trafficLight_new(int id, int GPIOline);
  * Getters / setters
  */
 state_t trafficLight_get_state(trafficLight_t* this);
-void trafficLight_set_sensibleSector(trafficLight_t* this, char sector,
+void trafficLight_set_sensibleSector(trafficLight_t* this, int sector,
 		train_direction_t sentido);
 void trafficLight_set_state(trafficLight_t* this, state_t state);
 

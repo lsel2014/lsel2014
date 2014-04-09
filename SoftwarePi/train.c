@@ -223,7 +223,8 @@ void train_set_length(train_t* this, char length) {
 void train_set_current_sector(train_t* this, char sector) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->sector = sector;
-	//observable_notify_observers(&this->observable);
+	rt_printf ("Starting notify\n");
+	observable_notify_observers(&this->observable);
 	rt_mutex_release(&this->mutex);
 }
 

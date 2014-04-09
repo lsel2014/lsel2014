@@ -18,12 +18,14 @@ static trafficLight_t* light;
 
 void setup_trafficLight(void) {
 	light = trafficLight_new(0, 13);
-	trafficLight_set_sensibleSector(light, '1', FORWARD);
-	trafficLight_set_sensibleSector(light, '3', REVERSE);
+	trafficLight_set_sensibleSector(light, 1, FORWARD);
+	trafficLight_set_sensibleSector(light, 2, FORWARD);
+	trafficLight_set_sensibleSector(light, 2, REVERSE);
+	trafficLight_set_sensibleSector(light, 3, REVERSE);
 	int i;
 	for (i = 0; i < ntrains; i++) {
-		/*observable_register_observer(&(trains[i]->observable),
-				(observer_t*) light);*/
+		observable_register_observer(&(trains[i]->observable),
+				(observer_t*) light);
 	}
 	interp_addcmd("semaphore", trafficLight_cmd, "Set semaphore state\n");
 }
@@ -67,14 +69,18 @@ trafficLight_new(int id, int GPIOline) {
 
 }
 
-void trafficLight_set_sensibleSector(trafficLight_t* this, char sector,
+void trafficLight_set_sensibleSector(trafficLight_t* this, int sector,
 		train_direction_t direction) {
-	if (this->sectors.sectorCount == MAXSENSIBLESECTORS)
-		return;
-
+	//if (this->sectors.sectorCount == MAXSENSIBLESECTORS)
+	//	return;
+	//rt_printf ("%i", this->sectors.sectorCount);
+	//rt_printf ("\n LISTA %i sector %i direc %s",this->sectors.sectorCount, sector, (direction == FORWARD) ? "FORWARD" : "REVERSE");
 	this->sectors.sectors[this->sectors.sectorCount] = sector;
-	this->sectors.sectors[this->sectors.sectorCount] = direction;
+	this->sectors.directions[this->sectors.sectorCount] = direction;
+	
 	this->sectors.sectorCount++;
+	
+	
 
 }
 state_t trafficLight_get_state(trafficLight_t* this) {
@@ -96,17 +102,28 @@ void trafficLight_set_state(trafficLight_t* this, state_t state) {
 }
 
 void trafficLight_notify(observer_t* this, observable_t* observable) {
-	train_t *tren = (train_t *) observable;
+	train_t* tren = (train_t*) ((void*) observable - sizeof(observer_t));
 	char sector = tren->telemetry->sector;
 	train_direction_t direction = tren->direction;
 	int i;
 	int inside = -1;
 	trafficLight_t* me = (trafficLight_t*) this;
-
+	rt_printf ("Called trafficLight by %i on %i\n", tren->ID, tren->telemetry->sector);
 	// Check if the train is in the active train list
+	
+	for (i = 0; i < (me->sectors.sectorCount); i++) {
+			rt_printf ("\n LISTA %i sector %i direc %s ",i, me->sectors.sectors [i], (me->sectors.directions[i] == FORWARD) ? "FORWARD" : "REVERSE");
+			
+		}
+	
+	
+	
+	
+	
 	for (i = 0; i < (me->activeTrainsCount); i++) {
 		if ((me->activeTrains[i]) == (tren->ID)) {
 			inside = i;
+			rt_printf ("Train inside list");
 		}
 	}
 
@@ -130,6 +147,7 @@ void trafficLight_notify(observer_t* this, observable_t* observable) {
 
 			// If there are no active trains, turn off the lights.
 			if (me->activeTrainsCount == 0)
+				rt_printf ("Sem OFF");
 				trafficLight_set_state(me, OFF);
 		}
 	}
@@ -138,8 +156,9 @@ void trafficLight_notify(observer_t* this, observable_t* observable) {
 		// Check if it has to be active
 		bool keep = false;
 		for (i = 0; i < (me->sectors.sectorCount); i++) {
-			if (sector == me->sectors.sectors[i]
-					&& direction == me->sectors.directions[i]) {
+			rt_printf ("\n LISTA %i sector %i direc %s ",i, me->sectors.sectors [i], (me->sectors.directions[i] == FORWARD) ? "FORWARD" : "REVERSE");
+			if (sector == me->sectors.sectors[i] && direction == me->sectors.directions[i]) {
+				rt_printf ("Sector %i",  me->sectors.sectors[i] );
 				keep = true;
 			}
 		}
@@ -150,6 +169,7 @@ void trafficLight_notify(observer_t* this, observable_t* observable) {
 			me->activeTrainsCount++;
 
 			if (me->activeTrainsCount == 1)
+				rt_printf ("Sem ON");
 				trafficLight_set_state(me, ON);
 		}
 	}
