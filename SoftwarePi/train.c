@@ -10,36 +10,35 @@
 #include <rtdk.h>
 #include <stdlib.h>
 
- train_t* trains[MAXTRAINS];
- int ntrains = 0;
- train_t* current_train;
+train_t* trains[MAXTRAINS];
+int ntrains = 0;
+train_t* current_train;
 
 /*This will be integrated with the interpreter*/
 void trains_setup(void) {
 	int i, j;
 	dcc_sender_t* dccobject = dcc_new(12, 50);
 
-	trains[0] = train_new("Diesel", 0b0000100, '0', 20, dccobject);
-	trains[1] = train_new("Vapor", 0b0000011, '0', 25, dccobject);
-	for (i=0;i<2; i++)
-	{
-		for (j=0;j<MAXSENSORS;j++)
-		{
-			rt_printf ("registering observer %i , %i", i, j);
-			observable_register_observer ((observable_t*) sensors[j], (observer_t*) trains[i]);
+	train_new("Diesel", 0b0000100, '0', 20, dccobject);
+	train_new("Renfe", 0b0000011, '0', 25, dccobject);
+	for (i = 0; i < ntrains; i++) {
+		for (j = 0; j < nsensors; j++) {
+			rt_printf("registering observer %i , %i", i, j);
+			observable_register_observer((observable_t*) sensors[j],
+					(observer_t*) trains[i]);
 		}
 	}
 	current_train = trains[0];
 	interp_addcmd("train", train_cmd, "Set train parameters\n");
-	interp_addcmd("s",train_emergency_cmd,"Emergency stop all trains");
+	interp_addcmd("s", train_emergency_cmd, "Emergency stop all trains");
 }
 
-int train_emergency_cmd(char*arg){
+int train_emergency_cmd(char*arg) {
 	int i;
-	for(i=0;i<ntrains;i++){
-		dcc_add_data_packet(trains[i]->dcc, current_train->ID, ESTOP_CMD);
+	for (i = 0; i < ntrains; i++) {
+		dcc_add_data_packet(trains[i]->dcc, trains[i]->ID, ESTOP_CMD);
 	}
-	for(i=0;i<ntrains;i++){
+	for (i = 0; i < ntrains; i++) {
 		train_set_target_power(trains[i], 0);
 
 	}
@@ -118,9 +117,7 @@ int train_cmd(char* arg) {
 train_t* train_new(char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc) {
 	train_t* this = (train_t*) malloc(sizeof(train_t));
-
 	telemetry_t* telemetry = (telemetry_t*) malloc(sizeof(telemetry_t));
-
 	train_init(this, name, ID, n_wagon, length, dcc, telemetry);
 	if (ntrains < MAXTRAINS) {
 		trains[ntrains++] = this;
@@ -128,14 +125,10 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
 	return this;
 }
 
-void train_notify (observer_t* this, observable_t* observed) 
-{
-	rt_printf ("Hi");
-}
-
 void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc, telemetry_t* telemetry) {
-	observer_init ((observer_t *) this, train_notify);
+	observer_init((observer_t *) this, train_notify);
+	observable_init(&this->observable);
 	this->name = name;
 	this->ID = ID;
 	this->power = 0;
@@ -146,6 +139,10 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->dcc = dcc;
 	this->telemetry = telemetry;
 	rt_mutex_create(&this->mutex, NULL);
+}
+
+void train_notify(observer_t* this, observable_t* observed) {
+	rt_printf("Hi");
 }
 
 void train_destroy(train_t* this) {
@@ -193,16 +190,16 @@ void train_set_length(train_t* this, char length) {
 	this->length = length;
 }
 
-void train_set_current_sector(train_t* this, char sector){
-	rt_mutex_acquire(&this->mutex,TM_INFINITE);
-	this->telemetry->sector =sector;
+void train_set_current_sector(train_t* this, char sector) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	this->telemetry->sector = sector;
 	observable_notify_observers(&(this->observable));
 	rt_mutex_release(&this->mutex);
 }
 
-void train_set_current_speed(train_t* this, float speed){
-	rt_mutex_acquire(&this->mutex,TM_INFINITE);
-	this->telemetry->speed =speed;
+void train_set_current_speed(train_t* this, float speed) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	this->telemetry->speed = speed;
 	rt_mutex_release(&this->mutex);
 }
 

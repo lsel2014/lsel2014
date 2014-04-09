@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include "../../tasks.h"
 #include "crossingGate.h"
-
 #include <wiringPi.h>
 #include <softPwm.h>
 
@@ -17,8 +16,8 @@ void setup_crossingGate(void) {
 	interp_addcmd("barrier", crossingGate_cmd, "Set barrier state\n");
 	int i;
 	for (i = 0; i < ntrains; i++) {
-		/*observable_register_observer(&(trains[i]->observable),
-				(observer_t*) barrier);*/
+		observable_register_observer(&(trains[i]->observable),
+				(observer_t*) barrier);
 	}
 }
 
@@ -49,8 +48,7 @@ void crossingGate_init(crossingGate_t* this, int id, int GPIOline,
 		char sectorCrossing, position_t position) {
 	int i;
 
-	actuator_init((actuator_t*) this, id, crossingGate_notify);
-
+	observer_init((observer_t*) this, crossingGate_notify);
 	this->GPIOline = GPIOline;
 	this->sectorCrossing = sectorCrossing;
 	this->position = position;

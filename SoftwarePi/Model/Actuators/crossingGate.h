@@ -2,7 +2,7 @@
 #define CROSSINGGATE_H
 
 
-#include "actuator.h"
+#include "../observer.h"
 #include "../../train.h"
 
 #define GATE_PERIOD 500000000
@@ -12,8 +12,7 @@ typedef enum {UP, DOWN} position_t;
 typedef struct crossingGate_t
 {
     //Inheritance
-    actuator_t actuator;
-
+	observer_t observer;
     //Attributes
     int GPIOline;
 	position_t position;
@@ -22,7 +21,6 @@ typedef struct crossingGate_t
 	//Private
 	char trainsInside[MAXTRAINS];
 	int trainsInsideIndex;
-
 	RT_MUTEX mutex;
 
 } crossingGate_t;

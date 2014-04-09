@@ -11,9 +11,8 @@
 #include "../observer.h"
 #include <native/mutex.h>
 #include "../../tasks.h"
+#include "../../train.h"
 #define MAXSENSORS 4
-
-#define NUMBER_OF_TRAINS 2 //esto habr�a que sacarlo de aqu� cuanto antes
 
 #define IR_DEADLINE 20000000
 #define IR_PERIOD 100000000
@@ -23,10 +22,8 @@ struct sensorIR_t;
 typedef struct sensorIR_t {
 
 	observable_t observable;
-	
 	int id;
-
-	int GPIOlines[NUMBER_OF_TRAINS];
+	int GPIOlines[MAXTRAINS];
 	int last_reading;
 
 	RT_MUTEX mutex;
@@ -34,6 +31,7 @@ typedef struct sensorIR_t {
 } sensorIR_t;
 
 extern sensorIR_t* sensors[MAXSENSORS];
+extern int nsensors;
 
 void IRsensors_setup(void);
 void IRsensors_poll (void* arg);

@@ -22,8 +22,8 @@ void setup_trafficLight(void) {
 	trafficLight_set_sensibleSector(light, '3', REVERSE);
 	int i;
 	for (i = 0; i < ntrains; i++) {
-		/*observable_register_observer(&(trains[i]->observable),
-				(observer_t*) light);*/
+		observable_register_observer(&(trains[i]->observable),
+				(observer_t*) light);
 	}
 	interp_addcmd("semaphore", trafficLight_cmd, "Set semaphore state\n");
 }
