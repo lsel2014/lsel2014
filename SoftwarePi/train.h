@@ -8,9 +8,6 @@
 #include "Interpreter/interp.h"
 #include "Model/observer.h"
 
-extern train_t* trains[MAXTRAINS];
-extern int ntrains;
-
 typedef struct{
 	char sector;
 	char speed;
@@ -34,6 +31,9 @@ typedef struct {
 	dcc_sender_t* dcc;
 	telemetry_t* telemetry;
 } train_t;
+
+extern train_t* trains[MAXTRAINS];
+extern int ntrains;
 
 void trains_setup(void);
 train_t* train_new(char* name, char ID, char n_wagon, char length,
