@@ -151,7 +151,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 void train_notify(observer_t* this, observable_t* observed) {
 	sensorIR_t* sensor = (sensorIR_t*)observed;
 	train_t* thisTrain = (train_t*)this;
-	
+	//rt_printf ("Received train %d in sector %d\n", sensor->id, sensor->last_reading);
 	if(sensor->last_reading == thisTrain->ID) {
 		int newSector;
 		switch (thisTrain->direction)
@@ -167,7 +167,8 @@ void train_notify(observer_t* this, observable_t* observed) {
 		}
 		if (thisTrain->telemetry->sector != newSector)
 		{
-			train_set_current_sector (thisTrain, newSector);
+			if (thisTrain->target_power != 0)
+				train_set_current_sector (thisTrain, newSector);
 			//rt_printf ("Train %i passed to sector %i\n", thisTrain->ID, newSector);
 		}
 		
