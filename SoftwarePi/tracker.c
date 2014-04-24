@@ -88,7 +88,7 @@ tracker_init (void)
 	// Estos bucles se dedican a coger los sensores y los trenes
 	// del modelo y registrarlos en el tracker 
 	for (s = ir_names; s->name; ++s) {
-		observable_t* obs = model_get (s->name);
+		observable_t* obs = model_get_IRsensor (s->name);
 		observable_register_observer (obs, &tracker_observer);
 		ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
 		ir_sensors[n_ir_sensors].sector = s->sector;
@@ -96,7 +96,7 @@ tracker_init (void)
 	}
 	
 	for (t = train_names; t->name; ++t) {
-		observable_t* obs = model_get (s->name);
+		observable_t* obs = model_get_train (s->name);
 		observable_register_observer (obs, &tracker_observer);
 		tracker_trains[n_ir_sensors].train = (train_t*) obs;
 		tracker_trains[n_ir_sensors].IRsimbolicId = t->IRsimbolicId;
