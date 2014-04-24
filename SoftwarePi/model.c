@@ -57,7 +57,7 @@ model_add_IRsensor (const char* name, sensorIR_t* sensor)
 
 void
 model_init (void)
-{
+{/*
     static struct ir_name_t {
 			const char* name;
 			int ID;
@@ -76,6 +76,7 @@ model_init (void)
 	}
 	task_add("IR polling", IR_DEADLINE, IRsensors_poll, ir_sensorsmodel);
 	interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
+	*/
 }
 observable_t*
 model_get_IRsensor (const char* name)
