@@ -9,12 +9,12 @@
 static struct registered_ir_sensor_t {
 		sensorIR_t* sensor;
 		const char* name
-} ir_sensors [MAXIRSENSORS];
+} ir_sensorsmodel [MAXIRSENSORS];
 
 static struct registered_train_t {
 		train_t* train;
 		const char* name
-} trains [MAXTRAINS];
+} trainsmodel [MAXTRAINS];
 
 static int n_ir_sensors;
 static int n_trains;
@@ -23,7 +23,7 @@ int
 sensors_cmd(char*arg){
 	int i;
 	for(i=0; i<n_ir_sensors; i++){
-		printf("Sensor %d\n",ir_sensors[i]->name);
+		printf("Sensor %d\n",ir_sensorsmodel[i]->name);
 	}
 	return 0;
 }
@@ -35,7 +35,7 @@ void IRsensors_poll(void* arg) {
 		int i = 0;
 		rt_task_wait_period(NULL);
 		for (i = 0; i < nsensors; i++) {
-			sensorIR_trainPassing(ir_sensors[i]->sensor);
+			sensorIR_trainPassing(ir_sensorsmodel[i]->sensor);
 		}
 	}
 }
@@ -44,11 +44,11 @@ int
 model_add_IRsensor (const char* name, sensorIR_t* sensor)
 {
     if( n_ir_sensors <= MAXIRSENSORS ){
-    ir_sensors[n_ir_sensors].name = name;
-    ir_sensors[n_ir_sensors].sensor = sensor;
+    ir_sensorsmodel[n_ir_sensors].name = name;
+    ir_sensorsmodel[n_ir_sensors].sensor = sensor;
    	return 1;
     }
-    printf(	"Max. sensor registered\n");
+    printf("Max. sensor registered\n");
     return 0;
 }
 
