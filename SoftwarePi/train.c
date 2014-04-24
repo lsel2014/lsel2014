@@ -28,7 +28,7 @@ void trains_setup(void) {
 		}
 	}
 	current_train = trains[0];
-	interp_addcmd("train", train_cmd, "Set train parameters\n");
+	interp_addcmd("train", train_cmd, "Set train parameters");
 	interp_addcmd("s", train_emergency_cmd, "Emergency stop all trains");
 }
 
