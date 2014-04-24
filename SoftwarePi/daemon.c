@@ -25,7 +25,7 @@
 //Model
 #include "train.h"
 #include "sun.h"
-#include "model.c"
+#include "model.h"
 #include "Model/Sensors/sensorIR.h"
 #include "Model/Actuators/railChange.h"
 #include "Model/Actuators/trafficLight.h"
