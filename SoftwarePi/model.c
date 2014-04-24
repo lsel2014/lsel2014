@@ -75,8 +75,8 @@ model_init (void)
 		++n_ir_sensors;
 	}
 	task_add("IR polling", IR_DEADLINE, IRsensors_poll, ir_sensorsmodel);
-	interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
-	*/
+	*/interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
+	
 }
 observable_t*
 model_get_IRsensor (const char* name)
