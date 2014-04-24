@@ -35,7 +35,7 @@ tracker_gen_train(int id){
                     
 // El notify revisa los sensores que estan registrados 
 // y si ve que alguno tiene algun evento, lo lee y 
-// actualiza la maqueta
+// actualiza la maqueta 
 static
 void tracker_notify (observer_t* this, observable_t* foo)
 {
