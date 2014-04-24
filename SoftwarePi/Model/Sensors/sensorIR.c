@@ -88,7 +88,7 @@ sensorIR_new(int id) {
 }
 
 void 
-sensorIR_init(sensorIR_t* this, int id) {
+sensorIR_init(sensorIR_t* this, int id , event_t* event) {
 	int i;
 	observable_init((observable_t *) this);
 	this->id = id;
