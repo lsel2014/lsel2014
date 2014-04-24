@@ -77,7 +77,11 @@ model_init (void)
 	interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
 }
 observable_t*
-model_get (const char* name)
+model_get_IRsensor (const char* name)
 {
-	return NULL;
+     struct registered_ir_sensor_t* s;
+     for (s = ir_sensorsmodel; s->name; ++s) {
+         if ( name == s-> name )
+         return s->sensor;
+     }
 }
