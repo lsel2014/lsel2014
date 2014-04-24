@@ -67,9 +67,9 @@ model_init (void)
 			{ "IRsensor[2]" , 2},
 			{ "IRsensor[3]" , 3},
 			{ NULL, -1 }
-	}; /*  
+	};   
     n_ir_sensors=0; 
-    struct ir_name_t* s;
+    struct ir_name_t* s;/*
 	for (s = ir_names; s->name; ++s) {
 		model_add_IRsensor( s->name,  sensorIR_new(s->ID) );
 		++n_ir_sensors;
