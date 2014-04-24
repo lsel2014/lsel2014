@@ -79,7 +79,8 @@ void IRsensors_poll(void* arg) {
 sensorIR_t*
 sensorIR_new(int id) {
 	sensorIR_t* this = (sensorIR_t*) malloc(sizeof(sensorIR_t));
-	sensorIR_init(this, id);
+	event_t* event = (event_t*) malloc(sizeof(event_t));
+	sensorIR_init(this, id ,event);
 	//if (nsensors < MAXSENSORS) {
 	//	sensors[nsensors++] = this;
 	//}
@@ -101,9 +102,8 @@ sensorIR_init(sensorIR_t* this, int id) {
 		 }*/
 	}
 //	this->last_reading = -1;
-    this->event->flag = 0;
-    this->event->passingTrain = 0;
-	rt_mutex_create(&this->mutex, NULL);
+    this->event = event;
+    rt_mutex_create(&this->mutex, NULL);
 
 }
 
