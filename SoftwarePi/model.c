@@ -90,8 +90,8 @@ observable_t*
 model_get_train (const char* name)
 {
      struct registered_train_t* t;
-     for (s = trainsmodel; s->name; ++s) {
+     for (t = trainsmodel; t->name; ++t) {
          if ( name == s-> name )
-         return s->sensor;
+         return t->train;
      }
 }
