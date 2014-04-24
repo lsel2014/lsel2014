@@ -69,11 +69,11 @@ model_init (void)
 			{ NULL, -1 }
 	};   
     n_ir_sensors=0; 
-    struct ir_name_t* s;/*
+    struct ir_name_t* s;
 	for (s = ir_names; s->name; ++s) {
 		model_add_IRsensor( s->name,  sensorIR_new(s->ID) );
 		++n_ir_sensors;
-	}
+	}/*
 	task_add("IR polling", IR_DEADLINE, IRsensors_poll, ir_sensorsmodel);
 	*/interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
 	
