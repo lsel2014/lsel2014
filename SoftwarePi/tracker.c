@@ -12,7 +12,7 @@ static struct ir_sensor_data_t {
 		sensorIR_t* sensor;
 		int sector;
 } ir_sensors [255];
-
+ 
 static struct train_data_t {
 		train_t* train;
 		int IRsimbolicId;
