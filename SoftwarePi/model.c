@@ -86,3 +86,12 @@ model_get_IRsensor (const char* name)
          return s->sensor;
      }
 }
+observable_t*
+model_get_train (const char* name)
+{
+     struct registered_train_t* t;
+     for (s = trainsmodel; s->name; ++s) {
+         if ( name == s-> name )
+         return s->sensor;
+     }
+}
