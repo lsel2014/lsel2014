@@ -31,6 +31,7 @@ tracker_gen_train(int id){
          if ( id == t-> IRsimbolicId )
          return t->train;
      }
+     return NULL;
 }  
                     
 // El notify revisa los sensores que estan registrados 
