@@ -3,7 +3,7 @@
 #include "model.h"
 #include "tracker.h"
 #include "train.h"
-#define NULL 0
+
 
 static observer_t tracker_observer;
 // Arrays donde se guardan los elementos de la maqueta
