@@ -10,7 +10,7 @@ static observer_t tracker_observer;
 // que interesan al tracker. 
 static struct ir_sensor_data_t {
 		sensorIR_t* sensor;
-		int sector;
+		char sector;
 } ir_sensors [255];
  
 static struct train_data_t {
@@ -59,7 +59,7 @@ tracker_init (void)
     // en el modelo y sus sectores asociados. 
 	static struct ir_name_t {
 			const char* name;
-			int sector;
+			char sector;
 	} ir_names [] = {
 			{ "IRsensor[0]", 0 },
 			{ "IRsensor[1]", 1 },
