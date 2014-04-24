@@ -23,7 +23,7 @@ int
 sensors_cmd(char*arg){
 	int i;
 	for(i=0; i<n_ir_sensors; i++){
-		printf("Sensor %d\n",ir_sensorsmodel[i]->name);
+		printf("Sensor %s\n",ir_sensorsmodel[i]->name);
 	}
 	return 0;
 }
