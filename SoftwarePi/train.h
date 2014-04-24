@@ -1,6 +1,6 @@
 #ifndef TRAIN_H
 #define TRAIN_H
-//#define MAXTRAINS 8
+#define MAXTRAINS 8
 #include <pthread.h>
 #include <native/mutex.h>
 #include "dcc.h"
@@ -33,8 +33,8 @@ typedef struct {
 	telemetry_t* telemetry;
 } train_t;
 
-//extern train_t* trains[MAXTRAINS];
-//extern int ntrains;
+extern train_t* trains[MAXTRAINS];
+extern int ntrains;
 
 void trains_setup(void);
 train_t* train_new(char* name, char ID, char n_wagon, char length,
