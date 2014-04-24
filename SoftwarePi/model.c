@@ -57,7 +57,7 @@ model_add_IRsensor (const char* name, sensorIR_t* sensor)
 
 void
 model_init (void)
-{/*
+{
     static struct ir_name_t {
 			const char* name;
 			int ID;
@@ -67,7 +67,7 @@ model_init (void)
 			{ "IRsensor[2]" , 2},
 			{ "IRsensor[3]" , 3},
 			{ NULL, -1 }
-	};   
+	}; /*  
     n_ir_sensors=0; 
     struct ir_name_t* s;
 	for (s = ir_names; s->name; ++s) {
