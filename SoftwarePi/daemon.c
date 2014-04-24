@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
 	 * task function,
 	 * function argument*/
 	//IRsensors_setup();
-	model_init();
+	model_init(void);
 	trains_setup();
 	setupRailChange();
 	sun_setup();
