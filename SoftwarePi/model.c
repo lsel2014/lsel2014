@@ -2,6 +2,7 @@
 #include "Model/Sensors/sensorIR.h"
 #include "train.h"
 #include "model.h"
+#include "Interpreter/interp.h"
 
 #define MAXIRSENSORS 4
 #define MAXTRAINS 8
