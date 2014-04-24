@@ -34,13 +34,13 @@ sensors_cmd(char*arg){
 void IRsensors_poll(void* arg) {
 	sensorIR_t** sensors = (sensorIR_t**) arg;
 	rt_task_set_periodic(NULL, TM_NOW, IR_PERIOD);
+	struct registered_ir_sensor_t s;
 	while (1) {
 		int i = 0;
 		rt_task_wait_period(NULL);
-		for (i = 0; i < n_ir_sensors; i++) {
-			const char* name = ir_sensorsmodel[i].name;
-			printf("U JELLY? %c",name);
-			sensorIR_trainPassing(ir_sensorsmodel[i].sensor);
+		for (s = ir_sensorsmodel; s->name; ++s) {
+			printf("U JELLY? %c",s->name);
+			sensorIR_trainPassing(s->sensor);
 		}
 	}
 }
