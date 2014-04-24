@@ -23,7 +23,7 @@ int
 sensors_cmd(char*arg){
 	int i;
 	for(i=0; i<n_ir_sensors; i++){
-		printf("Sensor %s\n",ir_sensorsmodel[i]->name);
+		printf("Sensor %s\n",ir_sensorsmodel[i].name);
 	}
 	return 0;
 }
@@ -35,7 +35,7 @@ void IRsensors_poll(void* arg) {
 		int i = 0;
 		rt_task_wait_period(NULL);
 		for (i = 0; i < nsensors; i++) {
-			sensorIR_trainPassing(ir_sensorsmodel[i]->sensor);
+			sensorIR_trainPassing(ir_sensorsmodel[i].sensor);
 		}
 	}
 }
