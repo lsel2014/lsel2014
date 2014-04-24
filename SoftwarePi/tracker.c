@@ -1,5 +1,5 @@
-#include "observer.h"
-#include "sensorIR.h"
+#include "Model/observer.h"
+#include "Model/Sensors/sensorIR.h"
 #include "model.h"
 #include "tracker.h"
 #include "train.h"
