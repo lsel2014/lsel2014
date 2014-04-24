@@ -11,12 +11,12 @@ static observer_t tracker_observer;
 static struct ir_sensor_data_t {
 		sensorIR_t* sensor;
 		char sector;
-} ir_sensors [255];
+} ir_sensors [MAXIRSENSORS];
  
 static struct train_data_t {
 		train_t* train;
 		int IRsimbolicId;
-} tracker_trains [255];
+} tracker_trains [MAXTRAINS];
 
 static int n_ir_sensors;
 static int n_trains;
