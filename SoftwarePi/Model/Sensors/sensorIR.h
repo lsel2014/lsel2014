@@ -19,7 +19,7 @@
 //#define IR_PERIOD 100000000
 //#define MAXTRAINS 4
 
-typedef struct event_t{
+typedef struct {
         char flag;
         int passingTrain;
 }event_t;
@@ -30,7 +30,7 @@ typedef struct {
 	int id;
 	int GPIOlines[MAXTRAINS];
 //	int last_reading;
-    event_t* event;
+        event_t* event;
 	RT_MUTEX mutex;
 
 } sensorIR_t;
