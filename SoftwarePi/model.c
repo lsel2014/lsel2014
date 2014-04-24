@@ -38,6 +38,7 @@ void IRsensors_poll(void* arg) {
 		int i = 0;
 		rt_task_wait_period(NULL);
 		for (i = 0; i < n_ir_sensors; i++) {
+			printf("U JELLY?");
 			sensorIR_trainPassing(ir_sensorsmodel[i].sensor);
 		}
 	}
