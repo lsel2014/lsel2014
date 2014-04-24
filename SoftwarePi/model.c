@@ -8,16 +8,16 @@
 #define MAXTRAINS 8
 #define IR_DEADLINE 20000000
 #define IR_PERIOD 100000000
-
+// Se le suma uno, pues la lista se cierra con NULL
 static struct registered_ir_sensor_t {
 		sensorIR_t* sensor;
 		const char* name;
-} ir_sensorsmodel [MAXIRSENSORS];
+} ir_sensorsmodel [MAXIRSENSORS+1];
 
 static struct registered_train_t {
 		train_t* train;
 		const char* name;
-} trainsmodel [MAXTRAINS];
+} trainsmodel [MAXTRAINS+1];
 
 static int n_ir_sensors;
 static int n_trains;
@@ -36,11 +36,12 @@ void IRsensors_poll(void* arg) {
 	rt_task_set_periodic(NULL, TM_NOW, IR_PERIOD);
 	struct registered_ir_sensor_t* s;
 	while (1) {
-		int i = 0;
+		int i ;
+		s = ir_sensorsmodel;
 		rt_task_wait_period(NULL);
-		for (s = ir_sensorsmodel; s->name; ++s) {
-			printf("%s",s->name);
+		for (i = 0; i <= n_ir_sensors; i++) {
 			sensorIR_trainPassing(s->sensor);
+			++s;
 		}
 	}
 }
