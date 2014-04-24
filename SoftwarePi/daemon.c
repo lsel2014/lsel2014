@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
 	 * task function,
 	 * function argument*/
 	//IRsensors_setup();
-	printf("U JELLY?");
+	fprintf("U JELLY?");
 	model_init();
 	trains_setup();
 	setupRailChange();
