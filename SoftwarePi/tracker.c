@@ -16,7 +16,7 @@ static struct ir_sensor_data_t {
 static struct train_data_t {
 		train_t* train;
 		int IRsimbolicId;
-} trains [255];
+} tracker_trains [255];
 
 static int n_ir_sensors;
 static int n_trains;
@@ -27,7 +27,7 @@ static event_t* event;
 train_t*
 tracker_gen_train(int id){
      struct train_data_t* t;             
-     for (t = trains; t->train; ++t) {
+     for (t = tracker_trains; t->train; ++t) {
          if ( id == t-> IRsimbolicId )
          return t->train;
      }
@@ -98,8 +98,8 @@ tracker_init (void)
 	for (t = train_names; t->name; ++t) {
 		observable_t* obs = model_get (s->name);
 		observable_register_observer (obs, &tracker_observer);
-		trains[n_ir_sensors].train = (train_t*) obs;
-		trains[n_ir_sensors].IRsimbolicId = t->IRsimbolicId;
+		tracker_trains[n_ir_sensors].train = (train_t*) obs;
+		tracker_trains[n_ir_sensors].IRsimbolicId = t->IRsimbolicId;
 		++n_trains;
 	}
 	// Comentario: cuando este la via, hay que cogerla tambien.
