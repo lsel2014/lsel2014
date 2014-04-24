@@ -25,6 +25,7 @@
 //Model
 #include "train.h"
 #include "sun.h"
+#include "model.c"
 #include "Model/Sensors/sensorIR.h"
 #include "Model/Actuators/railChange.h"
 #include "Model/Actuators/trafficLight.h"
@@ -93,7 +94,8 @@ int main(int argc, char* argv[]) {
 	 * Arguments: &task,
 	 * task function,
 	 * function argument*/
-	IRsensors_setup();
+	//IRsensors_setup();
+	model_init();
 	trains_setup();
 	setupRailChange();
 	sun_setup();
