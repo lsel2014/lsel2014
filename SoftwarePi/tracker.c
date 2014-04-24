@@ -97,7 +97,7 @@ tracker_init (void)
 	}
 	
 	for (t = train_names; t->name; ++t) {
-		observable_t* obs = model_get_train (s->name);
+		observable_t* obs = model_get_train (t->name);
 		observable_register_observer (obs, &tracker_observer);
 		tracker_trains[n_ir_sensors].train = (train_t*) obs;
 		tracker_trains[n_ir_sensors].IRsimbolicId = t->IRsimbolicId;
