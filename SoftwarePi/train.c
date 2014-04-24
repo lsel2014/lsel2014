@@ -21,12 +21,12 @@ void trains_setup(void) {
 
 	train_new("Diesel", 0b0000100, '0', 20, dccobject);
 	train_new("Renfe", 0b0000011, '0', 25, dccobject);
-	for (i = 0; i < ntrains; i++) {
+	/*for (i = 0; i < ntrains; i++) {
 		for (j = 0; j < nsensors; j++) {
 			observable_register_observer((observable_t*) sensors[j],
 					(observer_t*) trains[i]);
 		}
-	}
+	}*/
 	current_train = trains[0];
 	interp_addcmd("train", train_cmd, "Set train parameters");
 	interp_addcmd("s", train_emergency_cmd, "Emergency stop all trains");
@@ -149,6 +149,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 }
 
 void train_notify(observer_t* this, observable_t* observed) {
+	/*
 	sensorIR_t* sensor = (sensorIR_t*)observed;
 	train_t* thisTrain = (train_t*)this;
 	//rt_printf ("Received train %d in sector %d\n", sensor->id, sensor->last_reading);
@@ -173,7 +174,7 @@ void train_notify(observer_t* this, observable_t* observed) {
 		}
 		
 	
-	}
+	}*/
 }
 
 void train_destroy(train_t* this) {
