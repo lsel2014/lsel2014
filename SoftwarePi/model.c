@@ -10,12 +10,12 @@
 
 static struct registered_ir_sensor_t {
 		sensorIR_t* sensor;
-		const char* name
+		const char* name;
 } ir_sensorsmodel [MAXIRSENSORS];
 
 static struct registered_train_t {
 		train_t* train;
-		const char* name
+		const char* name;
 } trainsmodel [MAXTRAINS];
 
 static int n_ir_sensors;
