@@ -91,7 +91,7 @@ model_get_train (const char* name)
 {
      struct registered_train_t* t;
      for (t = trainsmodel; t->name; ++t) {
-         if ( name == s-> name )
+         if ( name == t-> name )
          return t->train;
      }
 }
