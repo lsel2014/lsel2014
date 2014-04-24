@@ -8,16 +8,16 @@
 #define MAXTRAINS 8
 #define IR_DEADLINE 20000000
 #define IR_PERIOD 100000000
-// Se le suma uno, pues la lista se cierra con NULL
+
 static struct registered_ir_sensor_t {
 		sensorIR_t* sensor;
 		const char* name;
-} ir_sensorsmodel [MAXIRSENSORS+1];
+} ir_sensorsmodel [MAXIRSENSORS];
 
 static struct registered_train_t {
 		train_t* train;
 		const char* name;
-} trainsmodel [MAXTRAINS+1];
+} trainsmodel [MAXTRAINS];
 
 static int n_ir_sensors;
 static int n_trains;
