@@ -45,7 +45,7 @@ void tracker_notify (observer_t* this, observable_t* foo)
 	    event = sensorIR_get_event(p->sensor);
 	    if (event->flag == 1 ) {
 	    	train_set_position (tracker_gen_train(event->passingTrain), p->sector);
-	    	railway_register_train(tracker_gen_train(event->passingTrain), p->sector);
+	    	//railway_register_train(tracker_gen_train(event->passingTrain), p->sector);
       	}
     }
 }
