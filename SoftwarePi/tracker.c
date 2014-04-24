@@ -44,7 +44,7 @@ void tracker_notify (observer_t* this, observable_t* foo)
 	struct ir_sensor_data_t* p;
 	for (p = ir_sensors; p->sensor; ++p) {
 	    event = sensorIR_get_event(p->sensor);
-	    printf( " he cogido a %d en %s", event->passingTrain,p->sector);
+	    printf( " he cogido a %d en %c", event->passingTrain,p->sector);
 	    if (event->flag == 1 ) {
 	    	train_set_current_sector (tracker_gen_train(event->passingTrain), p->sector);
 	    	//railway_register_train(tracker_gen_train(event->passingTrain), p->sector);
