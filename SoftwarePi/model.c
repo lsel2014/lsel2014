@@ -34,7 +34,7 @@ sensors_cmd(char*arg){
 void IRsensors_poll(void* arg) {
 	sensorIR_t** sensors = (sensorIR_t**) arg;
 	rt_task_set_periodic(NULL, TM_NOW, IR_PERIOD);
-	struct registered_ir_sensor_t s;
+	struct registered_ir_sensor_t* s;
 	while (1) {
 		int i = 0;
 		rt_task_wait_period(NULL);
