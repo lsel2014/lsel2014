@@ -39,7 +39,7 @@ void IRsensors_poll(void* arg) {
 		int i = 0;
 		rt_task_wait_period(NULL);
 		for (s = ir_sensorsmodel; s->name; ++s) {
-			printf("U JELLY? %c",s->name);
+			printf("%s",s->name);
 			sensorIR_trainPassing(s->sensor);
 		}
 	}
