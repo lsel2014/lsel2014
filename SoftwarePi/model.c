@@ -36,7 +36,7 @@ void IRsensors_poll(void* arg) {
 	while (1) {
 		int i = 0;
 		rt_task_wait_period(NULL);
-		for (i = 0; i < nsensors; i++) {
+		for (i = 0; i < n_ir_sensors; i++) {
 			sensorIR_trainPassing(ir_sensorsmodel[i].sensor);
 		}
 	}
@@ -73,7 +73,7 @@ model_init (void)
 		model_add_IRsensor( s->name,  sensorIR_new(s->ID) );
 		++n_ir_sensors;
 	}
-	task_add("IR polling", IR_DEADLINE, IRsensors_poll, ir_sensors);
+	task_add("IR polling", IR_DEADLINE, IRsensors_poll, ir_sensorsmodel);
 	interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
 }
 observable_t*
