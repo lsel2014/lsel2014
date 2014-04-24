@@ -46,13 +46,13 @@ void IRsensors_poll(void* arg) {
 int
 model_add_IRsensor (const char* name, sensorIR_t* sensor)
 {
-    /*if( n_ir_sensors <= MAXIRSENSORS ){
+    if( n_ir_sensors <= MAXIRSENSORS ){
     ir_sensorsmodel[n_ir_sensors].name = name;
     ir_sensorsmodel[n_ir_sensors].sensor = sensor;
    	return 1;
     }
     printf("Max. sensor registered\n");
-    */return 0;
+    return 0;
 }
 
 void
