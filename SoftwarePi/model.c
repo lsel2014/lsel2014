@@ -51,7 +51,8 @@ model_add_IRsensor (const char* name, sensorIR_t* sensor)
     if( n_ir_sensors <= MAXIRSENSORS ){
     ir_sensorsmodel[n_ir_sensors].name = name;
     ir_sensorsmodel[n_ir_sensors].sensor = sensor;
-   	return 1;
+    ++n_ir_sensors;
+    return 1;
     }
     printf("Max. sensor registered\n");
     return 0;
