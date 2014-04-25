@@ -31,7 +31,6 @@ typedef struct {
 	int GPIOlines[MAXTRAINS];
 //	int last_reading;
         event_t* event;
-        int nevent;
 	RT_MUTEX mutex;
 
 } sensorIR_t;
