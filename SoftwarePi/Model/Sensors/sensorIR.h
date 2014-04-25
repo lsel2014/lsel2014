@@ -17,7 +17,7 @@
 
 #define IR_DEADLINE 20000000
 #define IR_PERIOD 100000000
-#define MAXTRAINS 4
+//#define MAXTRAINS 4
 
 typedef struct {
         char flag;
