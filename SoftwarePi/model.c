@@ -109,6 +109,7 @@ model_get_observable (const char* name)
          if ( name == o-> name )
          return o->obs;
      }
+     return NULL;
 }	
 	
 /*observable_t*
