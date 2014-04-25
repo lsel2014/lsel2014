@@ -134,7 +134,7 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
 
 void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc, telemetry_t* telemetry) {
-	observer_init((observer_t *) this, train_notify);
+	//observer_init((observer_t *) this, train_notify);
 	observable_init(&this->observable);
 	this->name = name;
 	this->ID = ID;
@@ -147,9 +147,9 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->telemetry = telemetry;
 	rt_mutex_create(&this->mutex, NULL);
 }
-
-void train_notify(observer_t* this, observable_t* observed) {
 	/*
+void train_notify(observer_t* this, observable_t* observed) {
+
 	sensorIR_t* sensor = (sensorIR_t*)observed;
 	train_t* thisTrain = (train_t*)this;
 	//rt_printf ("Received train %d in sector %d\n", sensor->id, sensor->last_reading);
