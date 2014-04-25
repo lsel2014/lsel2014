@@ -17,6 +17,7 @@ void
 observable_init (observable_t* this)
 {
   this->nobservers = 0;
+  this->nevents = 0;
 }
 
 void
@@ -29,6 +30,7 @@ void
 observable_notify_observers (observable_t* this)
 {
   int i;
+  this->nevents++;
   for (i = 0; i < this->nobservers; ++i){
     	observer_notify (this->observer[i], this);
    }
