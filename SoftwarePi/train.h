@@ -54,7 +54,7 @@ void train_set_direction (train_t* this, train_direction_t direction);
 void train_set_n_wagon (train_t* this, char n_wagon);
 void train_set_length (train_t* this, char length);
 void train_set_current_sector (train_t* this, char sector);
-void train_set_current_speed (train_t* this, float speed);
+void train_set_current_speed (train_t* this, double speed);
 
 char* train_get_name (train_t* this);
 char train_get_ID (train_t* this);
@@ -63,7 +63,7 @@ train_direction_t train_get_direction (train_t* this);
 char train_get_n_wagon (train_t* this);
 char train_get_length (train_t* this);
 char train_get_current_sector (train_t* this);
-float train_get_current_speed (train_t* this);
+double train_get_current_speed (train_t* this);
 telemetry_t* train_get_telemetry (train_t* this);
 
 #endif

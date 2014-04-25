@@ -263,7 +263,7 @@ void train_set_current_sector(train_t* this, char sector) {
     rt_mutex_release(&this->mutex);
 }
 
-void train_set_current_speed(train_t* this, float speed) {
+void train_set_current_speed(train_t* this, double speed) {
     rt_mutex_acquire(&this->mutex, TM_INFINITE);
     this->telemetry->speed = speed;
     rt_mutex_release(&this->mutex);
@@ -302,7 +302,7 @@ char train_get_current_sector (train_t* this)
     return this->telemetry->sector;
 }
 
-float train_get_current_speed (train_t* this)
+double train_get_current_speed (train_t* this)
 {
     return this->telemetry->speed;
 }
