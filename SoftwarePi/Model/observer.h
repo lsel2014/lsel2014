@@ -20,6 +20,7 @@ void observer_notify (observer_t* this, struct observable_t* observable);
 typedef struct observable_t {
   observer_t* observer[MAXOBSERVERS];
   int nobservers;
+  int nevents;
 } observable_t;
 
 void observable_init (observable_t* this);
