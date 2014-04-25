@@ -103,7 +103,6 @@ sensorIR_init(sensorIR_t* this, int id , event_t* event) {
 	}
 //	this->last_reading = -1;
     this->event = event;
-    this->nevent = 0;
     rt_mutex_create(&this->mutex, NULL);
 
 }
