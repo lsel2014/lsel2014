@@ -16,7 +16,7 @@ objs = \
 	Model/Actuators/crossingGate.o \
 	Model/Actuators/railChange.o \
 	dcc.o \
-	sun.o sunparse.o
+	sun.o sunparse.o model.o tracker.o 
 
 all: daemon
 
