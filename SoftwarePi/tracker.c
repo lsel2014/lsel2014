@@ -33,7 +33,17 @@ tracker_gen_train(int id){
      }
      return NULL;
 }  
-                    
+void
+timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b)
+{
+  res->tv_sec = a->tv_sec - b->tv_sec;
+  res->tv_usec = a->tv_usec - b->tv_usec;
+  if (res->tv_usec < 0) {
+    --res->tv_sec;
+    res->tv_usec += 1000000;
+  }
+}
+                   
 // El notify revisa los sensores que estan registrados 
 // y si ve que alguno tiene algun evento, lo lee y 
 // actualiza la maqueta 
@@ -41,11 +51,23 @@ static
 void tracker_notify (observer_t* this, observable_t* foo)
 {
 	struct ir_sensor_data_t* p;
-	for (p = ir_sensors; p->sensor; ++p) {
+	struct telemetry_t* tel;
+	struct timeval diff , now ,last;
+	struct train_t* train;
+	float speed;
+	for (p = tracker_ir_sensors; p->sensor; ++p) {
 	    event = sensorIR_get_event(p->sensor);
 	    if (event->flag == 1) {
-	    	printf( " he cogido a %d en %d \n", event->passingTrain,p->sector);
-	    	//train_set_current_sector (tracker_gen_train(event->passingTrain), p->sector);
+	    	//printf( " he cogido a %d en %d \n", event->passingTrain,p->sector);
+	    	train = tracker_gen_train(event->passingTrain);
+	    	train_set_current_sector (train , p->sector);
+	    	tel = train_get_telemetry(train);
+	    	last = tel-> timestamp;
+	    	gettimeofday (&now, NULL);
+	    	timeval_sub ( &diff , &now , &last );
+	    	// divido entre microsegundos para tener mayor precision
+	    	speed = LENGHTSECTOR / diff -> tv_usec ;
+	    	train_set_current_speed(train , speed );
 	    	//railway_register_train(tracker_gen_train(event->passingTrain), p->sector);
       	}
     }
