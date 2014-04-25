@@ -21,7 +21,7 @@ static struct registered_train_t {
 static int n_ir_sensors;
 static int n_trains;
 
-int 
+/*int 
 sensors_cmd(char*arg){
 	int i;
 	for(i=0; i<n_ir_sensors; i++){
@@ -44,7 +44,7 @@ void IRsensors_poll(void* arg) {
 		}
 	}
 }
-
+*/
 int
 model_add_IRsensor (const char* name, sensorIR_t* sensor)
 {
