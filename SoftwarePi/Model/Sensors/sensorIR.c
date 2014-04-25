@@ -7,6 +7,7 @@
 
 #include "sensorIR.h"
 #include <rtdk.h>
+
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
@@ -43,19 +44,18 @@
  };
  */
 
-//sensorIR_t* sensors[MAXSENSORS];
-//int nsensors = 0;
+sensorIR_t* sensors[MAXSENSORS];
+int nsensors = 0;
 
-/*int 
-sensors_cmd(char*arg){
+int sensors_cmd(char*arg){
 	int i;
 	for(i=0;i<nsensors;i++){
 		printf("Sensor %d\n",sensors[i]->id);
 	}
 	return 0;
-}*/
+}
 
-/*void IRsensors_setup(void) {
+void IRsensors_setup(void) {
 	int i;
 	for (i = 0; i < 4; i++) {
 		sensorIR_new(i);
@@ -74,46 +74,46 @@ void IRsensors_poll(void* arg) {
 			sensorIR_trainPassing(sensors[i]);
 		}
 	}
-}*/
+}
 
 sensorIR_t*
 sensorIR_new(int id) {
 	sensorIR_t* this = (sensorIR_t*) malloc(sizeof(sensorIR_t));
 	sensorIR_init(this, id);
-	//if (nsensors < MAXSENSORS) {
-	//	sensors[nsensors++] = this;
-	//}
+	if (nsensors < MAXSENSORS) {
+		sensors[nsensors++] = this;
+	}
 	return this;
 }
 
-void 
-sensorIR_init(sensorIR_t* this, int id) {
+void sensorIR_init(sensorIR_t* this, int id) {
 	int i;
 	observable_init((observable_t *) this);
 	this->id = id;
 	for (i = 0; i < 2; i++) {
+
 		// Set the associated train line for that sensor
 		this->GPIOlines[i] = (id * 2) + i;
+		
 		// Set the line as input
 		pinMode(this->GPIOlines[i], INPUT);
+
 		/*if (wiringPiISR (this->GPIOlines[i], INT_EDGE_RISING, sensorIR_isr[i]) < 0) {
 		 fprintf (stderr, "Unable to setup ISR: %s\n", strerror (errno)) ;
 		 }*/
 	}
-//	this->last_reading = -1;
-    this->event->flag = 0;
-    this->event->passingTrain = 0;
+
+	this->last_reading = -1;
+
 	rt_mutex_create(&this->mutex, NULL);
 
 }
 
-void 
-sensorIR_destroy(sensorIR_t* this) {
+void sensorIR_destroy(sensorIR_t* this) {
 	free(this);
 }
 
-int 
-sensorIR_readLine(sensorIR_t* this, int trainLine) //trainLine: 0 for diesel, 1 for renfe
+int sensorIR_readLine(sensorIR_t* this, int trainLine) //trainLine: 0 for diesel, 1 for renfe
 {
 	int r;
 
@@ -128,8 +128,7 @@ sensorIR_readLine(sensorIR_t* this, int trainLine) //trainLine: 0 for diesel, 1 
 	return r;
 }
 
-void 
-sensorIR_trainPassing(sensorIR_t* this) {
+void sensorIR_trainPassing(sensorIR_t* this) {
 	int i, r;
 	r = -1;
 
@@ -139,25 +138,18 @@ sensorIR_trainPassing(sensorIR_t* this) {
 	for (i = 0; i < 2; i++) {
 		// Read sensor line and check its state
 		if (digitalRead(this->GPIOlines[i]) == HIGH) {
-             // 4 if diesel is passing, 3 if renfe is passing, or 2 if no one                                
 			r = i+3;
 		}
 	}
-    if(r>2){
-            
-	this->event->flag = 1;
-    this->event->passingTrain = r;
-    }
+
+	this->last_reading = r; // 4 if diesel is passing, 3 if renfe is passing, or 2 if no one
+
 	// Release mutex
 	rt_mutex_release(&this->mutex);
 
-	if (this->event->flag) {
+	if (this->last_reading >= 3) {
 		
 		observable_notify_observers((observable_t*) this);
 	}
 }
 
-event_t* 
-sensorIR_get_event (sensorIR_t* this){
-                   return this->event;
-}
