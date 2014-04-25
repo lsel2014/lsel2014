@@ -38,7 +38,7 @@ void IRsensors_poll(void* arg) {
 		int i ;
 		s = ir_sensorsmodel;
 		rt_task_wait_period(NULL);
-		for (i = 0; i <= n_ir_sensors; i++) {
+		for (i = 0; i < n_ir_sensors; i++) {
 			sensorIR_trainPassing(s->sensor);
 			++s;
 		}
