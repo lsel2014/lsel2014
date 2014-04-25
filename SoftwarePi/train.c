@@ -302,7 +302,7 @@ char train_get_current_sector (train_t* this)
     return this->telemetry->sector;
 }
 
-char train_get_current_speed (train_t* this)
+float train_get_current_speed (train_t* this)
 {
     return this->telemetry->speed;
 }
