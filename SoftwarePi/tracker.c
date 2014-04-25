@@ -40,12 +40,13 @@ tracker_gen_train(int id){
 static
 void tracker_notify (observer_t* this, observable_t* foo)
 {
-
+	int sense = 0;
 	struct ir_sensor_data_t* p;
 	for (p = ir_sensors; p->sensor; ++p) {
 	    event = sensorIR_get_event(p->sensor);
-	    if (event->flag == 1 ) {
-	    	printf( " he cogido a %d en %d/n", event->passingTrain,p->sector);
+	    if (event->flag == 1 && sense == 0) {
+	    	printf( " he cogido a %d en %d \n", event->passingTrain,p->sector);
+	    	sense = 1 ;
 	    	//train_set_current_sector (tracker_gen_train(event->passingTrain), p->sector);
 	    	//railway_register_train(tracker_gen_train(event->passingTrain), p->sector);
       	}
