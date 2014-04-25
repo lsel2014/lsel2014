@@ -106,7 +106,7 @@ model_get_observable (const char* name)
 {
      struct registered_observable_t* o;
      for (o = observablesmodel; o->name; ++o) {
-         if ( name == o-> name )
+         if (0 == strcmp(name, o-> name) )
          return o->obs;
      }
      return NULL;
