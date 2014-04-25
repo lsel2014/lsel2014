@@ -11,7 +11,7 @@ static observer_t tracker_observer;
 static struct ir_sensor_data_t {
 		sensorIR_t* sensor;
 		char sector;
-} ir_sensors [MAXSENSORS];
+} tracker_ir_sensors [MAXSENSORS];
  
 static struct train_data_t {
 		train_t* train;
@@ -90,11 +90,11 @@ tracker_init (void)
 	for (s = ir_names; s->name; ++s) {
 		observable_t* obs = model_get_observable (s->name);
 		observable_register_observer (obs, &tracker_observer);
-		ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
-		ir_sensors[n_ir_sensors].sector = s->sector;
+		tracker_ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
+		tracker_ir_sensors[n_ir_sensors].sector = s->sector;
 		++n_ir_sensors;
 	}
-	/*
+	
 	for (t = train_names; t->name; ++t) {
 		observable_t* obs = model_get_observable (t->name);
 		observable_register_observer (obs, &tracker_observer);
@@ -102,7 +102,7 @@ tracker_init (void)
 		tracker_trains[n_ir_sensors].IRsimbolicId = t->IRsimbolicId;
 		++n_trains;
 	}
-	*/
+	
 	// Comentario: cuando este la via, hay que cogerla tambien.
 }
 
