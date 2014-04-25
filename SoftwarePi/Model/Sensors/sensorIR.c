@@ -50,7 +50,7 @@ int
 sensors_cmd(char*arg){
 	int i;
 	for(i=0;i<nsensors;i++){
-		printf("Sensor %d\n",sensors[i]->id);
+		printf("Sensor %d , han ocurrido %d eventos \n",sensors[i]->id, sensor[i]-> nevent);
 	}
 	return 0;
 }
@@ -146,8 +146,9 @@ sensorIR_trainPassing(sensorIR_t* this) {
 	}
     if(r>2){
             
-	this->event->flag = 1;
+    this->event->flag = 1;
     this->event->passingTrain = r;
+    this->nevent++;
     }
 	// Release mutex
 	rt_mutex_release(&this->mutex);
@@ -155,6 +156,7 @@ sensorIR_trainPassing(sensorIR_t* this) {
 	if (this->event->flag == 1) {
 		
 		observable_notify_observers((observable_t*) this);
+		this->event->flag = 0;
 	}
 }
 
