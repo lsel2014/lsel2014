@@ -1,0 +1,4 @@
+train select 4
+train speed 28
+train wait 0
+train estop
