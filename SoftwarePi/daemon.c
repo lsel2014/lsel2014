@@ -30,6 +30,7 @@
 #include "Model/Actuators/railChange.h"
 #include "Model/Actuators/trafficLight.h"
 #include "Model/Actuators/crossingGate.h"
+#include "tracker.h"
 
 // Dummy function to catch signals
 void catch_signal () {}
@@ -97,6 +98,7 @@ int main(int argc, char* argv[]) {
 	//IRsensors_setup();
 	
 	model_init();
+	tracker_init ();
 	trains_setup();
 	setupRailChange();
 	sun_setup();
