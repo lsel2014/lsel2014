@@ -11,7 +11,7 @@ static observer_t tracker_observer;
 static struct ir_sensor_data_t {
 		sensorIR_t* sensor;
 		char sector;
-} ir_sensors [MAXIRSENSORS];
+} ir_sensors [MAXSENSORS];
  
 static struct train_data_t {
 		train_t* train;
