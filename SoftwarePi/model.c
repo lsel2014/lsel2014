@@ -92,7 +92,7 @@ model_init (void)
     struct ir_name_t* s;
 	for (s = ir_names; s->name; ++s) {
 		model_add_observable ( s->name,  sensors[i] );
-		++n_observable;ç
+		++n_observable;
 		i++;
 	}
 	//task_add("IR polling", IR_DEADLINE, IRsensors_poll, ir_sensorsmodel);
