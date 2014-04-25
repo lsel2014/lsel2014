@@ -4,10 +4,10 @@
 #include "model.h"
 #include "Interpreter/interp.h"
 
-
-#define IR_DEADLINE 20000000
-#define IR_PERIOD 100000000
-
+#define MAXOBS 20
+//#define IR_DEADLINE 20000000
+//#define IR_PERIOD 100000000
+/*
 static struct registered_ir_sensor_t {
 		sensorIR_t* sensor;
 		const char* name;
@@ -20,7 +20,11 @@ static struct registered_train_t {
 
 static int n_ir_sensors;
 static int n_trains;
-
+*/
+static struct registered_observable_t {
+		observable* obs;
+		const char* name;
+} obsmodel [MAXOBS];
 /*int 
 sensors_cmd(char*arg){
 	int i;
@@ -80,7 +84,18 @@ model_init (void)
 	interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
 	
 }
+
 observable_t*
+model_get_obs (const char* name) 
+{
+     struct registered_observable_t* o;
+     for (o = obsmodel; o->name; ++o) {
+         if ( name == o-> name )
+         return o->obs;
+     }
+}	
+	
+/*observable_t*
 model_get_IRsensor (const char* name)
 {
      struct registered_ir_sensor_t* s;
@@ -98,3 +113,4 @@ model_get_train (const char* name)
          return t->train;
      }
 }
+*/
