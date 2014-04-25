@@ -236,6 +236,12 @@ void train_set_current_speed(train_t* this, float speed) {
 	rt_mutex_release(&this->mutex);
 }
 
+void train_set_timestamp(train_t* this,struct timeval timestamp) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	this->telemetry->timestamp = timestamp;
+	rt_mutex_release(&this->mutex);
+}
+
 char* train_get_name(train_t* this) {
 	return this->name;
 }
