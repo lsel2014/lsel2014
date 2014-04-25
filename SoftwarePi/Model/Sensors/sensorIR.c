@@ -50,7 +50,7 @@ int
 sensors_cmd(char*arg){
 	int i;
 	for(i=0;i<nsensors;i++){
-		printf("Sensor %d , han ocurrido %d eventos \n",sensors[i]->id, sensor[i]-> nevent);
+		printf("Sensor %d , han ocurrido %d eventos \n",sensors[i]->id, sensor[i]-> observable -> nevents);
 	}
 	return 0;
 }
