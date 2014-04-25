@@ -102,7 +102,7 @@ model_init (void)
 }
 
 observable_t*
-model_get_obs (const char* name) 
+model_get_observable (const char* name) 
 {
      struct registered_observable_t* o;
      for (o = observablesmodel; o->name; ++o) {
