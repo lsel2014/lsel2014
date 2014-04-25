@@ -43,19 +43,19 @@
  };
  */
 
-//sensorIR_t* sensors[MAXSENSORS];
-//int nsensors = 0;
+sensorIR_t* sensors[MAXSENSORS];
+int nsensors = 0;
 
-/*int 
+int 
 sensors_cmd(char*arg){
 	int i;
 	for(i=0;i<nsensors;i++){
 		printf("Sensor %d\n",sensors[i]->id);
 	}
 	return 0;
-}*/
+}
 
-/*void IRsensors_setup(void) {
+void IRsensors_setup(void) {
 	int i;
 	for (i = 0; i < 4; i++) {
 		sensorIR_new(i);
@@ -74,16 +74,16 @@ void IRsensors_poll(void* arg) {
 			sensorIR_trainPassing(sensors[i]);
 		}
 	}
-}*/
+}
 
 sensorIR_t*
 sensorIR_new(int id) {
 	sensorIR_t* this = (sensorIR_t*) malloc(sizeof(sensorIR_t));
 	event_t* event = (event_t*) malloc(sizeof(event_t));
 	sensorIR_init(this, id ,event);
-	//if (nsensors < MAXSENSORS) {
-	//	sensors[nsensors++] = this;
-	//}
+	if (nsensors < MAXSENSORS) {
+		sensors[nsensors++] = this;
+	}
 	return this;
 }
 
@@ -151,7 +151,7 @@ sensorIR_trainPassing(sensorIR_t* this) {
 	// Release mutex
 	rt_mutex_release(&this->mutex);
 
-	if (this->event->flag) {
+	if (this->event->flag == 1) {
 		
 		observable_notify_observers((observable_t*) this);
 	}
