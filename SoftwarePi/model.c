@@ -87,11 +87,13 @@ model_init (void)
 			{ "IRsensor[3]" , 3},
 			{ NULL, -1 }
 	};   
-    n_ir_sensors=0; 
+    n_ir_sensors=0;
+    int i = 0;
     struct ir_name_t* s;
 	for (s = ir_names; s->name; ++s) {
-		model_add_observable ( s->name,  sensorIR_new(s->ID) );
-		++n_observable;
+		model_add_observable ( s->name,  sensors[i] );
+		++n_observable;ç
+		i++;
 	}
 	//task_add("IR polling", IR_DEADLINE, IRsensors_poll, ir_sensorsmodel);
 	//interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
