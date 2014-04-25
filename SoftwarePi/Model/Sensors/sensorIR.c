@@ -152,7 +152,7 @@ sensorIR_trainPassing(sensorIR_t* this) {
 	rt_mutex_release(&this->mutex);
 
 	if (this->event->flag == 1) {
-		
+		printf( " I'm notifying!!");
 		observable_notify_observers((observable_t*) this);
 		this->event->flag = 0;
 	}
