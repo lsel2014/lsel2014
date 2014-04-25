@@ -14,7 +14,7 @@ typedef struct observer_t {
 } observer_t;
 
 void observer_init (observer_t* this, observer_notify_func_t notify);
-void observer_notify (observer_t* this);
+void observer_notify (observer_t* this , struct observable_t* observable);
 
 
 typedef struct observable_t {
