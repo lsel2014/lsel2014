@@ -87,7 +87,7 @@ model_init (void)
 			{ "IRsensor[3]" , 3},
 			{ NULL, -1 }
 	};   
-    n_ir_sensors=0;
+    n_observable=0;
     int i = 0;
     IRsensors_setup();
     struct ir_name_t* s;
