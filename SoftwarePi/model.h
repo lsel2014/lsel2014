@@ -2,8 +2,6 @@
 #define MODEL_H
 
 #include "Model/observer.h"
-#define MAXIRSENSORS 4
-#define MAXTRAINS 8
 
 void model_init (void);
 observable_t* model_get_IRsensor (const char* name);
