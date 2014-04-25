@@ -92,7 +92,7 @@ model_init (void)
     IRsensors_setup();
     struct ir_name_t* s;
 	for (s = ir_names; s->name; ++s) {
-		model_add_observable ( s->name,  sensors[i] );
+		model_add_observable ( s->name,( observable_t*)  sensors[i] );
 		++n_observable;
 		i++;
 	}
