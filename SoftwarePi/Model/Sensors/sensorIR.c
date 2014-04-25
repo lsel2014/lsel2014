@@ -135,7 +135,7 @@ sensorIR_trainPassing(sensorIR_t* this) {
 
 	// Adquire mutex
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
-
+	this->event->flag = 0;
 	for (i = 0; i < 2; i++) {
 		// Read sensor line and check its state
 		if (digitalRead(this->GPIOlines[i]) == HIGH) {
@@ -153,7 +153,7 @@ sensorIR_trainPassing(sensorIR_t* this) {
 
 	if (this->event->flag == 1) {
 		observable_notify_observers((observable_t*) this);
-		this->event->flag = 0;
+		
 	}
 }
 
