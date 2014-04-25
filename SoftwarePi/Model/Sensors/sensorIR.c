@@ -147,7 +147,6 @@ sensorIR_trainPassing(sensorIR_t* this) {
             
     this->event->flag = 1;
     this->event->passingTrain = r;
-    this->nevent++;
     }
 	// Release mutex
 	rt_mutex_release(&this->mutex);
