@@ -95,7 +95,7 @@ tracker_init (void)
 		ir_sensors[n_ir_sensors].sector = s->sector;
 		++n_ir_sensors;
 	}
-	
+	/*
 	for (t = train_names; t->name; ++t) {
 		observable_t* obs = model_get_observable (t->name);
 		observable_register_observer (obs, &tracker_observer);
@@ -103,6 +103,7 @@ tracker_init (void)
 		tracker_trains[n_ir_sensors].IRsimbolicId = t->IRsimbolicId;
 		++n_trains;
 	}
+	*/
 	// Comentario: cuando este la via, hay que cogerla tambien.
 }
 
