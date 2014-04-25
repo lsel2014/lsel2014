@@ -3,15 +3,17 @@
 #define MAXTRAINS 8
 #include <pthread.h>
 #include <native/mutex.h>
+#include <time.h>
 #include "dcc.h"
-#define ESTOP_CMD 0b01000001
 #include "Interpreter/interp.h"
 #include "Model/observer.h"
 #include "Model/Sensors/sensorIR.h"
 
+#define ESTOP_CMD 0b01000001
 typedef struct{
 	char sector;
 	float speed;
+	timeval timestamp;
 } telemetry_t;
 
 typedef enum {
