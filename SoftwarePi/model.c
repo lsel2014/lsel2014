@@ -24,7 +24,7 @@ static int n_trains;
 static struct registered_observable_t {
 		observable* obs;
 		const char* name;
-} observablesmodel [MAXOBS];
+} observablesmodel [MAXOBSERVABLES];
 static int n_observable;
 /*int 
 sensors_cmd(char*arg){
