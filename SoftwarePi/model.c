@@ -89,6 +89,7 @@ model_init (void)
 	};   
     n_ir_sensors=0;
     int i = 0;
+    IRsensors_setup();
     struct ir_name_t* s;
 	for (s = ir_names; s->name; ++s) {
 		model_add_observable ( s->name,  sensors[i] );
