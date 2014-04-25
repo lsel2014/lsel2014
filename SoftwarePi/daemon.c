@@ -95,11 +95,11 @@ int main(int argc, char* argv[]) {
 	 * Arguments: &task,
 	 * task function,
 	 * function argument*/
-	//IRsensors_setup();
-	
+	IRsensors_setup();
+	trains_setup();
 	model_init();
 	tracker_init ();
-	trains_setup();
+	
 	setupRailChange();
 	sun_setup();
 	setup_trafficLight();
