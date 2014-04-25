@@ -4,8 +4,7 @@
 #include "model.h"
 #include "Interpreter/interp.h"
 
-#define MAXIRSENSORS 4
-#define MAXTRAINS 8
+
 #define IR_DEADLINE 20000000
 #define IR_PERIOD 100000000
 
