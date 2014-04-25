@@ -296,3 +296,13 @@ char train_get_length(train_t* this) {
 telemetry_t* train_get_telemetry(train_t* this) {
     return this->telemetry;
 }
+
+char train_get_current_sector (train_t* this)
+{
+    return this->telemetry->sector;
+}
+
+char train_get_current_speed (train_t* this)
+{
+    return this->telemetry->speed;
+}
