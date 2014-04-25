@@ -22,7 +22,7 @@ static int n_ir_sensors;
 static int n_trains;
 */
 static struct registered_observable_t {
-		observable* obs;
+		observable_t* obs;
 		const char* name;
 } observablesmodel [MAXOBSERVABLES];
 static int n_observable;
