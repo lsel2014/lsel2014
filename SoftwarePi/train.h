@@ -19,7 +19,7 @@ typedef enum {
 } train_direction_t;
 
 typedef struct {
-	observer_t observer;
+	//observer_t observer;
 	observable_t observable;
 	char* name;
 	char ID;
@@ -42,7 +42,7 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
 void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc, telemetry_t* telemetry);
 void train_destroy(train_t* this);
-void train_notify(observer_t* this, observable_t* observed);
+//void train_notify(observer_t* this, observable_t* observed);
 int train_cmd(char* arg);
 int train_emergency_cmd(char*arg);
 void train_set_name(train_t* this, char* name);
