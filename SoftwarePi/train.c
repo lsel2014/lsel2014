@@ -147,7 +147,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->telemetry = telemetry;
 	rt_mutex_create(&this->mutex, NULL);
 }
-	/*
+/*
 void train_notify(observer_t* this, observable_t* observed) {
 
 	sensorIR_t* sensor = (sensorIR_t*)observed;
@@ -174,9 +174,9 @@ void train_notify(observer_t* this, observable_t* observed) {
 		}
 		
 	
-	}*/
+	}
 }
-
+*/
 void train_destroy(train_t* this) {
 	if (this->telemetry)
 		free(this->telemetry);
