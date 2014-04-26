@@ -27,7 +27,7 @@ void railways_setup(void);
 railway_t* railways_new( int id );
 void railway_init( railway_t* this, int id );
 sector_t* sector_new( int id);
-void railway_init( sector_t* this, int id );
+void sector_init( sector_t* this, int id );
 int railway_cmd(char* arg);
 
 void railway_register_train( railway_t* this, train_t* train , int sector);
