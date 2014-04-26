@@ -11,6 +11,7 @@
 typedef struct {
   int id;
   traint_t* registeredTrains [MAXTRAINS];
+  int nregisteredtrains;
   } sector_t; 
 
 // ID is add so it can be more than one railway 
