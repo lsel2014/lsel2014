@@ -162,7 +162,7 @@ tracker_init (void)
 		++n_trains;
 	}
 	
-	for( r = railway_names; t->name; ++r) {
+	for( r = railway_names; r->name; ++r) {
 		observable_t* obs = model_get_observable (r->name);
 		observable_register_observer (obs, &tracker_observer);
 		tracker_railway[n_railway].train = (railway_t*) obs;
