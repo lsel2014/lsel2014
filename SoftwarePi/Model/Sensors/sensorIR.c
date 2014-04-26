@@ -50,7 +50,7 @@ int
 sensors_cmd(char*arg){
 	int i;
 	for(i=0;i<nsensors;i++){
-		printf("Sensor %d , events %d  \n",sensors[i]->id, sensors[i]->observable.nevents );
+		printf("Sensor %d",sensors[i]->id );
 	}
 	return 0;
 }
