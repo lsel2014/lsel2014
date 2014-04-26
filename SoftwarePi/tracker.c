@@ -116,10 +116,10 @@ tracker_init (void)
 			const char* name;
 			char sector;
 	} ir_names [] = {
-			{ "IRsensor[0]", 0 },
-			{ "IRsensor[1]", 1 },
-			{ "IRsensor[2]", 2 },
-			{ "IRsensor[3]", 3 },
+			{ "IRsensor0", 0 },
+			{ "IRsensor1", 1 },
+			{ "IRsensor2", 2 },
+			{ "IRsensor3", 3 },
 			{ NULL, 0 }
 	};
 	// Struct with the names and the ID of each train in the IR sensors
@@ -135,7 +135,7 @@ tracker_init (void)
 			const char* name;
 			int platform;
 	} railway_names [] = {
-			{ "via[0]", 0 },
+			{ "via0", 0 },
 			{ NULL, 0 }
 	};
 	struct ir_name_t* s;
