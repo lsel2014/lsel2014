@@ -1,10 +1,19 @@
 #include "railway.h"
 
+void 
+railways_setup(void)
+{
+  railway_new (0);
+  interp_addcmd("railway", railway_cmd, "Lists railway sectors");
+}
 railway_t* 
-train_new( int id )
+railway_new( int id )
 {
   railway_t* this = (railway_t*) malloc(sizeof(railway_t));
   railway_init(this, id );
+  if (nrailways < MAXRAILWAY ) {
+		railways[nrailways++] = this;
+	}
   return this;
 }
 
@@ -18,19 +27,20 @@ railway_init( railway_t* this, int id )
     this->railwaySectors[i] = sector_new(i);
     }
 }
-sector_t* 
-sector_new( int id)
-{
-  return NULL;
-}
+
 void 
 railway_init( sector_t* this, int id )
 {
-  return NULL;
+  this->id = id;
 }
 int 
 railway_cmd(char* arg)
 {
+  struct sector_t* s;
+	for(s = ;i<nsensors;i++){
+		printf("Sensor %d",sensors[i]->id );
+	}
+	return 0;
   return NULL;
 }
 
