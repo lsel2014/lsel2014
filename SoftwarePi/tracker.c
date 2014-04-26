@@ -26,16 +26,7 @@ static int n_ir_sensors;
 static int n_trains;
 static int n_railway;
 static event_t* event;
-// Translate the ID ir sensors returns into the actual train pointer
-train_t*
-tracker_gen_train(int id){
-     struct train_data_t* t;             
-     for (t = tracker_trains; t->train; ++t) {
-         if ( id == t-> IRsimbolicId )
-         return t->train;
-     }
-     return NULL;
-}  
+
 void
 timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b)
 {
@@ -46,7 +37,47 @@ timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b)
     res->tv_usec += 1000000;
   }
 }
-                   
+// Translate the ID ir sensors returns into the actual train pointer
+train_t*
+tracker_gen_train(int id){
+     struct train_data_t* t;             
+     for (t = tracker_trains; t->train; ++t) {
+         if ( id == t-> IRsimbolicId )
+         return t->train;
+     }
+     return NULL;
+} 
+// Does all the operations to properly update the train
+void 
+tracker_updating_train(train_t* train, int sector ,telemetry_t* tel)
+{
+	struct timeval diff , now ,last;
+	float speed;
+	int i;
+	for (i = 0 ; i < n_trains ; i++){
+	    		if (event->passingTrain == tracker_trains[i]-> IRsimbolicId)
+	    			tracker_trains[i]->storedDirection=train -> direction;	
+	}
+	train_set_current_sector (train , sector);
+	last = tel-> timestamp;
+	gettimeofday (&now, NULL);
+	train_set_timestamp ( train , now);
+	timeval_sub ( &diff , &now , &last );
+	speed = LENGHTSECTOR / diff -> tv_usec ;
+	train_set_current_speed(train , speed );
+}
+// Registers train in the railway taking into account the direction of the train
+void 
+tracker_register_train(train_t* train, int sector)
+{
+	if (train -> direction == FORWARD)
+		railway_register_train ( train, sector);
+	else
+		if( sector == 0)
+			railway_register_train ( train, 3);
+		else 
+			railway_register_train ( train, sector - 1);
+}
 // Notify checks registered sensors and if some of them
 // has an event and it's not a rebound updates the model.
 static
@@ -54,29 +85,23 @@ void tracker_notify (observer_t* this, observable_t* foo)
 {
 	struct ir_sensor_data_t* p;
 	struct telemetry_t* tel;
-	struct timeval diff , now ,last;
 	struct train_t* train;
-	float speed;
+	
 	for (p = tracker_ir_sensors; p->sensor; ++p) {
 	    event = sensorIR_get_event(p->sensor);
 	    
 	    if (event->flag == 1) {
 	    	tel = train_get_telemetry(train);
 	    	train = tracker_gen_train(event->passingTrain);
-	    	if ( train -> direction == storedDirection
-	    		&& tel -> sector != p->sector ){
-	    	//printf( " he cogido a %d en %d \n", event->passingTrain,p->sector);
-	    	train_set_current_sector (train , p->sector);
-	    	last = tel-> timestamp;
-	    	gettimeofday (&now, NULL);
-	    	timeval_sub ( &diff , &now , &last );
-	    	speed = LENGHTSECTOR / diff -> tv_usec ;
-	    	train_set_current_speed(train , speed );
-	    	} else if ( train -> direction != storedDirection
+	    	
+	    	if ( (train -> direction == storedDirection
 	    		&& tel -> sector != p->sector)
-	    	//railway_register_train(tracker_gen_train(event->passingTrain), p->sector);
-      	}
-    }
+	    		   || train -> direction != storedDirection){
+	    	tracker_updating_train (train , sector , tel);
+	    	}
+	    	tracker_register_train (train,  sector);
+      	    }
+        }
 }
 
 void
