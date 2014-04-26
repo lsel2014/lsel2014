@@ -1,5 +1,8 @@
 #include "railway.h"
 
+train_t* railways[MAXRAILWAY];
+int nrailways;
+
 void 
 railways_setup(void)
 {
@@ -37,28 +40,42 @@ sector_new( int id)
 void 
 sector_init( sector_t* this, int id )
 {
+  int i;
   this->id = id;
+  for ( i = 0 ; i < MAXTRAINS , i++)
+  	this-> registeredTrains [i] = NULL ;
+  this->nregisteredtrains = 0;
 }
+
 int 
 railway_cmd(char* arg)
 {
-	int i,j;
-	struct traint_t* t;
-	for(i = 0 ; i < nrailways ; i++){
-		for (j = 0; j < NSECTORS; j++ )
+  int i,j;
+  struct traint_t* t;
+  for(i = 0 ; i < nrailways ; i++){
+	for (j = 0; j < NSECTORS; j++ ){
 		printf("via %d : Sector %d \n",sensors[i]->id );
 		for(t = railways[i]-> railwaySectors [j]-> registeredTrains ; t ; ++t )
 			printf("train %d", train_get_ID(t));
 	}
-	return 0;
+  }
+  return 0;
 }
 
 void railway_register_train( railway_t* this, train_t* train , int sector)
 {
-	
-  return NULL;
+  if ( this -> railwaySectors [sector] -> nregisteredtrains < MAXTRAINS){
+  	this -> railwaySectors [sector] -> registeredTrains[++nregisteredtrains] = train;
+  }
 }
 void railway_erase_train( railway_t* this, train_t* train , int sector)
 {
-  return NULL;
+  struct train_t* t;
+  int i,j;
+  for ( i = 0 ; i < NSECTORS ; i++){
+  	for (j = 0 ; j < this -> railwaySectors[i] -> nregisteredtrains , j++){
+  		if ( train_get_ID(train) == train_get_ID(this -> railwaySectors[i]-> registeredTrains[j]))
+  			this -> railwaySectors[i]-> registeredTrains[j] = NULL;
+  	}
+  }
 }
