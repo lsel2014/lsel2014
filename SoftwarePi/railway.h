@@ -20,7 +20,7 @@ typedef struct {
   sector_t* railwaySectors [NSECTORS];
   } railway _t; 
   
-extern train_t* railways[MAXTRAINS];
+extern train_t* railways[MAXRAILWAY];
 extern int nrailways;
 
 void railways_setup(void);
