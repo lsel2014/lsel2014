@@ -17,16 +17,20 @@
 
 #define IR_DEADLINE 20000000
 #define IR_PERIOD 100000000
+//#define MAXTRAINS 4
 
-struct sensorIR_t;
+typedef struct {
+        char flag;
+        int passingTrain;
+}event_t;
 
-typedef struct sensorIR_t {
+typedef struct {
 
 	observable_t observable;
 	int id;
 	int GPIOlines[MAXTRAINS];
-	int last_reading;
-
+//	int last_reading;
+        event_t* event;
 	RT_MUTEX mutex;
 
 } sensorIR_t;
@@ -34,16 +38,16 @@ typedef struct sensorIR_t {
 extern sensorIR_t* sensors[MAXSENSORS];
 extern int nsensors;
 
-void IRsensors_setup(void);
+void IRsensors_setup (void);
 void IRsensors_poll (void* arg);
-int sensors_cmd(char*arg);
+int sensors_cmd (char* arg);
 sensorIR_t* sensorIR_new (int id);
-void sensorIR_init (sensorIR_t* this, int id);
+void sensorIR_init (sensorIR_t* this, int id, event_t* event);
 void sensorIR_destroy (sensorIR_t* this);
 
 int sensorIR_readLine(sensorIR_t* this, int trainLine);
 void sensorIR_trainPassing(sensorIR_t* this);
 
-void sensorIR_process_data (sensorIR_t* this);
+event_t* sensorIR_get_event (sensorIR_t* this);
 
 #endif

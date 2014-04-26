@@ -21,14 +21,14 @@ void trains_setup(void) {
 
 	train_new("Diesel", 0b0000100, '0', 20, dccobject);
 	train_new("Renfe", 0b0000011, '0', 25, dccobject);
-	for (i = 0; i < ntrains; i++) {
+	/*for (i = 0; i < ntrains; i++) {
 		for (j = 0; j < nsensors; j++) {
 			observable_register_observer((observable_t*) sensors[j],
 					(observer_t*) trains[i]);
 		}
-	}
+	}*/
 	current_train = trains[0];
-	interp_addcmd("train", train_cmd, "Set train parameters\n");
+	interp_addcmd("train", train_cmd, "Set train parameters");
 	interp_addcmd("s", train_emergency_cmd, "Emergency stop all trains");
 }
 
@@ -134,7 +134,7 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
 
 void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc, telemetry_t* telemetry) {
-	observer_init((observer_t *) this, train_notify);
+	//observer_init((observer_t *) this, train_notify);
 	observable_init(&this->observable);
 	this->name = name;
 	this->ID = ID;
@@ -147,8 +147,9 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->telemetry = telemetry;
 	rt_mutex_create(&this->mutex, NULL);
 }
-
+/*
 void train_notify(observer_t* this, observable_t* observed) {
+
 	sensorIR_t* sensor = (sensorIR_t*)observed;
 	train_t* thisTrain = (train_t*)this;
 	//rt_printf ("Received train %d in sector %d\n", sensor->id, sensor->last_reading);
@@ -175,7 +176,7 @@ void train_notify(observer_t* this, observable_t* observed) {
 	
 	}
 }
-
+*/
 void train_destroy(train_t* this) {
 	if (this->telemetry)
 		free(this->telemetry);
@@ -202,11 +203,10 @@ void train_set_power(train_t* this, int power) {
 
 void train_set_target_power(train_t* this, int power) {
 	this->target_power = power;
-	/*
-	 * In the future anti-collision system will take care of this,
-	 * for now just blindly obey the user.
-	 */
-	train_set_power(this, power);
+	
+	if (security_override = 0) {
+		train_set_power(this, power);
+	}
 }
 
 void train_set_direction(train_t* this, train_direction_t direction) {
@@ -235,6 +235,12 @@ void train_set_current_speed(train_t* this, float speed) {
 	rt_mutex_release(&this->mutex);
 }
 
+void train_set_timestamp(train_t* this,struct timeval timestamp) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	this->telemetry->timestamp = timestamp;
+	rt_mutex_release(&this->mutex);
+}
+
 char* train_get_name(train_t* this) {
 	return this->name;
 }
@@ -245,6 +251,10 @@ char train_get_ID(train_t* this) {
 
 int train_get_power(train_t* this) {
 	return this->power;
+}
+
+int train_get_target_power(train_t* this) {
+	return this->target_power;
 }
 
 train_direction_t train_get_direction(train_t* this) {
@@ -261,4 +271,8 @@ char train_get_length(train_t* this) {
 
 telemetry_t* train_get_telemetry(train_t* this) {
 	return this->telemetry;
+}
+
+char train_get_security(train_t* this) {
+	return this->security_override;
 }

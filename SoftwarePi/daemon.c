@@ -25,10 +25,12 @@
 //Model
 #include "train.h"
 #include "sun.h"
+#include "model.h"
 #include "Model/Sensors/sensorIR.h"
 #include "Model/Actuators/railChange.h"
 #include "Model/Actuators/trafficLight.h"
 #include "Model/Actuators/crossingGate.h"
+#include "tracker.h"
 
 // Dummy function to catch signals
 void catch_signal () {}
@@ -95,6 +97,9 @@ int main(int argc, char* argv[]) {
 	 * function argument*/
 	IRsensors_setup();
 	trains_setup();
+	model_init();
+	tracker_init ();
+	
 	setupRailChange();
 	sun_setup();
 	setup_trafficLight();
