@@ -15,6 +15,7 @@ static struct ir_sensor_data_t {
 static struct train_data_t {
 		train_t* train;
 		int IRsimbolicId;
+		train_direction_t storedDirection;
 } tracker_trains [MAXTRAINS];
 
 static struct railway_data_t {
@@ -58,16 +59,21 @@ void tracker_notify (observer_t* this, observable_t* foo)
 	float speed;
 	for (p = tracker_ir_sensors; p->sensor; ++p) {
 	    event = sensorIR_get_event(p->sensor);
+	    
 	    if (event->flag == 1) {
-	    	//printf( " he cogido a %d en %d \n", event->passingTrain,p->sector);
-	    	train = tracker_gen_train(event->passingTrain);
-	    	train_set_current_sector (train , p->sector);
 	    	tel = train_get_telemetry(train);
+	    	train = tracker_gen_train(event->passingTrain);
+	    	if ( train -> direction == storedDirection
+	    		&& tel -> sector != p->sector ){
+	    	//printf( " he cogido a %d en %d \n", event->passingTrain,p->sector);
+	    	train_set_current_sector (train , p->sector);
 	    	last = tel-> timestamp;
 	    	gettimeofday (&now, NULL);
 	    	timeval_sub ( &diff , &now , &last );
 	    	speed = LENGHTSECTOR / diff -> tv_usec ;
 	    	train_set_current_speed(train , speed );
+	    	} else if ( train -> direction != storedDirection
+	    		&& tel -> sector != p->sector)
 	    	//railway_register_train(tracker_gen_train(event->passingTrain), p->sector);
       	}
     }
@@ -127,6 +133,7 @@ tracker_init (void)
 		observable_register_observer (obs, &tracker_observer);
 		tracker_trains[n_trains].train = (train_t*) obs;
 		tracker_trains[n_trains].IRsimbolicId = t->IRsimbolicId;
+		tracker_trains[n_trains].storedDirection = FORWARD;
 		++n_trains;
 	}
 	
