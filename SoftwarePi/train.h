@@ -1,6 +1,6 @@
 #ifndef TRAIN_H
 #define TRAIN_H
-#define MAXTRAINS 8
+
 #include <pthread.h>
 #include <native/mutex.h>
 #include <time.h>
@@ -10,6 +10,8 @@
 #include "Model/Sensors/sensorIR.h"
 
 #define ESTOP_CMD 0b01000001
+#define MAXTRAINS 8
+
 typedef struct{
 	char sector;
 	float speed;
