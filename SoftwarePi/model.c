@@ -29,10 +29,10 @@ model_init (void)
     static struct ir_name_t {
 			const char* name;
 	} ir_names [] = {
-			 "IRsensor[0]" ,
-			 "IRsensor[1]" ,
-			 "IRsensor[2]" ,
-			 "IRsensor[3]" ,
+			 "IRsensor0" ,
+			 "IRsensor1" ,
+			 "IRsensor2" ,
+			 "IRsensor3" ,
 			 NULL 
 	};  
     static struct train_name_t {
@@ -42,10 +42,17 @@ model_init (void)
 			 "Renfe",
 			 NULL
 	};
+    static struct railway_name_t {
+			const char* name;
+	} railway_names [] = {
+			 "via0",
+			 NULL
+	};
     n_observable=0;
     int i = 0;
     struct ir_name_t* s;
     struct train_name_t* t; 
+    struct railway_name_t* r;
 	for (s = ir_names; s->name; ++s) {
 		model_add_observable ( s->name,( observable_t*) sensors[i] );
 		++n_observable;
@@ -54,6 +61,12 @@ model_init (void)
 	i=0;
 	for (t = ir_names; t->name; ++t) {
 		model_add_observable ( t->name,( observable_t*) trains[i] );
+		++n_observable;
+		i++;
+	}
+	i=0;
+	for (r = railway_names; r->name; ++r) {
+		model_add_observable ( r->name,( observable_t*) railways[i] );
 		++n_observable;
 		i++;
 	}
