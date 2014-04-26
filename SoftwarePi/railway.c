@@ -42,16 +42,20 @@ sector_init( sector_t* this, int id )
 int 
 railway_cmd(char* arg)
 {
-  struct sector_t* s;
-	for(s = ;i<nsensors;i++){
-		printf("Sensor %d",sensors[i]->id );
+	int i,j;
+	struct traint_t* t;
+	for(i = 0 ; i < nrailways ; i++){
+		for (j = 0; j < NSECTORS; j++ )
+		printf("via %d : Sector %d \n",sensors[i]->id );
+		for(t = railways[i]-> railwaySectors [j]-> registeredTrains ; t ; ++t )
+			printf("train %d", train_get_ID(t));
 	}
 	return 0;
-  return NULL;
 }
 
 void railway_register_train( railway_t* this, train_t* train , int sector)
 {
+	
   return NULL;
 }
 void railway_erase_train( railway_t* this, train_t* train , int sector)
