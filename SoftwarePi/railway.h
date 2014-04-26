@@ -6,6 +6,7 @@
 #include "Interpreter/interp.h"
 
 #define NSECTORS 4
+#define MAXRAILWAY 4
 
 typedef struct {
   int id;
