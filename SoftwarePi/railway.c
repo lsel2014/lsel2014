@@ -27,9 +27,15 @@ railway_init( railway_t* this, int id )
     this->railwaySectors[i] = sector_new(i);
     }
 }
+sector_t* 
+sector_new( int id)
+{
+  sector_t* this = (sector_t*) malloc(sizeof(sector_t));
+  sector_init(this, id );	
+}
 
 void 
-railway_init( sector_t* this, int id )
+sector_init( sector_t* this, int id )
 {
   this->id = id;
 }
