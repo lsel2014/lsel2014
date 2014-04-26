@@ -70,13 +70,17 @@ tracker_updating_train(train_t* train, int sector ,telemetry_t* tel)
 void 
 tracker_register_train(train_t* train, int sector)
 {
-	if (train -> direction == FORWARD)
+	if (train -> direction == FORWARD){
 		railway_register_train ( train, sector);
-	else
-		if( sector == 0)
+		train_set_current_sector ( train, sector);
+	}else
+		if( sector == 0){
 			railway_register_train ( train, 3);
-		else 
+			train_set_current_sector ( train, 3);
+		}else {
 			railway_register_train ( train, sector - 1);
+			train_set_current_sector ( train, sector - 1);
+		}
 }
 // Notify checks registered sensors and if some of them
 // has an event and it's not a rebound updates the model.
