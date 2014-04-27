@@ -19,7 +19,7 @@ typedef struct {
   int id;
   observable_t* observable;
   sector_t* railwaySectors [NSECTORS];
-  } railway _t; 
+  } railway_t;
   
 extern train_t* railways[MAXRAILWAY];
 extern int nrailways;
