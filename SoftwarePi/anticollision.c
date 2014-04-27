@@ -1,5 +1,5 @@
 /*
- * anti-collision.c
+ * anticollision.c
  *
  *  Created on: 24/04/2014
  *      Author: Javier
@@ -9,18 +9,18 @@
 #include <stdlib.h>
 #include <native/mutex.h>
 
-#include "anti-collision.h"
+#include "anticollision.h"
 
 
-anti-collision_t* anti-collision_new(void) {
-	anti-collision_t* this = (anti-collision_t*) malloc(sizeof(anti-collision_t));
-	anti-collision_init(this);
+anticollision_t* anticollision_new(void) {
+	anticollision_t* this = (anticollision_t*) malloc(sizeof(anticollision_t));
+	anticollision_init(this);
 	
 	return this;
 }
 
-void anti-collision_init(anti-collision_t* this) {
-	observer_init((observer_t*) this, anti-collision_notify);
+void anticollision_init(anticollision_t* this) {
+	observer_init((observer_t*) this, anticollision_notify);
 	security_flag = 0;
 	
 	//this->railway = railway;
@@ -30,7 +30,7 @@ void anti-collision_init(anti-collision_t* this) {
 	rt_mutex_create(&this->mutex, NULL);
 }
 
-void anti-collision_destroy(anti-collision_t* this) {
+void anticollision_destroy(anticollision_t* this) {
 	//This should be done properly
 	free(this);
 }
@@ -38,9 +38,9 @@ void anti-collision_destroy(anti-collision_t* this) {
 /*
  * Se deberia entrar aqui siempre que un tren cambie de sector o de sentido
  */
-void anti-collision_notify (observer_t* this, observable_t* observable) {
+void anticollision_notify (observer_t* this, observable_t* observable) {
 	railway_t* railway = (railway_t*) observable;
-	anti-collision_t* thisAC = (anti-collision_t*) this;
+	anticollision_t* thisAC = (anticollision_t*) this;
 	int i;
 	
 	for (i = 0; i < NSECTORS; i++) {
@@ -48,6 +48,7 @@ void anti-collision_notify (observer_t* this, observable_t* observable) {
 			traint_t* train = railway->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
 			int to_check;
 			
+			//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
 			if (train_get_direction(train) == FORWARD){
 				to_check = i+1;
 				if (to_check == NSECTORS)
@@ -62,13 +63,11 @@ void anti-collision_notify (observer_t* this, observable_t* observable) {
 				thisAC->security_flag = 1;
 				train_set_security(train, 1);
 				
-				//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y ya
+				//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
 				train_set_power(train, 0);
 			} else {
 				if (train_get_security(train) == 1) {
 					train_set_security(train, 0);
-					int target_power = train_get_target_power(train);
-					train_set_target_power(train, target_power);
 				}
 			}
 		}

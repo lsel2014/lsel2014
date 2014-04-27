@@ -140,6 +140,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->ID = ID;
 	this->power = 0;
 	this->target_power = 0;
+	this->security_override = 0;
 	this->direction = FORWARD;
 	this->n_wagon = n_wagon;
 	this->length = length;
@@ -275,4 +276,16 @@ telemetry_t* train_get_telemetry(train_t* this) {
 
 char train_get_security(train_t* this) {
 	return this->security_override;
+}
+
+void train_set_security(train_t* this, char newSecurity) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	
+	this->security_override = newSecurity;
+	if(newSecurity == 0) {
+		train_set_power(this, this->target_power);	
+	}
+	
+	rt_mutex_release(&this->mutex);
+	
 }
