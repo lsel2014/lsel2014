@@ -3,6 +3,7 @@
 #include "model.h"
 #include "tracker.h"
 #include "train.h"
+#include "railway.h"
 
 static observer_t tracker_observer;
 // Arrays where model elements are stored
