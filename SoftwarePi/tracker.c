@@ -74,17 +74,17 @@ void tracker_register_train(train_t* train, int sector) {
 	railway_t* rail;
 	rail = railways[0];
 	if (train->direction == FORWARD) {
-		printf("registering train!");
+		printf("registering train %d sector %d!",train_get_ID(train) ,sector );
 		train_set_current_sector(train, sector);
 		railway_erase_train(rail,train);
 		railway_register_train(rail ,train, sector);
 	} else if (sector == 0) {
-		printf("registering train!");
+		printf("registering train %d sector %d!",train_get_ID(train) ,sector );
 		train_set_current_sector(train, 3);
 		railway_erase_train(rail,train);
 		railway_register_train(rail,train, 3);
 	} else {
-		printf("registering train!");
+		printf("registering train %d sector %d!",train_get_ID(train) ,sector );
 		train_set_current_sector(train, sector - 1);
 		railway_erase_train(rail,train);
 		railway_register_train(rail,train, sector - 1);
