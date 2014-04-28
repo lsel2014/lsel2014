@@ -30,6 +30,7 @@ sector_t*
 sector_new(int id) {
 	sector_t* this = (sector_t*) malloc(sizeof(sector_t));
 	sector_init(this, id);
+	return this;
 }
 
 void sector_init(sector_t* this, int id) {
