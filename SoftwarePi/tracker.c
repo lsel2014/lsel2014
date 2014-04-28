@@ -99,9 +99,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 	train_direction_t storedDirection;
 	int i , j;
 	p = tracker_ir_sensors;
-	
 	for (j = 0 ; j < n_ir_sensors; j++) {
-		p = &tracker_ir_sensors[j];
 		event = sensorIR_get_event(p->sensor);
 		if (event->flag == 1) {
 			train = tracker_gen_train(event->passingTrain);
