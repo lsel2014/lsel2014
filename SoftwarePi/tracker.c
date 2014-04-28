@@ -67,24 +67,20 @@ void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
 	timeval_sub(&diff, &now, &last);
 	speed = LENGHTSECTOR / diff.tv_usec;
 	train_set_current_speed(train, speed);
-	printf ( "finished upgrading train %d", train_get_ID(train));
 }
 // Registers train in the railway taking into account the direction of the train
 void tracker_register_train(train_t* train, int sector) {
 	railway_t* rail;
 	rail = railways[0];
 	if (train->direction == FORWARD) {
-		printf("registering train %d sector %d!",train_get_ID(train) ,sector );
 		train_set_current_sector(train, sector);
 		railway_erase_train(rail,train);
 		railway_register_train(rail ,train, sector);
 	} else if (sector == 0) {
-		printf("registering train %d sector %d!",train_get_ID(train) ,sector );
 		train_set_current_sector(train, 3);
 		railway_erase_train(rail,train);
 		railway_register_train(rail,train, 3);
 	} else {
-		printf("registering train %d sector %d!",train_get_ID(train) ,sector );
 		train_set_current_sector(train, sector - 1);
 		railway_erase_train(rail,train);
 		railway_register_train(rail,train, sector - 1);
@@ -97,12 +93,13 @@ void tracker_register_train(train_t* train, int sector) {
 static
 void tracker_notify(observer_t* this, observable_t* foo) {
 	struct ir_sensor_data_t* p;
+	struct train_data_t* t;
 	telemetry_t* tel;
 	train_t* train;
-	struct train_data_t* t;
 	train_direction_t storedDirection;
 	int i , j;
 	p = tracker_ir_sensors;
+	
 	for (j = 0 ; j < n_ir_sensors; j++) {
 		p = &tracker_ir_sensors[j];
 		event = sensorIR_get_event(p->sensor);
@@ -154,11 +151,12 @@ void tracker_init(void) {
 	// and store them in the appropriate struct.
 	for (s = ir_names; s->name; ++s) {
 		observable_t* obs = model_get_observable(s->name);
+		printf("%d",observable_get_nobservers(obs));
 		observable_register_observer(obs, &tracker_observer);
+		printf("%d",observable_get_nobservers(obs));
 		tracker_ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
 		tracker_ir_sensors[n_ir_sensors].sector = s->sector;
 		++n_ir_sensors;
-		printf("registered %s",s->name );
 	}
 
 	for (t = train_names; t->name; ++t) {
