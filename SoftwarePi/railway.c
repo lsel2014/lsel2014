@@ -65,13 +65,16 @@ void railway_register_train(railway_t* this, train_t* train, int sector) {
 		rt_mutex_release(&this->mutex);
 	}
 }
-void railway_erase_train(railway_t* this, train_t* train) {
-	int i, j;
+void railway_erase_train ( railway_t* this, train_t* train ) {
+	int i, j ,k;
 	for (i = 0; i < NSECTORS; i++) {
 	for (j = 0; j < this -> railwaySectors[i] -> nregisteredtrains ; j++) {
 		if ( train_get_ID(train) == train_get_ID(this -> railwaySectors[i]-> registeredTrains[j]))
 		rt_mutex_acquire(&this->mutex, TM_INFINITE);
 		this -> railwaySectors[i]-> registeredTrains[j] = NULL;
+		for (k = j ; k < MAXTRAINS - 1 ; k++)
+			this -> railwaySectors[i]-> registeredTrains[k] =
+					this -> railwaySectors[i]-> registeredTrains[k+1];
 		rt_mutex_release(&this->mutex);
 		}
 	}
