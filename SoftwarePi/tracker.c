@@ -67,7 +67,7 @@ void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
 	timeval_sub(&diff, &now, &last);
 	speed = LENGHTSECTOR / diff.tv_usec;
 	train_set_current_speed(train, speed);
-	printf ( "finished upgrading train");
+	printf ( "finished upgrading train %d", train_get_ID(train));
 }
 // Registers train in the railway taking into account the direction of the train
 void tracker_register_train(train_t* train, int sector) {
@@ -76,14 +76,17 @@ void tracker_register_train(train_t* train, int sector) {
 	if (train->direction == FORWARD) {
 		printf("registering train!");
 		train_set_current_sector(train, sector);
+		railway_erase_train(rail,train);
 		railway_register_train(rail ,train, sector);
 	} else if (sector == 0) {
 		printf("registering train!");
 		train_set_current_sector(train, 3);
+		railway_erase_train(rail,train);
 		railway_register_train(rail,train, 3);
 	} else {
 		printf("registering train!");
 		train_set_current_sector(train, sector - 1);
+		railway_erase_train(rail,train);
 		railway_register_train(rail,train, sector - 1);
 
 	}
