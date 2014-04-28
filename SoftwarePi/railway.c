@@ -25,6 +25,7 @@ void railway_init(railway_t* this, int id) {
 	for (i = 0; i < NSECTORS; i++) {
 		this->railwaySectors[i] = sector_new(i);
 	}
+	rt_mutex_create(&this->mutex, NULL);
 }
 sector_t*
 sector_new(int id) {
@@ -57,9 +58,11 @@ void railway_register_train(railway_t* this, train_t* train, int sector) {
 	int rs;
 	rs = this->railwaySectors[sector]->nregisteredtrains;
 	if (rs < MAXTRAINS) {
+		rt_mutex_acquire(&this->mutex, TM_INFINITE);
 		this->railwaySectors[sector]->registeredTrains[rs] = train;
 		this->railwaySectors[sector]->nregisteredtrains++;
 		observable_notify_observers(&this->observable);
+		rt_mutex_release(&this->mutex);
 	}
 }
 void railway_erase_train(railway_t* this, train_t* train) {
@@ -67,7 +70,9 @@ void railway_erase_train(railway_t* this, train_t* train) {
 	for (i = 0; i < NSECTORS; i++) {
 	for (j = 0; j < this -> railwaySectors[i] -> nregisteredtrains ; j++) {
 		if ( train_get_ID(train) == train_get_ID(this -> railwaySectors[i]-> registeredTrains[j]))
+		rt_mutex_acquire(&this->mutex, TM_INFINITE);
 		this -> railwaySectors[i]-> registeredTrains[j] = NULL;
+		rt_mutex_release(&this->mutex);
 		}
 	}
 }
