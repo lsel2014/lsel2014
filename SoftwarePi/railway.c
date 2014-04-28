@@ -80,7 +80,7 @@ void railway_erase_train ( railway_t* this, train_t* train ) {
 		for (k = j ; k < MAXTRAINS - 1 ; k++)
 			this -> railwaySectors[i]-> registeredTrains[k] =
 					this -> railwaySectors[i]-> registeredTrains[k+1];
-		nregisteredtrains--;
+		this->railwaySectors[sector]->nregisteredtrains--;
 		rt_mutex_release(&this->mutex);
 		}
 	}
