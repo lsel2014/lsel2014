@@ -96,7 +96,7 @@ void tracker_register_train(train_t* train, int sector) {
 // has an event and it's not a rebound updates the model.
 static
 void tracker_notify(observer_t* this, observable_t* foo) {
-	struct ir_sensor_data_t* p;
+	ir_sensor_data_t* p;
 	telemetry_t* tel;
 	train_t* train;
 	struct train_data_t* t;
