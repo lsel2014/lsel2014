@@ -32,6 +32,6 @@ void sector_init( sector_t* this, int id );
 int railway_cmd(char* arg);
 
 void railway_register_train( railway_t* this, train_t* train , int sector);
-void railway_erase_train( railway_t* this, train_t* train , int sector);
+void railway_erase_train( railway_t* this, train_t* train );
 
 #endif
