@@ -97,6 +97,7 @@ int main(int argc, char* argv[]) {
 	 * function argument*/
 	IRsensors_setup();
 	trains_setup();
+	railways_setup(void);
 	model_init();
 	tracker_init ();
 	
