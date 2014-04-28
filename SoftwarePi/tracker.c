@@ -91,14 +91,19 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 	struct ir_sensor_data_t* p;
 	telemetry_t* tel;
 	train_t* train;
-
+	struct train_data_t* t;
+	train_direction_t storedDirection;
+	
 	for (p = tracker_ir_sensors; p->sensor; ++p) {
 		event = sensorIR_get_event(p->sensor);
-
 		if (event->flag == 1) {
 			train = tracker_gen_train(event->passingTrain);
 			tel = train_get_telemetry(train);
-			
+			for (t = train_names; t->name; ++t) {
+				t=tracker_trains[i];
+				if(t-> IRsimbolicId == event->passingTrain)
+					storedDirection = t-> storedDirection;
+			}
 			if ((train->direction == storedDirection && tel->sector != p->sector)
 					|| train->direction != storedDirection) {
 				tracker_updating_train(train, sector, tel);
