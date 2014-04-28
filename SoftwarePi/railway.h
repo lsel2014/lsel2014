@@ -16,7 +16,7 @@ typedef struct {
 
 // ID is add so it can be more than one railway 
 typedef struct {
-  observable_t* observable;
+  observable_t observable;
   int id;
   sector_t* railwaySectors [NSECTORS];
   } railway_t;
