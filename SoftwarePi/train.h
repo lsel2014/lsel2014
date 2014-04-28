@@ -3,6 +3,7 @@
 
 #include <pthread.h>
 #include <native/mutex.h>
+#include <sys/time.h>
 #include <time.h>
 #include "dcc.h"
 #include "Interpreter/interp.h"
