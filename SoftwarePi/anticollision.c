@@ -12,6 +12,11 @@
 #include "anticollision.h"
 
 
+void anticollision_setup(void) {
+	anticollision_new();
+	interp_addcmd("anticollision", anticollision_cmd, "Shows the anticollisions security protocol status");
+}
+
 anticollision_t* anticollision_new(void) {
 	anticollision_t* this = (anticollision_t*) malloc(sizeof(anticollision_t));
 	anticollision_init(this);
@@ -35,6 +40,15 @@ void anticollision_destroy(anticollision_t* this) {
 	free(this);
 }
 
+int anticollision_cmd(char* arg) {
+	if (security_flag == 0) { //Probablemente mal, repasar
+		printf("Anticollisions security protocol inactive\n");
+	} else {
+		printf("Anticollisions security protocol active\n");
+	}
+	return 0;
+}
+
 /*
  * Se deberia entrar aqui siempre que un tren cambie de sector o de sentido
  */
@@ -44,7 +58,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 	int i;
 	
 	for (i = 0; i < NSECTORS; i++) {
-		if ( /*TODO: el sector i contiene algun tren dentro*/ ) {
+		if ( (railway->railwaySectors[i]->nregisteredtrains) > 0 ) {
 			traint_t* train = railway->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
 			int to_check;
 			
@@ -59,15 +73,20 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 					to_check = NSECTORS-1;
 			}
 			
-			if ( /* TODO: el sector to_check contiene algun tren dentro */ ) {
-				thisAC->security_flag = 1;
+			if ( (railway->railwaySectors[to_check]->nregisteredtrains) > 0 ) {
+				if (thisAC->security_flag == 0) {
+					thisAC->security_flag = 1;
+				}
 				train_set_security(train, 1);
+				printf("Seguridad activada en el tren ID: %c\n", train->ID);
 				
 				//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
 				train_set_power(train, 0);
 			} else {
 				if (train_get_security(train) == 1) {
 					train_set_security(train, 0);
+					//// TODO: Comprobar si se deberia bajar el flag global
+					printf("Seguridad desactivada en el tren ID: %c\n", train->ID);
 				}
 			}
 		}
