@@ -31,6 +31,7 @@
 #include "Model/Actuators/trafficLight.h"
 #include "Model/Actuators/crossingGate.h"
 #include "tracker.h"
+#include "railway.h"
 
 // Dummy function to catch signals
 void catch_signal () {}
