@@ -96,9 +96,9 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 		event = sensorIR_get_event(p->sensor);
 
 		if (event->flag == 1) {
-			tel = train_get_telemetry(train);
 			train = tracker_gen_train(event->passingTrain);
-
+			tel = train_get_telemetry(train);
+			
 			if ((train->direction == storedDirection && tel->sector != p->sector)
 					|| train->direction != storedDirection) {
 				tracker_updating_train(train, sector, tel);
