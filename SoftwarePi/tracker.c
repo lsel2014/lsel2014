@@ -101,8 +101,9 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 	train_t* train;
 	struct train_data_t* t;
 	train_direction_t storedDirection;
-	int i;
-	for (p = tracker_ir_sensors; p->sensor; ++p) {
+	int i , j;
+	for (j = 0 ; j < n_ir_sensors; j++) {
+		p = tracker_ir_sensors;
 		event = sensorIR_get_event(p->sensor);
 		if (event->flag == 1) {
 			train = tracker_gen_train(event->passingTrain);
@@ -155,6 +156,7 @@ void tracker_init(void) {
 		tracker_ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
 		tracker_ir_sensors[n_ir_sensors].sector = s->sector;
 		++n_ir_sensors;
+		printf("registered %s",s->name );
 	}
 
 	for (t = train_names; t->name; ++t) {
