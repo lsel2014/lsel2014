@@ -89,8 +89,8 @@ void tracker_register_train(train_t* train, int sector) {
 static
 void tracker_notify(observer_t* this, observable_t* foo) {
 	struct ir_sensor_data_t* p;
-	struct telemetry_t* tel;
-	struct train_t* train;
+	telemetry_t* tel;
+	train_t* train;
 
 	for (p = tracker_ir_sensors; p->sensor; ++p) {
 		event = sensorIR_get_event(p->sensor);
