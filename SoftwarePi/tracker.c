@@ -100,7 +100,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 			train = tracker_gen_train(event->passingTrain);
 			tel = train_get_telemetry(train);
 			for (i = 0; i < MAXTRAINS ; ++i) {
-				t=tracker_trains[i];
+				t=&tracker_trains[i];
 				if(t-> IRsimbolicId == event->passingTrain)
 					storedDirection = t-> storedDirection;
 			}
