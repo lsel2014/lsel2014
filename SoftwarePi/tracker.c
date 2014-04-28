@@ -151,7 +151,7 @@ void tracker_init(void) {
 	for (t = train_names; t->name; ++t) {
 		observable_t* obs = model_get_observable(t->name);
 		observable_register_observer(obs, &tracker_observer);
-		tracker_trains[n_trains].train = (train_t_t*) obs;
+		tracker_trains[n_trains].train = (train_t*) obs;
 		tracker_trains[n_trains].IRsimbolicId = t->IRsimbolicId;
 		tracker_trains[n_trains].storedDirection = FORWARD;
 		++n_trains;
