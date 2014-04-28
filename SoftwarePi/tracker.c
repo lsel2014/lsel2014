@@ -71,7 +71,7 @@ void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
 // Registers train in the railway taking into account the direction of the train
 void tracker_register_train(train_t* train, int sector) {
 	struct railway_t* rail;
-	rail = railways[0];
+	rail = railways;
 	if (train->direction == FORWARD) {
 		railway_register_train(rail ,train, sector);
 		train_set_current_sector(train, sector);
