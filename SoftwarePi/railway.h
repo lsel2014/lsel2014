@@ -25,7 +25,7 @@ extern railway_t* railways[MAXRAILWAY];
 extern int nrailways;
 
 void railways_setup(void);
-railway_t* railways_new( int id );
+railway_t* railway_new( int id );
 void railway_init( railway_t* this, int id );
 sector_t* sector_new( int id);
 void sector_init( sector_t* this, int id );
