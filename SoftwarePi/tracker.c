@@ -52,9 +52,10 @@ void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
 	int i;
+	
 	for (i = 0; i < n_trains; i++) {
-		if (event->passingTrain == tracker_trains[i]->IRsimbolicId)
-			tracker_trains[i]->storedDirection = train->direction;
+		if (event->passingTrain == tracker_trains[i].IRsimbolicId)
+			tracker_trains[i].storedDirection = train->direction;
 	}
 	train_set_current_sector(train, sector);
 	last = tel->timestamp;
