@@ -99,6 +99,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 	struct train_data_t* t;
 	train_direction_t storedDirection;
 	int i;
+	printf("i'm being notified");
 	for (p = tracker_ir_sensors; p->sensor; ++p) {
 		event = sensorIR_get_event(p->sensor);
 		if (event->flag == 1) {
