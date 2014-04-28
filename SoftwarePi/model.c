@@ -3,6 +3,7 @@
 #include "train.h"
 #include "model.h"
 #include "Interpreter/interp.h"
+#include "railway.h"
 
 #define MAXOBSERVABLES 20
 static struct registered_observable_t {
@@ -49,7 +50,7 @@ void model_init(void) {
 	}
 	i = 0;
 	for (r = railway_names; r->name; ++r) {
-		model_add_observable(r->name, (observable_t*) railway_names[i]);
+		model_add_observable(r->name, (observable_t*) railways[i]);
 		++n_observable;
 		i++;
 	}
