@@ -65,19 +65,21 @@ void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
 	gettimeofday(&now, NULL);
 	train_set_timestamp(train, now);
 	timeval_sub(&diff, &now, &last);
-	speed = LENGHTSECTOR / diff->tv_usec;
+	speed = LENGHTSECTOR / diff.tv_usec;
 	train_set_current_speed(train, speed);
 }
 // Registers train in the railway taking into account the direction of the train
 void tracker_register_train(train_t* train, int sector) {
+	struct railway_t* rail;
+	rail = railways[0];
 	if (train->direction == FORWARD) {
-		railway_register_train(train, sector);
+		railway_register_train(rail ,train, sector);
 		train_set_current_sector(train, sector);
 	} else if (sector == 0) {
-		railway_register_train(train, 3);
+		railway_register_train(rail,train, 3);
 		train_set_current_sector(train, 3);
 	} else {
-		railway_register_train(train, sector - 1);
+		railway_register_train(rail,train, sector - 1);
 		train_set_current_sector(train, sector - 1);
 	}
 }
