@@ -57,11 +57,16 @@ int railway_cmd(char* arg) {
 void railway_register_train(railway_t* this, train_t* train, int sector) {
 	int rs;
 	rs = this->railwaySectors[sector]->nregisteredtrains;
+	printf("check point 1");
 	if (rs < MAXTRAINS) {
 		rt_mutex_acquire(&this->mutex, TM_INFINITE);
+		printf("check point 2");
 		this->railwaySectors[sector]->registeredTrains[rs] = train;
+		printf("check point 3");
 		this->railwaySectors[sector]->nregisteredtrains++;
+		printf("check point 4");
 		observable_notify_observers(&this->observable);
+		printf("check point 5");
 		rt_mutex_release(&this->mutex);
 	}
 }
@@ -75,6 +80,7 @@ void railway_erase_train ( railway_t* this, train_t* train ) {
 		for (k = j ; k < MAXTRAINS - 1 ; k++)
 			this -> railwaySectors[i]-> registeredTrains[k] =
 					this -> railwaySectors[i]-> registeredTrains[k+1];
+		nregisteredtrains--;
 		rt_mutex_release(&this->mutex);
 		}
 	}
