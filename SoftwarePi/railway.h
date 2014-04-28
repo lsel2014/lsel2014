@@ -10,7 +10,7 @@
 
 typedef struct {
   int id;
-  traint_t* registeredTrains [MAXTRAINS];
+  train_t* registeredTrains [MAXTRAINS];
   int nregisteredtrains;
   } sector_t; 
 
