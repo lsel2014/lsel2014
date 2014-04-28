@@ -41,13 +41,13 @@ void sector_init(sector_t* this, int id) {
 }
 
 int railway_cmd(char* arg) {
-	int i, j;
+	int i, j ,k;
 	train_t* t;
 	for (i = 0; i < nrailways; i++) {
 		for (j = 0; j < NSECTORS; j++) {
 			printf("via %d : Sector %d \n", railways[i]->id, railways[i]->railwaySectors[j]->id);
-			for (t = railways[i]->railwaySectors[j]->registeredTrains; t; ++t)
-				printf("train %d", train_get_ID(t));
+			for (k = 0; k < MAXTRAINS ; k++)
+				printf("train %d", train_get_ID(railways[i]->railwaySectors[j]->registeredTrains[k]));
 		}
 	}
 	return 0;
