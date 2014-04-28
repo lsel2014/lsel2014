@@ -100,6 +100,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 	int i , j;
 	p = tracker_ir_sensors;
 	for (j = 0 ; j < n_ir_sensors; j++) {
+		printf("checking sensor %d",p->sector);
 		event = sensorIR_get_event(p->sensor);
 		if (event->flag == 1) {
 			train = tracker_gen_train(event->passingTrain);
@@ -149,9 +150,7 @@ void tracker_init(void) {
 	// and store them in the appropriate struct.
 	for (s = ir_names; s->name; ++s) {
 		observable_t* obs = model_get_observable(s->name);
-		printf("%d",observable_get_nobservers(obs));
 		observable_register_observer(obs, &tracker_observer);
-		printf("%d",observable_get_nobservers(obs));
 		tracker_ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
 		tracker_ir_sensors[n_ir_sensors].sector = s->sector;
 		++n_ir_sensors;
