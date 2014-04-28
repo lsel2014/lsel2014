@@ -70,7 +70,7 @@ void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
 }
 // Registers train in the railway taking into account the direction of the train
 void tracker_register_train(train_t* train, int sector) {
-	struct railway_t* rail;
+/*	struct railway_t* rail;
 	rail = railways;
 	if (train->direction == FORWARD) {
 		railway_register_train(rail ,train, sector);
@@ -82,6 +82,7 @@ void tracker_register_train(train_t* train, int sector) {
 		railway_register_train(rail,train, sector - 1);
 		train_set_current_sector(train, sector - 1);
 	}
+*/	
 }
 // Notify checks registered sensors and if some of them
 // has an event and it's not a rebound updates the model.
