@@ -54,9 +54,11 @@ int railway_cmd(char* arg) {
 }
 
 void railway_register_train(railway_t* this, train_t* train, int sector) {
-	if (this->railwaySectors[sector]->nregisteredtrains < MAXTRAINS) {
-		this->railwaySectors[sector]->registeredTrains[railwaySectors[sector]->++nregisteredtrains] =
-				train;
+	int rs;
+	rs = this->railwaySectors[sector]->nregisteredtrains;
+	if (rs < MAXTRAINS) {
+		this->railwaySectors[sector]->registeredTrains[rs] = train;
+		this->railwaySectors[sector]->nregisteredtrains++;
 	}
 }
 void railway_erase_train(railway_t* this, train_t* train, int sector) {
