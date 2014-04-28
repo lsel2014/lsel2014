@@ -76,7 +76,6 @@ void tracker_register_train(train_t* train, int sector) {
 	if (train->direction == FORWARD) {
 		printf("registering train!");
 		train_set_current_sector(train, sector);
-		
 		railway_register_train(rail ,train, sector);
 	} else if (sector == 0) {
 		printf("registering train!");
@@ -109,12 +108,13 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 				t=&tracker_trains[i];
 				if(t-> IRsimbolicId == event->passingTrain)
 					storedDirection = t-> storedDirection;
-			}
-			if ((train->direction == storedDirection && tel->sector != p->sector)
+				if ((train->direction == storedDirection && tel->sector != p->sector)
 					|| train->direction != storedDirection) {
 				tracker_updating_train(train, p->sector, tel);
+				tracker_register_train(train, p->sector);
+				}
+			
 			}
-			tracker_register_train(train, p->sector);
 		}
 	}
 }
