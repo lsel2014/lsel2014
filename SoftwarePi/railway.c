@@ -38,7 +38,7 @@ void sector_init(sector_t* this, int id) {
 	this->id = id;
 	for ( i = 0; i < MAXTRAINS ; i++)
 	this-> registeredTrains [i] = NULL;
-	this->nregisteredtrains = 0;
+	this-> nregisteredtrains = 0;
 }
 
 int railway_cmd(char* arg) {
@@ -46,7 +46,7 @@ int railway_cmd(char* arg) {
 	for (i = 0; i < nrailways; i++) {
 		for (j = 0; j < NSECTORS; j++) {
 			printf("via %d : Sector %d \n", railways[i]->id, railways[i]->railwaySectors[j]->id);
-			for (k = 0; k < MAXTRAINS ; k++)
+			for (k = 0; k < railways[i]->railwaySectors[j]-> nregisteredtrains ; k++)
 				printf("train %d", train_get_ID(railways[i]->railwaySectors[j]->registeredTrains[k]));
 		}
 	}
@@ -59,9 +59,10 @@ void railway_register_train(railway_t* this, train_t* train, int sector) {
 	if (rs < MAXTRAINS) {
 		this->railwaySectors[sector]->registeredTrains[rs] = train;
 		this->railwaySectors[sector]->nregisteredtrains++;
+		observable_notify_observers(&this->observable);
 	}
 }
-void railway_erase_train(railway_t* this, train_t* train, int sector) {
+void railway_erase_train(railway_t* this, train_t* train) {
 	int i, j;
 	for (i = 0; i < NSECTORS; i++) {
 	for (j = 0; j < this -> railwaySectors[i] -> nregisteredtrains ; j++) {
