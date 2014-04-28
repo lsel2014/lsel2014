@@ -7,6 +7,7 @@
 #include <sys/time.h>
 #include <time.h>
 
+#define LENGHTSECTOR 10
 static observer_t tracker_observer;
 // Arrays where model elements are stored
 static struct ir_sensor_data_t {
