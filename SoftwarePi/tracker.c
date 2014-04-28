@@ -156,11 +156,11 @@ void tracker_init(void) {
 		tracker_trains[n_trains].storedDirection = FORWARD;
 		++n_trains;
 	}
-	for (r = ir_names; r->name; ++r) {
+	for (r = railway_names; r->name; ++r) {
 		observable_t* obs = model_get_observable(r->name);
 		observable_register_observer(obs, &tracker_observer);
-		tracker_ir_sensors[n_ir_sensors].railway = (railway_t*) obs;
-		tracker_ir_sensors[n_ir_sensors].platform = r->platform;
+		tracker_railway[n_railway].railway = (railway_t*) obs;
+		tracker_railway[n_railway].platform = r->platform;
 		++n_railway;
 	}
 }
