@@ -22,7 +22,7 @@ static struct train_data_t {
 } tracker_trains[MAXTRAINS];
 
 static struct railway_data_t {
-	railway_t* train;
+	railway_t* railway;
 	int platform;
 } tracker_railway[MAXRAILWAY];
 
@@ -149,4 +149,18 @@ void tracker_init(void) {
 	}
 
 	for (t = train_names; t->name; ++t) {
-		observable_t* obs = model_get_observable(t->name
+		observable_t* obs = model_get_observable(t->name);
+		observable_register_observer(obs, &tracker_observer);
+		tracker_trains[n_trains].train = (train_t_t*) obs;
+		tracker_trains[n_trains].IRsimbolicId = t->IRsimbolicId;
+		tracker_trains[n_trains].storedDirection = FORWARD;
+		++n_trains;
+	}
+	for (r = ir_names; r->name; ++r) {
+		observable_t* obs = model_get_observable(r->name);
+		observable_register_observer(obs, &tracker_observer);
+		tracker_ir_sensors[n_ir_sensors].railway = (railway_t*) obs;
+		tracker_ir_sensors[n_ir_sensors].platform = r->platform;
+		++n_railway;
+	}
+}
