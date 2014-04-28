@@ -42,7 +42,6 @@ void sector_init(sector_t* this, int id) {
 
 int railway_cmd(char* arg) {
 	int i, j ,k;
-	train_t* t;
 	for (i = 0; i < nrailways; i++) {
 		for (j = 0; j < NSECTORS; j++) {
 			printf("via %d : Sector %d \n", railways[i]->id, railways[i]->railwaySectors[j]->id);
@@ -62,12 +61,11 @@ void railway_register_train(railway_t* this, train_t* train, int sector) {
 	}
 }
 void railway_erase_train(railway_t* this, train_t* train, int sector) {
-	struct train_t* t;
 	int i, j;
 	for (i = 0; i < NSECTORS; i++) {
-	for (j = 0; j < this -> railwaySectors[i] -> nregisteredtrains , j++) {
+	for (j = 0; j < this -> railwaySectors[i] -> nregisteredtrains ; j++) {
 		if ( train_get_ID(train) == train_get_ID(this -> railwaySectors[i]-> registeredTrains[j]))
 		this -> railwaySectors[i]-> registeredTrains[j] = NULL;
+		}
 	}
-}
 }
