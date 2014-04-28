@@ -1,7 +1,7 @@
 #include "railway.h"
 #include "train.h"
 
-train_t* railways[MAXRAILWAY];
+railway_t* railways[MAXRAILWAY];
 int nrailways;
 
 void railways_setup(void) {
