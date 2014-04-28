@@ -16,7 +16,7 @@ train_t* current_train;
 
 /*This will be integrated with the interpreter*/
 void trains_setup(void) {
-	int i, j;
+	//int i, j;
 	dcc_sender_t* dccobject = dcc_new(12, 50);
 
 	train_new("Diesel", 0b0000100, '0', 20, dccobject);
