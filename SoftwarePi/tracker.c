@@ -106,9 +106,9 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 			}
 			if ((train->direction == storedDirection && tel->sector != p->sector)
 					|| train->direction != storedDirection) {
-				tracker_updating_train(train, sector, tel);
+				tracker_updating_train(train, p->sector, tel);
 			}
-			tracker_register_train(train, sector);
+			tracker_register_train(train, p->sector);
 		}
 	}
 }
