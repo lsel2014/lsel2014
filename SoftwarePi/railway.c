@@ -22,7 +22,7 @@ void railway_init(railway_t* this, int id) {
 	int i;
 	this->id = id;
 	observable_init(&this->observable);
-	for (i = 0; i < NSECTOR; i++) {
+	for (i = 0; i < NSECTORS; i++) {
 		this->railwaySectors[i] = sector_new(i);
 	}
 }
@@ -35,17 +35,17 @@ sector_new(int id) {
 void sector_init(sector_t* this, int id) {
 	int i;
 	this->id = id;
-	for ( i = 0; i < MAXTRAINS , i++)
+	for ( i = 0; i < MAXTRAINS ; i++)
 	this-> registeredTrains [i] = NULL;
 	this->nregisteredtrains = 0;
 }
 
 int railway_cmd(char* arg) {
 	int i, j;
-	struct traint_t* t;
+	struct train_t* t;
 	for (i = 0; i < nrailways; i++) {
 		for (j = 0; j < NSECTORS; j++) {
-			printf("via %d : Sector %d \n", sensors[i]->id);
+			printf("via %d : Sector %d \n", railways[i]->id, railways[i]->railwaySectors[j]->id);
 			for (t = railways[i]->railwaySectors[j]->registeredTrains; t; ++t)
 				printf("train %d", train_get_ID(t));
 		}
