@@ -42,7 +42,7 @@ void sector_init(sector_t* this, int id) {
 
 int railway_cmd(char* arg) {
 	int i, j;
-	struct train_t* t;
+	train_t* t;
 	for (i = 0; i < nrailways; i++) {
 		for (j = 0; j < NSECTORS; j++) {
 			printf("via %d : Sector %d \n", railways[i]->id, railways[i]->railwaySectors[j]->id);
