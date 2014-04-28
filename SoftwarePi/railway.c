@@ -1,4 +1,5 @@
 #include "railway.h"
+#include "train.h"
 
 train_t* railways[MAXRAILWAY];
 int nrailways;
