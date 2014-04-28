@@ -71,7 +71,7 @@ void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
 // Registers train in the railway taking into account the direction of the train
 void tracker_register_train(train_t* train, int sector) {
 	railway_t* rail;
-	rail = railways;
+	rail = railways[0];
 	if (train->direction == FORWARD) {
 		railway_register_train(rail ,train, sector);
 		train_set_current_sector(train, sector);
@@ -144,20 +144,4 @@ void tracker_init(void) {
 	}
 
 	for (t = train_names; t->name; ++t) {
-		observable_t* obs = model_get_observable(t->name);
-		observable_register_observer(obs, &tracker_observer);
-		tracker_trains[n_trains].train = (train_t*) obs;
-		tracker_trains[n_trains].IRsimbolicId = t->IRsimbolicId;
-		tracker_trains[n_trains].storedDirection = FORWARD;
-		++n_trains;
-	}
-
-	for (r = railway_names; r->name; ++r) {
-		observable_t* obs = model_get_observable(r->name);
-		observable_register_observer(obs, &tracker_observer);
-		tracker_railway[n_railway].train = (railway_t*) obs;
-		tracker_railway[n_railway].platform = r->platform;
-		++n_railway;
-	}
-}
-
+		observable_t* obs = model_get_observable(t->name
