@@ -12,7 +12,8 @@ static observer_t tracker_observer;
 // Arrays where model elements are stored
 static struct ir_sensor_data_t {
 	sensorIR_t* sensor;
-	char sector;
+	char sectorForward;
+	char sectorReverse;
 } tracker_ir_sensors[MAXSENSORS];
 
 static struct train_data_t {
@@ -50,8 +51,17 @@ tracker_gen_train(int id) {
 	}
 	return NULL;
 }
+train_direction_t
+tracker_gen_direction(int id) {
+	struct train_data_t* t;
+	for (t = tracker_trains; t->train; ++t) {
+		if (id == t->IRsimbolicId)
+			return t->storedDirection;
+	}
+	return NULL;
+}
 // Does all the operations to properly update the train
-void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
+void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
 	int i;
@@ -69,7 +79,7 @@ void tracker_updating_train(train_t* train, int sector, telemetry_t* tel) {
 	train_set_current_speed(train, speed);
 }
 // Registers train in the railway taking into account the direction of the train
-void tracker_register_train(train_t* train, int sector) {
+/*void tracker_register_train(train_t* train, int sector) {
 	railway_t* rail;
 	rail = railways[0];
 	if (train->direction == FORWARD) {
@@ -88,46 +98,61 @@ void tracker_register_train(train_t* train, int sector) {
 	}
 	
 }
+*/
 // Notify checks registered sensors and if some of them
 // has an event and it's not a rebound updates the model.
 static
 void tracker_notify(observer_t* this, observable_t* foo) {
-	struct ir_sensor_data_t* p;
-	struct train_data_t* t;
+	struct ir_sensor_data_t* sd;
+//	struct train_data_t* t;
 	telemetry_t* tel;
 	train_t* train;
 	train_direction_t storedDirection;
 	int i , j;
-	p = tracker_ir_sensors;
+	railway_t* rail;
+	rail = railways[0];
 	for (j = 0 ; j < n_ir_sensors; j++) {
-		printf("checking sensor %d",p->sensor->id);
-		event = sensorIR_get_event(p->sensor);
+		sd = &tracker_ir_sensors[j];
+		rt_printf("checking sensor %d, j = %d \n",sd->sensor->id, j);
+		event = sensorIR_get_event(sd->sensor);
 		if (event->flag == 1) {
 			train = tracker_gen_train(event->passingTrain);
-			tel = train_get_telemetry(train);
-			for (i = 0; i < MAXTRAINS ; ++i) {
-				t=&tracker_trains[i];
-				if(t-> IRsimbolicId == event->passingTrain)
-					storedDirection = t-> storedDirection;
-				if ((train->direction == storedDirection && tel->sector != p->sector)
-					|| train->direction != storedDirection) {
-				tracker_updating_train(train, p->sector, tel);
-				tracker_register_train(train, p->sector);
+			storedDirection = train_gen_direction(event->passingTrain);
+			tel = train_get_telemetry(train;)
+			rt_printf("train %d", train_get_ID(train));
+			if(train->direction == FORWARD)
+			{
+				if(train->direction == storedDirection && sd-> sectorForward != tel -> sector){
+					tracker_updating_train(train, sd-> sectorForward, tel);
+					railway_register_train(train, sd-> sectorForward);
+				}else if(train->direction != storedDirection){
+					tracker_updating_train(train, sd-> sectorForward, tel);
+					railway_register_train(train, sd-> sectorForward);
 				}
-			
+			}
+			if(train->direction == REVERSE)
+			{
+				if(train->direction == storedDirection && sd-> sectorReverse != tel -> sector){
+					tracker_updating_train(train, sd-> sectorReverse, tel);
+					railway_register_train(train, sd-> sectorReverse);
+				}else if(train->direction != storedDirection){
+					tracker_updating_train(train, sd-> sectorReverse, tel);
+					railway_register_train(train, sd-> sectorReverse);
+				}
 			}
 		}
-	++p;
 	}
 }
+
 
 void tracker_init(void) {
 	// Struct with the names and associated sector of the sensors
 	static struct ir_name_t {
 		const char* name;
-		char sector;
-	} ir_names[] = { { "IRsensor0", 0 }, { "IRsensor1", 1 }, { "IRsensor2", 2 },
-			{ "IRsensor3", 3 }, { NULL, 0 } };
+		char sectorForward;
+		char sectorReverse;
+	} ir_names[] = { { "IRsensor0", 0 , 3}, { "IRsensor1", 1, 0 }, { "IRsensor2", 2, 1 },
+			{ "IRsensor3", 3 ,2}, { NULL, 0 } };
 	// Struct with the names and the ID of each train in the IR sensors
 	static struct train_name_t {
 		const char* name;
@@ -152,7 +177,8 @@ void tracker_init(void) {
 		observable_t* obs = model_get_observable(s->name);
 		observable_register_observer(obs, &tracker_observer);
 		tracker_ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
-		tracker_ir_sensors[n_ir_sensors].sector = s->sector;
+		tracker_ir_sensors[n_ir_sensors].sector = s->sectorForward;
+		tracker_ir_sensors[n_ir_sensors].sector = s->sectorReverse;
 		++n_ir_sensors;
 	}
 
