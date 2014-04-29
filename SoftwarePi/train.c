@@ -9,6 +9,8 @@
 #include "dcc.h"
 #include <rtdk.h>
 #include <stdlib.h>
+#include <sys/time.h>
+#include <time.h>
 
 train_t* trains[MAXTRAINS];
 int ntrains = 0;
