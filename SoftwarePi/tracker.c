@@ -65,14 +65,14 @@ tracker_gen_direction(int id) {
 void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
-	int i;
+	//int i;
 	struct train_data_t* t;
 	//for (i = 0; i < n_trains; i++) {
 	//	if (event->passingTrain == tracker_trains[i].IRsimbolicId)
 	//		tracker_trains[i].storedDirection = train->direction;
 	//
 	for (t = tracker_trains; t->train; ++t) {
-		if (id == t->IRsimbolicId)
+		if (train_get_ID(t->train) == t->IRsimbolicId)
 			t->storedDirection = train_get_direction(train);
 			rt_printf(" updated train %d direction \n" , train_get_ID(train));
 	}
