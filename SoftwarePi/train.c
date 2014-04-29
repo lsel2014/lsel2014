@@ -140,7 +140,7 @@ int train_cmd(char* arg) {
 			"Incorrect command. Use train help to see a list of available commands\n");
 	return 1;
 }
-	
+
 train_t* train_new(char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc) {
 	train_t* this = (train_t*) malloc(sizeof(train_t));
@@ -166,8 +166,6 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->length = length;
 	this->dcc = dcc;
 	this->telemetry = telemetry;
-	this->telemetry->sector = 0;
-	this->telemetry->speed = 0;
 	rt_mutex_create(&this->mutex, NULL);
 }
 /*
@@ -258,9 +256,9 @@ void train_set_current_speed(train_t* this, float speed) {
 	rt_mutex_release(&this->mutex);
 }
 
-void train_set_timestamp(train_t* this, struct timeval timestamp) {
+void train_set_timestamp(train_t* this, struct timeval *tv) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-	this->telemetry->timestamp = timestamp;
+	copy_timeval( &(this->telemetry-> timestamp) ,tv);
 	rt_mutex_release(&this->mutex);
 }
 
@@ -298,7 +296,7 @@ char train_get_sector (train_t* this)
 }
 void train_get_timestamp (train_t* this, struct timeval *tv)
 {
-	copy_timeval(tv, &(this->telemetry-> timestamp))
+	copy_timeval(tv, &(this->telemetry-> timestamp));
 	//return this->telemetry-> timestamp;
 }
 float train_get_speed(train_t* this)
