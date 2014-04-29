@@ -68,11 +68,11 @@ int train_emergency_cmd(char*arg) {
 
 int train_cmd(char* arg) {
 	if (0 == strcmp(arg, "list")) {
-		printf("ID\tNAME\tPOWER\tDIRECTION\tSECTOR\tACTIVE\n");
+		printf("ID\tNAME\tPOWER\tTARGET\tDIRECTION\tSECTOR\tACTIVE\n");
 		int i;
 		for (i = 0; i < ntrains; ++i) {
 			printf("%d\t%s\t%d\t%s\t%s\t%d\r\n", trains[i]->ID, trains[i]->name,
-					trains[i]->power,
+					trains[i]->power, trains[i]->target_power,
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE",
 					(trains[i]->ID == current_train->ID) ? "<" : " ",
 					trains[i]->telemetry->sector);
