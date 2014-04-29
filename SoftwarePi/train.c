@@ -296,12 +296,13 @@ char train_get_sector (train_t* this)
 {
 	return this->telemetry-> sector;
 }
-struct timeval train_get_timestamp (train_t* this)
+void train_get_timestamp (train_t* this, struct timeval *tv)
 {
-	return this->telemetry-> timestamp;
+	copy_timeval(tv, &(this->telemetry-> timestamp))
+	//return this->telemetry-> timestamp;
 }
 float train_get_speed(train_t* this)
-{
+{	
 	return this->telemetry-> speed;
 }
 

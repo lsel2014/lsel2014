@@ -66,8 +66,9 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
 	//int i;
-	rt_printf(" sector %d \n" , sector );
+	//telemetry_t* local; 
 	struct train_data_t* t;
+	rt_printf(" sector %d \n" , sector );
 	//for (i = 0; i < n_trains; i++) {
 	//	if (event->passingTrain == tracker_trains[i].IRsimbolicId)
 	//		tracker_trains[i].storedDirection = train->direction;
@@ -86,7 +87,7 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	//timeval_sub(&diff, &now, &last);
 	//speed = LENGHTSECTOR / diff.tv_usec;
 	//train_set_current_speed(train, speed);
-	rt_printf(" updated train %d, speed %d sector %d \n", 
+	rt_printf(" updated train %d, speed %d sector %c \n", 
 			train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }
 // Registers train in the railway taking into account the direction of the train
@@ -166,8 +167,6 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 		}
 	}
 }
-
-
 void tracker_init(void) {
 	// Struct with the names and associated sector of the sensors
 	static struct ir_name_t {
