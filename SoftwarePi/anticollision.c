@@ -79,7 +79,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 				}
 				train_set_security(train, 1);
 				nalarm++;
-				printf("Seguridad activada en el tren ID: %c\n", train->ID);
+				printf("Seguridad activada en el tren ID: %d\n", train->ID);
 
 				//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
 				train_set_power(train, 0);
@@ -98,7 +98,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 					train_set_security(train, 0);
 
 					//// TODO: Comprobar si se deberia bajar el flag global
-					printf("Seguridad desactivada en el tren ID: %c\n", train->ID);
+					printf("Seguridad desactivada en el tren ID: %d\n", train->ID);
 				}
 			}
 			
