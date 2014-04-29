@@ -167,5 +167,56 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 		}
 	}
 }
+void tracker_init(void) {
+	// Struct with the names and associated sector of the sensors
+	static struct ir_name_t {
+		const char* name;
+		char sectorForward;
+		char sectorReverse;
+	} ir_names[] = { { "IRsensor0", 0 , 3}, { "IRsensor1", 1, 0 }, { "IRsensor2", 2, 1 },
+			{ "IRsensor3", 3 ,2}, { NULL, 0 } };
+	// Struct with the names and the ID of each train in the IR sensors
+	static struct train_name_t {
+		const char* name;
+		int IRsimbolicId;
+	} train_names[] = { { "Diesel", 4 }, { "Renfe", 3 }, { NULL, 0 } };
+	static struct railway_name_t {
+		const char* name;
+		int platform;
+	} railway_names[] = { { "via0", 0 }, { NULL, 0 } };
+	struct ir_name_t* s;
+	struct train_name_t* t;
+	struct railway_name_t* r;
+	observer_init(&tracker_observer, tracker_notify);
 
+	n_ir_sensors = 0;
+	n_trains = 0;
+	n_railway = 0;
+	// those "for" takes the elements in the model, cast them to 
+	// his type ( since all the elements in the model are observables)
+	// and store them in the appropriate struct.
+	for (s = ir_names; s->name; ++s) {
+		observable_t* obs = model_get_observable(s->name);
+		observable_register_observer(obs, &tracker_observer);
+		tracker_ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
+		tracker_ir_sensors[n_ir_sensors].sectorForward = s->sectorForward;
+		tracker_ir_sensors[n_ir_sensors].sectorReverse = s->sectorReverse;
+		++n_ir_sensors;
+	}
 
+	for (t = train_names; t->name; ++t) {
+		observable_t* obs = model_get_observable(t->name);
+		observable_register_observer(obs, &tracker_observer);
+		tracker_trains[n_trains].train = (train_t*) obs;
+		tracker_trains[n_trains].IRsimbolicId = t->IRsimbolicId;
+		tracker_trains[n_trains].storedDirection = FORWARD;
+		++n_trains;
+	}
+	for (r = railway_names; r->name; ++r) {
+		observable_t* obs = model_get_observable(r->name);
+		observable_register_observer(obs, &tracker_observer);
+		tracker_railway[n_railway].railway = (railway_t*) obs;
+		tracker_railway[n_railway].platform = r->platform;
+		++n_railway;
+	}
+}
