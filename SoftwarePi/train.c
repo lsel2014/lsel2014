@@ -292,7 +292,6 @@ telemetry_t* train_get_telemetry(train_t* this) {
 
 char train_get_sector (train_t* this)
 {
-	rt_printf("local train %c \n", this->telemetry-> sector);
 	return this->telemetry-> sector;
 }
 struct timeval train_get_timestamp (train_t* this)
