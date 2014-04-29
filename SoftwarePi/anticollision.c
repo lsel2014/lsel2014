@@ -56,6 +56,10 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 	railway_t* railway = (railway_t*) observable;
 	anticollision_t* thisAC = (anticollision_t*) this;
 	int i;
+	int direction;
+	int speed;
+	int direction2;
+	int speed2;
 	
 	for (i = 0; i < NSECTORS; i++) {
 		if ( (railway->railwaySectors[i]->nregisteredtrains) > 0 ) {
@@ -73,6 +77,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 					to_check = NSECTORS-1;
 			}
 			
+			
 			if ( (railway->railwaySectors[to_check]->nregisteredtrains) > 0 ) {
 				if (thisAC->security_flag == 0) {
 					thisAC->security_flag = 1;
@@ -80,15 +85,32 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 				train_set_security(train, 1);
 				printf("Seguridad activada en el tren ID: %c\n", train->ID);
 				
+				//Guardar estado del tren para reactivarlo
+				direction = train_get_direction(train);
+				speed = train_get_power(train);
 				//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
 				train_set_power(train, 0);
+				
+				//Protocolo de actuación cuando ambos trenes van en distinto sentido
+				if (train_get_direction(train) != train_get_direction("train2")) {
+					direction2 = train_get_direction("train2");
+					speed2 = train_get_power("train2");
+					train_set_power("train2", 0);
+				}
+				
 			} else {
 				if (train_get_security(train) == 1) {
 					train_set_security(train, 0);
+					//Cuando se desactiva la seguridad, sigue en el estado que tenía
+					train_set_direction(train, direction);
+					train_set_power(train,speed);
 					//// TODO: Comprobar si se deberia bajar el flag global
 					printf("Seguridad desactivada en el tren ID: %c\n", train->ID);
 				}
 			}
+			
+			//Protocolo de actuación cuando los trenes tienen sentido opuesto
+			////En este caso, hay que actuar sobre los dos trenes
 		}
 	}
 	
