@@ -36,6 +36,7 @@ typedef struct {
 	RT_MUTEX mutex;
 	dcc_sender_t* dcc;
 	telemetry_t* telemetry;
+	char security_override;
 } train_t;
 
 extern train_t* trains[MAXTRAINS];
@@ -70,5 +71,7 @@ telemetry_t* train_get_telemetry(train_t* this);
 char train_get_sector (train_t* this);
 struct timeval train_get_timestamp (train_t* this);
 float train_get_speed(train_t* this);
+char train_get_security(train_t* this);
+void train_set_security(train_t* this, char newSecurity);
 
 #endif

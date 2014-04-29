@@ -160,6 +160,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->ID = ID;
 	this->power = 0;
 	this->target_power = 0;
+	this->security_override = 0;
 	this->direction = FORWARD;
 	this->n_wagon = n_wagon;
 	this->length = length;
@@ -223,11 +224,10 @@ void train_set_power(train_t* this, int power) {
 
 void train_set_target_power(train_t* this, int power) {
 	this->target_power = power;
-	/*
-	 * In the future anti-collision system will take care of this,
-	 * for now just blindly obey the user.
-	 */
-	train_set_power(this, power);
+	
+	if (this->security_override == 0) {
+		train_set_power(this, power);
+	}
 }
 
 void train_set_direction(train_t* this, train_direction_t direction) {
@@ -301,4 +301,19 @@ struct timeval train_get_timestamp (train_t* this)
 float train_get_speed(train_t* this)
 {
 	return this->telemetry-> speed;
+}
+
+char train_get_security(train_t* this) {
+	return this->security_override;
+}
+
+void train_set_security(train_t* this, char newSecurity) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+
+	this->security_override = newSecurity;
+	if(newSecurity == 0) {
+		train_set_power(this, this->target_power);
+	}
+
+	rt_mutex_release(&this->mutex);
 }
