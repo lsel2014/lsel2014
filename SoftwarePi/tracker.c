@@ -119,26 +119,26 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 		if (event->flag == 1) {
 			train = tracker_gen_train(event->passingTrain);
 			storedDirection = tracker_gen_direction(event->passingTrain);
-			tel = train_get_telemetry(train;)
+			tel = train_get_telemetry(train);
 			rt_printf("train %d", train_get_ID(train));
 			if(train->direction == FORWARD)
 			{
 				if(train->direction == storedDirection && sd-> sectorForward != tel -> sector){
 					tracker_updating_train(train, sd-> sectorForward, tel);
-					railway_register_train(train, sd-> sectorForward);
+					railway_register_train(rail, train, sd-> sectorForward);
 				}else if(train->direction != storedDirection){
 					tracker_updating_train(train, sd-> sectorForward, tel);
-					railway_register_train(train, sd-> sectorForward);
+					railway_register_train(rail, train, sd-> sectorForward);
 				}
 			}
 			if(train->direction == REVERSE)
 			{
 				if(train->direction == storedDirection && sd-> sectorReverse != tel -> sector){
 					tracker_updating_train(train, sd-> sectorReverse, tel);
-					railway_register_train(train, sd-> sectorReverse);
+					railway_register_train(rail, train, sd-> sectorReverse);
 				}else if(train->direction != storedDirection){
 					tracker_updating_train(train, sd-> sectorReverse, tel);
-					railway_register_train(train, sd-> sectorReverse);
+					railway_register_train(rail, train, sd-> sectorReverse);
 				}
 			}
 		}
@@ -178,8 +178,8 @@ void tracker_init(void) {
 		observable_t* obs = model_get_observable(s->name);
 		observable_register_observer(obs, &tracker_observer);
 		tracker_ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
-		tracker_ir_sensors[n_ir_sensors].sector = s->sectorForward;
-		tracker_ir_sensors[n_ir_sensors].sector = s->sectorReverse;
+		tracker_ir_sensors[n_ir_sensors].sectorForward = s->sectorForward;
+		tracker_ir_sensors[n_ir_sensors].sectorReverse = s->sectorReverse;
 		++n_ir_sensors;
 	}
 
