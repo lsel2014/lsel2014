@@ -72,9 +72,10 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	//		tracker_trains[i].storedDirection = train->direction;
 	//
 	for (t = tracker_trains; t->train; ++t) {
-		if (train_get_ID(t->train) == t->IRsimbolicId)
+		if (train_get_ID(t->train) == t->IRsimbolicId){
 			t->storedDirection = train_get_direction(train);
 			rt_printf(" updated train %d direction \n" , train_get_ID(train));
+		}
 	}
 	train_set_current_sector(train, sector);
 	last = train_get_timestamp(train);
@@ -84,7 +85,7 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	speed = LENGHTSECTOR / diff.tv_usec;
 	train_set_current_speed(train, speed);
 	rt_printf(" updated train %d, speed %d sector %d \n", 
-			train_get_ID(train), train_get_speed(train) , train_get_speed(train));
+			train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }
 // Registers train in the railway taking into account the direction of the train
 /*void tracker_register_train(train_t* train, int sector) {
@@ -130,7 +131,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 			//rt_printf("train %d", train_get_ID(train));
 			if(train_get_direction(train) == FORWARD)
 			{
-				rt_printf(" train FORWARD \n");
+				//rt_printf(" train FORWARD \n");
 				if(train_get_direction(train) == storedDirection 
 					&& sd-> sectorForward != train_get_sector(train)){
 					  rt_printf(" train same dir not same sector \n");
@@ -144,7 +145,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 			}
 			if(train_get_direction(train) == REVERSE)
 			{
-				rt_printf(" train REVERSE \n");
+				//rt_printf(" train REVERSE \n");
 				if(train_get_direction(train) == storedDirection 
 					&& sd-> sectorReverse != tel -> sector){
 					  rt_printf(" train same dir not same sector \n");	
