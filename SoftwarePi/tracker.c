@@ -6,6 +6,7 @@
 #include "railway.h"
 #include <sys/time.h>
 #include <time.h>
+#include <rtdk.h>
 
 #define LENGHTSECTOR 10
 static observer_t tracker_observer;
@@ -58,7 +59,7 @@ tracker_gen_direction(int id) {
 		if (id == t->IRsimbolicId)
 			return t->storedDirection;
 	}
-	return NULL;
+	return FORWARD;
 }
 // Does all the operations to properly update the train
 void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
@@ -117,7 +118,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 		event = sensorIR_get_event(sd->sensor);
 		if (event->flag == 1) {
 			train = tracker_gen_train(event->passingTrain);
-			storedDirection = train_gen_direction(event->passingTrain);
+			storedDirection = tracker_gen_direction(event->passingTrain);
 			tel = train_get_telemetry(train;)
 			rt_printf("train %d", train_get_ID(train));
 			if(train->direction == FORWARD)
