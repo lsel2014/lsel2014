@@ -16,14 +16,15 @@ static anticollision_t *anticollision;
 void anticollision_setup(void) {
 	anticollision = anticollision_new();
 	interp_addcmd("anticollision", anticollision_cmd, "Shows the anticollisions security protocol status");
-
+	
 	observable_register_observer(&(railways[0]->observable), (observer_t*) anticollision);
+	
 }
 
 anticollision_t* anticollision_new(void) {
 	anticollision_t* this = (anticollision_t*) malloc(sizeof(anticollision_t));
 	anticollision_init(this);
-
+	
 	return this;
 }
 
@@ -40,7 +41,7 @@ void anticollision_destroy(anticollision_t* this) {
 }
 
 int anticollision_cmd(char* arg) {
-	if (anticollision->security_flag == 0) { //Probablemente mal, repasar
+	if (security_flag == 0) { //Probablemente mal, repasar
 		printf("Anticollisions security protocol inactive\n");
 	} else {
 		printf("Anticollisions security protocol active\n");

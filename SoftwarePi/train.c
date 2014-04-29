@@ -224,8 +224,8 @@ void train_set_power(train_t* this, int power) {
 
 void train_set_target_power(train_t* this, int power) {
 	this->target_power = power;
-	
-	if (security_override = 0) {
+
+	if (this->security_override == 0) {
 		train_set_power(this, power);
 	}
 }
@@ -296,12 +296,13 @@ char train_get_security(train_t* this) {
 
 void train_set_security(train_t* this, char newSecurity) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-	
+
 	this->security_override = newSecurity;
 	if(newSecurity == 0) {
-		train_set_power(this, this->target_power);	
+		train_set_power(this, this->target_power);
 	}
-	
+
 	rt_mutex_release(&this->mutex);
-	
+
 }
+
