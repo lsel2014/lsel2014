@@ -100,8 +100,9 @@ int main(int argc, char* argv[]) {
 	IRsensors_setup();
 	trains_setup();
 	railways_setup();
-	aticollision_setup();
+	anticollision_setup();
 	model_init();
+
 	tracker_init ();
 	
 	setupRailChange();
