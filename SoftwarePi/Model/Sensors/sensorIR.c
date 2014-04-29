@@ -154,7 +154,9 @@ sensorIR_trainPassing(sensorIR_t* this) {
 
 	if (this->event->flag == 1) {
 		observable_notify_observers((observable_t*) this);
-		
+		rt_mutex_acquire(&(this->mutex), TM_INFINITE);
+		this->event->flag = 0;	
+		rt_mutex_release(&this->mutex);
 	}
 }
 
