@@ -8,7 +8,7 @@
 #include <time.h>
 #include <rtdk.h>
 
-#define LENGHTSECTOR 10
+#define LENGHTSECTOR 100
 static observer_t tracker_observer;
 // Arrays where model elements are stored
 static struct ir_sensor_data_t {
@@ -62,7 +62,8 @@ tracker_gen_direction(int id) {
 	return FORWARD;
 }
 // Does all the operations to properly update the train
-void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
+//void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
+void tracker_updating_train(train_t* train, char sector) {
 	struct timeval diff, now, last;
 	float speed;
 	struct train_data_t* t;
@@ -79,7 +80,7 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	gettimeofday(&now, NULL);
 	train_set_timestamp(train, &now);
 	timeval_sub(&diff, &now, &last);
-	speed = LENGHTSECTOR / diff.tv_usec;
+	speed = LENGHTSECTOR / diff.tv_sec;
 	train_set_current_speed(train, speed);
 	//rt_printf(" updated train %d, speed %d sector %c \n", 
 	//		train_get_ID(train), train_get_speed(train) , train_get_sector(train));
