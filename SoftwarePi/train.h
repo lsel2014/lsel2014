@@ -68,7 +68,7 @@ char train_get_n_wagon(train_t* this);
 char train_get_length(train_t* this);
 telemetry_t* train_get_telemetry(train_t* this);
 char train_get_sector (train_t* this);
-char train_get_timestamp (train_t* this);
+struct timeval train_get_timestamp (train_t* this);
 float train_get_speed(train_t* this);
 
 #endif
