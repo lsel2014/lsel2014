@@ -76,7 +76,7 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 			t->storedDirection = train_get_direction(train);
 	}
 	train_set_current_sector(train, sector);
-	last = tel->timestamp;
+	last = train_get_timestamp(train);
 	gettimeofday(&now, NULL);
 	train_set_timestamp(train, now);
 	timeval_sub(&diff, &now, &last);
