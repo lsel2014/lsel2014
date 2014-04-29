@@ -294,7 +294,7 @@ char train_get_sector (train_t* this)
 {
 	return this->telemetry-> sector;
 }
-char train_get_timestamp (train_t* this)
+struct timeval train_get_timestamp (train_t* this)
 {
 	return this->telemetry-> timestamp;
 }
