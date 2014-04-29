@@ -138,10 +138,12 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 					&& sd-> sectorForward != train_get_sector(train)){
 					  rt_printf(" train same dir not same sector \n");
 					  tracker_updating_train(train, sd-> sectorForward, tel);
+					  railway_erase_train(rail,train);
 					  railway_register_train(rail, train, sd-> sectorForward);
 				}else if(train_get_direction(train) != storedDirection){
 					  rt_printf(" train no same dir \n");
 					  tracker_updating_train(train, sd-> sectorForward, tel);
+					  railway_erase_train(rail,train);
 					  railway_register_train(rail, train, sd-> sectorForward);
 				}
 			}
@@ -152,10 +154,12 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 					&& sd-> sectorReverse != train_get_sector(train)){
 					  rt_printf(" train same dir not same sector \n");	
 					  tracker_updating_train(train, sd-> sectorReverse, tel);
+					  railway_erase_train(rail,train);
 					  railway_register_train(rail, train, sd-> sectorReverse);
 				}else if(train_get_direction(train) != storedDirection){
 					  rt_printf(" train no same dir \n");
 					  tracker_updating_train(train, sd-> sectorReverse, tel);
+					  railway_erase_train(rail,train);
 					  railway_register_train(rail, train, sd-> sectorReverse);
 				}
 			}
