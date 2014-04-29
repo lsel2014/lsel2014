@@ -3,6 +3,7 @@
 
 #include <pthread.h>
 #include <native/mutex.h>
+#include <sys/time.h>
 #include <time.h>
 #include "dcc.h"
 #include "Interpreter/interp.h"
@@ -15,7 +16,7 @@
 typedef struct{
 	char sector;
 	float speed;
-	timeval timestamp;
+	struct timeval timestamp;
 } telemetry_t;
 
 typedef enum {
@@ -68,6 +69,6 @@ char train_get_n_wagon(train_t* this);
 char train_get_length(train_t* this);
 telemetry_t* train_get_telemetry(train_t* this);
 char train_get_security(train_t* this);
-int train_get_target_power(train_t* this);
+void train_set_security(train_t* this, char newSecurity);
 
 #endif

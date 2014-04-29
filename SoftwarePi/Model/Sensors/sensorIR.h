@@ -17,7 +17,7 @@
 
 #define IR_DEADLINE 20000000
 #define IR_PERIOD 100000000
-//#define MAXTRAINS 4
+#define MAXTRAINS 8
 
 typedef struct {
         char flag;
@@ -38,9 +38,6 @@ typedef struct {
 extern sensorIR_t* sensors[MAXSENSORS];
 extern int nsensors;
 
-void IRsensors_setup (void);
-void IRsensors_poll (void* arg);
-int sensors_cmd (char* arg);
 sensorIR_t* sensorIR_new (int id);
 void sensorIR_init (sensorIR_t* this, int id, event_t* event);
 void sensorIR_destroy (sensorIR_t* this);

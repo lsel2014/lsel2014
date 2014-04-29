@@ -36,3 +36,13 @@ observable_notify_observers (observable_t* this)
    }
 }
 
+int 
+observable_get_nobservers(observable_t* this)
+{
+  return this->nobservers;
+}
+
+int observable_get_nevents(observable_t* this)
+{
+  return this->nevents;
+}

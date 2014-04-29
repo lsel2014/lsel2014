@@ -7,11 +7,28 @@
 #include "tasks.h"
 #include <wiringPi.h>
 
+/**
+ * DCC emulation functions.
+ *
+ * This is a implementation of a complete DCC sender for the Raspberry Pi.
+ * These functions emulate the basic DCC functionality. Support for extended
+ * packets may be added in the future.
+ *
+ * Signals are generated via bit-banging. Timing is controlled by a periodic
+ * real-time task that toggles the sending GPIO.
+ */
+
+
+/*
+ * Speed codes defined by DCC standard (28 step speed format). Mapped for convenience.
+ */
+
 const char train_speed_codes[29] = { 0b00000, 0b00010, 0b10010, 0b00011,
 		0b10011, 0b00100, 0b10100, 0b00101, 0b10101, 0b00110, 0b10110, 0b00111,
 		0b10111, 0b01000, 0b11000, 0b01001, 0b11001, 0b01010, 0b11010, 0b01011,
 		0b11011, 0b01100, 0b11100, 0b01101, 0b11101, 0b01110, 0b11110, 0b01111,
 		0b11111 };
+
 
 dcc_sender_t* dcc_new(int gpio, int deadline) {
 	dcc_sender_t* this = (dcc_sender_t*) malloc(sizeof(dcc_sender_t));
@@ -30,6 +47,17 @@ void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline) {
 	task_add("DCC sender", DCC_DEADLINE, dcc_send, this);
 
 }
+
+
+/**
+ * dcc_add_packet
+ *
+ * Adds a packet to the DCC packet queue. Packets are serviced in a FIFO fashion.
+ * If the queue is full old packets will be discarded to make room for new ones.
+ *
+ * @param this the dcc_sender that will transmit the packet
+ * @param packet the packet to add
+ */
 void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
 	/*
 	 * Circular buffer with overtake prevention. Old packets get discarded if
@@ -49,6 +77,17 @@ void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
 	//rt_printf("%x\n", packet);
 }
 
+/**
+ * dcc_add_data_packet
+ *
+ * Formats a generic basic DCC packet with 7 bit address and 8 bit data, filling
+ * the preamble and separator bits and calculating the required CRC. Then adds
+ * it to the packet queue for transmission.
+ *
+ * @param this the dcc_sender that will transmit the packet
+ * @param address 7 bit address of the target receiver
+ * @param data 8 bit generic data
+ */
 void dcc_add_data_packet(dcc_sender_t* this, unsigned char address, unsigned char data){
 		dcc_packet_t dcc_packet;
 		char dcc_packet_ecc;
@@ -60,7 +99,21 @@ void dcc_add_data_packet(dcc_sender_t* this, unsigned char address, unsigned cha
 		dcc_add_packet(this, dcc_packet);
 }
 
-
+/**
+ * dcc_add_data_packet
+ *
+ * Formats a basic function DCC packet. These packets are sent when the
+ * user toggles a DCC basic function (F0-F14), which are mapped on each receiver
+ * to control functions such as train lights, sound, actuators...
+ * Only functions F0 to F12 are supported and only one of each group (1-4, 5-8 or 9-12)
+ * can be enabled at a time with this implementation.
+ *  Read the DCC standard for further information.
+ *
+ * @param this the dcc_sender that will transmit the packet
+ * @param address 7 bit address of the target receiver
+ * @param function 0 to 12 indicates the function number to modify
+ * @param state 1 enables the function, 0 disables it
+ */
 void dcc_add_function_packet(dcc_sender_t* this, unsigned char address,
 		unsigned char function, unsigned char state) {
 	dcc_packet_t dcc_packet;
@@ -93,18 +146,17 @@ void dcc_add_function_packet(dcc_sender_t* this, unsigned char address,
 }
 ;
 
-/*
- * DCC packet structure.
- * 14bit preamble (only 4 here to fit in 32bit)
- * 1 bit packet start bit (always 0)
- * 8 bit address (0-127, MSB always 0)
- * 1 bit address-data separator (always 0)
- * 8 bit data (different formats available)
- * 1 bit data-ecc separator (always 0)
- * 8 bit error checking code (address XOR data)
- * 1 bit packet end (always 1)
- */
 
+/**
+ * dcc_add_speed_packet
+ *
+ * Formats a 28-step DCC speed packet including direction and adds it to the
+ * sending queue.
+ *
+ * @param this the dcc_sender that will transmit the packet
+ * @param address 7 bit address of the target receiver
+ * @param speed desired train speed between -28 (top backwards speed) to 28 (top forward speed)
+ */
 void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed) {
 	dcc_packet_t dcc_packet;
 	char dcc_packet_data, dcc_packet_ecc;
@@ -124,13 +176,27 @@ void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed) 
 	dcc_packet |= ((unsigned int) dcc_packet_ecc) << 1;
 	dcc_add_packet(this, dcc_packet);
 }
-;
+
+
+
+/**
+ * dcc_send
+ *
+ * This periodic task is used for bit-banging the DCC protocol. Packets from
+ * the sending queue are taken in a FIFO fashion and sent. If no new packets
+ * are available the last transmitted packet is repeated until a new one
+ * arrives. This auto-retransmission feature improves packet loss rates in
+ * some scenarios.
+ *
+ * @param arg the dcc_sender associated to the task.
+ */
 
 void dcc_send(void* arg) {
 	dcc_sender_t* this = (dcc_sender_t*) arg;
 	static dcc_packet_t current_packet;
 	unsigned char buffer_bit = 0xFF;
 	unsigned long long buffer = 0;
+	/*Idle DCC packet. Refer to DCC standard for further information*/
 	unsigned long long idle_packet = 0xFFFDFE007FC00000ULL;
 	rt_task_set_periodic(NULL, TM_NOW, DCC_PERIOD);
 	while (1) {
@@ -147,12 +213,17 @@ void dcc_send(void* arg) {
 					rt_mutex_release(&(this->dcc_mutex));
 					buffer = 0xFFFC000000000000ULL
 							| (((unsigned long long) current_packet) << 22);
-					//rt_printf("%llx, %x\n", buffer, current_packet);
 					idle_packet = buffer;
 				} else {
 					buffer = idle_packet;
 				}
 			}
+			/*A logic 1 is sent as a 58us high/58us low cycle
+			 * 0xFD = 0b11111101
+			 * A logic 0 is sent as a 116us high/116us low cycle
+			 * 0xF3 = 0b11110011
+			 * Bits are shifted every 58us
+			 */
 			buffer_bit = (buffer & 0x8000000000000000ULL) ? 0xFD : 0xF3;
 			buffer = buffer << 1;
 		}

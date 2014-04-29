@@ -16,22 +16,31 @@ train_t* current_train;
 
 /*This will be integrated with the interpreter*/
 void trains_setup(void) {
-	int i, j;
+	//int i, j;
 	dcc_sender_t* dccobject = dcc_new(12, 50);
 
 	train_new("Diesel", 0b0000100, '0', 20, dccobject);
 	train_new("Renfe", 0b0000011, '0', 25, dccobject);
 	/*for (i = 0; i < ntrains; i++) {
-		for (j = 0; j < nsensors; j++) {
-			observable_register_observer((observable_t*) sensors[j],
-					(observer_t*) trains[i]);
-		}
-	}*/
+	 for (j = 0; j < nsensors; j++) {
+	 observable_register_observer((observable_t*) sensors[j],
+	 (observer_t*) trains[i]);
+	 }
+	 }*/
 	current_train = trains[0];
 	interp_addcmd("train", train_cmd, "Set train parameters");
 	interp_addcmd("s", train_emergency_cmd, "Emergency stop all trains");
 }
-
+/**
+ * train_emergency_cmd
+ *
+ * Sends a emergency stop command all available trains.
+ * This will cut off the power to the motors and enable
+ * the electric brake if available. Unrealistic deceleration.
+ *
+ * @param arg subcmd string, dummy in this case
+ * @return always 0
+ */
 int train_emergency_cmd(char*arg) {
 	int i;
 	for (i = 0; i < ntrains; i++) {
@@ -45,6 +54,16 @@ int train_emergency_cmd(char*arg) {
 	return 0;
 }
 
+/**
+ * train_cmd
+ *
+ * Train related commands. Allows the user to manage
+ * and control the trains via the cmd interpreter.
+ *
+ * @param arg subcmd string.
+ * @return always 0
+ */
+
 int train_cmd(char* arg) {
 	if (0 == strcmp(arg, "list")) {
 		printf("ID\tNAME\tPOWER\tDIRECTION\tSECTOR\tACTIVE\n");
@@ -53,7 +72,8 @@ int train_cmd(char* arg) {
 			printf("%d\t%s\t%d\t%s\t%s\t%d\r\n", trains[i]->ID, trains[i]->name,
 					trains[i]->power,
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE",
-					(trains[i]->ID == current_train->ID) ? "<" : " ",trains[i]->telemetry->sector);
+					(trains[i]->ID == current_train->ID) ? "<" : " ",
+					trains[i]->telemetry->sector);
 		}
 		return 0;
 	}
@@ -85,11 +105,11 @@ int train_cmd(char* arg) {
 	}
 
 	if (0 == strncmp(arg, "sector ", strlen("sector "))) {
-			int sector;
-			sector = atoi(arg + strlen("sector "));
-			train_set_current_sector(current_train, sector);
-			return 0;
-		}
+		int sector;
+		sector = atoi(arg + strlen("sector "));
+		train_set_current_sector(current_train, sector);
+		return 0;
+	}
 
 	if (0 == strncmp(arg, "estop", strlen("estop"))) {
 		dcc_add_data_packet(current_train->dcc, current_train->ID, ESTOP_CMD);
@@ -149,35 +169,35 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	rt_mutex_create(&this->mutex, NULL);
 }
 /*
-void train_notify(observer_t* this, observable_t* observed) {
+ void train_notify(observer_t* this, observable_t* observed) {
 
-	sensorIR_t* sensor = (sensorIR_t*)observed;
-	train_t* thisTrain = (train_t*)this;
-	//rt_printf ("Received train %d in sector %d\n", sensor->id, sensor->last_reading);
-	if(sensor->last_reading == thisTrain->ID) {
-		int newSector;
-		switch (thisTrain->direction)
-		{
-			case FORWARD:
-				newSector = sensor->id;
-				break;
-			case REVERSE:
-				newSector = sensor->id -1;
-				if (newSector == -1)
-					newSector = 3;
-				break;
-		}
-		if (thisTrain->telemetry->sector != newSector)
-		{
-			if (thisTrain->target_power != 0)
-				train_set_current_sector (thisTrain, newSector);
-			//rt_printf ("Train %i passed to sector %i\n", thisTrain->ID, newSector);
-		}
-		
-	
-	}
-}
-*/
+ sensorIR_t* sensor = (sensorIR_t*)observed;
+ train_t* thisTrain = (train_t*)this;
+ //rt_printf ("Received train %d in sector %d\n", sensor->id, sensor->last_reading);
+ if(sensor->last_reading == thisTrain->ID) {
+ int newSector;
+ switch (thisTrain->direction)
+ {
+ case FORWARD:
+ newSector = sensor->id;
+ break;
+ case REVERSE:
+ newSector = sensor->id -1;
+ if (newSector == -1)
+ newSector = 3;
+ break;
+ }
+ if (thisTrain->telemetry->sector != newSector)
+ {
+ if (thisTrain->target_power != 0)
+ train_set_current_sector (thisTrain, newSector);
+ //rt_printf ("Train %i passed to sector %i\n", thisTrain->ID, newSector);
+ }
+
+
+ }
+ }
+ */
 void train_destroy(train_t* this) {
 	if (this->telemetry)
 		free(this->telemetry);
@@ -236,7 +256,7 @@ void train_set_current_speed(train_t* this, float speed) {
 	rt_mutex_release(&this->mutex);
 }
 
-void train_set_timestamp(train_t* this,struct timeval timestamp) {
+void train_set_timestamp(train_t* this, struct timeval timestamp) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->timestamp = timestamp;
 	rt_mutex_release(&this->mutex);
@@ -252,10 +272,6 @@ char train_get_ID(train_t* this) {
 
 int train_get_power(train_t* this) {
 	return this->power;
-}
-
-int train_get_target_power(train_t* this) {
-	return this->target_power;
 }
 
 train_direction_t train_get_direction(train_t* this) {

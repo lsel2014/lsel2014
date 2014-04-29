@@ -72,30 +72,12 @@ void sun_task(void* arg) {
 			sprintf(buffer, "23:59:59");
 		} else {
 			int seg_tot, h, r, min, seg;
-			char st_h[3], st_min[3], st_seg[3];
 			seg_tot = (this->current_simulated_time * 86400) / 1200;
 			h = seg_tot / 3600;
 			r = seg_tot % 3600;
 			min = r / 60;
 			seg = r % 60;
-
-			if (h < 10) {
-				sprintf(st_h, "0%i", h);
-			} else {
-				sprintf(st_h, "%i", h);
-			}
-			if (min < 10) {
-				sprintf(st_min, "0%i", min);
-			} else {
-				sprintf(st_min, "%i", min);
-			}
-			if (seg < 10) {
-				sprintf(st_seg, "0%i", seg);
-			} else {
-				sprintf(st_seg, "%i", seg);
-			}
-
-			sprintf(buffer, "%s:%s:%s", st_h, st_min, st_seg);
+			sprintf(buffer, "%02d:%02d:%02d", h, min, seg);
 		}
 
 		FILE *fp;
@@ -103,7 +85,6 @@ void sun_task(void* arg) {
 			rt_printf("Error en archivo destino");
 		}
 		fprintf(fp, "%s", buffer);
-		//printf("%s\n", buffer);
 		fclose(fp);
 		system("mv /var/www/HoraVirtual.txt.new /var/www/HoraVirtual.txt");
 	}

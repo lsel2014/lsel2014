@@ -102,7 +102,7 @@ void trafficLight_set_state(trafficLight_t* this, state_t state) {
 }
 
 void trafficLight_notify(observer_t* this, observable_t* observable) {
-	train_t* tren = (train_t*) ((void*) observable - sizeof(observer_t));
+	train_t* tren = (train_t*) observable;
 	char sector = tren->telemetry->sector;
 	train_direction_t direction = tren->direction;
 	int i;
