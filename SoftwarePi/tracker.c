@@ -77,6 +77,7 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	timeval_sub(&diff, &now, &last);
 	speed = LENGHTSECTOR / diff.tv_usec;
 	train_set_current_speed(train, speed);
+	rt_printf(" updated train %d, speed %d sector %d", train_get_ID(train), speed , sector);
 }
 // Registers train in the railway taking into account the direction of the train
 /*void tracker_register_train(train_t* train, int sector) {
@@ -113,13 +114,13 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 	rail = railways[0];
 	for (j = 0 ; j < n_ir_sensors; j++) {
 		sd = &tracker_ir_sensors[j];
-		rt_printf("checking sensor %d, j = %d \n",sd->sensor->id, j);
+		//rt_printf("checking sensor %d, j = %d \n",sd->sensor->id, j);
 		event = sensorIR_get_event(sd->sensor);
 		if (event->flag == 1) {
 			train = tracker_gen_train(event->passingTrain);
 			storedDirection = tracker_gen_direction(event->passingTrain);
 			tel = train_get_telemetry(train);
-			rt_printf("train %d", train_get_ID(train));
+			//rt_printf("train %d", train_get_ID(train));
 			if(train->direction == FORWARD)
 			{
 				if(train->direction == storedDirection && sd-> sectorForward != tel -> sector){
