@@ -80,12 +80,12 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	}
 	train_set_current_sector(train, sector);
 	//last = train_get_timestamp(train);
-	copy_timeval(&last, &train_get_timestamp(train));
-	gettimeofday(&now, NULL);
-	train_set_timestamp(train, now);
-	timeval_sub(&diff, &now, &last);
-	speed = LENGHTSECTOR / diff.tv_usec;
-	train_set_current_speed(train, speed);
+	//copy_timeval(&last, &train_get_timestamp(train));
+	//gettimeofday(&now, NULL);
+	//train_set_timestamp(train, now);
+	//timeval_sub(&diff, &now, &last);
+	//speed = LENGHTSECTOR / diff.tv_usec;
+	//train_set_current_speed(train, speed);
 	rt_printf(" updated train %d, speed %d sector %d \n", 
 			train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }
