@@ -66,19 +66,21 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
 	//int i;
+	rt_printf(" updated train %d" , sector );
 	struct train_data_t* t;
 	//for (i = 0; i < n_trains; i++) {
 	//	if (event->passingTrain == tracker_trains[i].IRsimbolicId)
 	//		tracker_trains[i].storedDirection = train->direction;
 	//
 	for (t = tracker_trains; t->train; ++t) {
-		if (train_get_ID(t->train) == t->IRsimbolicId){
+		if (train_get_ID(train) == t->IRsimbolicId){
 			t->storedDirection = train_get_direction(train);
 			rt_printf(" updated train %d direction \n" , train_get_ID(train));
 		}
 	}
 	train_set_current_sector(train, sector);
-	last = train_get_timestamp(train);
+	//last = train_get_timestamp(train);
+	copy_timeval(&last, &train_get_timestamp(train));
 	gettimeofday(&now, NULL);
 	train_set_timestamp(train, now);
 	timeval_sub(&diff, &now, &last);
@@ -147,7 +149,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 			{
 				//rt_printf(" train REVERSE \n");
 				if(train_get_direction(train) == storedDirection 
-					&& sd-> sectorReverse != tel -> sector){
+					&& sd-> sectorReverse != train_get_sector(train)){
 					  rt_printf(" train same dir not same sector \n");	
 					  tracker_updating_train(train, sd-> sectorReverse, tel);
 					  railway_register_train(rail, train, sd-> sectorReverse);
