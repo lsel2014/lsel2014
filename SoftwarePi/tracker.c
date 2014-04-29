@@ -66,10 +66,14 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
 	int i;
-	telemetry_t* localtel;
-	for (i = 0; i < n_trains; i++) {
-		if (event->passingTrain == tracker_trains[i].IRsimbolicId)
-			tracker_trains[i].storedDirection = train->direction;
+	struct train_data_t* t;
+	//for (i = 0; i < n_trains; i++) {
+	//	if (event->passingTrain == tracker_trains[i].IRsimbolicId)
+	//		tracker_trains[i].storedDirection = train->direction;
+	//
+	for (t = tracker_trains; t->train; ++t) {
+		if (id == t->IRsimbolicId)
+			t->storedDirection = train_get_direction(train);
 	}
 	train_set_current_sector(train, sector);
 	last = tel->timestamp;
@@ -78,8 +82,8 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	timeval_sub(&diff, &now, &last);
 	speed = LENGHTSECTOR / diff.tv_usec;
 	train_set_current_speed(train, speed);
-	localtel = train_get_telemetry(train);
-	rt_printf(" updated train %d, speed %d sector %d", train_get_ID(train), localtel -> speed , localtel -> sector);
+	rt_printf(" updated train %d, speed %d sector %d \n", 
+			train_get_ID(train), train_get_speed(train) , train_get_speed(train));
 }
 // Registers train in the railway taking into account the direction of the train
 /*void tracker_register_train(train_t* train, int sector) {
@@ -123,24 +127,26 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 			storedDirection = tracker_gen_direction(event->passingTrain);
 			tel = train_get_telemetry(train);
 			//rt_printf("train %d", train_get_ID(train));
-			if(train->direction == FORWARD)
+			if(train_get_direction(train) == FORWARD)
 			{
-				if(train->direction == storedDirection && sd-> sectorForward != tel -> sector){
-					tracker_updating_train(train, sd-> sectorForward, tel);
-					railway_register_train(rail, train, sd-> sectorForward);
-				}else if(train->direction != storedDirection){
-					tracker_updating_train(train, sd-> sectorForward, tel);
-					railway_register_train(rail, train, sd-> sectorForward);
+				if(train_get_direction(train) == storedDirection 
+					&& sd-> sectorForward != train_get_sector(train)){
+					  tracker_updating_train(train, sd-> sectorForward, tel);
+					  railway_register_train(rail, train, sd-> sectorForward);
+				}else if(train_get_direction(train) != storedDirection){
+					  tracker_updating_train(train, sd-> sectorForward, tel);
+					  railway_register_train(rail, train, sd-> sectorForward);
 				}
 			}
-			if(train->direction == REVERSE)
+			if(train_get_direction(train) == REVERSE)
 			{
-				if(train->direction == storedDirection && sd-> sectorReverse != tel -> sector){
-					tracker_updating_train(train, sd-> sectorReverse, tel);
-					railway_register_train(rail, train, sd-> sectorReverse);
-				}else if(train->direction != storedDirection){
-					tracker_updating_train(train, sd-> sectorReverse, tel);
-					railway_register_train(rail, train, sd-> sectorReverse);
+				if(train_get_direction(train) == storedDirection 
+					&& sd-> sectorReverse != tel -> sector){
+					  tracker_updating_train(train, sd-> sectorReverse, tel);
+					  railway_register_train(rail, train, sd-> sectorReverse);
+				}else if(train_get_direction(train) != storedDirection){
+					  tracker_updating_train(train, sd-> sectorReverse, tel);
+					  railway_register_train(rail, train, sd-> sectorReverse);
 				}
 			}
 		}
