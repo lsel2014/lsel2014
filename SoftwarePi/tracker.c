@@ -66,7 +66,7 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
 	//int i;
-	rt_printf(" updated train %d" , sector );
+	rt_printf(" sector %d \n" , sector );
 	struct train_data_t* t;
 	//for (i = 0; i < n_trains; i++) {
 	//	if (event->passingTrain == tracker_trains[i].IRsimbolicId)
