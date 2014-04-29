@@ -13,8 +13,11 @@
 
 
 void anticollision_setup(void) {
-	anticollision_new();
+	anticollision = anticollision_new();
 	interp_addcmd("anticollision", anticollision_cmd, "Shows the anticollisions security protocol status");
+	
+	observable_register_observer(&(railways[0]->observable), (observer_t*) anticollision);
+	
 }
 
 anticollision_t* anticollision_new(void) {
@@ -27,10 +30,6 @@ anticollision_t* anticollision_new(void) {
 void anticollision_init(anticollision_t* this) {
 	observer_init((observer_t*) this, anticollision_notify);
 	security_flag = 0;
-	
-	//this->railway = railway;
-	
-	//// TODO: registrarse como observer del railway
 	
 	rt_mutex_create(&this->mutex, NULL);
 }
@@ -85,18 +84,15 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 				train_set_security(train, 1);
 				printf("Seguridad activada en el tren ID: %c\n", train->ID);
 				
-				//Guardar estado del tren para reactivarlo
-				direction = train_get_direction(train);
-				speed = train_get_power(train);
 				//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
 				train_set_power(train, 0);
 				
 				//Protocolo de actuación cuando ambos trenes van en distinto sentido
-				if (train_get_direction(train) != train_get_direction("train2")) {
-					direction2 = train_get_direction("train2");
-					speed2 = train_get_power("train2");
-					train_set_power("train2", 0);
-				}
+				// if (train_get_direction(train) != train_get_direction("train2")) {
+					// direction2 = train_get_direction("train2");
+					// speed2 = train_get_power("train2");
+					// train_set_power("train2", 0);
+				// }
 				
 			} else {
 				if (train_get_security(train) == 1) {
