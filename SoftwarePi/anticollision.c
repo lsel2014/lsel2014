@@ -55,6 +55,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 	railway_t* railway = (railway_t*) observable;
 	anticollision_t* thisAC = (anticollision_t*) this;
 	int i;
+	int nalarm = 0;
 
 	for (i = 0; i < NSECTORS; i++) {
 		if ( (railway->railwaySectors[i]->nregisteredtrains) > 0 ) {
@@ -77,18 +78,21 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 					thisAC->security_flag = 1;
 				}
 				train_set_security(train, 1);
+				nalarm++;
 				printf("Seguridad activada en el tren ID: %c\n", train->ID);
 
 				//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
 				train_set_power(train, 0);
-
-				//Protocolo de actuación cuando ambos trenes van en distinto sentido
-				// if (train_get_direction(train) != train_get_direction("train2")) {
-					// direction2 = train_get_direction("train2");
-					// speed2 = train_get_power("train2");
-					// train_set_power("train2", 0);
-				// }
-				
+				if (nalarm == 2) {
+					int j;
+					for (j=0; j<ntrains; j++) {
+						if (train_get_direction(trains[j]) == REVERSE) {
+							train_set_power(trains[j], 20);
+							train_set_target_power(trains[j], 20);
+						}	
+					}
+					
+				}
 			} else {
 				if (train_get_security(train) == 1) {
 					train_set_security(train, 0);
@@ -98,8 +102,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 				}
 			}
 			
-			//Protocolo de actuación cuando los trenes tienen sentido opuesto
-			////En este caso, hay que actuar sobre los dos trenes
+
 		}
 	}
 	
