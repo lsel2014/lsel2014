@@ -55,15 +55,12 @@ int railway_cmd(char* arg) {
 		for (j = 0; j < NSECTORS; j++) {
 			printf("via %d : Sector %d :\n", railways[i]->id, railways[i]->railwaySectors[j]->id);
 			for (k = 0; k < railways[i]->railwaySectors[j]-> nregisteredtrains ; k++)
-<<<<<<< HEAD
+
 				if((railways[i]->railwaySectors[j]->nregisteredtrains) > 0 ) {
 					printf("\t train %d\n", train_get_ID(railways[i]->railwaySectors[j]->registeredTrains[k]));
 				} else {
 					printf("\t sin trenes");
 				}
-=======
-				printf("train %d \n", train_get_ID(railways[i]->railwaySectors[j]->registeredTrains[k]));
->>>>>>> d863a64ce469149ab2c71e01f7c2befc2c4a5d7d
 		}
 	}
 	return 0;
