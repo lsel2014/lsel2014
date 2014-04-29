@@ -86,7 +86,7 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	//timeval_sub(&diff, &now, &last);
 	//speed = LENGHTSECTOR / diff.tv_usec;
 	//train_set_current_speed(train, speed);
-	rt_printf(" updated train %d, speed %d sector %d \n", 
+	rt_printf(" updated train %d, speed %d sector %c \n", 
 			train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }
 // Registers train in the railway taking into account the direction of the train
