@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <native/mutex.h>
+#include <rtdk.h>
 
 #include "anticollision.h"
 
@@ -15,7 +16,7 @@ static anticollision_t *anticollision;
 
 void anticollision_setup(void) {
 	anticollision = anticollision_new();
-	interp_addcmd("anticollision", anticollision_cmd, "Shows the anticollisions security protocol status");
+	interp_addcmd("anti", anticollision_cmd, "Shows the anticollisions security protocol status");
 
 	observable_register_observer(&(railways[0]->observable), (observer_t*) anticollision);
 }
@@ -40,12 +41,27 @@ void anticollision_destroy(anticollision_t* this) {
 }
 
 int anticollision_cmd(char* arg) {
-	if (anticollision->security_flag == 0) { //Probablemente mal, repasar
-		printf("Anticollisions security protocol inactive\n");
-	} else {
-		printf("Anticollisions security protocol active\n");
+	if (0 == strcmp(arg, "status")) {
+		int i;
+		for (i = 0; i < ntrains; i++) {
+			printf("Train %s -> Security override %d.\n", train_get_name(trains[i]), train_get_security(trains[i]));
+		}
+		return 0;
 	}
-	return 0;
+	
+	if (0 == strcmp(arg, "cancel")) {
+		int i;
+		for (i = 0; i < ntrains; i++) {
+			train_set_power(trains[i], 0);
+			train_set_target_power(trains[i], 0);
+			train_set_security(trains[i], 0);
+		}
+		printf("Anticollision system cancelled.");
+		return 0;
+	}
+	
+	printf("Incorrect command.\n");
+	return 1;
 }
 
 /*
@@ -62,6 +78,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 			train_t* train = railway->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
 			int to_check;
 
+			rt_printf("Comprobando tren %s en sector %d\n", train_get_name(trains), i);
 			//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
 			if (train_get_direction(train) == FORWARD){
 				to_check = i+1;
