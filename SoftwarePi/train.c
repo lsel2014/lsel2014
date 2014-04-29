@@ -140,7 +140,7 @@ int train_cmd(char* arg) {
 			"Incorrect command. Use train help to see a list of available commands\n");
 	return 1;
 }
-
+	
 train_t* train_new(char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc) {
 	train_t* this = (train_t*) malloc(sizeof(train_t));
@@ -166,6 +166,8 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->length = length;
 	this->dcc = dcc;
 	this->telemetry = telemetry;
+	this->telemetry->sector = 0;
+	this->telemetry->speed = 0;
 	rt_mutex_create(&this->mutex, NULL);
 }
 /*

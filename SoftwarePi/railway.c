@@ -19,11 +19,17 @@ railway_new(int id) {
 }
 
 void railway_init(railway_t* this, int id) {
-	int i;
+	int i, j, int_sector;
+	char char_sector;
 	this->id = id;
 	observable_init(&this->observable);
 	for (i = 0; i < NSECTORS; i++) {
 		this->railwaySectors[i] = sector_new(i);
+	}
+	for (j = 0; j < ntrains; j++) {
+		char_sector = train_get_sector(trains[j]);
+		int_sector = (int)char_sector;
+		railway_register_train(this, trains[j], int_sector);
 	}
 	rt_mutex_create(&this->mutex, NULL);
 }
@@ -40,15 +46,20 @@ void sector_init(sector_t* this, int id) {
 	for ( i = 0; i < MAXTRAINS ; i++)
 	this-> registeredTrains [i] = NULL;
 	this-> nregisteredtrains = 0;
+	
 }
 
 int railway_cmd(char* arg) {
 	int i, j ,k;
 	for (i = 0; i < nrailways; i++) {
 		for (j = 0; j < NSECTORS; j++) {
-			printf("via %d : Sector %d \n", railways[i]->id, railways[i]->railwaySectors[j]->id);
+			printf("via %d : Sector %d :\n", railways[i]->id, railways[i]->railwaySectors[j]->id);
 			for (k = 0; k < railways[i]->railwaySectors[j]-> nregisteredtrains ; k++)
-				printf("train %d", train_get_ID(railways[i]->railwaySectors[j]->registeredTrains[k]));
+				if((railways[i]->railwaySectors[j]->nregisteredtrains) > 0 ) {
+					printf("\t train %d\n", train_get_ID(railways[i]->railwaySectors[j]->registeredTrains[k]));
+				} else {
+					printf("\t sin trenes");
+				}
 		}
 	}
 	return 0;
