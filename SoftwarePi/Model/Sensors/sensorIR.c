@@ -46,6 +46,18 @@
 sensorIR_t* sensors[MAXSENSORS];
 int nsensors = 0;
 
+void IRsensors_poll(void* arg) {
+	sensorIR_t** sensors = (sensorIR_t**) arg;
+	rt_task_set_periodic(NULL, TM_NOW, IR_PERIOD);
+	while (1) {
+		int i = 0;
+		rt_task_wait_period(NULL);
+		for (i = 0; i < nsensors; i++) {
+			sensorIR_trainPassing(sensors[i]);
+		}
+	}
+}
+
 int 
 sensors_cmd(char*arg){
 	int i;
@@ -64,17 +76,6 @@ void IRsensors_setup(void) {
 	interp_addcmd("sensors",sensors_cmd,"Lists IR sensors");
 }
 
-void IRsensors_poll(void* arg) {
-	sensorIR_t** sensors = (sensorIR_t**) arg;
-	rt_task_set_periodic(NULL, TM_NOW, IR_PERIOD);
-	while (1) {
-		int i = 0;
-		rt_task_wait_period(NULL);
-		for (i = 0; i < nsensors; i++) {
-			sensorIR_trainPassing(sensors[i]);
-		}
-	}
-}
 
 sensorIR_t*
 sensorIR_new(int id) {
