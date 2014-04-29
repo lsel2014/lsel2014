@@ -65,18 +65,12 @@ tracker_gen_direction(int id) {
 void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
-	//int i;
-	//telemetry_t* local; 
 	struct train_data_t* t;
 	rt_printf(" sector %d \n" , sector );
-	//for (i = 0; i < n_trains; i++) {
-	//	if (event->passingTrain == tracker_trains[i].IRsimbolicId)
-	//		tracker_trains[i].storedDirection = train->direction;
-	//
 	for (t = tracker_trains; t->train; ++t) {
 		if (train_get_ID(train) == t->IRsimbolicId){
 			t->storedDirection = train_get_direction(train);
-			rt_printf(" updated train %d direction \n" , train_get_ID(train));
+			//rt_printf(" updated train %d direction \n" , train_get_ID(train));
 		}
 	}
 	train_set_current_sector(train, sector);
@@ -87,8 +81,8 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	timeval_sub(&diff, &now, &last);
 	speed = LENGHTSECTOR / diff.tv_usec;
 	train_set_current_speed(train, speed);
-	rt_printf(" updated train %d, speed %d sector %c \n", 
-			train_get_ID(train), train_get_speed(train) , train_get_sector(train));
+	//rt_printf(" updated train %d, speed %d sector %c \n", 
+	//		train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }
 // Registers train in the railway taking into account the direction of the train
 /*void tracker_register_train(train_t* train, int sector) {
@@ -137,12 +131,12 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 				//rt_printf(" train FORWARD \n");
 				if(train_get_direction(train) == storedDirection 
 					&& sd-> sectorForward != train_get_sector(train)){
-					  rt_printf(" train same dir not same sector \n");
+					  //rt_printf(" train same dir not same sector \n");
 					  tracker_updating_train(train, sd-> sectorForward, tel);
 					  railway_erase_train(rail,train);
 					  railway_register_train(rail, train, sd-> sectorForward);
 				}else if(train_get_direction(train) != storedDirection){
-					  rt_printf(" train no same dir \n");
+					  //rt_printf(" train no same dir \n");
 					  tracker_updating_train(train, sd-> sectorForward, tel);
 					  railway_erase_train(rail,train);
 					  railway_register_train(rail, train, sd-> sectorForward);
@@ -153,12 +147,12 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 				//rt_printf(" train REVERSE \n");
 				if(train_get_direction(train) == storedDirection 
 					&& sd-> sectorReverse != train_get_sector(train)){
-					  rt_printf(" train same dir not same sector \n");	
+					  //rt_printf(" train same dir not same sector \n");	
 					  tracker_updating_train(train, sd-> sectorReverse, tel);
 					  railway_erase_train(rail,train);
 					  railway_register_train(rail, train, sd-> sectorReverse);
 				}else if(train_get_direction(train) != storedDirection){
-					  rt_printf(" train no same dir \n");
+					  //rt_printf(" train no same dir \n");
 					  tracker_updating_train(train, sd-> sectorReverse, tel);
 					  railway_erase_train(rail,train);
 					  railway_register_train(rail, train, sd-> sectorReverse);
