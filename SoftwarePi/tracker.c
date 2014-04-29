@@ -66,7 +66,6 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
 	int i;
-	
 	for (i = 0; i < n_trains; i++) {
 		if (event->passingTrain == tracker_trains[i].IRsimbolicId)
 			tracker_trains[i].storedDirection = train->direction;
@@ -109,7 +108,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 	telemetry_t* tel;
 	train_t* train;
 	train_direction_t storedDirection;
-	int i , j;
+	int j;
 	railway_t* rail;
 	rail = railways[0];
 	for (j = 0 ; j < n_ir_sensors; j++) {
@@ -159,43 +158,4 @@ void tracker_init(void) {
 		const char* name;
 		int IRsimbolicId;
 	} train_names[] = { { "Diesel", 4 }, { "Renfe", 3 }, { NULL, 0 } };
-	static struct railway_name_t {
-		const char* name;
-		int platform;
-	} railway_names[] = { { "via0", 0 }, { NULL, 0 } };
-	struct ir_name_t* s;
-	struct train_name_t* t;
-	struct railway_name_t* r;
-	observer_init(&tracker_observer, tracker_notify);
-
-	n_ir_sensors = 0;
-	n_trains = 0;
-	n_railway = 0;
-	// those "for" takes the elements in the model, cast them to 
-	// his type ( since all the elements in the model are observables)
-	// and store them in the appropriate struct.
-	for (s = ir_names; s->name; ++s) {
-		observable_t* obs = model_get_observable(s->name);
-		observable_register_observer(obs, &tracker_observer);
-		tracker_ir_sensors[n_ir_sensors].sensor = (sensorIR_t*) obs;
-		tracker_ir_sensors[n_ir_sensors].sectorForward = s->sectorForward;
-		tracker_ir_sensors[n_ir_sensors].sectorReverse = s->sectorReverse;
-		++n_ir_sensors;
-	}
-
-	for (t = train_names; t->name; ++t) {
-		observable_t* obs = model_get_observable(t->name);
-		observable_register_observer(obs, &tracker_observer);
-		tracker_trains[n_trains].train = (train_t*) obs;
-		tracker_trains[n_trains].IRsimbolicId = t->IRsimbolicId;
-		tracker_trains[n_trains].storedDirection = FORWARD;
-		++n_trains;
-	}
-	for (r = railway_names; r->name; ++r) {
-		observable_t* obs = model_get_observable(r->name);
-		observable_register_observer(obs, &tracker_observer);
-		tracker_railway[n_railway].railway = (railway_t*) obs;
-		tracker_railway[n_railway].platform = r->platform;
-		++n_railway;
-	}
-}
+	static struct 
