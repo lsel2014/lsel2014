@@ -48,7 +48,7 @@ int railway_cmd(char* arg) {
 		for (j = 0; j < NSECTORS; j++) {
 			printf("via %d : Sector %d \n", railways[i]->id, railways[i]->railwaySectors[j]->id);
 			for (k = 0; k < railways[i]->railwaySectors[j]-> nregisteredtrains ; k++)
-				printf("train %d", train_get_ID(railways[i]->railwaySectors[j]->registeredTrains[k]));
+				printf("train %d \n", train_get_ID(railways[i]->railwaySectors[j]->registeredTrains[k]));
 		}
 	}
 	return 0;
