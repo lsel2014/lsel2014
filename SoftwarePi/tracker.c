@@ -4,6 +4,7 @@
 #include "tracker.h"
 #include "train.h"
 #include "railway.h"
+#include "pruebaFB.h"
 #include <sys/time.h>
 #include <time.h>
 #include <rtdk.h>
@@ -82,6 +83,11 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	timeval_sub(&diff, &now, &last);
 	speed = LENGHTSECTOR / diff.tv_sec;
 	train_set_current_speed(train, speed);
+	
+	estimation = train_get_speed(train)*(float)sector_lengths[sector+1];
+	rt_printf ("Estimation: %f\n", estimation);
+	snprintf(estimation_str, 20, "TIME: %f", estimation);
+	draw_line(2, 0xffff, estimation_str, 20);
 	//rt_printf(" updated train %d, speed %d sector %c \n", 
 	//		train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }
