@@ -19,7 +19,7 @@ train_t* current_train;
 /*This will be integrated with the interpreter*/
 void trains_setup(void) {
 	//int i, j;
-	dcc_sender_t* dccobject = dcc_new(12, 50);
+	dcc_sender_t* dccobject = dcc_new(13, 63000);
 
 	train_new("Diesel", 0b0000100, '0', 20, dccobject);
 	train_new("Renfe", 0b0000011, '0', 25, dccobject);
@@ -313,7 +313,9 @@ void train_get_timestamp (train_t* this, struct timeval *tv)
 }
 float train_get_speed(train_t* this)
 {	
+	rt_mutex_acquire (&this->mutex, TM_INFINITE);
 	return this->telemetry-> speed;
+	rt_mutex_release (&this->mutex);
 }
 
 char train_get_security(train_t* this) {

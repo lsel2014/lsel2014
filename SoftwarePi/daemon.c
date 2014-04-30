@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
 
 	tracker_init ();
 	
-	setupRailChange();
+	//setupRailChange();
 	sun_setup();
 	setup_trafficLight();
 	setup_crossingGate();
@@ -123,5 +123,6 @@ int main(int argc, char* argv[]) {
 	//rt_task_delete(&task_dcc);
 	//rt_task_delete(&task_sun);
 	task_delete_all();
+	fbtft_destroy();
 	return 0;
 }

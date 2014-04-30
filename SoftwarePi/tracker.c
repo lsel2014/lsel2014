@@ -9,7 +9,8 @@
 #include <time.h>
 #include <rtdk.h>
 
-#define LENGHTSECTOR 100
+#define NUMSECTORS 4
+
 static observer_t tracker_observer;
 // Arrays where model elements are stored
 static struct ir_sensor_data_t {
@@ -33,6 +34,8 @@ static int n_ir_sensors;
 static int n_trains;
 static int n_railway;
 static event_t* event;
+
+static int sector_lengths[] = {92, 156, 89, 149};
 
 void
 timeval_sub(struct timeval *res, struct timeval *a, struct timeval *b) {
@@ -67,6 +70,8 @@ tracker_gen_direction(int id) {
 void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
+	float estimation;
+	char estimation_str[20];
 	struct train_data_t* t;
 	rt_printf(" sector %d \n" , sector );
 	for (t = tracker_trains; t->train; ++t) {
@@ -81,12 +86,13 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	gettimeofday(&now, NULL);
 	train_set_timestamp(train, &now);
 	timeval_sub(&diff, &now, &last);
-	speed = LENGHTSECTOR / diff.tv_sec;
+	speed =(float) sector_lengths[sector] /((float) diff.tv_sec+((float)diff.tv_usec/1.0E6));
 	train_set_current_speed(train, speed);
 	
-	estimation = train_get_speed(train)*(float)sector_lengths[sector+1];
+	estimation = train_get_speed(train)*(float)sector_lengths[(sector+1)%NUMSECTORS];
 	rt_printf ("Estimation: %f\n", estimation);
 	snprintf(estimation_str, 20, "TIME: %f", estimation);
+	draw (0x1818);
 	draw_line(2, 0xffff, estimation_str, 20);
 	//rt_printf(" updated train %d, speed %d sector %c \n", 
 	//		train_get_ID(train), train_get_speed(train) , train_get_sector(train));

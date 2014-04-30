@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <linux/fb.h>
 #include <sys/mman.h>
+#include <sys/ioctl.h>
 
 //Functions 
 void put_pixel(int x, int y, short c);
@@ -18,7 +19,7 @@ void draw_char1(char a, int textX, int textY, short textC);
 void draw_line( int nlinea, int color, char *c, int size);
 void draw_line_x2( int nlinea, int color, char *c, int size);
 void fbtft_init ();
-
+void fbtft_destroy();
 #endif
 
 

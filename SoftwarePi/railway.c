@@ -73,7 +73,7 @@ void railway_register_train(railway_t* this, train_t* train, int sector) {
 		rt_mutex_acquire(&this->mutex, TM_INFINITE);
 		this->railwaySectors[sector]->registeredTrains[rs] = train;
 		this->railwaySectors[sector]->nregisteredtrains++;
-		observable_notify_observers(&this->observable);
+		observable_notify_observers((observable_t *) this);
 		rt_mutex_release(&this->mutex);
 	}
 }

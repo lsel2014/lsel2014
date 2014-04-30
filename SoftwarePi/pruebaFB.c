@@ -1,4 +1,5 @@
 #include "pruebaFB.h"
+#include <sys/ioctl.h>
 
 // 'global' variables to store screen info
 
@@ -10,7 +11,7 @@ struct fb_fix_screeninfo finfo;
 	int fbfd = 0;
    	struct fb_var_screeninfo orig_vinfo;
    	long int screensize = 0;
-   	int i = 0;
+   	//int i = 0;
 
 //Characters.
 
@@ -386,6 +387,9 @@ char *char_to_bitmap(char a){
 		case ('E'):
 			return E;
 		break;
+		case ('0'):
+			return zero;
+		break;
 		case ('1'):
 			return one;
 		break;
@@ -459,8 +463,8 @@ void draw_line(int nlinea, int color, char c[], int size){
 
 
 	int xInit=16;
-	for (i=0; i< size; i++){
-
+	int i=0;
+	for (i=0; i< size&&c[i]!='\0'; i++){
 		draw_char1(c[i],xInit+(16*i), nlinea*8, color);
 		
 	}
@@ -470,9 +474,9 @@ void draw_line(int nlinea, int color, char c[], int size){
 
 void draw_line_x2( int nlinea, int color, char c[], int size ){
 
-
+	int i=0;
 	int xInit=16;
-	for (i=0; i< size; i++){
+	for (i=0; i< size&&c[i]!='\0'; i++){
 
 		draw_char_x2(c[i],xInit+(32*i), nlinea*16, color);
 		
@@ -521,6 +525,11 @@ void fbtft_init(){
 	    if ((int)fbp == -1) {
 	        printf("Failed to mmap.\n");
 	    }
+}
+
+void fbtft_destroy(){
+	munmap (fbp, screensize);
+	close (fbfd);
 }
 
 

@@ -19,6 +19,9 @@ void anticollision_setup(void) {
 	interp_addcmd("anti", anticollision_cmd, "Shows the anticollisions security protocol status");
 
 	observable_register_observer(&(railways[0]->observable), (observer_t*) anticollision);
+	
+	// REGISTRAR A LOS TRENES
+	//observable_register_observer(&(railways[0]->observable), (observer_t*) anticollision);
 }
 
 anticollision_t* anticollision_new(void) {
@@ -68,15 +71,18 @@ int anticollision_cmd(char* arg) {
  * Se deberia entrar aqui siempre que un tren cambie de sector o de sentido
  */
 void anticollision_notify (observer_t* this, observable_t* observable) {
-	railway_t* railway = (railway_t*) observable;
+	
+	//railway_t* railway = (railway_t*) observable;
 	anticollision_t* thisAC = (anticollision_t*) this;
 	int i;
 	int nalarm = 0;
+	railway_t* rail;
+	rail = railways[0];
 
 	for (i = 0; i < NSECTORS; i++) {
-		if ( (railway->railwaySectors[i]->nregisteredtrains) > 0 ) {
-			train_t* train = railway->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
-			int to_check;
+		if ( (rail->railwaySectors[i]->nregisteredtrains) > 0 ) {
+			train_t* train = rail->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
+			int to_check=0;
 
 			rt_printf("Comprobando tren %s en sector %d\n", train_get_name(train), i);
 			//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
@@ -90,7 +96,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 					to_check = NSECTORS-1;
 			}
 
-			if ( (railway->railwaySectors[to_check]->nregisteredtrains) > 0 ) {
+			if ( (rail->railwaySectors[to_check]->nregisteredtrains) > 0 ) {
 				if (thisAC->security_flag == 0) {
 					thisAC->security_flag = 1;
 				}
@@ -112,6 +118,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 				}
 			} else {
 				if (train_get_security(train) == 1) {
+					nalarm--;
 					train_set_security(train, 0);
 
 					//// TODO: Comprobar si se deberia bajar el flag global

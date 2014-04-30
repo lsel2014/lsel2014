@@ -17,7 +17,7 @@
 static trafficLight_t* light;
 
 void setup_trafficLight(void) {
-	light = trafficLight_new(0, 13);
+	/*light = trafficLight_new(0, 13);
 	trafficLight_set_sensibleSector(light, 1, FORWARD);
 	trafficLight_set_sensibleSector(light, 2, FORWARD);
 	trafficLight_set_sensibleSector(light, 2, REVERSE);
@@ -28,6 +28,7 @@ void setup_trafficLight(void) {
 				(observer_t*) light);
 	}
 	interp_addcmd("semaphore", trafficLight_cmd, "Set semaphore state\n");
+	*/
 }
 
 int trafficLight_cmd(char* arg) {
