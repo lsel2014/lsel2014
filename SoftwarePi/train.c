@@ -151,12 +151,12 @@ int train_cmd(char* arg) {
 		float time_out_time = 1.2 * initial_estimation + initial_time;
 		while (initial_estimation == train_get_time_estimation(current_train)
 				&& !time_out) {
-			gettimeoftoday(&t1, NULL);
+			gettimeofday(&t1, NULL);
 			current_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
 			if (current_time > time_out_time)
 				time_out = 1;
 		}
-		gettimeoftoday(&t1, NULL);
+		gettimeofday(&t1, NULL);
 		final_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
 		if (time_out
 				|| final_time < 0.8 * (initial_time + initial_estimation)) {
@@ -171,10 +171,10 @@ int train_cmd(char* arg) {
 		int sector = atoi(arg + strlen("wait_sector"));
 		char time_out = 0;
 		struct timeval t1;
-		gettimeoftoday(&t1, NULL);
+		gettimeofday(&t1, NULL);
 		int max_time = t1.tv_sec + 60;
 		while (train_get_sector(current_train) != sector && !time_out) {
-			gettimeoftoday(&t1, NULL);
+			gettimeofday(&t1, NULL);
 			if (t1.tv_sec >= max_time)
 				time_out = 1;
 		}
