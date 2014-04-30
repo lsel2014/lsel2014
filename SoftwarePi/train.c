@@ -314,8 +314,9 @@ void train_get_timestamp (train_t* this, struct timeval *tv)
 float train_get_speed(train_t* this)
 {	
 	rt_mutex_acquire (&this->mutex, TM_INFINITE);
-	return this->telemetry-> speed;
+	float speed=this->telemetry-> speed;
 	rt_mutex_release (&this->mutex);
+	return speed;
 }
 
 char train_get_security(train_t* this) {
@@ -330,5 +331,17 @@ void train_set_security(train_t* this, char newSecurity) {
 		train_set_power(this, this->target_power);
 	}
 
+	rt_mutex_release(&this->mutex);
+}
+
+float train_get_time_estimation(train_t* this){
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	float est = this->telemetry->time_est;
+	rt_mutex_release(&this->mutex);
+	return est;
+}
+float train_set_time_estimation(train_t* this,float estimation){
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	this->telemetry->time_est=estimation;
 	rt_mutex_release(&this->mutex);
 }
