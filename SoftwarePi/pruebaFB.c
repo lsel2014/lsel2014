@@ -1,6 +1,285 @@
 #include "pruebaFB.h"
 
+// 'global' variables to store screen info
 
+char *fbp = 0;
+struct fb_var_screeninfo vinfo;
+struct fb_fix_screeninfo finfo;
+
+// variables
+	int fbfd = 0;
+   	struct fb_var_screeninfo orig_vinfo;
+   	long int screensize = 0;
+   	int i = 0;
+
+//Characters.
+
+char A[] = {
+    0, 0, 0, 1, 1, 0, 0, 0,
+    0, 0, 1, 0, 0, 1, 0, 0,
+    0, 1, 0, 0, 0, 0, 1, 0,
+    0, 1, 0, 0, 0, 0, 1, 0,
+    0, 1, 1, 1, 1, 1, 1, 0,
+    0, 1, 0, 0, 0, 0, 1, 0,
+    0, 1, 0, 0, 0, 0, 1, 0,
+    0, 0, 0, 0, 0, 0, 0, 0
+};
+
+char B[] = {
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+};
+
+char C[]={ // C
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char D[]={ // D
+            0, 1, 1, 1, 1, 0, 0, 0,
+            0, 1, 0, 0, 0, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 1, 0, 0,
+            0, 1, 1, 1, 1, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char E[]={ // E
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 1, 1, 1, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char F[]={ // F
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 1, 1, 1, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char T[]={
+		0, 1, 1, 1, 1, 1, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0
+};
+
+char I[]={
+		0, 0, 1, 1, 1, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 1, 1, 1, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0
+};
+
+char M[]={
+		0, 1, 0, 0, 0, 1, 0, 0,
+		0, 1, 1, 0, 1, 1, 0, 0,
+		0, 1, 0, 1, 0, 1, 0, 0,
+		0, 1, 0, 0, 0, 1, 0, 0,
+		0, 1, 0, 0, 0, 1, 0, 0,
+		0, 1, 0, 0, 0, 1, 0, 0,
+		0, 1, 0, 0, 0, 1, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0
+};
+
+char Z[]={ // Z
+            0, 1, 1, 1, 1, 1, 1, 0,
+            0, 0, 0, 0, 0, 1, 0, 0,
+            0, 0, 0, 0, 1, 0, 0, 0,
+            0, 0, 0, 1, 0, 0, 0, 0,
+            0, 0, 1, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 1, 1, 1, 1, 1, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+
+char espacio[]={
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+
+char comillas[]={
+            0, 0, 1, 0, 0, 1, 0, 0,
+            0, 0, 1, 0, 0, 1, 0, 0,
+            0, 0, 1, 0, 0, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+};
+
+
+char point[]={
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 1, 1, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char doublepoint[]={
+            0, 0, 0, 1, 1, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 1, 1, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char zero[] = {
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 1, 1, 0,
+            0, 1, 0, 0, 1, 0, 1, 0,
+            0, 1, 0, 1, 0, 0, 1, 0,
+            0, 1, 0, 1, 0, 0, 1, 0,
+            0, 1, 1, 0, 0, 0, 1, 0,
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char one[]={ // 1
+            0, 0, 0, 0, 1, 0, 0, 0,
+            0, 0, 0, 1, 1, 0, 0, 0,
+            0, 0, 1, 0, 1, 0, 0, 0,
+            0, 0, 0, 0, 1, 0, 0, 0,
+            0, 0, 0, 0, 1, 0, 0, 0,
+            0, 0, 0, 0, 1, 0, 0, 0,
+            0, 0, 1, 1, 1, 1, 1, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char two[]={ // 2
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 1, 1, 1, 0, 0,
+            0, 1, 1, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 1, 1, 1, 1, 1, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char three[]={ // 8
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char four[]={  // 9
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 0, 1, 1, 1, 1, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char five[]={ // :
+            0, 0, 1, 1, 1, 1, 1, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char six[]={ // :
+            0, 0, 1, 1, 1, 1, 1, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 0, 0, 0, 0, 0, 0,
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 1, 0, 0, 0, 0, 1, 0,
+            0, 0, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char seven[]={ // :
+            0, 1, 1, 1, 1, 1, 0, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char eight[]={ // :
+		0, 0, 1, 1, 1, 1, 0, 0,
+		0, 1, 0, 0, 0, 0, 1, 0,
+		0, 1, 0, 0, 1, 0, 1, 0,
+		0, 1, 1, 1, 1, 1, 1, 0,
+		0, 1, 0, 1, 0, 0, 1, 0,
+		0, 1, 0, 0, 0, 0, 1, 0,
+		0, 0, 1, 1, 1, 1, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+char nine[]={ // :
+		0, 0, 1, 1, 1, 1, 0, 0,
+		0, 1, 0, 0, 0, 0, 1, 0,
+		0, 1, 0, 0, 0, 0, 1, 0,
+		0, 1, 1, 1, 1, 1, 1, 0,
+		0, 0, 0, 0, 0, 0, 1, 0,
+		0, 0, 0, 0, 0, 0, 1, 0,
+		0, 0, 1, 1, 1, 1, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0
+    };
 
 // helper function to 'plot' a pixel in given color
 void put_pixel(int x, int y, short c) 
@@ -88,7 +367,6 @@ char *character = char_to_bitmap(a);
 
 char *char_to_bitmap(char a){
 
-
 	switch(a){ 
 		case ('A'):
 			return A;
@@ -96,7 +374,59 @@ char *char_to_bitmap(char a){
 		case ('B'):
 			return B;
 		break;
+		case ('T'):
+			return T;
+		break;
+		case ('I'):
+			return I;
+		break;
+		case ('M'):
+			return M;
+		break;
+		case ('E'):
+			return E;
+		break;
+		case ('1'):
+			return one;
+		break;
+		case ('2'):
+			return two;
+		break;
+		case ('3'):
+			return three;
+		break;
+		case ('4'):
+			return four;
+		break;
+		case ('5'):
+			return five;
+		break;
+		case ('6'):
+			return six;
+		break;
+		case ('7'):
+			return seven;
+		break;
+		case ('8'):
+			return eight;
+		break;
+		case ('9'):
+			return nine;
+		break;
+		case (' '):
+			return espacio;
+		break;
+		case (':'):
+			return doublepoint;
+		break;
+		case ('"'):
+			return comillas;
+		break;
+		case ('.'):
+			return point;
+		break;
 	}
+	return NULL;
 		
 }
 
@@ -125,7 +455,7 @@ char *character = char_to_bitmap(a);
 }
 
 
-void draw_line( int nlinea, int color, char c[], int size){
+void draw_line(int nlinea, int color, char c[], int size){
 
 
 	int xInit=16;
@@ -151,93 +481,129 @@ void draw_line_x2( int nlinea, int color, char c[], int size ){
 
 }
 
+void fbtft_init(){
+	 // Open the file for reading and writing
+	    fbfd = open("/dev/fb1", O_RDWR);
+	    if (!fbfd) {
+	      printf("Error: cannot open framebuffer device.\n");
+	    }
+	    printf("The framebuffer device was opened successfully.\n");
 
+	    // Get variable screen information
+	    if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
+	      printf("Error reading variable information.\n");
+	    }
+	    printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
+	       vinfo.bits_per_pixel );
 
+	    // Store for reset (copy vinfo to vinfo_orig)
+	    memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
 
+	    // Change variable info
+	    vinfo.bits_per_pixel = 16;
+	    if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
+	      printf("Error setting variable information.\n");
+	    }
 
+	    // Get fixed screen information
+	    if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
+	      printf("Error reading fixed information.\n");
+	    }
+	    // map fb to user mem
+	    screensize = finfo.smem_len;
+	    fbp = (char*)mmap(0,
+	              screensize,
+	              PROT_READ | PROT_WRITE,
+	              MAP_SHARED,
+	              fbfd,
+	              0);
+
+	    if ((int)fbp == -1) {
+	        printf("Failed to mmap.\n");
+	    }
+}
 
 
 // application entry point
-int main(int argc, char* argv[])
-{
-    // Open the file for reading and writing
-    fbfd = open("/dev/fb1", O_RDWR);
-    if (!fbfd) {
-      printf("Error: cannot open framebuffer device.\n");
-      return(1);
-    }
-    printf("The framebuffer device was opened successfully.\n");
-
-    // Get variable screen information
-    if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
-      printf("Error reading variable information.\n");
-    }
-    printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres, 
-       vinfo.bits_per_pixel );
-
-    // Store for reset (copy vinfo to vinfo_orig)
-    memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
-
-    // Change variable info
-    vinfo.bits_per_pixel = 16;
-    if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
-      printf("Error setting variable information.\n");
-    }
-
-    // Get fixed screen information
-    if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
-      printf("Error reading fixed information.\n");
-    }
-    // map fb to user mem 
-    screensize = finfo.smem_len;
-    fbp = (char*)mmap(0, 
-              screensize, 
-              PROT_READ | PROT_WRITE, 
-              MAP_SHARED, 
-              fbfd, 
-              0);
-
-
-    if ((int)fbp == -1) {
-        printf("Failed to mmap.\n");
-    }
-    else {
-
-    	// and lower half with something else
-
-	// draw...
-	int i=0;
-
-        draw(0x1818);
-        //sleep(1);
-	int size = 32;
-	char c[] = "BABABA";
-
-	//draw_char1('A',200, 200, 0xffff);
-;
-	draw_line(2, 0xffff, c, 6);
-	//draw_line_x2(2, 0xffff, "BABA");
-	//draw_line_x2(3, 0xab12, "ABAAAA");
-	//draw_line_x2(4, 0xffff, "BAAAAAAA");
-	//draw_line_x2(5, 0xab12, "BBBBBBAAA");
-
-	//for(i=0; i<50; i++){
-		//draw_char1(A,200 + (size *i),200,3+(i*9));
-		//draw_char_x2(A,200 + (size *i),200,3+(i*9));
-	//}
-	//for(i=0; i<50; i++){
-      	//  draw_char_x2(A,200 + (size *i),216,0xffff);
-        //}
-	sleep(1);
-	
-
-    }
-
-    // cleanup
-    munmap(fbp, screensize);
-
-    close(fbfd);
-
-    return 0;
-  
-}
+//int main(int argc, char* argv[])
+//{
+//    // Open the file for reading and writing
+//    fbfd = open("/dev/fb1", O_RDWR);
+//    if (!fbfd) {
+//      printf("Error: cannot open framebuffer device.\n");
+//      return(1);
+//    }
+//    printf("The framebuffer device was opened successfully.\n");
+//
+//    // Get variable screen information
+//    if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
+//      printf("Error reading variable information.\n");
+//    }
+//    printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
+//       vinfo.bits_per_pixel );
+//
+//    // Store for reset (copy vinfo to vinfo_orig)
+//    memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
+//
+//    // Change variable info
+//    vinfo.bits_per_pixel = 16;
+//    if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
+//      printf("Error setting variable information.\n");
+//    }
+//
+//    // Get fixed screen information
+//    if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
+//      printf("Error reading fixed information.\n");
+//    }
+//    // map fb to user mem
+//    screensize = finfo.smem_len;
+//    fbp = (char*)mmap(0,
+//              screensize,
+//              PROT_READ | PROT_WRITE,
+//              MAP_SHARED,
+//              fbfd,
+//              0);
+//
+//
+//    if ((int)fbp == -1) {
+//        printf("Failed to mmap.\n");
+//    }
+//    else {
+//
+//    	// and lower half with something else
+//
+//	// draw...
+//	int i=0;
+//
+//        draw(0x1818);
+//        //sleep(1);
+//	int size = 32;
+//	char c[] = "BABABA";
+//
+//	//draw_char1('A',200, 200, 0xffff);
+//	draw_line(2, 0xffff, c, 6);
+//	//draw_line_x2(2, 0xffff, "BABA");
+//	//draw_line_x2(3, 0xab12, "ABAAAA");
+//	//draw_line_x2(4, 0xffff, "BAAAAAAA");
+//	//draw_line_x2(5, 0xab12, "BBBBBBAAA");
+//
+//	//for(i=0; i<50; i++){
+//		//draw_char1(A,200 + (size *i),200,3+(i*9));
+//		//draw_char_x2(A,200 + (size *i),200,3+(i*9));
+//	//}
+//	//for(i=0; i<50; i++){
+//      	//  draw_char_x2(A,200 + (size *i),216,0xffff);
+//        //}
+//	sleep(1);
+//
+//
+//    }
+//
+//    // cleanup
+//    munmap(fbp, screensize);
+//
+//    close(fbfd);
+//
+//    return 0;
+//
+//}
