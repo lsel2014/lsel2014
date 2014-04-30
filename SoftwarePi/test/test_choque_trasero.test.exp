@@ -1,0 +1,41 @@
+>>> anti enable 1
+Anticollision system enabled
+>>> train select 4
+>>> train estop
+Train 4 Diesel stopped
+>>> train select 3
+>>> train estop
+Train 3 Renfe stopped
+>>> sleep 10
+>>> train select 3
+>>> train speed 20
+Train 3 Renfe speed set to 20
+>>> sleep 7
+Seguridad activada en el tren ID: 4
+ sector 1 
+>>> train select 4
+>>> train speed 28
+Train 4 Diesel speed set to 28
+>>> sleep 2
+Seguridad desactivada en el tren ID: 4
+ sector 2 
+>>> train select 3
+>>> train speed 8
+Train 3 Renfe speed set to 8
+>>> sleep 30
+Seguridad activada en el tren ID: 3
+ sector 3 
+Seguridad desactivada en el tren ID: 3
+ sector 1 
+Seguridad activada en el tren ID: 4
+ sector 2 
+Seguridad desactivada en el tren ID: 4
+ sector 0 
+Seguridad activada en el tren ID: 4
+ sector 3 
+Seguridad desactivada en el tren ID: 4
+ sector 1 
+Seguridad activada en el tren ID: 4
+ sector 0 
+ sector 0 
+

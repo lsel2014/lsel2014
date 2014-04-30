@@ -66,6 +66,7 @@ void train_set_timestamp(train_t* this, struct timeval *tv);
 char* train_get_name(train_t* this);
 char train_get_ID(train_t* this);
 int train_get_power(train_t* this);
+int train_get_target_power(train_t* this);
 train_direction_t train_get_direction(train_t* this);
 char train_get_n_wagon(train_t* this);
 char train_get_length(train_t* this);

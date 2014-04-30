@@ -166,7 +166,7 @@ int train_cmd(char* arg) {
 		train_get_timestamp(current_train, &t1);
 		float initial_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
 		float current_time, final_time;
-		int time_out = 0;
+		char time_out = 0;
 		float initial_estimation = train_get_time_estimation(current_train);
 		/*
 		 * Hardcoded 20%
@@ -174,13 +174,13 @@ int train_cmd(char* arg) {
 		float time_out_time = 1.2 * initial_estimation + initial_time;
 		
 		printf("tout %f\n",time_out_time);
-		while (initial_estimation == train_get_time_estimation(current_train) && !time_out) {
+		while (initial_estimation == train_get_time_estimation(current_train)
+				&& !time_out) {
 			gettimeofday(&t1, NULL);
 			current_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
 			
-			if (current_time > time_out_time){
+			if (current_time > time_out_time)
 				time_out = 1;
-			}
 		}
 			printf("ctime %f\n",current_time);
 
@@ -299,6 +299,7 @@ void train_set_ID(train_t* this, char ID) {
 
 void train_set_power(train_t* this, int power) {
 	int i;
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->power = power;
 	if (power < 0) {
 		train_set_direction(this, REVERSE);
@@ -309,14 +310,17 @@ void train_set_power(train_t* this, int power) {
 	for (i = 0; i < 3; i++) {
 		dcc_add_speed_packet(this->dcc, this->ID, this->power);
 	}
+	rt_mutex_release(&this->mutex);
 }
 
 void train_set_target_power(train_t* this, int power) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->target_power = power;
 
 	if (this->security_override == 0) {
 		train_set_power(this, power);
 	}
+	rt_mutex_release(&this->mutex);
 }
 
 void train_set_direction(train_t* this, train_direction_t direction) {
@@ -363,7 +367,14 @@ char train_get_ID(train_t* this) {
 }
 
 int train_get_power(train_t* this) {
-	return this->power;
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	int power = this->power;
+	rt_mutex_release(&this->mutex);
+	return power;
+}
+
+int train_get_target_power(train_t* this) {
+	return this->target_power;
 }
 
 train_direction_t train_get_direction(train_t* this) {
