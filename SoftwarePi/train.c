@@ -216,13 +216,18 @@ void train_set_ID(train_t* this, char ID) {
 }
 
 void train_set_power(train_t* this, int power) {
+	int i;
 	this->power = power;
 	if (power < 0) {
 		train_set_direction(this, REVERSE);
 	} else {
 		train_set_direction(this, FORWARD);
 	}
-	dcc_add_speed_packet(this->dcc, this->ID, this->power);
+	
+	for (i=0;i<3;i++)
+	{
+	    dcc_add_speed_packet(this->dcc, this->ID, this->power);
+    }
 }
 
 void train_set_target_power(train_t* this, int power) {
