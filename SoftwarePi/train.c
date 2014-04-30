@@ -177,9 +177,11 @@ int train_cmd(char* arg) {
 				&& !time_out) {
 			gettimeofday(&t1, NULL);
 			current_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
-			
-			if (current_time > time_out_time)
+			//printf("%2.7f",current_time);
+			if (current_time > time_out_time){
 				time_out = 1;
+				printf("TIMEOUT");
+			}
 		}
 			printf("ctime %f\n",current_time);
 
@@ -199,14 +201,15 @@ int train_cmd(char* arg) {
 		char time_out = 0;
 		struct timeval t1;
 		gettimeofday(&t1, NULL);
-		int max_time = t1.tv_sec + 60;
+		int max_time = t1.tv_sec + 30;
 		while (train_get_sector(current_train) != sector && !time_out) {
 			gettimeofday(&t1, NULL);
+			//printf("%d\n",(int)t1.tv_sec);
 			if (t1.tv_sec >= max_time)
 				time_out = 1;
 		}
 		if (time_out) {
-			printf("Train didn't reach sector in one minute\n");
+			printf("Train didn't reach sector in 30 seconds\n");
 			return 1;
 		}
 		return 0;
