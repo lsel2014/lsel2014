@@ -63,7 +63,7 @@ tracker_gen_direction(int id) {
 }
 // Does all the operations to properly update the train
 //void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
-void tracker_updating_train(train_t* train, char sector) {
+void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
 	struct train_data_t* t;

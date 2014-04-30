@@ -78,7 +78,7 @@ void anticollision_notify (observer_t* this, observable_t* observable) {
 			train_t* train = railway->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
 			int to_check;
 
-			rt_printf("Comprobando tren %s en sector %d\n", train_get_name(trains), i);
+			rt_printf("Comprobando tren %s en sector %d\n", train_get_name(train), i);
 			//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
 			if (train_get_direction(train) == FORWARD){
 				to_check = i+1;

@@ -266,8 +266,8 @@ void train_set_current_speed(train_t* this, float speed) {
 
 void train_set_timestamp(train_t* this, struct timeval *tv) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-	this-> telemetry-> timestamp -> tv_sec = tv->tv_sec;
-	this-> telemetry-> timestamp -> tv_usec  = tv->tv_usec;
+	this-> telemetry-> timestamp.tv_sec = tv->tv_sec;
+	this-> telemetry-> timestamp.tv_usec  = tv->tv_usec;
 	//copy_timeval( &(this->telemetry-> timestamp) ,tv);
 	rt_mutex_release(&this->mutex);
 }
@@ -306,8 +306,8 @@ char train_get_sector (train_t* this)
 }
 void train_get_timestamp (train_t* this, struct timeval *tv)
 {
-	tv->tv_sec =  this-> telemetry-> timestamp -> tv_sec;
-	tv->tv_usec = this-> telemetry-> timestamp -> tv_usec;
+	tv->tv_sec =  this-> telemetry-> timestamp.tv_sec;
+	tv->tv_usec = this-> telemetry-> timestamp.tv_usec;
 	//copy_timeval(tv, &(this->telemetry-> timestamp));
 	//return this->telemetry-> timestamp;
 }
