@@ -166,7 +166,7 @@ int train_cmd(char* arg) {
 		train_get_timestamp(current_train, &t1);
 		float initial_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
 		float current_time, final_time;
-		char time_out = 0;
+		int time_out = 0;
 		float initial_estimation = train_get_time_estimation(current_train);
 		/*
 		 * Hardcoded 20%
@@ -174,13 +174,13 @@ int train_cmd(char* arg) {
 		float time_out_time = 1.2 * initial_estimation + initial_time;
 		
 		printf("tout %f\n",time_out_time);
-		while (initial_estimation == train_get_time_estimation(current_train)
-				&& !time_out) {
+		while (initial_estimation == train_get_time_estimation(current_train) && !time_out) {
 			gettimeofday(&t1, NULL);
 			current_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
 			
-			if (current_time > time_out_time)
+			if (current_time > time_out_time){
 				time_out = 1;
+			}
 		}
 			printf("ctime %f\n",current_time);
 
