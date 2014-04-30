@@ -13,6 +13,7 @@
 #include "anticollision.h"
 
 static anticollision_t *anticollision;
+char security_enable = 0;
 
 void anticollision_setup(void) {
 	int i;
@@ -38,7 +39,7 @@ anticollision_t* anticollision_new(void) {
 
 void anticollision_init(anticollision_t* this) {
 	observer_init((observer_t*) this, anticollision_notify);
-	this->security_flag = 0;
+	security_enable = 1;
 
 	rt_mutex_create(&this->mutex, NULL);
 }
@@ -52,8 +53,7 @@ int anticollision_cmd(char* arg) {
 	if (0 == strcmp(arg, "status")) {
 		int i;
 		for (i = 0; i < ntrains; i++) {
-			printf("Train %s -> Security override %d.\n",
-					train_get_name(trains[i]), train_get_security(trains[i]));
+			printf("Anticollision enable: %d\n", security_enable);
 		}
 		return 0;
 	}
@@ -65,7 +65,20 @@ int anticollision_cmd(char* arg) {
 			train_set_target_power(trains[i], 0);
 			train_set_security(trains[i], 0);
 		}
-		printf("Anticollision system cancelled.");
+		printf("Anticollision override cancelled.");
+		return 0;
+	}
+
+	if (0 == strncmp(arg, "enable ", strlen("enable "))) {
+		int en;
+		en = atoi(arg + strlen("enable "));
+		if (en == 0) {
+			security_enable = 0;
+			printf("Anticollision disabled.");
+		} else {
+			security_enable = 1;
+			printf("Anticollision enabled.");
+		}
 		return 0;
 	}
 
@@ -85,56 +98,58 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 	railway_t* rail;
 	rail = railways[0];
 
-	for (i = 0; i < NSECTORS; i++) {
-		if ((rail->railwaySectors[i]->nregisteredtrains) > 0) {
-			train_t* train = rail->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
-			int to_check = 0;
+	if (security_enable == 1) {
+		for (i = 0; i < NSECTORS; i++) {
+			if ((rail->railwaySectors[i]->nregisteredtrains) > 0) {
+				train_t* train = rail->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
+				int to_check = 0;
 
-			rt_printf("Comprobando tren %s en sector %d\n",
-					train_get_name(train), i);
-			//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
-			if (train_get_direction(train) == FORWARD) {
-				to_check = i + 1;
-				if (to_check == NSECTORS)
-					to_check = 0;
-			} else {
-				to_check = i - 1;
-				if (to_check == -1)
-					to_check = NSECTORS - 1;
-			}
+				//rt_printf("Comprobando tren %s en sector %d\n",
+				//		train_get_name(train), i);
 
-			if ((rail->railwaySectors[to_check]->nregisteredtrains) > 0) {
-				if (thisAC->security_flag == 0) {
-					thisAC->security_flag = 1;
+				//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
+				if (train_get_direction(train) == FORWARD) {
+					to_check = i + 1;
+					if (to_check == NSECTORS)
+						to_check = 0;
+				} else {
+					to_check = i - 1;
+					if (to_check == -1)
+						to_check = NSECTORS - 1;
 				}
-				train_set_security(train, 1);
-				nalarm++;
-				printf("Seguridad activada en el tren ID: %d\n", train->ID);
 
-				//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
-				train_set_power(train, 0);
-				if (nalarm == 2) {
-					int j;
-					for (j = 0; j < ntrains; j++) {
-						if (train_get_direction(trains[j]) == REVERSE) {
-							train_set_power(trains[j], 20);
-							train_set_target_power(trains[j], 20);
-						}
+				if ((rail->railwaySectors[to_check]->nregisteredtrains) > 0) {
+					if (thisAC->security_flag == 0) {
+						thisAC->security_flag = 1;
 					}
+					train_set_security(train, 1);
+					nalarm++;
+					printf("Seguridad activada en el tren ID: %d\n", train->ID);
 
-				}
-			} else {
-				if (train_get_security(train) == 1) {
-					nalarm--;
-					train_set_security(train, 0);
+					//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
+					train_set_power(train, 0);
+					if (nalarm == 2) {
+						int j;
+						for (j = 0; j < ntrains; j++) {
+							if (train_get_direction(trains[j]) == REVERSE) {
+								train_set_power(trains[j], 20);
+								train_set_target_power(trains[j], 20);
+							}
+						}
 
-					//// TODO: Comprobar si se deberia bajar el flag global
-					printf("Seguridad desactivada en el tren ID: %d\n",
-							train->ID);
+					}
+				} else {
+					if (train_get_security(train) == 1) {
+						nalarm--;
+						train_set_security(train, 0);
+
+						//// TODO: Comprobar si se deberia bajar el flag global
+						printf("Seguridad desactivada en el tren ID: %d\n",
+								train->ID);
+					}
 				}
+
 			}
-
 		}
 	}
-
 }

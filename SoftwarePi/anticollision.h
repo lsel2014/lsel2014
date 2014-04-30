@@ -16,7 +16,6 @@
 typedef struct anticollision_t {
 
 	observer_t* observer;
-	char security_flag;
 
 	//railway_t* railway;
 
