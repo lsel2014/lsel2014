@@ -40,6 +40,7 @@ anticollision_t* anticollision_new(void) {
 void anticollision_init(anticollision_t* this) {
 	observer_init((observer_t*) this, anticollision_notify);
 	security_enable = 1;
+	this->overrides_activated = 0;
 
 	rt_mutex_create(&this->mutex, NULL);
 }
@@ -126,7 +127,8 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 					printf("Seguridad activada en el tren ID: %d\n", train->ID);
 
 					//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
-					train_set_power(train, 0);
+					//train_set_power(train, 0);
+					dcc_add_data_packet(train->dcc, train->ID, ESTOP_CMD);
 
 					/*
 					if (nalarm == 2) {

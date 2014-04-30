@@ -325,14 +325,14 @@ void fbtft_init() {
 	if (!fbfd) {
 		printf("Error: cannot open framebuffer device.\n");
 	}
-	printf("The framebuffer device was opened successfully.\n");
+	//printf("The framebuffer device was opened successfully.\n");
 
 	// Get variable screen information
 	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
 		printf("Error reading variable information.\n");
 	}
-	printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
-			vinfo.bits_per_pixel);
+	/*printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
+			vinfo.bits_per_pixel);*/
 
 	// Store for reset (copy vinfo to vinfo_orig)
 	memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));

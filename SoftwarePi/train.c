@@ -82,7 +82,7 @@ int train_cmd(char* arg) {
 				"ID\tNAME\tPOWER\tTARGET\tDIRECTION\tSECTOR\tSECURITY\tACTIVE\n");
 		int i;
 		for (i = 0; i < ntrains; ++i) {
-			printf("%d\t%s\t%d\t%d\t%s\t%d\t%d\t%s\r\n", trains[i]->ID,
+			printf("%d\t%s\t%d\t%d\t%s\t\t%d\t%d\t%s\r\n", trains[i]->ID,
 					trains[i]->name, trains[i]->power, trains[i]->target_power,
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE",
 					trains[i]->telemetry->sector, trains[i]->security_override,

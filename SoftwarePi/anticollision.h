@@ -12,10 +12,12 @@
 #include "railway.h"
 #include "Model/observer.h"
 #include "Interpreter/interp.h"
+#include "dcc.h"
 
 typedef struct anticollision_t {
 
 	observer_t* observer;
+	char overrides_activated;
 
 	//railway_t* railway;
 
