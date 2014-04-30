@@ -133,6 +133,55 @@ int train_cmd(char* arg) {
 		printf("Only functions F0 to F12 available\n");
 		return 1;
 	}
+
+	/*
+	 * I'M AWARE THAT THIS SHOULDN'T BE DONE THIS WAY
+	 * I PROMISE I'LL FIX IT
+	 */
+	if (0 == strncmp(arg, "check_est", strlen("check_est"))) {
+		struct timeval t1,t2;
+		gettimeoftoday(&t1,NULL);
+		float initial_time = (float)t1->tv_sec+((float)t1->tv_usec/1.0E6);
+		float current_time,final_time;
+		char time_out=0;
+		float initial_estimation = train_get_time_estimation(current_train);
+		/*
+		 * Hardcoded 20%
+		 */
+		float time_out_time = 1.2*initial_estimation+initial_time;
+		while(initial_estimation == train_get_time_estimation(current_train)&& !time_out){
+			gettimeoftoday(&t1,NULL);
+			current_time = (float)t1->tv_sec+((float)t1->tv_usec/1.0E6);
+			if(current_time>time_out_time) time_out=1;
+		}
+		gettimeoftoday(&t1,NULL);
+		float final_time= (float)t1->tv_sec+((float)t1->tv_usec/1.0E6);
+		if(time_out || final_time < 0.8*(initial_time+initial_estimation)){
+			printf("Estimation was off by more than 20%\n");
+			return 1;
+		}
+		printf("Estimation within 20%, OK\n");
+		return 0;
+		}
+
+	if (0 == strncmp(arg, "wait_sector ", strlen("wait_sector "))) {
+				int function, state;
+				int sector = atoi(arg + strlen("wait_sector"));
+				char time_out=0;
+				struct timeval t1;
+				gettimeoftoday(&t1,NULL);
+				int max_time = t1.tv_sec+60;
+				while(train_get_sector(current_train)!=sector && !time_out){
+					gettimeoftoday(&t1,NULL);
+					if(t1.tv_sec>=max_time) timeout=1;
+				}
+				if(timeout){
+					printf("Train didn't reach sector in one minute\n");
+					return 1;
+				}
+				return 0;
+			}
+
 	if (0 == strncmp(arg, "help", strlen("help"))) {
 		printf(
 				"Available commands:\nselect <n>\t\tSelects train with ID <n>\nspeed <n>\t\tSets current train speed to <n>\nestop\t\tEmergency stop\nfunction <n> <s>\t\t<s>=1 enables DCC function <n>\n\t\t\t<s>=0 disables it\n");
@@ -340,7 +389,7 @@ float train_get_time_estimation(train_t* this){
 	rt_mutex_release(&this->mutex);
 	return est;
 }
-float train_set_time_estimation(train_t* this,float estimation){
+void train_set_time_estimation(train_t* this,float estimation){
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->time_est=estimation;
 	rt_mutex_release(&this->mutex);

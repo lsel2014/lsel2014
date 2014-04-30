@@ -94,7 +94,8 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	if (train_get_ID (train) == 3){
 		rt_printf ("Estimation RENFE: %2.2f\n", train_get_time_estimation(train));
 		snprintf(estimation1_str, 20, "TIME 1: %2.2f", train_get_time_estimation(train));
-	else{
+	}
+		else{
 		rt_printf ("Estimation DIESEL: %2.2f\n", train_get_time_estimation(train));
 		snprintf (estimation2_str, 20, "TIME 2: %2.2f", train_get_time_estimation(train));
 	}
