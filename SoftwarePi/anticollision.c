@@ -24,10 +24,10 @@ void anticollision_setup(void) {
 	observable_register_observer(&(railways[0]->observable),
 			(observer_t*) anticollision);
     
-    for (i=0;i<ntrains;i++)
+    /*for (i=0;i<ntrains;i++)
     {
         observable_register_observer(&(trains[i]->observable), (observer_t*) anticollision);
-    }
+    }*/
 }
 
 anticollision_t* anticollision_new(void) {

@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
+#include <unistd.h>
 
 train_t* trains[MAXTRAINS];
 int ntrains = 0;
@@ -18,7 +19,7 @@ train_t* current_train;
 
 
 void train_wait_sector(train_t* this, char sector) {
-	if(this->telemetry->sector != sector)
+	while(train_get_sector(this) != sector)
 	{
 	    sleep (1);
 	}
@@ -112,6 +113,19 @@ int train_cmd(char* arg) {
 			train_set_target_power(current_train, target_speed);
 			printf("Train %d %s speed set to %d\n", current_train->ID,
 					current_train->name, target_speed);
+		}
+		return 0;
+	}
+	
+	if (0 == strncmp(arg, "wait ", strlen("wait "))) {
+		int target_sector;
+		target_sector = atoi(arg + strlen("wait "));
+		if (((target_sector) > 3) || (target_sector)<0) {
+			printf("Sector must be between 0 and 3\n");
+			return 1;
+		} else {
+			train_wait_sector(current_train, target_sector);
+			printf("Sector %d reached\n", target_sector);
 		}
 		return 0;
 	}
