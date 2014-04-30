@@ -51,9 +51,10 @@ void anticollision_destroy(anticollision_t* this) {
 
 int anticollision_cmd(char* arg) {
 	if (0 == strcmp(arg, "status")) {
-		int i;
-		for (i = 0; i < ntrains; i++) {
-			printf("Anticollision enable: %d\n", security_enable);
+		if (security_enable == 0) {
+			printf("Anticollision system disabled.\n");
+		} else {
+			printf("Anticollision system enabled.\n");
 		}
 		return 0;
 	}
@@ -65,7 +66,7 @@ int anticollision_cmd(char* arg) {
 			train_set_target_power(trains[i], 0);
 			train_set_security(trains[i], 0);
 		}
-		printf("Anticollision override cancelled.");
+		printf("Anticollision override cancelled in all trains.\n");
 		return 0;
 	}
 
@@ -74,10 +75,10 @@ int anticollision_cmd(char* arg) {
 		en = atoi(arg + strlen("enable "));
 		if (en == 0) {
 			security_enable = 0;
-			printf("Anticollision disabled.");
+			printf("Anticollision system disabled\n.");
 		} else {
 			security_enable = 1;
-			printf("Anticollision enabled.");
+			printf("Anticollision system enabled\n.");
 		}
 		return 0;
 	}
@@ -91,12 +92,12 @@ int anticollision_cmd(char* arg) {
  */
 void anticollision_notify(observer_t* this, observable_t* observable) {
 
-	//railway_t* railway = (railway_t*) observable;
+	railway_t* rail = (railway_t*) observable;
+	//railway_t* rail;
+	//rail = railways[0];
 	anticollision_t* thisAC = (anticollision_t*) this;
 	int i;
 	int nalarm = 0;
-	railway_t* rail;
-	rail = railways[0];
 
 	if (security_enable == 1) {
 		for (i = 0; i < NSECTORS; i++) {
@@ -126,6 +127,8 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 
 					//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
 					train_set_power(train, 0);
+
+					/*
 					if (nalarm == 2) {
 						int j;
 						for (j = 0; j < ntrains; j++) {
@@ -135,7 +138,7 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 							}
 						}
 
-					}
+					}*/
 				} else {
 					if (train_get_security(train) == 1) {
 						nalarm--;
