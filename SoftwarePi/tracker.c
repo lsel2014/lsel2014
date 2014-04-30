@@ -86,10 +86,10 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	gettimeofday(&now, NULL);
 	train_set_timestamp(train, &now);
 	timeval_sub(&diff, &now, &last);
-	speed =(float) sector_lengths[sector] /((float) diff.tv_sec+((float)diff.tv_usec/1.0E6));
+	int prevsector = (sector==0)?NUMSECTORS-1:sector-1;
+	speed =(float) sector_lengths[prevsector] /((float) diff.tv_sec+((float)diff.tv_usec/1.0E6));
 	train_set_current_speed(train, speed);
-	
-	estimation = train_get_speed(train)*(float)sector_lengths[(sector+1)%NUMSECTORS];
+	estimation = (float)sector_lengths[sector]/train_get_speed(train);
 	rt_printf ("Estimation: %f\n", estimation);
 	snprintf(estimation_str, 20, "TIME: %f", estimation);
 	draw (0x1818);
