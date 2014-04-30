@@ -160,10 +160,10 @@ int train_cmd(char* arg) {
 		final_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
 		if (time_out
 				|| final_time < 0.8 * (initial_time + initial_estimation)) {
-			printf("Estimation was off by more than 20\%\n");
+			printf("Estimation was off by more than 20%%\n");
 			return 1;
 		}
-		printf("Estimation within 20\%, OK\n");
+		printf("Estimation within 20%%, OK\n");
 		return 0;
 	}
 
