@@ -70,8 +70,8 @@ tracker_gen_direction(int id) {
 void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
-	float estimation;
-	char estimation_str[20];
+	char estimation1_str[20];
+	char estimation2_str[20];
 	struct train_data_t* t;
 	rt_printf(" sector %d \n" , sector );
 	for (t = tracker_trains; t->train; ++t) {
@@ -86,14 +86,21 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	gettimeofday(&now, NULL);
 	train_set_timestamp(train, &now);
 	timeval_sub(&diff, &now, &last);
+	// Prevents negative sectors
 	int prevsector = (sector==0)?NUMSECTORS-1:sector-1;
 	speed =(float) sector_lengths[prevsector] /((float) diff.tv_sec+((float)diff.tv_usec/1.0E6));
 	train_set_current_speed(train, speed);
-	estimation = (float)sector_lengths[sector]/train_get_speed(train);
-	rt_printf ("Estimation: %f\n", estimation);
-	snprintf(estimation_str, 20, "TIME: %f", estimation);
+	train_set_time_estimation (train, (float)sector_lengths[sector]/train_get_speed(train));
+	if (train_get_ID (train) == 3){
+		rt_printf ("Estimation RENFE: %2.2f\n", train_get_time_estimation(train));
+		snprintf(estimation1_str, 20, "TIME 1: %2.2f", train_get_time_estimation(train));
+	else{
+		rt_printf ("Estimation DIESEL: %2.2f\n", train_get_time_estimation(train));
+		snprintf (estimation2_str, 20, "TIME 2: %2.2f", train_get_time_estimation(train));
+	}
 	draw (0x1818);
-	draw_line(2, 0xffff, estimation_str, 20);
+	draw_line(2, 0xffff, estimation1_str, 20);
+	draw_line (6, 0xffff, estimation2_str, 20);
 	//rt_printf(" updated train %d, speed %d sector %c \n", 
 	//		train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }
