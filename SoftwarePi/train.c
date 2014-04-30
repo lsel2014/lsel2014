@@ -16,6 +16,15 @@ train_t* trains[MAXTRAINS];
 int ntrains = 0;
 train_t* current_train;
 
+
+void train_wait_sector(train_t* this, char sector) {
+	if(this->telemetry->sector != sector)
+	{
+	    sleep (1);
+	}
+}
+
+
 /*This will be integrated with the interpreter*/
 void trains_setup(void) {
 	//int i, j;
@@ -227,6 +236,8 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->dcc = dcc;
 	this->telemetry = telemetry;
 	rt_mutex_create(&this->mutex, NULL);
+	
+	train_set_power (this, 0);
 }
 /*
  void train_notify(observer_t* this, observable_t* observed) {

@@ -78,4 +78,6 @@ void train_set_security(train_t* this, char newSecurity);
 float train_get_time_estimation(train_t* this);
 void train_set_time_estimation(train_t* this, float estimation);
 
+void train_wait_sector(train_t* this, char sector);
+
 #endif
