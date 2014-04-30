@@ -141,7 +141,7 @@ int train_cmd(char* arg) {
 	if (0 == strncmp(arg, "check_est", strlen("check_est"))) {
 		struct timeval t1;
 		train_get_timestamp(current_train,&t1);
-		float initial_time = (float)t1->tv_sec+((float)t1->tv_usec/1.0E6);
+		float initial_time = (float)t1.tv_sec+((float)t1.tv_usec/1.0E6);
 		float current_time,final_time;
 		char time_out=0;
 		float initial_estimation = train_get_time_estimation(current_train);
@@ -151,11 +151,11 @@ int train_cmd(char* arg) {
 		float time_out_time = 1.2*initial_estimation+initial_time;
 		while(initial_estimation == train_get_time_estimation(current_train)&& !time_out){
 			gettimeoftoday(&t1,NULL);
-			current_time = (float)t1->tv_sec+((float)t1->tv_usec/1.0E6);
+			current_time = (float)t1.tv_sec+((float)t1.tv_usec/1.0E6);
 			if(current_time>time_out_time) time_out=1;
 		}
 		gettimeoftoday(&t1,NULL);
-		float final_time= (float)t1->tv_sec+((float)t1->tv_usec/1.0E6);
+		final_time= (float)t1.tv_sec+((float)t1.tv_usec/1.0E6);
 		if(time_out || final_time < 0.8*(initial_time+initial_estimation)){
 			printf("Estimation was off by more than 20%\n");
 			return 1;
