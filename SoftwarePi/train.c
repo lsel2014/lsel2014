@@ -82,7 +82,7 @@ int train_cmd(char* arg) {
 				"ID\tNAME\tPOWER\tTARGET\tDIRECTION\tSECTOR\tSECURITY\tACTIVE\n");
 		int i;
 		for (i = 0; i < ntrains; ++i) {
-			printf("%d\t%s\t%d\t%d\t%s\t\t%d\t%d\t%s\r\n", trains[i]->ID,
+			printf("%d\t%s\t%d\t%d\t%s\t\t%d\t%d\t\t%s\r\n", trains[i]->ID,
 					trains[i]->name, trains[i]->power, trains[i]->target_power,
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE",
 					trains[i]->telemetry->sector, trains[i]->security_override,
@@ -138,8 +138,7 @@ int train_cmd(char* arg) {
 	}
 
 	if (0 == strncmp(arg, "estop", strlen("estop"))) {
-		dcc_add_data_packet(current_train->dcc, current_train->ID, ESTOP_CMD);
-		train_set_target_power(current_train, 0);
+		train_emergency_stop(current_train);
 		printf("Train %d %s stopped\n", current_train->ID, current_train->name);
 		return 0;
 	}
@@ -296,6 +295,18 @@ void train_set_name(train_t* this, char* name) {
 void train_set_ID(train_t* this, char ID) {
 	this->ID = ID;
 }
+
+void train_emergency_stop(train_t* this){
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+		this->power = 0;
+	rt_mutex_release(&this->mutex);
+	int i;
+	for (i = 0; i < 3; i++) {
+		dcc_add_data_packet(this->dcc, this->ID, ESTOP_CMD);
+	}
+	
+}
+
 
 void train_set_power(train_t* this, int power) {
 	int i;

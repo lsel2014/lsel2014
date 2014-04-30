@@ -121,16 +121,16 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 
 				if ((rail->railwaySectors[to_check]->nregisteredtrains) > 0) {
 
-					//if (train_get_security(train) == 0) {
+					if (train_get_security(train) == 0) {
 						thisAC->overrides_activated++;
 						train_set_security(train, 1);
 					
 						printf("Seguridad activada en el tren ID: %d\n", train->ID);
 
 						//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
-						dcc_add_data_packet(train->dcc, train->ID, ESTOP_CMD);
+						train_emergency_stop(train);
 					//	train_set_power(train, 0);
-					//}
+					}
 					
 				} else {
 					if (train_get_security(train) == 1) {
@@ -145,7 +145,7 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 			}
 		}
 	
-	/*if (thisAC->overrides_activated == 2) {
+	if (thisAC->overrides_activated == 2) {
 		int new_power;
 		new_power = -train_get_target_power(trains[0]);
 		train_set_target_power(trains[0], new_power);
@@ -153,9 +153,8 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 		thisAC->overrides_activated--;
 		train_set_security(trains[0], 0);
 
-		printf("Seguridad desactivada en el tren ID: %d\n",
-					trains[0]->ID);
-	}*/
+		printf("Protocolo de mismo sentido");
+	}
 	
 	
 	}

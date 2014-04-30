@@ -1,6 +1,6 @@
 #ifndef DCC_H
 #define DCC_H
-#define PACKET_BUFFER_SIZE 16
+#define PACKET_BUFFER_SIZE 32
 #define DCC_PERIOD 58000
 #define DCC_DEADLINE 63000 //DCC tolerates up to 63us half period
 #include <native/mutex.h>
