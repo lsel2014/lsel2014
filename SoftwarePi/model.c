@@ -25,13 +25,14 @@ int model_add_observable(const char* name, observable_t* obs) {
 void model_init(void) {
 	static struct ir_name_t {
 		const char* name;
-	} ir_names[] = { {"IRsensor0"}, {"IRsensor1"}, {"IRsensor2"}, {"IRsensor3"}, {NULL} };
+	} ir_names[] = { { "IRsensor0" }, { "IRsensor1" }, { "IRsensor2" }, {
+			"IRsensor3" }, { NULL } };
 	static struct train_name_t {
 		const char* name;
-	} train_names[] = { {"Diesel"}, {"Renfe"}, {NULL} };
+	} train_names[] = { { "Diesel" }, { "Renfe" }, { NULL } };
 	static struct railway_name_t {
 		const char* name;
-	} railway_names[] = { {"via0"}, {NULL} };
+	} railway_names[] = { { "via0" }, { NULL } };
 	n_observable = 0;
 	int i = 0;
 	struct ir_name_t* s;

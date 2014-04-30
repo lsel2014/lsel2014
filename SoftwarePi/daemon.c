@@ -36,14 +36,14 @@
 #include "pruebaFB.h"
 
 // Dummy function to catch signals
-void catch_signal () {}
+void catch_signal() {
+}
 
 void initializeModel(void) {
 	// TODO
 	int i;
-	
-	for (i=0;i<4;i++)
-	{
+
+	for (i = 0; i < 4; i++) {
 		//IRsensors[i] = sensorIR_new(i);
 	}
 }
@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
 
 	// Initialize wiringPi lib, configure IO
 	initializeWiringPi();
-	
+
 	// Initialize the model
 	initializeModel();
 
@@ -105,8 +105,8 @@ int main(int argc, char* argv[]) {
 	fbtft_init();
 	model_init();
 
-	tracker_init ();
-	
+	tracker_init();
+
 	//setupRailChange();
 	sun_setup();
 	setup_trafficLight();

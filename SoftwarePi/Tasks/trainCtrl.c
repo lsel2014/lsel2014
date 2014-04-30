@@ -21,7 +21,7 @@ void trainCtrl_periodic() {
 	rt_task_set_periodic(NULL, TM_NOW, TASK_TRAINCTRL_PERIOD);
 
 	while (1) {
-		rt_task_wait_period(NULL );
+		rt_task_wait_period(NULL);
 		if (bufferBit == 0xFF) {
 			if (buffer == 0) {
 				if (tramaPendiente == 1) {

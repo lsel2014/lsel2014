@@ -28,14 +28,10 @@ typedef struct anticollision_t {
 void anticollision_setup(void);
 anticollision_t* anticollision_new(void);
 void anticollision_init(anticollision_t* this);
-void anticollision_destroy (anticollision_t* this);
+void anticollision_destroy(anticollision_t* this);
 int anticollision_cmd(char* arg);
 
 //Observer function
-void anticollision_notify (observer_t* this, observable_t* observable);
-
-
-
-
+void anticollision_notify(observer_t* this, observable_t* observable);
 
 #endif

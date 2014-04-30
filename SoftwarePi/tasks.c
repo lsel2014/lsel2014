@@ -83,7 +83,6 @@ void task_start_all() {
  * @return -1,0 or 1 according to qsort specifications
  */
 
-
 int task_cmp(const void* t1, const void* t2) {
 	taskinfo_t* task1 = (taskinfo_t*) t1;
 	taskinfo_t* task2 = (taskinfo_t*) t2;
@@ -108,5 +107,4 @@ void task_delete_all() {
 	}
 }
 ;
-
 

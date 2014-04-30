@@ -18,7 +18,6 @@
  * real-time task that toggles the sending GPIO.
  */
 
-
 /*
  * Speed codes defined by DCC standard (28 step speed format). Mapped for convenience.
  */
@@ -28,7 +27,6 @@ const char train_speed_codes[29] = { 0b00000, 0b00010, 0b10010, 0b00011,
 		0b10111, 0b01000, 0b11000, 0b01001, 0b11001, 0b01010, 0b11010, 0b01011,
 		0b11011, 0b01100, 0b11100, 0b01101, 0b11101, 0b01110, 0b11110, 0b01111,
 		0b11111 };
-
 
 dcc_sender_t* dcc_new(int gpio, int deadline) {
 	dcc_sender_t* this = (dcc_sender_t*) malloc(sizeof(dcc_sender_t));
@@ -47,7 +45,6 @@ void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline) {
 	task_add("DCC sender", DCC_DEADLINE, dcc_send, this);
 
 }
-
 
 /**
  * dcc_add_packet
@@ -88,15 +85,16 @@ void dcc_add_packet(dcc_sender_t* this, dcc_packet_t packet) {
  * @param address 7 bit address of the target receiver
  * @param data 8 bit generic data
  */
-void dcc_add_data_packet(dcc_sender_t* this, unsigned char address, unsigned char data){
-		dcc_packet_t dcc_packet;
-		char dcc_packet_ecc;
-		dcc_packet = 0b11110000000000000000000000000001;
-		dcc_packet |= ((unsigned int) address) << 19;
-		dcc_packet |= ((unsigned int) data) << 10;
-		dcc_packet_ecc = address ^ data;
-		dcc_packet |= ((unsigned int) dcc_packet_ecc) << 1;
-		dcc_add_packet(this, dcc_packet);
+void dcc_add_data_packet(dcc_sender_t* this, unsigned char address,
+		unsigned char data) {
+	dcc_packet_t dcc_packet;
+	char dcc_packet_ecc;
+	dcc_packet = 0b11110000000000000000000000000001;
+	dcc_packet |= ((unsigned int) address) << 19;
+	dcc_packet |= ((unsigned int) data) << 10;
+	dcc_packet_ecc = address ^ data;
+	dcc_packet |= ((unsigned int) dcc_packet_ecc) << 1;
+	dcc_add_packet(this, dcc_packet);
 }
 
 /**
@@ -146,7 +144,6 @@ void dcc_add_function_packet(dcc_sender_t* this, unsigned char address,
 }
 ;
 
-
 /**
  * dcc_add_speed_packet
  *
@@ -176,8 +173,6 @@ void dcc_add_speed_packet(dcc_sender_t* this, unsigned char address, int speed) 
 	dcc_packet |= ((unsigned int) dcc_packet_ecc) << 1;
 	dcc_add_packet(this, dcc_packet);
 }
-
-
 
 /**
  * dcc_send

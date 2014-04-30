@@ -20,9 +20,9 @@
 #define MAXTRAINS 8
 
 typedef struct {
-        char flag;
-        int passingTrain;
-}event_t;
+	char flag;
+	int passingTrain;
+} event_t;
 
 typedef struct {
 
@@ -30,7 +30,7 @@ typedef struct {
 	int id;
 	int GPIOlines[MAXTRAINS];
 //	int last_reading;
-        event_t* event;
+	event_t* event;
 	RT_MUTEX mutex;
 
 } sensorIR_t;
@@ -38,13 +38,13 @@ typedef struct {
 extern sensorIR_t* sensors[MAXSENSORS];
 extern int nsensors;
 
-sensorIR_t* sensorIR_new (int id);
-void sensorIR_init (sensorIR_t* this, int id, event_t* event);
-void sensorIR_destroy (sensorIR_t* this);
+sensorIR_t* sensorIR_new(int id);
+void sensorIR_init(sensorIR_t* this, int id, event_t* event);
+void sensorIR_destroy(sensorIR_t* this);
 
 int sensorIR_readLine(sensorIR_t* this, int trainLine);
 void sensorIR_trainPassing(sensorIR_t* this);
 
-event_t* sensorIR_get_event (sensorIR_t* this);
+event_t* sensorIR_get_event(sensorIR_t* this);
 
 #endif

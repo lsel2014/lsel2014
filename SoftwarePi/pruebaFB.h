@@ -16,22 +16,9 @@ void draw(short c);
 char *char_to_bitmap(char a);
 void draw_char1(char a, int textX, int textY, short textC);
 
-void draw_line( int nlinea, int color, char *c, int size);
-void draw_line_x2( int nlinea, int color, char *c, int size);
-void fbtft_init ();
+void draw_line(int nlinea, int color, char *c, int size);
+void draw_line_x2(int nlinea, int color, char *c, int size);
+void fbtft_init();
 void fbtft_destroy();
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
 

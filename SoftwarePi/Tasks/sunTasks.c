@@ -14,7 +14,7 @@ void daemon_update_sun(void *arg) {
 	rt_task_set_periodic(NULL, TM_NOW, TASK_SUN_PERIOD);
 
 	while (1) {
-		rt_task_wait_period(NULL );
+		rt_task_wait_period(NULL);
 		printf("Sun!\n");
 	}
 }

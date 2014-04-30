@@ -35,10 +35,9 @@ static int n_trains;
 static int n_railway;
 static event_t* event;
 
-static int sector_lengths[] = {92, 156, 89, 149};
+static int sector_lengths[] = { 92, 156, 89, 149 };
 
-void
-timeval_sub(struct timeval *res, struct timeval *a, struct timeval *b) {
+void timeval_sub(struct timeval *res, struct timeval *a, struct timeval *b) {
 	res->tv_sec = a->tv_sec - b->tv_sec;
 	res->tv_usec = a->tv_usec - b->tv_usec;
 	if (res->tv_usec < 0) {
@@ -56,8 +55,7 @@ tracker_gen_train(int id) {
 	}
 	return NULL;
 }
-train_direction_t
-tracker_gen_direction(int id) {
+train_direction_t tracker_gen_direction(int id) {
 	struct train_data_t* t;
 	for (t = tracker_trains; t->train; ++t) {
 		if (id == t->IRsimbolicId)
@@ -73,9 +71,9 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	char estimation1_str[20];
 	char estimation2_str[20];
 	struct train_data_t* t;
-	rt_printf(" sector %d \n" , sector );
+	rt_printf(" sector %d \n", sector);
 	for (t = tracker_trains; t->train; ++t) {
-		if (train_get_ID(train) == t->IRsimbolicId){
+		if (train_get_ID(train) == t->IRsimbolicId) {
 			t->storedDirection = train_get_direction(train);
 			//rt_printf(" updated train %d direction \n" , train_get_ID(train));
 		}
@@ -87,45 +85,50 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	train_set_timestamp(train, &now);
 	timeval_sub(&diff, &now, &last);
 	// Prevents negative sectors
-	int prevsector = (sector==0)?NUMSECTORS-1:sector-1;
-	speed =(float) sector_lengths[prevsector] /((float) diff.tv_sec+((float)diff.tv_usec/1.0E6));
+	int prevsector = (sector == 0) ? NUMSECTORS - 1 : sector - 1;
+	speed = (float) sector_lengths[prevsector]
+			/ ((float) diff.tv_sec + ((float) diff.tv_usec / 1.0E6));
 	train_set_current_speed(train, speed);
-	train_set_time_estimation (train, (float)sector_lengths[sector]/train_get_speed(train));
-	if (train_get_ID (train) == 3){
-		rt_printf ("Estimation RENFE: %2.2f\n", train_get_time_estimation(train));
-		snprintf(estimation1_str, 20, "TIME 1: %2.2f", train_get_time_estimation(train));
+	train_set_time_estimation(train,
+			(float) sector_lengths[sector] / train_get_speed(train));
+	if (train_get_ID(train) == 3) {
+		rt_printf("Estimation RENFE: %2.2f\n",
+				train_get_time_estimation(train));
+		snprintf(estimation1_str, 20, "TIME 1: %2.2f",
+				train_get_time_estimation(train));
+	} else {
+		rt_printf("Estimation DIESEL: %2.2f\n",
+				train_get_time_estimation(train));
+		snprintf(estimation2_str, 20, "TIME 2: %2.2f",
+				train_get_time_estimation(train));
 	}
-		else{
-		rt_printf ("Estimation DIESEL: %2.2f\n", train_get_time_estimation(train));
-		snprintf (estimation2_str, 20, "TIME 2: %2.2f", train_get_time_estimation(train));
-	}
-	draw (0x1818);
+	draw(0x1818);
 	draw_line(2, 0xffff, estimation1_str, 20);
-	draw_line (6, 0xffff, estimation2_str, 20);
+	draw_line(6, 0xffff, estimation2_str, 20);
 	//rt_printf(" updated train %d, speed %d sector %c \n", 
 	//		train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }
 // Registers train in the railway taking into account the direction of the train
 /*void tracker_register_train(train_t* train, int sector) {
-	railway_t* rail;
-	rail = railways[0];
-	if (train->direction == FORWARD) {
-		train_set_current_sector(train, sector);
-		railway_erase_train(rail,train);
-		railway_register_train(rail ,train, sector);
-	} else if (sector == 0) {
-		train_set_current_sector(train, 3);
-		railway_erase_train(rail,train);
-		railway_register_train(rail,train, 3);
-	} else {
-		train_set_current_sector(train, sector - 1);
-		railway_erase_train(rail,train);
-		railway_register_train(rail,train, sector - 1);
+ railway_t* rail;
+ rail = railways[0];
+ if (train->direction == FORWARD) {
+ train_set_current_sector(train, sector);
+ railway_erase_train(rail,train);
+ railway_register_train(rail ,train, sector);
+ } else if (sector == 0) {
+ train_set_current_sector(train, 3);
+ railway_erase_train(rail,train);
+ railway_register_train(rail,train, 3);
+ } else {
+ train_set_current_sector(train, sector - 1);
+ railway_erase_train(rail,train);
+ railway_register_train(rail,train, sector - 1);
 
-	}
-	
-}
-*/
+ }
+ 
+ }
+ */
 // Notify checks registered sensors and if some of them
 // has an event and it's not a rebound updates the model.
 static
@@ -138,7 +141,7 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 	int j;
 	railway_t* rail;
 	rail = railways[0];
-	for (j = 0 ; j < n_ir_sensors; j++) {
+	for (j = 0; j < n_ir_sensors; j++) {
 		sd = &tracker_ir_sensors[j];
 		//rt_printf("checking sensor %d, j = %d \n",sd->sensor->id, j);
 		event = sensorIR_get_event(sd->sensor);
@@ -147,36 +150,34 @@ void tracker_notify(observer_t* this, observable_t* foo) {
 			storedDirection = tracker_gen_direction(event->passingTrain);
 			tel = train_get_telemetry(train);
 			//rt_printf("train %d", train_get_ID(train));
-			if(train_get_direction(train) == FORWARD)
-			{
+			if (train_get_direction(train) == FORWARD) {
 				//rt_printf(" train FORWARD \n");
-				if(train_get_direction(train) == storedDirection 
-					&& sd-> sectorForward != train_get_sector(train)){
-					  //rt_printf(" train same dir not same sector \n");
-					  tracker_updating_train(train, sd-> sectorForward, tel);
-					  railway_erase_train(rail,train);
-					  railway_register_train(rail, train, sd-> sectorForward);
-				}else if(train_get_direction(train) != storedDirection){
-					  //rt_printf(" train no same dir \n");
-					  tracker_updating_train(train, sd-> sectorForward, tel);
-					  railway_erase_train(rail,train);
-					  railway_register_train(rail, train, sd-> sectorForward);
+				if (train_get_direction(train) == storedDirection
+						&& sd->sectorForward != train_get_sector(train)) {
+					//rt_printf(" train same dir not same sector \n");
+					tracker_updating_train(train, sd->sectorForward, tel);
+					railway_erase_train(rail, train);
+					railway_register_train(rail, train, sd->sectorForward);
+				} else if (train_get_direction(train) != storedDirection) {
+					//rt_printf(" train no same dir \n");
+					tracker_updating_train(train, sd->sectorForward, tel);
+					railway_erase_train(rail, train);
+					railway_register_train(rail, train, sd->sectorForward);
 				}
 			}
-			if(train_get_direction(train) == REVERSE)
-			{
+			if (train_get_direction(train) == REVERSE) {
 				//rt_printf(" train REVERSE \n");
-				if(train_get_direction(train) == storedDirection 
-					&& sd-> sectorReverse != train_get_sector(train)){
-					  //rt_printf(" train same dir not same sector \n");	
-					  tracker_updating_train(train, sd-> sectorReverse, tel);
-					  railway_erase_train(rail,train);
-					  railway_register_train(rail, train, sd-> sectorReverse);
-				}else if(train_get_direction(train) != storedDirection){
-					  //rt_printf(" train no same dir \n");
-					  tracker_updating_train(train, sd-> sectorReverse, tel);
-					  railway_erase_train(rail,train);
-					  railway_register_train(rail, train, sd-> sectorReverse);
+				if (train_get_direction(train) == storedDirection
+						&& sd->sectorReverse != train_get_sector(train)) {
+					//rt_printf(" train same dir not same sector \n");	
+					tracker_updating_train(train, sd->sectorReverse, tel);
+					railway_erase_train(rail, train);
+					railway_register_train(rail, train, sd->sectorReverse);
+				} else if (train_get_direction(train) != storedDirection) {
+					//rt_printf(" train no same dir \n");
+					tracker_updating_train(train, sd->sectorReverse, tel);
+					railway_erase_train(rail, train);
+					railway_register_train(rail, train, sd->sectorReverse);
 				}
 			}
 		}
@@ -188,8 +189,8 @@ void tracker_init(void) {
 		const char* name;
 		char sectorForward;
 		char sectorReverse;
-	} ir_names[] = { { "IRsensor0", 0 , 3}, { "IRsensor1", 1, 0 }, { "IRsensor2", 2, 1 },
-			{ "IRsensor3", 3 ,2}, { NULL, 0 } };
+	} ir_names[] = { { "IRsensor0", 0, 3 }, { "IRsensor1", 1, 0 }, {
+			"IRsensor2", 2, 1 }, { "IRsensor3", 3, 2 }, { NULL, 0 } };
 	// Struct with the names and the ID of each train in the IR sensors
 	static struct train_name_t {
 		const char* name;

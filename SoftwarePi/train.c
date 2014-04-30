@@ -68,14 +68,14 @@ int train_emergency_cmd(char*arg) {
 
 int train_cmd(char* arg) {
 	if (0 == strcmp(arg, "list")) {
-		printf("ID\tNAME\tPOWER\tTARGET\tDIRECTION\tSECTOR\tSECURITY\tACTIVE\n");
+		printf(
+				"ID\tNAME\tPOWER\tTARGET\tDIRECTION\tSECTOR\tSECURITY\tACTIVE\n");
 		int i;
 		for (i = 0; i < ntrains; ++i) {
-			printf("%d\t%s\t%d\t%d\t%s\t%d\t%d\t%s\r\n", trains[i]->ID, trains[i]->name,
-					trains[i]->power, trains[i]->target_power,
+			printf("%d\t%s\t%d\t%d\t%s\t%d\t%d\t%s\r\n", trains[i]->ID,
+					trains[i]->name, trains[i]->power, trains[i]->target_power,
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE",
-					trains[i]->telemetry->sector,
-					trains[i]->security_override,
+					trains[i]->telemetry->sector, trains[i]->security_override,
 					(trains[i]->ID == current_train->ID) ? "<" : " ");
 		}
 		return 0;
@@ -140,46 +140,50 @@ int train_cmd(char* arg) {
 	 */
 	if (0 == strncmp(arg, "check_est", strlen("check_est"))) {
 		struct timeval t1;
-		train_get_timestamp(current_train,&t1);
-		float initial_time = (float)t1.tv_sec+((float)t1.tv_usec/1.0E6);
-		float current_time,final_time;
-		char time_out=0;
+		train_get_timestamp(current_train, &t1);
+		float initial_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
+		float current_time, final_time;
+		char time_out = 0;
 		float initial_estimation = train_get_time_estimation(current_train);
 		/*
 		 * Hardcoded 20%
 		 */
-		float time_out_time = 1.2*initial_estimation+initial_time;
-		while(initial_estimation == train_get_time_estimation(current_train)&& !time_out){
-			gettimeoftoday(&t1,NULL);
-			current_time = (float)t1.tv_sec+((float)t1.tv_usec/1.0E6);
-			if(current_time>time_out_time) time_out=1;
+		float time_out_time = 1.2 * initial_estimation + initial_time;
+		while (initial_estimation == train_get_time_estimation(current_train)
+				&& !time_out) {
+			gettimeoftoday(&t1, NULL);
+			current_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
+			if (current_time > time_out_time)
+				time_out = 1;
 		}
-		gettimeoftoday(&t1,NULL);
-		final_time= (float)t1.tv_sec+((float)t1.tv_usec/1.0E6);
-		if(time_out || final_time < 0.8*(initial_time+initial_estimation)){
+		gettimeoftoday(&t1, NULL);
+		final_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
+		if (time_out
+				|| final_time < 0.8 * (initial_time + initial_estimation)) {
 			printf("Estimation was off by more than 20\%\n");
 			return 1;
 		}
 		printf("Estimation within 20\%, OK\n");
 		return 0;
-		}
+	}
 
 	if (0 == strncmp(arg, "wait_sector ", strlen("wait_sector "))) {
-				int sector = atoi(arg + strlen("wait_sector"));
-				char time_out=0;
-				struct timeval t1;
-				gettimeoftoday(&t1,NULL);
-				int max_time = t1.tv_sec+60;
-				while(train_get_sector(current_train)!=sector && !time_out){
-					gettimeoftoday(&t1,NULL);
-					if(t1.tv_sec>=max_time) time_out=1;
-				}
-				if(time_out){
-					printf("Train didn't reach sector in one minute\n");
-					return 1;
-				}
-				return 0;
-			}
+		int sector = atoi(arg + strlen("wait_sector"));
+		char time_out = 0;
+		struct timeval t1;
+		gettimeoftoday(&t1, NULL);
+		int max_time = t1.tv_sec + 60;
+		while (train_get_sector(current_train) != sector && !time_out) {
+			gettimeoftoday(&t1, NULL);
+			if (t1.tv_sec >= max_time)
+				time_out = 1;
+		}
+		if (time_out) {
+			printf("Train didn't reach sector in one minute\n");
+			return 1;
+		}
+		return 0;
+	}
 
 	if (0 == strncmp(arg, "help", strlen("help"))) {
 		printf(
@@ -271,16 +275,15 @@ void train_set_power(train_t* this, int power) {
 	} else {
 		train_set_direction(this, FORWARD);
 	}
-	
-	for (i=0;i<3;i++)
-	{
-	    dcc_add_speed_packet(this->dcc, this->ID, this->power);
-    }
+
+	for (i = 0; i < 3; i++) {
+		dcc_add_speed_packet(this->dcc, this->ID, this->power);
+	}
 }
 
 void train_set_target_power(train_t* this, int power) {
 	this->target_power = power;
-	
+
 	if (this->security_override == 0) {
 		train_set_power(this, power);
 	}
@@ -314,8 +317,8 @@ void train_set_current_speed(train_t* this, float speed) {
 
 void train_set_timestamp(train_t* this, struct timeval *tv) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-	this-> telemetry-> timestamp.tv_sec = tv->tv_sec;
-	this-> telemetry-> timestamp.tv_usec  = tv->tv_usec;
+	this->telemetry->timestamp.tv_sec = tv->tv_sec;
+	this->telemetry->timestamp.tv_usec = tv->tv_usec;
 	//copy_timeval( &(this->telemetry-> timestamp) ,tv);
 	rt_mutex_release(&this->mutex);
 }
@@ -348,24 +351,21 @@ telemetry_t* train_get_telemetry(train_t* this) {
 	return this->telemetry;
 }
 
-char train_get_sector (train_t* this)
-{
-	return this->telemetry-> sector;
+char train_get_sector(train_t* this) {
+	return this->telemetry->sector;
 }
-void train_get_timestamp (train_t* this, struct timeval *tv)
-{
-	rt_mutex_acquire (&this->mutex, TM_INFINITE);
-	tv->tv_sec =  this-> telemetry-> timestamp.tv_sec;
-	tv->tv_usec = this-> telemetry-> timestamp.tv_usec;
-	rt_mutex_release (&this->mutex);
+void train_get_timestamp(train_t* this, struct timeval *tv) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	tv->tv_sec = this->telemetry->timestamp.tv_sec;
+	tv->tv_usec = this->telemetry->timestamp.tv_usec;
+	rt_mutex_release(&this->mutex);
 	//copy_timeval(tv, &(this->telemetry-> timestamp));
 	//return this->telemetry-> timestamp;
 }
-float train_get_speed(train_t* this)
-{	
-	rt_mutex_acquire (&this->mutex, TM_INFINITE);
-	float speed=this->telemetry-> speed;
-	rt_mutex_release (&this->mutex);
+float train_get_speed(train_t* this) {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	float speed = this->telemetry->speed;
+	rt_mutex_release(&this->mutex);
 	return speed;
 }
 
@@ -377,21 +377,21 @@ void train_set_security(train_t* this, char newSecurity) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 
 	this->security_override = newSecurity;
-	if(newSecurity == 0) {
+	if (newSecurity == 0) {
 		train_set_power(this, this->target_power);
 	}
 
 	rt_mutex_release(&this->mutex);
 }
 
-float train_get_time_estimation(train_t* this){
+float train_get_time_estimation(train_t* this) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	float est = this->telemetry->time_est;
 	rt_mutex_release(&this->mutex);
 	return est;
 }
-void train_set_time_estimation(train_t* this,float estimation){
+void train_set_time_estimation(train_t* this, float estimation) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-	this->telemetry->time_est=estimation;
+	this->telemetry->time_est = estimation;
 	rt_mutex_release(&this->mutex);
 }

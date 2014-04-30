@@ -1,5 +1,4 @@
 
-
 #ifndef TRAINCTRL_H
 #define TRAINCTRL_H
 

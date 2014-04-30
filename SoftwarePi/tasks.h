@@ -8,16 +8,16 @@
 #define PRIO_BASE 30
 #define PRIO_STEP 5
 
-typedef struct{
+typedef struct {
 	RT_TASK* task;
 	int prio;
 	int deadline;
 	void (*f)(void *);
 	void* arg;
 	char* name;
-}taskinfo_t;
+} taskinfo_t;
 
-void task_add(char* name, int deadline, void (*f)(void *),void* arg);
+void task_add(char* name, int deadline, void (*f)(void *), void* arg);
 void task_start_all();
 void task_delete_all();
 int task_cmd(char* arg);
