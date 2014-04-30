@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
 	IRsensors_setup();
 	trains_setup();
 	railways_setup();
-	//anticollision_setup();
+//	anticollision_setup();
 	fbtft_init();
 	model_init();
 

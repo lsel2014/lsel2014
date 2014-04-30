@@ -15,15 +15,18 @@
 static anticollision_t *anticollision;
 
 void anticollision_setup(void) {
+	int i;
 	anticollision = anticollision_new();
 	interp_addcmd("anti", anticollision_cmd,
 			"Shows the anticollisions security protocol status");
 
 	observable_register_observer(&(railways[0]->observable),
 			(observer_t*) anticollision);
-
-	// REGISTRAR A LOS TRENES
-	//observable_register_observer(&(railways[0]->observable), (observer_t*) anticollision);
+    
+    for (i=0;i<ntrains;i++)
+    {
+        observable_register_observer(&(trains[i]->observable), (observer_t*) anticollision);
+    }
 }
 
 anticollision_t* anticollision_new(void) {

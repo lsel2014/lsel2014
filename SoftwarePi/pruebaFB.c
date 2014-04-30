@@ -268,7 +268,7 @@ char *char_to_bitmap(char a) {
 		return point;
 		break;
 	}
-	return NULL;
+	return espacio;
 
 }
 
@@ -300,6 +300,7 @@ void draw_line(int nlinea, int color, char c[], int size) {
 	int xInit = 16;
 	int i = 0;
 	for (i = 0; i < size && c[i] != '\0'; i++) {
+		
 		draw_char1(c[i], xInit + (16 * i), nlinea * 8, color);
 
 	}

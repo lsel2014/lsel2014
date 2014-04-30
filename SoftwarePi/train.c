@@ -149,13 +149,18 @@ int train_cmd(char* arg) {
 		 * Hardcoded 20%
 		 */
 		float time_out_time = 1.2 * initial_estimation + initial_time;
+		
+		printf("tout %f\n",time_out_time);
 		while (initial_estimation == train_get_time_estimation(current_train)
 				&& !time_out) {
 			gettimeofday(&t1, NULL);
 			current_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
+			
 			if (current_time > time_out_time)
 				time_out = 1;
 		}
+			printf("ctime %f\n",current_time);
+
 		gettimeofday(&t1, NULL);
 		final_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
 		if (time_out
@@ -291,6 +296,7 @@ void train_set_target_power(train_t* this, int power) {
 
 void train_set_direction(train_t* this, train_direction_t direction) {
 	this->direction = direction;
+	observable_notify_observers(&this->observable);
 }
 
 void train_set_n_wagon(train_t* this, char n_wagon) {
