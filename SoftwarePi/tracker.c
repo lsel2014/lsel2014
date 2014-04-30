@@ -68,8 +68,8 @@ train_direction_t tracker_gen_direction(int id) {
 void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
-	char estimation1_str[20];
-	char estimation2_str[20];
+	static char estimation1_str[20];
+	static char estimation2_str[20];
 	struct train_data_t* t;
 	rt_printf(" sector %d \n", sector);
 	for (t = tracker_trains; t->train; ++t) {
