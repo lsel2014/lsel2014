@@ -119,9 +119,7 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 				}
 
 				if ((rail->railwaySectors[to_check]->nregisteredtrains) > 0) {
-					if (thisAC->security_flag == 0) {
-						thisAC->security_flag = 1;
-					}
+
 					train_set_security(train, 1);
 					nalarm++;
 					printf("Seguridad activada en el tren ID: %d\n", train->ID);
