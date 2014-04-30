@@ -139,8 +139,8 @@ int train_cmd(char* arg) {
 	 * I PROMISE I'LL FIX IT
 	 */
 	if (0 == strncmp(arg, "check_est", strlen("check_est"))) {
-		struct timeval t1,t2;
-		gettimeoftoday(&t1,NULL);
+		struct timeval t1;
+		train_get_timestamp(current_train,&t1);
 		float initial_time = (float)t1->tv_sec+((float)t1->tv_usec/1.0E6);
 		float current_time,final_time;
 		char time_out=0;
@@ -355,8 +355,10 @@ char train_get_sector (train_t* this)
 }
 void train_get_timestamp (train_t* this, struct timeval *tv)
 {
+	rt_mutex_acquire (&this->mutex, TM_INFINITE);
 	tv->tv_sec =  this-> telemetry-> timestamp.tv_sec;
 	tv->tv_usec = this-> telemetry-> timestamp.tv_usec;
+	rt_mutex_release (&this->mutex);
 	//copy_timeval(tv, &(this->telemetry-> timestamp));
 	//return this->telemetry-> timestamp;
 }
