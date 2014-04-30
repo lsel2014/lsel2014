@@ -157,15 +157,14 @@ int train_cmd(char* arg) {
 		gettimeoftoday(&t1,NULL);
 		final_time= (float)t1.tv_sec+((float)t1.tv_usec/1.0E6);
 		if(time_out || final_time < 0.8*(initial_time+initial_estimation)){
-			printf("Estimation was off by more than 20%\n");
+			printf("Estimation was off by more than 20\%\n");
 			return 1;
 		}
-		printf("Estimation within 20%, OK\n");
+		printf("Estimation within 20\%, OK\n");
 		return 0;
 		}
 
 	if (0 == strncmp(arg, "wait_sector ", strlen("wait_sector "))) {
-				int function, state;
 				int sector = atoi(arg + strlen("wait_sector"));
 				char time_out=0;
 				struct timeval t1;
@@ -173,9 +172,9 @@ int train_cmd(char* arg) {
 				int max_time = t1.tv_sec+60;
 				while(train_get_sector(current_train)!=sector && !time_out){
 					gettimeoftoday(&t1,NULL);
-					if(t1.tv_sec>=max_time) timeout=1;
+					if(t1.tv_sec>=max_time) time_out=1;
 				}
-				if(timeout){
+				if(time_out){
 					printf("Train didn't reach sector in one minute\n");
 					return 1;
 				}
