@@ -14,7 +14,6 @@
 #include <unistd.h>
 #include "time_operations.h"
 
-
 train_t* trains[MAXTRAINS];
 int ntrains = 0;
 train_t* current_train;
@@ -151,19 +150,19 @@ int train_cmd(char* arg) {
 		 */
 		float time_out_time = 1.2 * initial_estimation;
 
-		printf("tout %f\n", time_out_time);
+		//printf("tout %f\n", time_out_time);
 		while (initial_estimation == train_get_time_estimation(current_train)
 				&& !time_out) {
 			gettimeofday(&current, NULL);
-			(&diff, &current, &initial);
+			timeval_sub(&diff, &current, &initial);
 			elapsed_time = (float) diff.tv_sec + ((float) diff.tv_usec / 1.0E6);
 			//printf("%2.7f",current_time);
 			if (elapsed_time > time_out_time) {
 				time_out = 1;
-				printf("TIMEOUT");
+				//printf("TIMEOUT");
 			}
 		}
-		printf("ctime %f\n", elapsed_time);
+		//printf("ctime %f\n", elapsed_time);
 
 		if (time_out || elapsed_time < 0.8 * initial_estimation) {
 			printf("Estimation was off by more than 20%%\n");
@@ -175,8 +174,8 @@ int train_cmd(char* arg) {
 
 	if (0 == strncmp(arg, "wait_sector ", strlen("wait_sector "))) {
 		int sector = atoi(arg + strlen("wait_sector"));
-		if(sector <0 || sector >3){
-			printf ("Sector must be between 0 and 3\n");
+		if (sector < 0 || sector > 3) {
+			printf("Sector must be between 0 and 3\n");
 			return 1;
 		}
 		char time_out = 0;
