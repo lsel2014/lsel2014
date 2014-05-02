@@ -18,7 +18,7 @@ typedef struct {
 	char sector;
 	float speed;
 	struct timeval timestamp;
-	struct timeval time_est;
+	float time_est;
 } telemetry_t;
 
 typedef enum {
@@ -80,5 +80,5 @@ float train_get_time_estimation(train_t* this);
 void train_set_time_estimation(train_t* this, float estimation);
 void train_emergency_stop(train_t* this);
 void train_wait_sector(train_t* this, char sector);
-
+void timeval_sub(struct timeval *res, struct timeval *a, struct timeval *b);
 #endif
