@@ -12,6 +12,8 @@
 #include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
+#include "time_operations.h"
+
 
 train_t* trains[MAXTRAINS];
 int ntrains = 0;
@@ -108,19 +110,6 @@ int train_cmd(char* arg) {
 		return 0;
 	}
 
-	if (0 == strncmp(arg, "wait ", strlen("wait "))) {
-		int target_sector;
-		target_sector = atoi(arg + strlen("wait "));
-		if (((target_sector) > 3) || (target_sector) < 0) {
-			printf("Sector must be between 0 and 3\n");
-			return 1;
-		} else {
-			train_wait_sector(current_train, target_sector);
-			printf("Sector %d reached\n", target_sector);
-		}
-		return 0;
-	}
-
 	if (0 == strncmp(arg, "sector ", strlen("sector "))) {
 		int sector;
 		sector = atoi(arg + strlen("sector "));
@@ -166,7 +155,7 @@ int train_cmd(char* arg) {
 		while (initial_estimation == train_get_time_estimation(current_train)
 				&& !time_out) {
 			gettimeofday(&current, NULL);
-			timeval_sub(&diff, &current, &initial);
+			(&diff, &current, &initial);
 			elapsed_time = (float) diff.tv_sec + ((float) diff.tv_usec / 1.0E6);
 			//printf("%2.7f",current_time);
 			if (elapsed_time > time_out_time) {
@@ -186,6 +175,10 @@ int train_cmd(char* arg) {
 
 	if (0 == strncmp(arg, "wait_sector ", strlen("wait_sector "))) {
 		int sector = atoi(arg + strlen("wait_sector"));
+		if(sector <0 || sector >3){
+			printf ("Sector must be between 0 and 3\n");
+			return 1;
+		}
 		char time_out = 0;
 		struct timeval t1;
 		gettimeofday(&t1, NULL);
@@ -439,11 +432,3 @@ void train_set_time_estimation(train_t* this, float estimation) {
 	rt_mutex_release(&this->mutex);
 }
 
-void timeval_sub(struct timeval *res, struct timeval *a, struct timeval *b) {
-	res->tv_sec = a->tv_sec - b->tv_sec;
-	res->tv_usec = a->tv_usec - b->tv_usec;
-	if (res->tv_usec < 0) {
-		--res->tv_sec;
-		res->tv_usec += 1000000;
-	}
-}

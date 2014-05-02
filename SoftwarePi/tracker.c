@@ -7,6 +7,7 @@
 #include "pruebaFB.h"
 #include <sys/time.h>
 #include <time.h>
+#include "time_operations.h"
 #include <rtdk.h>
 
 #define NUMSECTORS 4
@@ -37,14 +38,6 @@ static event_t* event;
 
 static int sector_lengths[] = { 92, 156, 89, 149 };
 
-void timeval_sub(struct timeval *res, struct timeval *a, struct timeval *b) {
-	res->tv_sec = a->tv_sec - b->tv_sec;
-	res->tv_usec = a->tv_usec - b->tv_usec;
-	if (res->tv_usec < 0) {
-		--res->tv_sec;
-		res->tv_usec += 1000000;
-	}
-}
 // Translate the ID ir sensors returns into the actual train pointer
 train_t*
 tracker_gen_train(int id) {
