@@ -17,15 +17,6 @@ train_t* trains[MAXTRAINS];
 int ntrains = 0;
 train_t* current_train;
 
-
-void train_wait_sector(train_t* this, char sector) {
-	while(train_get_sector(this) != sector)
-	{
-	    sleep (1);
-	}
-}
-
-
 /*This will be integrated with the interpreter*/
 void trains_setup(void) {
 	//int i, j;
@@ -116,11 +107,11 @@ int train_cmd(char* arg) {
 		}
 		return 0;
 	}
-	
+
 	if (0 == strncmp(arg, "wait ", strlen("wait "))) {
 		int target_sector;
 		target_sector = atoi(arg + strlen("wait "));
-		if (((target_sector) > 3) || (target_sector)<0) {
+		if (((target_sector) > 3) || (target_sector) < 0) {
 			printf("Sector must be between 0 and 3\n");
 			return 1;
 		} else {
@@ -161,34 +152,31 @@ int train_cmd(char* arg) {
 	 * I PROMISE I'LL FIX IT
 	 */
 	if (0 == strncmp(arg, "check_est", strlen("check_est"))) {
-		struct timeval t1;
-		train_get_timestamp(current_train, &t1);
-		float initial_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
-		float current_time, final_time;
+		struct timeval initial, current, diff;
+		train_get_timestamp(current_train, &initial);
+		float elapsed_time, final_time;
 		char time_out = 0;
 		float initial_estimation = train_get_time_estimation(current_train);
 		/*
 		 * Hardcoded 20%
 		 */
-		float time_out_time = 1.2 * initial_estimation + initial_time;
-		
-		printf("tout %f\n",time_out_time);
+		float time_out_time = 1.2 * initial_estimation;
+
+		printf("tout %f\n", time_out_time);
 		while (initial_estimation == train_get_time_estimation(current_train)
 				&& !time_out) {
-			gettimeofday(&t1, NULL);
-			current_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
+			gettimeofday(&current, NULL);
+			timeval_sub(&diff, &current, &initial);
+			elapsed_time = (float) diff.tv_sec + ((float) diff.tv_usec / 1.0E6);
 			//printf("%2.7f",current_time);
-			if (current_time > time_out_time){
+			if (elapsed_time > time_out_time) {
 				time_out = 1;
 				printf("TIMEOUT");
 			}
 		}
-			printf("ctime %f\n",current_time);
+		printf("ctime %f\n", elapsed_time);
 
-		gettimeofday(&t1, NULL);
-		final_time = (float) t1.tv_sec + ((float) t1.tv_usec / 1.0E6);
-		if (time_out
-				|| final_time < 0.8 * (initial_time + initial_estimation)) {
+		if (time_out || elapsed_time < 0.8 * initial_estimation) {
 			printf("Estimation was off by more than 20%%\n");
 			return 1;
 		}
@@ -252,8 +240,8 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->dcc = dcc;
 	this->telemetry = telemetry;
 	rt_mutex_create(&this->mutex, NULL);
-	
-	train_set_power (this, 0);
+
+	train_set_power(this, 0);
 }
 /*
  void train_notify(observer_t* this, observable_t* observed) {
@@ -299,17 +287,16 @@ void train_set_ID(train_t* this, char ID) {
 	this->ID = ID;
 }
 
-void train_emergency_stop(train_t* this){
+void train_emergency_stop(train_t* this) {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-		this->power = 0;
+	this->power = 0;
 	rt_mutex_release(&this->mutex);
 	int i;
 	for (i = 0; i < 3; i++) {
 		dcc_add_data_packet(this->dcc, this->ID, ESTOP_CMD);
 	}
-	
-}
 
+}
 
 void train_set_power(train_t* this, int power) {
 	int i;
