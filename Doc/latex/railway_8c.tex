@@ -1,0 +1,42 @@
+\hypertarget{railway_8c}{\section{/home/smau/workspace/lsel2014/\-Software\-Pi/railway.c File Reference}
+\label{railway_8c}\index{/home/smau/workspace/lsel2014/\-Software\-Pi/railway.\-c@{/home/smau/workspace/lsel2014/\-Software\-Pi/railway.\-c}}
+}
+
+
+Railway entity definition.  
+
+
+{\ttfamily \#include \char`\"{}railway.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}train.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$ \hyperlink{group__railway__t__object_gac3e91549f0ddbcae822b72aa28a44a4d}{railway\-\_\-new} (int id)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structrailway__t}{railway\-\_\-t} creation \end{DoxyCompactList}\item 
+void \hyperlink{group__railway__t__object_ga020674cf7829a33dbd1d632d08fc6e81}{railway\-\_\-init} (\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$this, int id)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structrailway__t}{railway\-\_\-t} initialization \end{DoxyCompactList}\item 
+void \hyperlink{group__railway__t__object_gaaad8a955da219ec436f0cd915464c561}{railways\-\_\-setup} (void)
+\begin{DoxyCompactList}\small\item\em Railway instantiation. \end{DoxyCompactList}\item 
+\hyperlink{structsector__t}{sector\-\_\-t} $\ast$ \hyperlink{group__sector__t__object_ga752655e2c317bef5cd11ce87c02fc170}{sector\-\_\-new} (int id)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structsector__t}{sector\-\_\-t} creation \end{DoxyCompactList}\item 
+void \hyperlink{group__sector__t__object_ga434854bf1e09ab2da6afe89067299b29}{sector\-\_\-init} (\hyperlink{structsector__t}{sector\-\_\-t} $\ast$this, int id)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structsector__t}{sector\-\_\-t} initialization \end{DoxyCompactList}\item 
+int \hyperlink{group__railway__t__actions_ga4132dde76192adaef01b679049d5e5f4}{railway\-\_\-cmd} (char $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Railway related interpreter commands. \end{DoxyCompactList}\item 
+void \hyperlink{group__railway__t__actions_ga3b9b10cab801022fc85539c249eda493}{railway\-\_\-register\-\_\-train} (\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$this, \hyperlink{structtrain__t}{train\-\_\-t} $\ast$train, int sector)
+\begin{DoxyCompactList}\small\item\em Register a train in a railway. \end{DoxyCompactList}\item 
+void \hyperlink{group__railway__t__actions_gae751d6edaad205319b010ba3fd33313c}{railway\-\_\-erase\-\_\-train} (\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$this, \hyperlink{structtrain__t}{train\-\_\-t} $\ast$train)
+\begin{DoxyCompactList}\small\item\em Erase a train from a railway. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$ \hyperlink{group__railway__t__globals_gaa4fac897105182cb0daa7953375d7e09}{railways} \mbox{[}M\-A\-X\-R\-A\-I\-L\-W\-A\-Y\mbox{]}
+\item 
+int \hyperlink{group__railway__t__globals_ga111eda200b72aa71b44357d6dac97f31}{nrailways}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Railway entity definition. \begin{DoxyDate}{Date}
+-- Implementation of \hyperlink{structrailway__t}{railway\-\_\-t} and \hyperlink{structsector__t}{sector\-\_\-t} functions and declarations 
+\end{DoxyDate}

@@ -1,0 +1,90 @@
+\hypertarget{group__dcc__t__actions}{\section{dcc\-\_\-t actions}
+\label{group__dcc__t__actions}\index{dcc\-\_\-t actions@{dcc\-\_\-t actions}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__dcc__t__actions_gacb4f29b0b7c35730b6fe1bd716041ea2}{dcc\-\_\-add\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, \hyperlink{structdcc__packet__t}{dcc\-\_\-packet\-\_\-t} packet)
+\begin{DoxyCompactList}\small\item\em Add packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__actions_gaaf362a49f668badd91f596f581cd2ba6}{dcc\-\_\-add\-\_\-speed\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, int speed)
+\begin{DoxyCompactList}\small\item\em Add speed packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__actions_ga3c44ba8b3f884a558aa4d06ef945e7c7}{dcc\-\_\-add\-\_\-data\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, unsigned char data)
+\begin{DoxyCompactList}\small\item\em Add data packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+\hypertarget{group__dcc__t__actions_gadde12081b6782aab96f05029932c8b30}{void {\bfseries dcc\-\_\-add\-\_\-function\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, unsigned char function, unsigned char state)}\label{group__dcc__t__actions_gadde12081b6782aab96f05029932c8b30}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Actions of \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} 
+
+\subsection{Function Documentation}
+\hypertarget{group__dcc__t__actions_ga3c44ba8b3f884a558aa4d06ef945e7c7}{\index{dcc\-\_\-t actions@{dcc\-\_\-t actions}!dcc\-\_\-add\-\_\-data\-\_\-packet@{dcc\-\_\-add\-\_\-data\-\_\-packet}}
+\index{dcc\-\_\-add\-\_\-data\-\_\-packet@{dcc\-\_\-add\-\_\-data\-\_\-packet}!dcc_t actions@{dcc\-\_\-t actions}}
+\subsubsection[{dcc\-\_\-add\-\_\-data\-\_\-packet}]{\setlength{\rightskip}{0pt plus 5cm}void dcc\-\_\-add\-\_\-data\-\_\-packet (
+\begin{DoxyParamCaption}
+\item[{{\bf dcc\-\_\-sender\-\_\-t} $\ast$}]{this, }
+\item[{unsigned char}]{address, }
+\item[{unsigned char}]{data}
+\end{DoxyParamCaption}
+)}}\label{group__dcc__t__actions_ga3c44ba8b3f884a558aa4d06ef945e7c7}
+
+
+Add data packet to D\-C\-C buffer. 
+
+Formats a generic basic D\-C\-C packet with 7 bit address and 8 bit data, filling the preamble and separator bits and calculating the required C\-R\-C. Then adds it to the packet queue for transmission.
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & the dcc\-\_\-sender that will transmit the packet \\
+\hline
+{\em address} & 7 bit address of the target receiver \\
+\hline
+{\em data} & 8 bit generic data \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcc__t__actions_gacb4f29b0b7c35730b6fe1bd716041ea2}{\index{dcc\-\_\-t actions@{dcc\-\_\-t actions}!dcc\-\_\-add\-\_\-packet@{dcc\-\_\-add\-\_\-packet}}
+\index{dcc\-\_\-add\-\_\-packet@{dcc\-\_\-add\-\_\-packet}!dcc_t actions@{dcc\-\_\-t actions}}
+\subsubsection[{dcc\-\_\-add\-\_\-packet}]{\setlength{\rightskip}{0pt plus 5cm}void dcc\-\_\-add\-\_\-packet (
+\begin{DoxyParamCaption}
+\item[{{\bf dcc\-\_\-sender\-\_\-t} $\ast$}]{this, }
+\item[{{\bf dcc\-\_\-packet\-\_\-t}}]{packet}
+\end{DoxyParamCaption}
+)}}\label{group__dcc__t__actions_gacb4f29b0b7c35730b6fe1bd716041ea2}
+
+
+Add packet to D\-C\-C buffer. 
+
+Adds a packet to the D\-C\-C packet queue. Packets are serviced in a F\-I\-F\-O fashion. If the queue is full old packets will be discarded to make room for new ones.
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & the dcc\-\_\-sender that will transmit the packet \\
+\hline
+{\em packet} & the packet to add \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcc__t__actions_gaaf362a49f668badd91f596f581cd2ba6}{\index{dcc\-\_\-t actions@{dcc\-\_\-t actions}!dcc\-\_\-add\-\_\-speed\-\_\-packet@{dcc\-\_\-add\-\_\-speed\-\_\-packet}}
+\index{dcc\-\_\-add\-\_\-speed\-\_\-packet@{dcc\-\_\-add\-\_\-speed\-\_\-packet}!dcc_t actions@{dcc\-\_\-t actions}}
+\subsubsection[{dcc\-\_\-add\-\_\-speed\-\_\-packet}]{\setlength{\rightskip}{0pt plus 5cm}void dcc\-\_\-add\-\_\-speed\-\_\-packet (
+\begin{DoxyParamCaption}
+\item[{{\bf dcc\-\_\-sender\-\_\-t} $\ast$}]{this, }
+\item[{unsigned char}]{address, }
+\item[{int}]{speed}
+\end{DoxyParamCaption}
+)}}\label{group__dcc__t__actions_gaaf362a49f668badd91f596f581cd2ba6}
+
+
+Add speed packet to D\-C\-C buffer. 
+
+Formats a 28-\/step D\-C\-C speed packet including direction and adds it to the sending queue.
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & the dcc\-\_\-sender that will transmit the packet \\
+\hline
+{\em address} & 7 bit address of the target receiver \\
+\hline
+{\em speed} & desired train speed between -\/28 (top backwards speed) to 28 (top forward speed) \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,62 @@
+\hypertarget{group__dcc__t__object}{\section{dcc\-\_\-t object functions}
+\label{group__dcc__t__object}\index{dcc\-\_\-t object functions@{dcc\-\_\-t object functions}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$ \hyperlink{group__dcc__t__object_gafd6ecd109e0603b75722ffae93dacb55}{dcc\-\_\-new} (int gpio, int deadline)
+\begin{DoxyCompactList}\small\item\em dcc\-\_\-t creation \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__object_gae7b3b3f0723a4b2e5827365fd7e0cd3a}{dcc\-\_\-init} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, int dcc\-\_\-gpio, int deadline)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} initialization \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Object creation/destruction functions of \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} 
+
+\subsection{Function Documentation}
+\hypertarget{group__dcc__t__object_gae7b3b3f0723a4b2e5827365fd7e0cd3a}{\index{dcc\-\_\-t object functions@{dcc\-\_\-t object functions}!dcc\-\_\-init@{dcc\-\_\-init}}
+\index{dcc\-\_\-init@{dcc\-\_\-init}!dcc_t object functions@{dcc\-\_\-t object functions}}
+\subsubsection[{dcc\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void dcc\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf dcc\-\_\-sender\-\_\-t} $\ast$}]{this, }
+\item[{int}]{dcc\-\_\-gpio, }
+\item[{int}]{deadline}
+\end{DoxyParamCaption}
+)}}\label{group__dcc__t__object_gae7b3b3f0723a4b2e5827365fd7e0cd3a}
+
+
+\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} initialization 
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & Malloc'd \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} object \\
+\hline
+{\em dcc\-\_\-gpio} & G\-P\-I\-O port to send packets through \\
+\hline
+{\em deadline} & Periodic task deadline \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcc__t__object_gafd6ecd109e0603b75722ffae93dacb55}{\index{dcc\-\_\-t object functions@{dcc\-\_\-t object functions}!dcc\-\_\-new@{dcc\-\_\-new}}
+\index{dcc\-\_\-new@{dcc\-\_\-new}!dcc_t object functions@{dcc\-\_\-t object functions}}
+\subsubsection[{dcc\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf dcc\-\_\-sender\-\_\-t} $\ast$ dcc\-\_\-new (
+\begin{DoxyParamCaption}
+\item[{int}]{gpio, }
+\item[{int}]{deadline}
+\end{DoxyParamCaption}
+)}}\label{group__dcc__t__object_gafd6ecd109e0603b75722ffae93dacb55}
+
+
+dcc\-\_\-t creation 
+
+Creates a \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} object
+
+
+\begin{DoxyParams}{Parameters}
+{\em gpio} & G\-P\-I\-O port to send packets through \\
+\hline
+{\em deadline} & Periodic task deadline\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this Malloc'd and initialized \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} object 
+\end{DoxyReturn}

@@ -1,0 +1,72 @@
+\hypertarget{group__railway__t__object}{\section{railway\-\_\-t object functions}
+\label{group__railway__t__object}\index{railway\-\_\-t object functions@{railway\-\_\-t object functions}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$ \hyperlink{group__railway__t__object_gac3e91549f0ddbcae822b72aa28a44a4d}{railway\-\_\-new} (int id)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structrailway__t}{railway\-\_\-t} creation \end{DoxyCompactList}\item 
+void \hyperlink{group__railway__t__object_ga020674cf7829a33dbd1d632d08fc6e81}{railway\-\_\-init} (\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$this, int id)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structrailway__t}{railway\-\_\-t} initialization \end{DoxyCompactList}\item 
+void \hyperlink{group__railway__t__object_gaaad8a955da219ec436f0cd915464c561}{railways\-\_\-setup} (void)
+\begin{DoxyCompactList}\small\item\em Railway instantiation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Object creation/destruction functions of \hyperlink{structrailway__t}{railway\-\_\-t} 
+
+\subsection{Function Documentation}
+\hypertarget{group__railway__t__object_ga020674cf7829a33dbd1d632d08fc6e81}{\index{railway\-\_\-t object functions@{railway\-\_\-t object functions}!railway\-\_\-init@{railway\-\_\-init}}
+\index{railway\-\_\-init@{railway\-\_\-init}!railway_t object functions@{railway\-\_\-t object functions}}
+\subsubsection[{railway\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void railway\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf railway\-\_\-t} $\ast$}]{this, }
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}}\label{group__railway__t__object_ga020674cf7829a33dbd1d632d08fc6e81}
+
+
+\hyperlink{structrailway__t}{railway\-\_\-t} initialization 
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & Malloc'd railway object \\
+\hline
+{\em id} & Railway I\-D \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__railway__t__object_gac3e91549f0ddbcae822b72aa28a44a4d}{\index{railway\-\_\-t object functions@{railway\-\_\-t object functions}!railway\-\_\-new@{railway\-\_\-new}}
+\index{railway\-\_\-new@{railway\-\_\-new}!railway_t object functions@{railway\-\_\-t object functions}}
+\subsubsection[{railway\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf railway\-\_\-t} $\ast$ railway\-\_\-new (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}}\label{group__railway__t__object_gac3e91549f0ddbcae822b72aa28a44a4d}
+
+
+\hyperlink{structrailway__t}{railway\-\_\-t} creation 
+
+Creates a \hyperlink{structrailway__t}{railway\-\_\-t} object and stores it in the global railways array if not full.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Railway I\-D\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this Malloc'd and initialized \hyperlink{structrailway__t}{railway\-\_\-t} object 
+\end{DoxyReturn}
+\hypertarget{group__railway__t__object_gaaad8a955da219ec436f0cd915464c561}{\index{railway\-\_\-t object functions@{railway\-\_\-t object functions}!railways\-\_\-setup@{railways\-\_\-setup}}
+\index{railways\-\_\-setup@{railways\-\_\-setup}!railway_t object functions@{railway\-\_\-t object functions}}
+\subsubsection[{railways\-\_\-setup}]{\setlength{\rightskip}{0pt plus 5cm}void railways\-\_\-setup (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{group__railway__t__object_gaaad8a955da219ec436f0cd915464c561}
+
+
+Railway instantiation. 
+
+Sets up the railway object of the model.
+
+It also registers the railway commands in the intepreter. 
