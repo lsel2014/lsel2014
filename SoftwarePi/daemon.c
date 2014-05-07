@@ -33,7 +33,7 @@
 #include "tracker.h"
 #include "railway.h"
 #include "anticollision.h"
-#include "pruebaFB.h"
+#include "screen.h"
 
 // Dummy function to catch signals
 void catch_signal() {
@@ -102,11 +102,9 @@ int main(int argc, char* argv[]) {
 	trains_setup();
 	railways_setup();
 	anticollision_setup();
-	fbtft_init();
 	model_init();
-
 	tracker_init();
-
+	screen_setup();
 	//setupRailChange();
 	sun_setup();
 	setup_trafficLight();

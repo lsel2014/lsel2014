@@ -68,6 +68,7 @@ typedef struct
 	float speed;
 	struct timeval timestamp;
 	float time_est;
+	float current_time_est;
 } telemetry_t;
 
 /**
@@ -158,6 +159,7 @@ char    train_get_length(train_t* this);
 void    train_get_timestamp(train_t* this, struct timeval *tv);
 char    train_get_security(train_t* this);
 float   train_get_time_estimation(train_t* this);
+float   train_get_current_time_estimation(train_t* this);
 char    train_get_sector(train_t* this);
 float   train_get_speed(train_t* this);
 telemetry_t*    train_get_telemetry(train_t* this);
@@ -180,6 +182,7 @@ void    train_set_length(train_t* this, char length);
 void    train_set_timestamp(train_t* this, struct timeval *tv);
 void    train_set_security(train_t* this, char newSecurity);
 void    train_set_time_estimation(train_t* this, float estimation);
+void    train_set_current_time_estimation(train_t* this, float estimation);
 void    train_set_current_sector(train_t* this, char sector);
 void    train_set_current_speed(train_t* this, float speed);
 /**@}*/

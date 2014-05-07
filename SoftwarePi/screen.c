@@ -1,24 +1,29 @@
-#include "pruebaFB.h"
+#include "screen.h"
 #include <sys/ioctl.h>
+#include "train.h"
+
+screen_t* mini_screen;
+static void screen_notify(observer_t* this, observable_t* foo);
 
 // 'global' variables to store screen info
-
-char *fbp = 0;
-struct fb_var_screeninfo vinfo;
-struct fb_fix_screeninfo finfo;
-
-// variables
-int fbfd = 0;
-struct fb_var_screeninfo orig_vinfo;
-long int screensize = 0;
-//int i = 0;
 
 //Characters.
 
 char A[] = { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0,
 		1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0,
 		1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
+char R[] = { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0,
+		1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0,
+		0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+char N[] = { 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
+		1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0,
+		1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+char S[] = { 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+		1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+char L[] = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 char B[] = { 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
 		1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
 		1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -125,43 +130,124 @@ char nine[] = { // :
 				0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
 				0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
+void screen_setup(){
+	mini_screen=screen_new(16,"/dev/fb1");
+	train_t* t;
+	for (t=mini_screen->t; mini_screen->t->name; ++t) {
+			observable_t* obs = model_get_observable(t->name);
+			observable_register_observer(obs, mini_screen->observer);
+	}
+}
+
+screen_t* screen_new(int bpp, char* dev) {
+	screen_t* this = (screen_t*) malloc(sizeof(screen_t));
+	screen_init(this, bpp, dev);
+	return this;
+}
+
+void screen_init(screen_t* this, int bpp, char* dev) {
+	int i;
+	observer_init((observer_t*) this, screen_notify);
+	this->t[0] = (train_t*) model_get("Diesel");
+	this->t[1] = (train_t*) model_get("Renfe");
+	this->t[2] = NULL;
+	this->dev = dev;
+	this->bpp = bpp;
+	this->fbfd = open(dev, O_RDWR);
+	if (!this->fbfd) {
+		printf("Error: cannot open framebuffer device.\n");
+	}
+	//printf("The framebuffer device was opened successfully.\n");
+
+	// Get variable screen information
+	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &this->vinfo)) {
+		printf("Error reading variable information.\n");
+	}
+	/*printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
+	 vinfo.bits_per_pixel);*/
+
+	// Store for reset (copy vinfo to vinfo_orig)
+	memcpy(&this->orig_vinfo, &this->vinfo, sizeof(struct fb_var_screeninfo));
+
+	// Change variable info
+	this->vinfo.bits_per_pixel = bpp;
+	if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &this->vinfo)) {
+		printf("Error setting variable information.\n");
+	}
+
+	// Get fixed screen information
+	if (ioctl(fbfd, FBIOGET_FSCREENINFO, &this->finfo)) {
+		printf("Error reading fixed information.\n");
+	}
+	// map fb to user mem
+	unsigned long screensize = this->finfo->smem_len;
+	this->fb_pointer = (char*) mmap(0, screensize, PROT_READ | PROT_WRITE,
+			MAP_SHARED, fbfd, 0);
+
+	if ((int) this->fb_pointer == -1) {
+		printf("Failed to mmap.\n");
+	}
+}
+
+static
+void screen_notify(observer_t* this, observable_t* foo) {
+	int i;
+	char line[20];
+	draw(this, 0x1818); //Background
+	float est;
+	int nsect;
+	screen_t* s = (screen_t*)this;
+	for (i = 0; s->t[i]; ++i) {
+		train_t* t = s->t[i];
+		est = train_get_current_time_estimation(t);
+		nsect = train_get_sector(t);
+		if (train_get_direction(t) == FORWARD) {
+			nsect = (nsect + 1) % 4;
+		} else {
+			nsect = (nsect > 0) ? nsect - 1 : 3;
+		}
+		sprintf(line, "%6s %d %2.2f", train_get_name(t), nsect, est);
+		draw_line((screen_t*) this, i + 2, 0xFFFF, line, 20);
+	}
+}
+
 // helper function to 'plot' a pixel in given color
-void put_pixel(int x, int y, short c) {
+void put_pixel(screen_t* this, int x, int y, short c) {
 	// calculate the pixel's byte offset inside the buffer
-	unsigned int pix_offset = x + y * finfo.line_length;
+	unsigned int pix_offset = x + y * this->finfo.line_length;
 
 	char upper = (c >> 8) & 0xFF;
 	char lower = c & 0xFF;
 
 	// now this is about the same as 'fbp[pix_offset] = value'
-	*((char*) (fbp + pix_offset)) = upper;
-	*((char*) (fbp + pix_offset + 1)) = lower;
+	*((char*) (this->fb_pointer + pix_offset)) = upper;
+	*((char*) (this->fb_pointer + pix_offset + 1)) = lower;
 
 }
 
 // helper function for drawing - no more need to go mess with
 // the main function when just want to change what to draw...
 
-void draw(short c) {
+void draw(screen_t* this, short c) {
 
 	int x, y;
 
-	for (y = 0; y < vinfo.yres - 1; y++) {
-		for (x = 0; x < vinfo.xres * 2; x++) {
+	for (y = 0; y < this->vinfo.yres - 1; y++) {
+		for (x = 0; x < this->vinfo.xres * 2; x++) {
 
 			// color based on the 16th of the screen width
 			// short c = 0x1818;
 
 			// call the helper function
 
-			put_pixel(x, y, c);
+			put_pixel(this, x, y, c);
 
 		}
 	}
 
 }
 
-void draw_char(char *a, int textX, int textY, short textC) {
+void draw_char(screen_t* this, char *a, int textX, int textY, short textC) {
 	int y = 0;
 	int x = 0;
 	// loop through pixel rows
@@ -171,7 +257,7 @@ void draw_char(char *a, int textX, int textY, short textC) {
 			// get the pixel value
 			char b = a[y * 8 + x];
 			if (b > 0) { // plot the pixel
-				put_pixel(textX + (x * 2), textY + y, textC);
+				put_pixel(this, textX + (x * 2), textY + y, textC);
 			} else {
 				// leave empty (or maybe plot 'text backgr color')
 			}
@@ -181,7 +267,7 @@ void draw_char(char *a, int textX, int textY, short textC) {
 }
 
 // Function to draw a char bigger.
-void draw_char_x2(char a, int textX, int textY, int textC) {
+void draw_char_x2(screen_t* this, char a, int textX, int textY, int textC) {
 	int y = 0;
 	int x = 0;
 	char *character = char_to_bitmap(a);
@@ -192,10 +278,11 @@ void draw_char_x2(char a, int textX, int textY, int textC) {
 			// get the pixel value
 			char b = character[y * 8 + x];
 			if (b > 0) { // plot the pixel
-				put_pixel(textX + (x * 4), textY + (y * 2), textC);
-				put_pixel(textX + (x * 4) + 2, textY + (y * 2), textC);
-				put_pixel(textX + (x * 4), textY + (y * 2) + 1, textC);
-				put_pixel(textX + (x * 4) + 2, textY + (y * 2) + 1, textC);
+				put_pixel(this, textX + (x * 4), textY + (y * 2), textC);
+				put_pixel(this, textX + (x * 4) + 2, textY + (y * 2), textC);
+				put_pixel(this, textX + (x * 4), textY + (y * 2) + 1, textC);
+				put_pixel(this, textX + (x * 4) + 2, textY + (y * 2) + 1,
+						textC);
 			} else {
 				// leave empty (or maybe plot 'text backgr color')
 			}
@@ -207,6 +294,14 @@ void draw_char_x2(char a, int textX, int textY, int textC) {
 char *char_to_bitmap(char a) {
 
 	switch (a) {
+	case ('R'):
+	case ('r'):
+		return R;
+		break;
+	case ('N'):
+	case ('n'):
+		return N;
+		break;
 	case ('A'):
 		return A;
 		break;
@@ -214,16 +309,35 @@ char *char_to_bitmap(char a) {
 		return B;
 		break;
 	case ('T'):
+	case ('t'):
 		return T;
 		break;
 	case ('I'):
+	case ('i'):
 		return I;
 		break;
 	case ('M'):
 		return M;
 		break;
 	case ('E'):
+	case ('e'):
 		return E;
+		break;
+	case ('F'):
+	case ('f'):
+		return F;
+		break;
+	case ('I'):
+	case ('i'):
+		return I;
+		break;
+	case ('S'):
+	case ('s'):
+		return S;
+		break;
+	case ('L'):
+	case ('l'):
+		return L;
 		break;
 	case ('0'):
 		return zero;
@@ -272,7 +386,7 @@ char *char_to_bitmap(char a) {
 
 }
 
-void draw_char1(char a, int textX, int textY, short textC) {
+void draw_char1(screen_t* this, char a, int textX, int textY, short textC) {
 
 	int y = 0;
 	int x = 0;
@@ -286,7 +400,7 @@ void draw_char1(char a, int textX, int textY, short textC) {
 			// get the pixel value
 			char b = character[y * 8 + x];
 			if (b > 0) { // plot the pixel
-				put_pixel(textX + (x * 2), textY + y, textC);
+				put_pixel(this, textX + (x * 2), textY + y, textC);
 			} else {
 				// leave empty (or maybe plot 'text backgr color')
 			}
@@ -295,153 +409,32 @@ void draw_char1(char a, int textX, int textY, short textC) {
 
 }
 
-void draw_line(int nlinea, int color, char c[], int size) {
+void draw_line(screen_t* this, int nlinea, int color, char c[], int size) {
 
 	int xInit = 16;
 	int i = 0;
-	for (i = 0; i < size && c[i] != '\0'; i++) {
-		
-		draw_char1(c[i], xInit + (16 * i), nlinea * 8, color);
+	for (i = 0; (i < size) && c[i]; i++) {
+
+		draw_char1(this, c[i], xInit + (16 * i), nlinea * 8, color);
 
 	}
 
 }
 
-void draw_line_x2(int nlinea, int color, char c[], int size) {
+void draw_line_x2(screen_t* this, int nlinea, int color, char c[], int size) {
 
 	int i = 0;
 	int xInit = 16;
-	for (i = 0; i < size && c[i] != '\0'; i++) {
+	for (i = 0; (i < size) && c[i]; i++) {
 
-		draw_char_x2(c[i], xInit + (32 * i), nlinea * 16, color);
+		draw_char_x2(this, c[i], xInit + (32 * i), nlinea * 16, color);
 
 	}
 
 }
 
-void fbtft_init() {
-	// Open the file for reading and writing
-	fbfd = open("/dev/fb1", O_RDWR);
-	if (!fbfd) {
-		printf("Error: cannot open framebuffer device.\n");
-	}
-	//printf("The framebuffer device was opened successfully.\n");
-
-	// Get variable screen information
-	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
-		printf("Error reading variable information.\n");
-	}
-	/*printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
-			vinfo.bits_per_pixel);*/
-
-	// Store for reset (copy vinfo to vinfo_orig)
-	memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
-
-	// Change variable info
-	vinfo.bits_per_pixel = 16;
-	if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
-		printf("Error setting variable information.\n");
-	}
-
-	// Get fixed screen information
-	if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
-		printf("Error reading fixed information.\n");
-	}
-	// map fb to user mem
-	screensize = finfo.smem_len;
-	fbp = (char*) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd,
-			0);
-
-	if ((int) fbp == -1) {
-		printf("Failed to mmap.\n");
-	}
+void screen_destroy(screen_t* this) {
+	munmap(this->fb_pointer, this->finfo->smem_len);
+	close(this->fbfd);
+	free(this);
 }
-
-void fbtft_destroy() {
-	munmap(fbp, screensize);
-	close(fbfd);
-}
-
-// application entry point
-//int main(int argc, char* argv[])
-//{
-//    // Open the file for reading and writing
-//    fbfd = open("/dev/fb1", O_RDWR);
-//    if (!fbfd) {
-//      printf("Error: cannot open framebuffer device.\n");
-//      return(1);
-//    }
-//    printf("The framebuffer device was opened successfully.\n");
-//
-//    // Get variable screen information
-//    if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
-//      printf("Error reading variable information.\n");
-//    }
-//    printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
-//       vinfo.bits_per_pixel );
-//
-//    // Store for reset (copy vinfo to vinfo_orig)
-//    memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
-//
-//    // Change variable info
-//    vinfo.bits_per_pixel = 16;
-//    if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
-//      printf("Error setting variable information.\n");
-//    }
-//
-//    // Get fixed screen information
-//    if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
-//      printf("Error reading fixed information.\n");
-//    }
-//    // map fb to user mem
-//    screensize = finfo.smem_len;
-//    fbp = (char*)mmap(0,
-//              screensize,
-//              PROT_READ | PROT_WRITE,
-//              MAP_SHARED,
-//              fbfd,
-//              0);
-//
-//
-//    if ((int)fbp == -1) {
-//        printf("Failed to mmap.\n");
-//    }
-//    else {
-//
-//    	// and lower half with something else
-//
-//	// draw...
-//	int i=0;
-//
-//        draw(0x1818);
-//        //sleep(1);
-//	int size = 32;
-//	char c[] = "BABABA";
-//
-//	//draw_char1('A',200, 200, 0xffff);
-//	draw_line(2, 0xffff, c, 6);
-//	//draw_line_x2(2, 0xffff, "BABA");
-//	//draw_line_x2(3, 0xab12, "ABAAAA");
-//	//draw_line_x2(4, 0xffff, "BAAAAAAA");
-//	//draw_line_x2(5, 0xab12, "BBBBBBAAA");
-//
-//	//for(i=0; i<50; i++){
-//		//draw_char1(A,200 + (size *i),200,3+(i*9));
-//		//draw_char_x2(A,200 + (size *i),200,3+(i*9));
-//	//}
-//	//for(i=0; i<50; i++){
-//      	//  draw_char_x2(A,200 + (size *i),216,0xffff);
-//        //}
-//	sleep(1);
-//
-//
-//    }
-//
-//    // cleanup
-//    munmap(fbp, screensize);
-//
-//    close(fbfd);
-//
-//    return 0;
-//
-//}

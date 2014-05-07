@@ -4,7 +4,7 @@
 #include "tracker.h"
 #include "train.h"
 #include "railway.h"
-#include "pruebaFB.h"
+#include "screen.h"
 #include <sys/time.h>
 #include <time.h>
 #include "time_operations.h"
@@ -84,20 +84,6 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	train_set_current_speed(train, speed);
 	train_set_time_estimation(train,
 			(float) sector_lengths[sector] / train_get_speed(train));
-	if (train_get_ID(train) == 3) {
-		/*rt_printf("Estimation RENFE: %2.2f\n",
-				train_get_time_estimation(train));*/
-		snprintf(estimation1_str, 20, "TIME 1: %2.2f",
-				train_get_time_estimation(train));
-	} else {
-		/*rt_printf("Estimation DIESEL: %2.2f\n",
-				train_get_time_estimation(train));*/
-		snprintf(estimation2_str, 20, "TIME 2: %2.2f",
-				train_get_time_estimation(train));
-	}
-	draw(0x1818);
-	draw_line(2, 0xffff, estimation1_str, 20);
-	draw_line(3, 0xffff, estimation2_str, 20);
 	//rt_printf(" updated train %d, speed %d sector %c \n", 
 	//		train_get_ID(train), train_get_speed(train) , train_get_sector(train));
 }

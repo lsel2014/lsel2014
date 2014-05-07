@@ -20,6 +20,7 @@ train_t* trains[MAXTRAINS];
 train_t* current_train;
 int ntrains = 0;
 
+static void train_update_est(void* arg);
 
 // Object creation/destruction -----
 
@@ -128,7 +129,7 @@ void trains_setup(void)
 	 }*/
 	
 	current_train = trains[0];
-	
+	task_add("Estimation updater", 2000000000, train_update_est, NULL);
 	interp_addcmd("train", train_cmd, "Set train parameters");
 	interp_addcmd("s", train_emergency_cmd, "Emergency stop all trains");
 }
@@ -357,12 +358,11 @@ int train_cmd(char* arg)
      */
 	if (0 == strncmp(arg, "help", strlen("help")))
 	{
-		printf(
-				"Available commands:\nselect <n>\t\tSelects train with ID <n>
-				                    \nspeed <n>\t\tSets current train speed to <n>
-				                    \nestop\t\tEmergency stop
-				                    \nfunction <n> <s>\t\t<s>=1 enables DCC function <n>
-				                                  \n\t\t\t<s>=0 disables it\n");
+		printf( "Available commands:\n"
+				"  select <n>\t\tSelects train with ID <n>\n"
+				"  speed <n>\t\tSets current train speed to <n>\n"
+				"  estop\t\tEmergency stop\n"
+				"  function <n> <s>\t\t<s>=1 enables DCC function <n>\n\t\t\t<s>=0 disables it\n");
 		return 0;
 	}
 
@@ -577,6 +577,22 @@ float train_get_time_estimation(train_t* this)
 }
 
 /**
+ * @brief train_t current time estimation getter
+ *
+ * @ingroup train_t_getters
+ *
+ * @param this train_t object
+ * @return est Train time estimation
+ */
+float train_get_current_time_estimation(train_t* this)
+{
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	float est = this->telemetry->current_time_est;
+	rt_mutex_release(&this->mutex);
+	return est;
+}
+
+/**
  * @brief train_t sector getter
  *
  * @ingroup train_t_getters
@@ -786,8 +802,25 @@ void train_set_time_estimation(train_t* this, float estimation)
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->time_est = estimation;
 	rt_mutex_release(&this->mutex);
+	train_set_current_time_estimation(this,estimation);
+	observable_notify_observers(&this->observable);
 }
 
+/**
+ * @brief train_t time estimation setter
+ *
+ * @ingroup train_t_setters
+ *
+ * @param this train_t object
+ * @param estimation Train time estimation
+ */
+void train_set_current_time_estimation(train_t* this, float estimation)
+{
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	this->telemetry->current_time_est = estimation;
+	rt_mutex_release(&this->mutex);
+	observable_notify_observers(&this->observable);
+}
 /**
  * @brief train_t sector setter
  *
@@ -801,8 +834,8 @@ void train_set_current_sector(train_t* this, char sector)
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->sector = sector;
 	//rt_printf ("Starting notify\n");
-	observable_notify_observers(&this->observable);
 	rt_mutex_release(&this->mutex);
+	observable_notify_observers(&this->observable);
 }
 
 /**
@@ -818,10 +851,22 @@ void train_set_current_speed(train_t* this, float speed)
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->speed = speed;
 	rt_mutex_release(&this->mutex);
+	observable_notify_observers(&this->observable);
 }
-
-
-
+static
+void train_update_est(void* arg){
+	int i;
+	float est;
+	rt_task_set_periodic(NULL, TM_NOW, 2000000000);
+	while (1) {
+		rt_task_wait_period(NULL);
+		for(i=0;i<ntrains;i++){
+			est=train_get_current_time_estimation(trains[i]);
+			est = (est-0.2)>0?est-0.2:0.0;
+			train_set_current_time_estimation(trains[i],est);
+		}
+	}
+}
 /*
  void train_notify(observer_t* this, observable_t* observed) {
 
