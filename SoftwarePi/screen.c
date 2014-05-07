@@ -134,7 +134,7 @@ char nine[] = { // :
 void screen_setup(){
 	mini_screen=screen_new(16,"/dev/fb1");
 	train_t* t;
-	for (t=mini_screen->t[0]; mini_screen->t->name; ++t) {
+	for (t=mini_screen->t[0]; t->name; ++t) {
 			observable_t* obs = model_get_observable(t->name);
 			observable_register_observer(obs, &mini_screen->observer);
 	}
@@ -192,12 +192,12 @@ void screen_init(screen_t* this, int bpp, char* dev) {
 
 static
 void screen_notify(observer_t* this, observable_t* foo) {
+	screen_t* s = (screen_t*)this;
 	int i;
 	char line[20];
-	draw(this, 0x1818); //Background
+	draw(s, 0x1818); //Background
 	float est;
 	int nsect;
-	screen_t* s = (screen_t*)this;
 	for (i = 0; s->t[i]; ++i) {
 		train_t* t = s->t[i];
 		est = train_get_current_time_estimation(t);
@@ -431,7 +431,7 @@ void draw_line_x2(screen_t* this, int nlinea, int color, char c[], int size) {
 }
 
 void screen_destroy(screen_t* this) {
-	munmap(this->fb_pointer, this->finfo->smem_len);
+	munmap(this->fb_pointer, this->finfo.smem_len);
 	close(this->fbfd);
 	free(this);
 }
