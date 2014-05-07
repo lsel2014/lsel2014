@@ -121,6 +121,6 @@ int main(int argc, char* argv[]) {
 	//rt_task_delete(&task_dcc);
 	//rt_task_delete(&task_sun);
 	task_delete_all();
-	fbtft_destroy();
+	screen_destroy();
 	return 0;
 }

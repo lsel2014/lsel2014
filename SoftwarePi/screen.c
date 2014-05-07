@@ -430,8 +430,8 @@ void draw_line_x2(screen_t* this, int nlinea, int color, char c[], int size) {
 
 }
 
-void screen_destroy(screen_t* this) {
-	munmap(this->fb_pointer, this->finfo.smem_len);
-	close(this->fbfd);
-	free(this);
+void screen_destroy() {
+	munmap(mini_screen->fb_pointer, mini_screen->finfo.smem_len);
+	close(mini_screen->fbfd);
+	free(mini_screen);
 }
