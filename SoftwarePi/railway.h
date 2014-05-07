@@ -31,17 +31,8 @@
  * @defgroup railway_t_globals railway_t globals
  * @{
  */
- typedef struct railway_t;
 
-/**
- * Global array of railways in the model
- */
-extern railway_t* railways[MAXRAILWAY];
-/**
- * Number of railwais in the model
- */
-extern int nrailways;
-/**@}*/
+
 
 
 
@@ -80,6 +71,16 @@ typedef struct
 
 	RT_MUTEX mutex;
 } railway_t;
+/**@}*/
+
+/**
+ * Global array of railways in the model
+ */
+extern railway_t* railways[MAXRAILWAY];
+/**
+ * Number of railwais in the model
+ */
+extern int nrailways;
 /**@}*/
 
 
