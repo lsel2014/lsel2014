@@ -26,6 +26,7 @@
 #include "tracker.h"
 #include "railway.h"
 #include "anticollision.h"
+#include "screen.h"
 
 #ifdef __XENO__
 #include <rtdk.h>
@@ -99,15 +100,13 @@ int main(int argc, char* argv[]) {
 	trains_setup();
 	railways_setup();
 	anticollision_setup();
-	fbtft_init();
 	model_init();
-
 	tracker_init();
-
+	screen_setup();
 	//setupRailChange();
 	sun_setup();
-	setup_trafficLight();
-	setup_crossingGate();
+	//setup_trafficLight();
+	//setup_crossingGate();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
@@ -120,6 +119,6 @@ int main(int argc, char* argv[]) {
 	//rt_task_delete(&task_dcc);
 	//rt_task_delete(&task_sun);
 	task_delete_all();
-	fbtft_destroy();
+	screen_destroy();
 	return 0;
 }

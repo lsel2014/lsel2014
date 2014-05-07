@@ -1,0 +1,32 @@
+\hypertarget{group__dcc__t__tasks}{\section{dcc\-\_\-t tasks}
+\label{group__dcc__t__tasks}\index{dcc\-\_\-t tasks@{dcc\-\_\-t tasks}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__dcc__t__tasks_ga7acd3fe48534561f3f11049be5ad2a2e}{dcc\-\_\-send} (void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Periodic task associated to every dcc\-\_\-sender. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Tasks associated to every \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} 
+
+\subsection{Function Documentation}
+\hypertarget{group__dcc__t__tasks_ga7acd3fe48534561f3f11049be5ad2a2e}{\index{dcc\-\_\-t tasks@{dcc\-\_\-t tasks}!dcc\-\_\-send@{dcc\-\_\-send}}
+\index{dcc\-\_\-send@{dcc\-\_\-send}!dcc_t tasks@{dcc\-\_\-t tasks}}
+\subsubsection[{dcc\-\_\-send}]{\setlength{\rightskip}{0pt plus 5cm}void dcc\-\_\-send (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}}\label{group__dcc__t__tasks_ga7acd3fe48534561f3f11049be5ad2a2e}
+
+
+Periodic task associated to every dcc\-\_\-sender. 
+
+This periodic task is used for bit-\/banging the D\-C\-C protocol. Packets from the sending queue are taken in a F\-I\-F\-O fashion and sent. If no new packets are available the last transmitted packet is repeated until a new one arrives. This auto-\/retransmission feature improves packet loss rates in some scenarios.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & The dcc\-\_\-sender associated to the task. \\
+\hline
+\end{DoxyParams}

@@ -1,3 +1,4 @@
+
 CC = gcc
 CFLAGS = -g -Wall $(shell xeno-config --skin native --cflags)
 LDFLAGS = $(shell xeno-config --skin native --ldflags)
@@ -17,7 +18,9 @@ objs = \
 	railChange.o \
 	dcc.o \
 	sun.o sunparse.o \
-	tracker.o anticollision.o
+	tracker.o anticollision.o \
+	screen.o \
+	time_operations.o
 
 all: daemon
 
@@ -33,8 +36,6 @@ test: daemon
 	done
 
 daemon: $(objs)
-
-#test_trafficLight: Model/observer.o Model/Actuators/actuator.o Model/Actuators/trafficLight.o Model/Actuators/test_trafficLight.o
 
 clean:
 	$(RM) *.o *~ daemon Tasks/*.o Tasks/*~ Interpreter/*.o Interpreter/*~ Model/*.o Model/*~ Model/Actuators/*.o Model/Actuators/*~ Model/Sensors/*.o Model/Sensors/*~ test/*.out

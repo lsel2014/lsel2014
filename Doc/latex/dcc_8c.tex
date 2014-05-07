@@ -1,0 +1,62 @@
+\hypertarget{dcc_8c}{\section{/home/smau/workspace/lsel2014/\-Software\-Pi/dcc.c File Reference}
+\label{dcc_8c}\index{/home/smau/workspace/lsel2014/\-Software\-Pi/dcc.\-c@{/home/smau/workspace/lsel2014/\-Software\-Pi/dcc.\-c}}
+}
+
+
+D\-C\-C entity definition.  
+
+
+{\ttfamily \#include $<$native/mutex.\-h$>$}\\*
+{\ttfamily \#include $<$native/task.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$rtdk.\-h$>$}\\*
+{\ttfamily \#include $<$wiring\-Pi.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}dcc.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}daemon.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tasks.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$ \hyperlink{group__dcc__t__object_gafd6ecd109e0603b75722ffae93dacb55}{dcc\-\_\-new} (int gpio, int deadline)
+\begin{DoxyCompactList}\small\item\em dcc\-\_\-t creation \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__object_gae7b3b3f0723a4b2e5827365fd7e0cd3a}{dcc\-\_\-init} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, int dcc\-\_\-gpio, int deadline)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} initialization \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__actions_gacb4f29b0b7c35730b6fe1bd716041ea2}{dcc\-\_\-add\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, \hyperlink{structdcc__packet__t}{dcc\-\_\-packet\-\_\-t} packet)
+\begin{DoxyCompactList}\small\item\em Add packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__actions_gaaf362a49f668badd91f596f581cd2ba6}{dcc\-\_\-add\-\_\-speed\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, int speed)
+\begin{DoxyCompactList}\small\item\em Add speed packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__actions_ga3c44ba8b3f884a558aa4d06ef945e7c7}{dcc\-\_\-add\-\_\-data\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, unsigned char data)
+\begin{DoxyCompactList}\small\item\em Add data packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+\hypertarget{group__dcc__t__actions_gadde12081b6782aab96f05029932c8b30}{void {\bfseries dcc\-\_\-add\-\_\-function\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, unsigned char function, unsigned char state)}\label{group__dcc__t__actions_gadde12081b6782aab96f05029932c8b30}
+
+\item 
+void \hyperlink{group__dcc__t__tasks_ga7acd3fe48534561f3f11049be5ad2a2e}{dcc\-\_\-send} (void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Periodic task associated to every dcc\-\_\-sender. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char \hyperlink{dcc_8c_a1785b204e168584e912961a599268fad}{train\-\_\-speed\-\_\-codes} \mbox{[}29\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+D\-C\-C entity definition. \begin{DoxyDate}{Date}
+-- Implementation of \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} functions and declarations
+\end{DoxyDate}
+This is an implementation of a complete D\-C\-C sender for the Raspberry Pi. These functions emulate the basic D\-C\-C functionality. Support for extended packets may be added in the future.
+
+Signals are generated via bit-\/banging. Timing is controlled by a periodic real-\/time task that toggles the sending G\-P\-I\-O. 
+
+\subsection{Variable Documentation}
+\hypertarget{dcc_8c_a1785b204e168584e912961a599268fad}{\index{dcc.\-c@{dcc.\-c}!train\-\_\-speed\-\_\-codes@{train\-\_\-speed\-\_\-codes}}
+\index{train\-\_\-speed\-\_\-codes@{train\-\_\-speed\-\_\-codes}!dcc.c@{dcc.\-c}}
+\subsubsection[{train\-\_\-speed\-\_\-codes}]{\setlength{\rightskip}{0pt plus 5cm}const char train\-\_\-speed\-\_\-codes\mbox{[}29\mbox{]}}}\label{dcc_8c_a1785b204e168584e912961a599268fad}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+ \{ 0b00000, 0b00010, 0b10010, 0b00011,
+        0b10011, 0b00100, 0b10100, 0b00101, 0b10101, 0b00110, 0b10110, 0b00111,
+        0b10111, 0b01000, 0b11000, 0b01001, 0b11001, 0b01010, 0b11010, 0b01011,
+        0b11011, 0b01100, 0b11100, 0b01101, 0b11101, 0b01110, 0b11110, 0b01111,
+        0b11111 \}
+\end{DoxyCode}
+Speed codes defined by D\-C\-C standard (28 step speed format). Mapped for convenience. 

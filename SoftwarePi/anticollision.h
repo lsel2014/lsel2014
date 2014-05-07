@@ -16,10 +16,10 @@
 typedef struct anticollision_t {
 	observer_t observer;
 
+	char overrides_activated;
 	//railway_t* railway;
 
 	pthread_mutex_t mutex;
-
 } anticollision_t;
 
 //Object creation/destruction

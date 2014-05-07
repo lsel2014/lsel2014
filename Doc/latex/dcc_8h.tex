@@ -1,0 +1,58 @@
+\hypertarget{dcc_8h}{\section{/home/smau/workspace/lsel2014/\-Software\-Pi/dcc.h File Reference}
+\label{dcc_8h}\index{/home/smau/workspace/lsel2014/\-Software\-Pi/dcc.\-h@{/home/smau/workspace/lsel2014/\-Software\-Pi/dcc.\-h}}
+}
+
+
+D\-C\-C entity declaration.  
+
+
+{\ttfamily \#include $<$native/mutex.\-h$>$}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structdcc__buffer}{dcc\-\_\-buffer}
+\item 
+struct \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__DCC_gab30af815d6e9494361629440f14e3716}{\#define {\bfseries P\-A\-C\-K\-E\-T\-\_\-\-B\-U\-F\-F\-E\-R\-\_\-\-S\-I\-Z\-E}~32}\label{group__DCC_gab30af815d6e9494361629440f14e3716}
+
+\item 
+\hypertarget{group__DCC_ga9c864f3eb4dde448f5d31dda47c8a602}{\#define {\bfseries D\-C\-C\-\_\-\-P\-E\-R\-I\-O\-D}~58000}\label{group__DCC_ga9c864f3eb4dde448f5d31dda47c8a602}
+
+\item 
+\hypertarget{group__DCC_ga4ae7dfe73b5ebd50713d44bf89a6e9d6}{\#define {\bfseries D\-C\-C\-\_\-\-D\-E\-A\-D\-L\-I\-N\-E}~63000}\label{group__DCC_ga4ae7dfe73b5ebd50713d44bf89a6e9d6}
+
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__dcc__t__structs_ga8b23789145a099407c1361ddb8bfe11b}{typedef unsigned int {\bfseries dcc\-\_\-packet\-\_\-t}}\label{group__dcc__t__structs_ga8b23789145a099407c1361ddb8bfe11b}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$ \hyperlink{group__dcc__t__object_gafd6ecd109e0603b75722ffae93dacb55}{dcc\-\_\-new} (int gpio, int deadline)
+\begin{DoxyCompactList}\small\item\em dcc\-\_\-t creation \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__object_gae7b3b3f0723a4b2e5827365fd7e0cd3a}{dcc\-\_\-init} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, int dcc\-\_\-gpio, int deadline)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} initialization \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__actions_gacb4f29b0b7c35730b6fe1bd716041ea2}{dcc\-\_\-add\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, \hyperlink{structdcc__packet__t}{dcc\-\_\-packet\-\_\-t} packet)
+\begin{DoxyCompactList}\small\item\em Add packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__actions_gaaf362a49f668badd91f596f581cd2ba6}{dcc\-\_\-add\-\_\-speed\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, int speed)
+\begin{DoxyCompactList}\small\item\em Add speed packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcc__t__actions_ga3c44ba8b3f884a558aa4d06ef945e7c7}{dcc\-\_\-add\-\_\-data\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, unsigned char data)
+\begin{DoxyCompactList}\small\item\em Add data packet to D\-C\-C buffer. \end{DoxyCompactList}\item 
+\hypertarget{group__dcc__t__actions_gadde12081b6782aab96f05029932c8b30}{void {\bfseries dcc\-\_\-add\-\_\-function\-\_\-packet} (\hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$this, unsigned char address, unsigned char function, unsigned char state)}\label{group__dcc__t__actions_gadde12081b6782aab96f05029932c8b30}
+
+\item 
+void \hyperlink{group__dcc__t__tasks_ga7acd3fe48534561f3f11049be5ad2a2e}{dcc\-\_\-send} (void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Periodic task associated to every dcc\-\_\-sender. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+D\-C\-C entity declaration. \begin{DoxyDate}{Date}
+-- Declaration of \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} object and functions 
+\end{DoxyDate}

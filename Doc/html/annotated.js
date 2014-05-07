@@ -1,13 +1,30 @@
 var annotated =
 [
+    [ "actuator_t", "structactuator__t.html", "structactuator__t" ],
+    [ "add", "structadd.html", "structadd" ],
+    [ "ADD", "unionADD.html", "unionADD" ],
     [ "anticollision_t", "structanticollision__t.html", "structanticollision__t" ],
+    [ "cmd_t", "structcmd__t.html", "structcmd__t" ],
+    [ "crossingGate_t", "structcrossingGate__t.html", "structcrossingGate__t" ],
+    [ "ctr", "structctr.html", "structctr" ],
+    [ "CTR", "unionCTR.html", "unionCTR" ],
     [ "dcc_buffer", "structdcc__buffer.html", "structdcc__buffer" ],
+    [ "dcc_packet_t", "structdcc__packet__t.html", null ],
     [ "dcc_sender_t", "structdcc__sender__t.html", "structdcc__sender__t" ],
+    [ "event_t", "structevent__t.html", "structevent__t" ],
+    [ "observable_t", "structobservable__t.html", "structobservable__t" ],
+    [ "observer_t", "structobserver__t.html", "structobserver__t" ],
+    [ "railChange_t", "structrailChange__t.html", "structrailChange__t" ],
     [ "railway_t", "structrailway__t.html", "structrailway__t" ],
     [ "sector_t", "structsector__t.html", "structsector__t" ],
+    [ "sensibleSectors_t", "structsensibleSectors__t.html", "structsensibleSectors__t" ],
+    [ "sensor_t", "structsensor__t.html", "structsensor__t" ],
+    [ "sensorIR_t", "structsensorIR__t.html", "structsensorIR__t" ],
     [ "sun_t", "structsun__t.html", "structsun__t" ],
     [ "sun_time_t", "structsun__time__t.html", "structsun__time__t" ],
     [ "taskinfo_t", "structtaskinfo__t.html", "structtaskinfo__t" ],
     [ "telemetry_t", "structtelemetry__t.html", "structtelemetry__t" ],
-    [ "train_t", "structtrain__t.html", "structtrain__t" ]
+    [ "trafficLight_t", "structtrafficLight__t.html", "structtrafficLight__t" ],
+    [ "train_t", "structtrain__t.html", "structtrain__t" ],
+    [ "TRM", "structTRM.html", "structTRM" ]
 ];

@@ -1,0 +1,15 @@
+\hypertarget{structdcc__packet__t}{\section{dcc\-\_\-packet\-\_\-t Struct Reference}
+\label{structdcc__packet__t}\index{dcc\-\_\-packet\-\_\-t@{dcc\-\_\-packet\-\_\-t}}
+}
+
+
+{\ttfamily \#include $<$dcc.\-h$>$}
+
+
+
+\subsection{Detailed Description}
+D\-C\-C packet structure\-: 14bit preamble (only 4 here to fit in 32bit) 1 bit packet start bit (always 0) 8 bit address (0-\/127, M\-S\-B always 0) 1 bit address-\/data separator (always 0) 8 bit data (different formats available) 1 bit data-\/ecc separator (always 0) 8 bit error checking code (address X\-O\-R data) 1 bit packet end (always 1) 
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/smau/workspace/lsel2014/\-Software\-Pi/\hyperlink{dcc_8h}{dcc.\-h}\end{DoxyCompactItemize}

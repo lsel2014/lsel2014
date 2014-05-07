@@ -25,10 +25,10 @@ void anticollision_setup(void)
   observable_register_observer(&(railways[0]->observable),
                                (observer_t*) anticollision);
     
-  for (i=0;i<ntrains;i++)
-    {
-      observable_register_observer(&(trains[i]->observable), (observer_t*) anticollision);
-    }
+  for (i=0;i<ntrains;i++) {
+    observable_register_observer (&(trains[i]->observable),
+                                  (observer_t*) anticollision);
+  }
 }
 
 anticollision_t* anticollision_new(void)
@@ -42,6 +42,7 @@ anticollision_t* anticollision_new(void)
 void anticollision_init(anticollision_t* this) {
 	observer_init((observer_t*) this, anticollision_notify);
 	security_enable = 1;
+	this->overrides_activated = 0;
 
 	rt_mutex_create(&this->mutex, NULL);
 }
@@ -99,7 +100,6 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 	//rail = railways[0];
 	anticollision_t* thisAC = (anticollision_t*) this;
 	int i;
-	int nalarm = 0;
 
 	if (security_enable == 1) {
 		for (i = 0; i < NSECTORS; i++) {
@@ -123,30 +123,22 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 
 				if ((rail->railwaySectors[to_check]->nregisteredtrains) > 0) {
 
-					train_set_security(train, 1);
-					nalarm++;
-					printf("Seguridad activada en el tren ID: %d\n", train->ID);
+					if (train_get_security(train) == 0) {
+						thisAC->overrides_activated++;
+						train_set_security(train, 1);
+					
+						printf("Seguridad activada en el tren ID: %d\n", train->ID);
 
-					//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
-					train_set_power(train, 0);
-
-					/*
-					if (nalarm == 2) {
-						int j;
-						for (j = 0; j < ntrains; j++) {
-							if (train_get_direction(trains[j]) == REVERSE) {
-								train_set_power(trains[j], 20);
-								train_set_target_power(trains[j], 20);
-							}
-						}
-
-					}*/
+						//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
+						train_emergency_stop(train);
+					//	train_set_power(train, 0);
+					}
+					
 				} else {
 					if (train_get_security(train) == 1) {
-						nalarm--;
+						thisAC->overrides_activated--;
 						train_set_security(train, 0);
 
-						//// TODO: Comprobar si se deberia bajar el flag global
 						printf("Seguridad desactivada en el tren ID: %d\n",
 								train->ID);
 					}
@@ -154,5 +146,18 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 
 			}
 		}
+	
+	if (thisAC->overrides_activated == 2) {
+		int new_power;
+		new_power = -train_get_target_power(trains[0]);
+		train_set_target_power(trains[0], new_power);
+		
+		thisAC->overrides_activated--;
+		train_set_security(trains[0], 0);
+
+		printf("Protocolo de mismo sentido");
+	}
+	
+	
 	}
 }

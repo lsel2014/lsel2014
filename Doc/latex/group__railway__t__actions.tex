@@ -1,0 +1,84 @@
+\hypertarget{group__railway__t__actions}{\section{railway\-\_\-t actions}
+\label{group__railway__t__actions}\index{railway\-\_\-t actions@{railway\-\_\-t actions}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group__railway__t__actions_ga4132dde76192adaef01b679049d5e5f4}{railway\-\_\-cmd} (char $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Railway related interpreter commands. \end{DoxyCompactList}\item 
+void \hyperlink{group__railway__t__actions_ga3b9b10cab801022fc85539c249eda493}{railway\-\_\-register\-\_\-train} (\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$this, \hyperlink{structtrain__t}{train\-\_\-t} $\ast$train, int sector)
+\begin{DoxyCompactList}\small\item\em Register a train in a railway. \end{DoxyCompactList}\item 
+void \hyperlink{group__railway__t__actions_gae751d6edaad205319b010ba3fd33313c}{railway\-\_\-erase\-\_\-train} (\hyperlink{structrailway__t}{railway\-\_\-t} $\ast$this, \hyperlink{structtrain__t}{train\-\_\-t} $\ast$train)
+\begin{DoxyCompactList}\small\item\em Erase a train from a railway. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Actions of \hyperlink{structrailway__t}{railway\-\_\-t} 
+
+\subsection{Function Documentation}
+\hypertarget{group__railway__t__actions_ga4132dde76192adaef01b679049d5e5f4}{\index{railway\-\_\-t actions@{railway\-\_\-t actions}!railway\-\_\-cmd@{railway\-\_\-cmd}}
+\index{railway\-\_\-cmd@{railway\-\_\-cmd}!railway_t actions@{railway\-\_\-t actions}}
+\subsubsection[{railway\-\_\-cmd}]{\setlength{\rightskip}{0pt plus 5cm}int railway\-\_\-cmd (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}}\label{group__railway__t__actions_ga4132dde76192adaef01b679049d5e5f4}
+
+
+Railway related interpreter commands. 
+
+Railway related commands. Allows the user to manage and control the railway via the cmd intepreter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Second command argument to be executed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 
+\end{DoxyReturn}
+\hypertarget{group__railway__t__actions_gae751d6edaad205319b010ba3fd33313c}{\index{railway\-\_\-t actions@{railway\-\_\-t actions}!railway\-\_\-erase\-\_\-train@{railway\-\_\-erase\-\_\-train}}
+\index{railway\-\_\-erase\-\_\-train@{railway\-\_\-erase\-\_\-train}!railway_t actions@{railway\-\_\-t actions}}
+\subsubsection[{railway\-\_\-erase\-\_\-train}]{\setlength{\rightskip}{0pt plus 5cm}void railway\-\_\-erase\-\_\-train (
+\begin{DoxyParamCaption}
+\item[{{\bf railway\-\_\-t} $\ast$}]{this, }
+\item[{{\bf train\-\_\-t} $\ast$}]{train}
+\end{DoxyParamCaption}
+)}}\label{group__railway__t__actions_gae751d6edaad205319b010ba3fd33313c}
+
+
+Erase a train from a railway. 
+
+Removes a given train from the desired railway.
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & Railway to remove a train from \\
+\hline
+{\em train} & Train to be removed \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__railway__t__actions_ga3b9b10cab801022fc85539c249eda493}{\index{railway\-\_\-t actions@{railway\-\_\-t actions}!railway\-\_\-register\-\_\-train@{railway\-\_\-register\-\_\-train}}
+\index{railway\-\_\-register\-\_\-train@{railway\-\_\-register\-\_\-train}!railway_t actions@{railway\-\_\-t actions}}
+\subsubsection[{railway\-\_\-register\-\_\-train}]{\setlength{\rightskip}{0pt plus 5cm}void railway\-\_\-register\-\_\-train (
+\begin{DoxyParamCaption}
+\item[{{\bf railway\-\_\-t} $\ast$}]{this, }
+\item[{{\bf train\-\_\-t} $\ast$}]{train, }
+\item[{int}]{sector}
+\end{DoxyParamCaption}
+)}}\label{group__railway__t__actions_ga3b9b10cab801022fc85539c249eda493}
+
+
+Register a train in a railway. 
+
+Registers a given train in a given sector, storing it into the desired railway.
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & Railway to register a train in \\
+\hline
+{\em train} & Train to be registered \\
+\hline
+{\em sector} & Specific railway sector to register the train in \\
+\hline
+\end{DoxyParams}

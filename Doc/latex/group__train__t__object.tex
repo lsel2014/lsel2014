@@ -1,0 +1,119 @@
+\hypertarget{group__train__t__object}{\section{train\-\_\-t object functions}
+\label{group__train__t__object}\index{train\-\_\-t object functions@{train\-\_\-t object functions}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structtrain__t}{train\-\_\-t} $\ast$ \hyperlink{group__train__t__object_ga70e77691cff7bdc84a461f7fab1c3916}{train\-\_\-new} (char $\ast$name, char I\-D, char n\-\_\-wagon, char length, \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$dcc)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structtrain__t}{train\-\_\-t} creation \end{DoxyCompactList}\item 
+void \hyperlink{group__train__t__object_ga4cfab4202f81ad2996cf09acc5911974}{train\-\_\-init} (\hyperlink{structtrain__t}{train\-\_\-t} $\ast$this, char $\ast$name, char I\-D, char n\-\_\-wagon, char length, \hyperlink{structdcc__sender__t}{dcc\-\_\-sender\-\_\-t} $\ast$dcc, \hyperlink{structtelemetry__t}{telemetry\-\_\-t} $\ast$telemetry)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structtrain__t}{train\-\_\-t} initialization \end{DoxyCompactList}\item 
+void \hyperlink{group__train__t__object_gaabbf02bfbe6892af7ee3a86cd4cfe023}{trains\-\_\-setup} (void)
+\begin{DoxyCompactList}\small\item\em Model trains and D\-C\-C instantiation. \end{DoxyCompactList}\item 
+void \hyperlink{group__train__t__object_gaf6a5b2bd35fdbc74a139af997e58bcf8}{train\-\_\-destroy} (\hyperlink{structtrain__t}{train\-\_\-t} $\ast$this)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structtrain__t}{train\-\_\-t} destruction \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Object creation/destruction functions of \hyperlink{structtrain__t}{train\-\_\-t} 
+
+\subsection{Function Documentation}
+\hypertarget{group__train__t__object_gaf6a5b2bd35fdbc74a139af997e58bcf8}{\index{train\-\_\-t object functions@{train\-\_\-t object functions}!train\-\_\-destroy@{train\-\_\-destroy}}
+\index{train\-\_\-destroy@{train\-\_\-destroy}!train_t object functions@{train\-\_\-t object functions}}
+\subsubsection[{train\-\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}void train\-\_\-destroy (
+\begin{DoxyParamCaption}
+\item[{{\bf train\-\_\-t} $\ast$}]{this}
+\end{DoxyParamCaption}
+)}}\label{group__train__t__object_gaf6a5b2bd35fdbc74a139af997e58bcf8}
+
+
+\hyperlink{structtrain__t}{train\-\_\-t} destruction 
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & \hyperlink{structtrain__t}{train\-\_\-t} to be free'd \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__train__t__object_ga4cfab4202f81ad2996cf09acc5911974}{\index{train\-\_\-t object functions@{train\-\_\-t object functions}!train\-\_\-init@{train\-\_\-init}}
+\index{train\-\_\-init@{train\-\_\-init}!train_t object functions@{train\-\_\-t object functions}}
+\subsubsection[{train\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void train\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf train\-\_\-t} $\ast$}]{this, }
+\item[{char $\ast$}]{name, }
+\item[{char}]{I\-D, }
+\item[{char}]{n\-\_\-wagon, }
+\item[{char}]{length, }
+\item[{{\bf dcc\-\_\-sender\-\_\-t} $\ast$}]{dcc, }
+\item[{{\bf telemetry\-\_\-t} $\ast$}]{telemetry}
+\end{DoxyParamCaption}
+)}}\label{group__train__t__object_ga4cfab4202f81ad2996cf09acc5911974}
+
+
+\hyperlink{structtrain__t}{train\-\_\-t} initialization 
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & Malloc'd \hyperlink{structtrain__t}{train\-\_\-t} object \\
+\hline
+{\em name} & Train name \\
+\hline
+{\em I\-D} & Train I\-D \\
+\hline
+{\em n\-\_\-wagon} & Number of wagons attached to the train \\
+\hline
+{\em length} & Length of the train \\
+\hline
+{\em dcc} & D\-C\-C sender reference \\
+\hline
+{\em telemetry} & Telemetry data \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__train__t__object_ga70e77691cff7bdc84a461f7fab1c3916}{\index{train\-\_\-t object functions@{train\-\_\-t object functions}!train\-\_\-new@{train\-\_\-new}}
+\index{train\-\_\-new@{train\-\_\-new}!train_t object functions@{train\-\_\-t object functions}}
+\subsubsection[{train\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf train\-\_\-t} $\ast$ train\-\_\-new (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{name, }
+\item[{char}]{I\-D, }
+\item[{char}]{n\-\_\-wagon, }
+\item[{char}]{length, }
+\item[{{\bf dcc\-\_\-sender\-\_\-t} $\ast$}]{dcc}
+\end{DoxyParamCaption}
+)}}\label{group__train__t__object_ga70e77691cff7bdc84a461f7fab1c3916}
+
+
+\hyperlink{structtrain__t}{train\-\_\-t} creation 
+
+Creates a \hyperlink{structtrain__t}{train\-\_\-t} object and stores it in the global trains array if not full.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Train name \\
+\hline
+{\em I\-D} & Train I\-D \\
+\hline
+{\em n\-\_\-wagon} & Number of wagons attached to the train \\
+\hline
+{\em length} & Length of the train \\
+\hline
+{\em dcc} & D\-C\-C sender reference\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this Malloc'd and initialized \hyperlink{structtrain__t}{train\-\_\-t} object 
+\end{DoxyReturn}
+\hypertarget{group__train__t__object_gaabbf02bfbe6892af7ee3a86cd4cfe023}{\index{train\-\_\-t object functions@{train\-\_\-t object functions}!trains\-\_\-setup@{trains\-\_\-setup}}
+\index{trains\-\_\-setup@{trains\-\_\-setup}!train_t object functions@{train\-\_\-t object functions}}
+\subsubsection[{trains\-\_\-setup}]{\setlength{\rightskip}{0pt plus 5cm}void trains\-\_\-setup (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{group__train__t__object_gaabbf02bfbe6892af7ee3a86cd4cfe023}
+
+
+Model trains and D\-C\-C instantiation. 
+
+Sets up the D\-C\-C object (in charge of sending commands to the railway amplifier) and every train present in the model, attaching them to the D\-C\-C.
+
+It also registers all of the train commands in the intepreter.
+
+At the end, sets the current\-\_\-train to the first one stored in the global trains array. 
