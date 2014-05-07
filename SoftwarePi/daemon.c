@@ -29,7 +29,7 @@
 #include "Model/Sensors/sensorIR.h"
 #include "Model/Actuators/railChange.h"
 #include "Model/Actuators/trafficLight.h"
-#include "Model/Actuators/crossingGate.h"
+//#include "Model/Actuators/crossingGate.h"
 #include "tracker.h"
 #include "railway.h"
 #include "anticollision.h"
@@ -107,8 +107,8 @@ int main(int argc, char* argv[]) {
 	screen_setup();
 	//setupRailChange();
 	sun_setup();
-	setup_trafficLight();
-	setup_crossingGate();
+	//setup_trafficLight();
+	//setup_crossingGate();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);

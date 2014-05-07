@@ -801,8 +801,9 @@ void train_set_time_estimation(train_t* this, float estimation)
 {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->time_est = estimation;
+	this->telemetry->current_time_est =estimation;
 	rt_mutex_release(&this->mutex);
-	train_set_current_time_estimation(this,estimation);
+	//train_set_current_time_estimation(this,estimation);
 	observable_notify_observers(&this->observable);
 }
 

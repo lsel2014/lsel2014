@@ -1,9 +1,0 @@
-anti enable 0
-s
-sleep 10
-train select 4
-train speed -28
-sleep 20
-train select 3
-train speed 20
-sleep 40
