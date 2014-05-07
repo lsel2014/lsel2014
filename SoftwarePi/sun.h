@@ -1,11 +1,6 @@
 #ifndef SUN_H
 #define SUN_H
 
-#include <native/mutex.h>
-#include <native/task.h>
-#include <stdlib.h>
-#include <rtdk.h>
-
 #define SUN_PERIOD 1000000000
 #define SUN_DEADLINE 1000000000
 #define DEFAULT_DATE "11/11/2011"
@@ -25,7 +20,7 @@ typedef struct sun_t {
 	sun_date_t date;
 	sun_time_t sunrise;
 	sun_time_t sunset;
-	RT_MUTEX mutex;
+	pthread_mutex_t mutex;
 } sun_t;
 
 int sun_cmd(char* arg);

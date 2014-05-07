@@ -2,15 +2,8 @@
 #include <signal.h>
 #include <unistd.h>
 
-// Xenomai native skin libraries
-#include <sys/mman.h>
-#include <native/task.h>
-#include <native/timer.h>
 // WiringPi
 #include <wiringPi.h>
-
-// RT compilant print library
-#include <rtdk.h>
 
 // Tasks
 #include "dcc.h"
@@ -18,22 +11,25 @@
 //#include "sunTasks.h"
 
 // Interpreter
-#include "Interpreter/interp.h"
+#include "interp.h"
 #include "daemon.h"
-#include "tasks.h"
+#include "task.h"
 
 //Model
 #include "train.h"
 #include "sun.h"
 #include "model.h"
-#include "Model/Sensors/sensorIR.h"
-#include "Model/Actuators/railChange.h"
-#include "Model/Actuators/trafficLight.h"
-#include "Model/Actuators/crossingGate.h"
+#include "sensorIR.h"
+#include "railChange.h"
+#include "trafficLight.h"
+#include "crossingGate.h"
 #include "tracker.h"
 #include "railway.h"
 #include "anticollision.h"
-#include "pruebaFB.h"
+
+#ifdef __XENO__
+#include <rtdk.h>
+#endif
 
 // Dummy function to catch signals
 void catch_signal() {
@@ -48,20 +44,21 @@ void initializeModel(void) {
 	}
 }
 
-void initializeXenomaiEnv(void) {
+void initializeXenomaiEnv(void)
+{
 	// Catch signals
 	signal(SIGTERM, catch_signal);
 	signal(SIGINT, catch_signal);
-
+#ifdef __XENO__
 	/* Avoids memory swapping for this program */
 	mlockall(MCL_CURRENT | MCL_FUTURE);
-
 	// Initialize rdtk to use rt_printf
 	rt_print_auto_init(1);
+#endif
 }
 
-void initializeWiringPi(void) {
-
+void initializeWiringPi(void)
+{
 	wiringPiSetup();
 
 	// Replace with proper I2C modules load on kernel

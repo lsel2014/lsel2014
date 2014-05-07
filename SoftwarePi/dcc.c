@@ -1,6 +1,5 @@
 #include "dcc.h"
-#include <native/mutex.h>
-#include <native/task.h>
+#include "task.h"
 #include <stdlib.h>
 #include <rtdk.h>
 #include "daemon.h"

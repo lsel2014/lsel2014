@@ -3,7 +3,7 @@
 #define PACKET_BUFFER_SIZE 16
 #define DCC_PERIOD 58000
 #define DCC_DEADLINE 63000 //DCC tolerates up to 63us half period
-#include <native/mutex.h>
+#include <pthread.h>
 
 /*
  * DCC packet structure.
@@ -29,7 +29,7 @@ typedef struct {
 	int dcc_gpio;
 	int pending_packets;
 	dcc_buffer buffer;
-	RT_MUTEX dcc_mutex;
+	pthread_mutex_t dcc_mutex;
 } dcc_sender_t;
 
 dcc_sender_t* dcc_new(int gpio, int deadline);

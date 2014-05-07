@@ -2,14 +2,13 @@
 #define TRAIN_H
 
 #include <pthread.h>
-#include <native/mutex.h>
 #include <sys/time.h>
 #include <time.h>
 #include <stdlib.h>
 #include "dcc.h"
-#include "Interpreter/interp.h"
-#include "Model/observer.h"
-#include "Model/Sensors/sensorIR.h"
+#include "interp.h"
+#include "observer.h"
+#include "sensorIR.h"
 
 #define ESTOP_CMD 0b01000001
 #define MAXTRAINS 8
@@ -35,7 +34,7 @@ typedef struct {
 	train_direction_t direction;
 	char n_wagon;
 	char length;
-	RT_MUTEX mutex;
+	pthread_mutex_t mutex;
 	dcc_sender_t* dcc;
 	telemetry_t* telemetry;
 	char security_override;

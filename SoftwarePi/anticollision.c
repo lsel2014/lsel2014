@@ -12,25 +12,27 @@
 
 #include "anticollision.h"
 
-static anticollision_t *anticollision;
+static anticollision_t anticollision;
 char security_enable = 0;
 
-void anticollision_setup(void) {
-	int i;
-	anticollision = anticollision_new();
-	interp_addcmd("anti", anticollision_cmd,
-			"Shows the anticollisions security protocol status");
+void anticollision_setup(void)
+{
+  int i;
+  anticollision_init (&anticollision);
+  interp_addcmd("anti", anticollision_cmd,
+                "Shows the anticollisions security protocol status");
 
-	observable_register_observer(&(railways[0]->observable),
-			(observer_t*) anticollision);
+  observable_register_observer(&(railways[0]->observable),
+                               (observer_t*) anticollision);
     
-    for (i=0;i<ntrains;i++)
+  for (i=0;i<ntrains;i++)
     {
-        observable_register_observer(&(trains[i]->observable), (observer_t*) anticollision);
+      observable_register_observer(&(trains[i]->observable), (observer_t*) anticollision);
     }
 }
 
-anticollision_t* anticollision_new(void) {
+anticollision_t* anticollision_new(void)
+{
 	anticollision_t* this = (anticollision_t*) malloc(sizeof(anticollision_t));
 	anticollision_init(this);
 

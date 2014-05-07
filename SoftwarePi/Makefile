@@ -5,18 +5,19 @@ LDLIBS = -lwiringPi -lreadline -lm
 
 objs = \
 	daemon.o \
-	tasks.o \
-	Interpreter/interp.o \
-	train.o \
-	Model/observer.o \
-	Model/Sensors/sensor.o \
-	Model/Sensors/sensorIR.o \
-	Model/Actuators/actuator.o \
-	Model/Actuators/trafficLight.o \
-	Model/Actuators/crossingGate.o \
-	Model/Actuators/railChange.o \
+	task.o \
+	interp.o \
+	model.o observer.o \
+	train.o railway.o \
+	sensor.o \
+	sensorIR.o \
+	actuator.o \
+	trafficLight.o \
+	crossingGate.o \
+	railChange.o \
 	dcc.o \
-	sun.o sunparse.o model.o tracker.o railway.o anticollision.o pruebaFB.o
+	sun.o sunparse.o \
+	tracker.o anticollision.o
 
 all: daemon
 

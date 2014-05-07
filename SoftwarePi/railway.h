@@ -1,10 +1,9 @@
 #ifndef RAILWAY_H
 #define RAILWAY_H
 
-#include <native/mutex.h>
 #include "train.h" 
-#include "Model/observer.h"
-#include "Interpreter/interp.h"
+#include "observer.h"
+#include "interp.h"
 
 #define NSECTORS 4
 #define MAXRAILWAY 4
@@ -19,7 +18,7 @@ typedef struct {
 typedef struct {
 	observable_t observable;
 	int id;
-	RT_MUTEX mutex;
+	pthread_mutex_t mutex;
 	sector_t* railwaySectors[NSECTORS];
 } railway_t;
 

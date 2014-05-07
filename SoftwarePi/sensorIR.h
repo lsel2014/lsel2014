@@ -8,11 +8,10 @@
 #ifndef SENSORIR_H
 #define SENSORIR_H
 
-#include "../observer.h"
-#include <native/mutex.h>
-#include "../../tasks.h"
-#include "../../train.h"
-#include "../../Interpreter/interp.h"
+#include "observer.h"
+#include "task.h"
+#include "train.h"
+#include "interp.h"
 #define MAXSENSORS 4
 
 #define IR_DEADLINE 20000000
@@ -31,12 +30,14 @@ typedef struct {
 	int GPIOlines[MAXTRAINS];
 //	int last_reading;
 	event_t* event;
-	RT_MUTEX mutex;
+	pthread_mutex_t mutex;
 
 } sensorIR_t;
 
 extern sensorIR_t* sensors[MAXSENSORS];
 extern int nsensors;
+
+void IRsensors_setup(void);
 
 sensorIR_t* sensorIR_new(int id);
 void sensorIR_init(sensorIR_t* this, int id, event_t* event);

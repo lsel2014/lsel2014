@@ -8,10 +8,9 @@
 #define TRAFFIC_LIGHT_H
 #include <stdlib.h>
 
-#include <native/mutex.h>
-#include "../../train.h"
-#include "../../Interpreter/interp.h"
-#include "../observer.h"
+#include "train.h"
+#include "interp.h"
+#include "observer.h"
 
 #define MAXSENSIBLESECTORS 4
 
@@ -32,7 +31,7 @@ typedef struct trafficLight_t {
 	sensibleSectors_t sectors;
 	int activeTrainsCount;
 	char activeTrains[MAXTRAINS];
-	RT_MUTEX mutex;
+	pthread_mutex_t mutex;
 } trafficLight_t;
 
 void setup_trafficLight(void);

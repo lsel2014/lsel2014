@@ -1,7 +1,7 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-#include "../observer.h"
+#include "observer.h"
 
 struct sensor_t;
 

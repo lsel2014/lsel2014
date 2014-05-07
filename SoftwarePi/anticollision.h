@@ -10,16 +10,15 @@
 
 #include "train.h"
 #include "railway.h"
-#include "Model/observer.h"
-#include "Interpreter/interp.h"
+#include "observer.h"
+#include "interp.h"
 
 typedef struct anticollision_t {
-
-	observer_t* observer;
+	observer_t observer;
 
 	//railway_t* railway;
 
-	RT_MUTEX mutex;
+	pthread_mutex_t mutex;
 
 } anticollision_t;
 

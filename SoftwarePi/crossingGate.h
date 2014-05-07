@@ -1,8 +1,8 @@
 #ifndef CROSSINGGATE_H
 #define CROSSINGGATE_H
 
-#include "../observer.h"
-#include "../../train.h"
+#include "observer.h"
+#include "train.h"
 
 #define GATE_PERIOD 500000000
 #define GATE_DEADLINE 500000000
@@ -21,7 +21,7 @@ typedef struct crossingGate_t {
 	//Private
 	char trainsInside[MAXTRAINS];
 	int trainsInsideIndex;
-	RT_MUTEX mutex;
+	pthread_mutex_t mutex;
 
 } crossingGate_t;
 
