@@ -74,15 +74,7 @@ typedef enum
 } train_direction_t;
 
 
-/**
- * Global array of trains in the model
- */
-extern train_t* trains[MAXTRAINS];
-/**
- * Number of trains in the model
- */
-extern int ntrains;
-/**@}*/
+
 
 /**
  * Train model. It includes basic parameters such as name and ID,
@@ -114,6 +106,15 @@ typedef struct
 } train_t;
 /**@}*/
 
+/**
+ * Global array of trains in the model
+ */
+extern train_t* trains[MAXTRAINS];
+/**
+ * Number of trains in the model
+ */
+extern int ntrains;
+/**@}*/
 
 /**
  * Object creation/destruction functions of train_t
