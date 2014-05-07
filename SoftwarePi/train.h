@@ -30,6 +30,7 @@
 #define ESTOP_CMD 0b01000001
 #define MAXTRAINS 8
 
+typedef struct train_t;
 /**
  * Train globals
  *

@@ -31,6 +31,7 @@
  * @defgroup railway_t_globals railway_t globals
  * @{
  */
+ typedef struct railway_t;
 
 /**
  * Global array of railways in the model
