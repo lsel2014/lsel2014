@@ -1,6 +1,7 @@
 #include "screen.h"
 #include <sys/ioctl.h>
 #include "train.h"
+#include "model.h"
 
 screen_t* mini_screen;
 static void screen_notify(observer_t* this, observable_t* foo);
@@ -133,9 +134,9 @@ char nine[] = { // :
 void screen_setup(){
 	mini_screen=screen_new(16,"/dev/fb1");
 	train_t* t;
-	for (t=mini_screen->t; mini_screen->t->name; ++t) {
+	for (t=mini_screen->t[0]; mini_screen->t->name; ++t) {
 			observable_t* obs = model_get_observable(t->name);
-			observable_register_observer(obs, mini_screen->observer);
+			observable_register_observer(obs, &mini_screen->observer);
 	}
 }
 
@@ -148,8 +149,8 @@ screen_t* screen_new(int bpp, char* dev) {
 void screen_init(screen_t* this, int bpp, char* dev) {
 	int i;
 	observer_init((observer_t*) this, screen_notify);
-	this->t[0] = (train_t*) model_get("Diesel");
-	this->t[1] = (train_t*) model_get("Renfe");
+	this->t[0] = (train_t*) model_get_observable("Diesel");
+	this->t[1] = (train_t*) model_get_observable("Renfe");
 	this->t[2] = NULL;
 	this->dev = dev;
 	this->bpp = bpp;
@@ -160,7 +161,7 @@ void screen_init(screen_t* this, int bpp, char* dev) {
 	//printf("The framebuffer device was opened successfully.\n");
 
 	// Get variable screen information
-	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &this->vinfo)) {
+	if (ioctl(this->fbfd, FBIOGET_VSCREENINFO, &this->vinfo)) {
 		printf("Error reading variable information.\n");
 	}
 	/*printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
@@ -171,18 +172,18 @@ void screen_init(screen_t* this, int bpp, char* dev) {
 
 	// Change variable info
 	this->vinfo.bits_per_pixel = bpp;
-	if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &this->vinfo)) {
+	if (ioctl(this->fbfd, FBIOPUT_VSCREENINFO, &this->vinfo)) {
 		printf("Error setting variable information.\n");
 	}
 
 	// Get fixed screen information
-	if (ioctl(fbfd, FBIOGET_FSCREENINFO, &this->finfo)) {
+	if (ioctl(this->fbfd, FBIOGET_FSCREENINFO, &this->finfo)) {
 		printf("Error reading fixed information.\n");
 	}
 	// map fb to user mem
-	unsigned long screensize = this->finfo->smem_len;
+	unsigned long screensize = this->finfo.smem_len;
 	this->fb_pointer = (char*) mmap(0, screensize, PROT_READ | PROT_WRITE,
-			MAP_SHARED, fbfd, 0);
+			MAP_SHARED, this->fbfd, 0);
 
 	if ((int) this->fb_pointer == -1) {
 		printf("Failed to mmap.\n");
@@ -207,7 +208,7 @@ void screen_notify(observer_t* this, observable_t* foo) {
 			nsect = (nsect > 0) ? nsect - 1 : 3;
 		}
 		sprintf(line, "%6s %d %2.2f", train_get_name(t), nsect, est);
-		draw_line((screen_t*) this, i + 2, 0xFFFF, line, 20);
+		draw_line(s, i + 2, 0xFFFF, line, 20);
 	}
 }
 
@@ -326,10 +327,6 @@ char *char_to_bitmap(char a) {
 	case ('F'):
 	case ('f'):
 		return F;
-		break;
-	case ('I'):
-	case ('i'):
-		return I;
 		break;
 	case ('S'):
 	case ('s'):
