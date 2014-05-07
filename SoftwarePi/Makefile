@@ -21,7 +21,7 @@ objs = \
 	tracker.o \
 	railway.o \
 	anticollision.o \
-	pruebaFB.o \
+	screen.o \
 	time_operations.o
 
 all: daemon

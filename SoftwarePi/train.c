@@ -129,7 +129,7 @@ void trains_setup(void)
 	 }*/
 	
 	current_train = trains[0];
-	task_add("Estimation updater", 2000000000, train_update_est, NULL);
+	task_add("Estimation updater", 200000000, train_update_est, NULL);
 	interp_addcmd("train", train_cmd, "Set train parameters");
 	interp_addcmd("s", train_emergency_cmd, "Emergency stop all trains");
 }
@@ -857,7 +857,7 @@ static
 void train_update_est(void* arg){
 	int i;
 	float est;
-	rt_task_set_periodic(NULL, TM_NOW, 2000000000);
+	rt_task_set_periodic(NULL, TM_NOW, 200000000);
 	while (1) {
 		rt_task_wait_period(NULL);
 		for(i=0;i<ntrains;i++){

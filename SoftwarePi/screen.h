@@ -34,6 +34,6 @@ void draw_line(screen_t* this,int nlinea, int color, char *c, int size);
 void draw_line_x2(screen_t* this,int nlinea, int color, char *c, int size);
 screen_t* screen_new(int bpp, char* dev);
 void screen_init(screen_t* this, int bpp, char* dev);
-void screen_destroy(screen_t* this);
+void screen_destroy();
 #endif
 
