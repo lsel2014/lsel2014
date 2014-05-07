@@ -1,0 +1,15 @@
+anti enable 1
+train select 4
+train estop
+train select 3
+train estop
+sleep 10
+train select 3
+train speed 20
+sleep 7
+train select 4
+train speed 28
+sleep 2
+train select 3
+train speed 8
+sleep 30
