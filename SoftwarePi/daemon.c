@@ -40,6 +40,18 @@ initializeWiringPi (void)
 	//pinModes ....
 }
 
+static
+void
+load_config_file (const char* fname)
+{
+  FILE* f = fopen (fname, "r");
+  char p[128];
+  while (fscanf (f, "%s", p) > 0) {
+    plugin_load (p);
+  }
+  fclose (f);
+}
+
 int
 main (int argc, char* argv[])
 {
@@ -51,15 +63,9 @@ main (int argc, char* argv[])
 
   task_setup ();
   model_setup ();
-        
-  // Load plugins
-  plugin_load ("train");
-  plugin_load ("railway");
-  plugin_load ("irsensor");
-  plugin_load ("screen");
-  plugin_load ("sun");
-  plugin_load ("tracker");
-  plugin_load ("anticollision");
+
+  if (argc > 1)
+    load_config_file (argv[1]);
 
   task_setup_priorities ();
   interp_run ();

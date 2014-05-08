@@ -2,29 +2,24 @@ ARCH = $(shell uname -m)
 
 ifeq ($ARCH,x86_64)
 CC = gcc
-CFLAGS = -g -Wall $(shell xeno-config --skin native --cflags)
-LDFLAGS = $(shell xeno-config --skin native --ldflags)
-LDLIBS = -lwiringPi -lreadline -lm
+CFLAGS = -g -Wall -fPIC $(shell xeno-config --skin native --cflags)
+LDFLAGS = -rdynamic $(shell xeno-config --skin native --ldflags)
+LDLIBS = -lwiringPi -lreadline -lm -ldl
 ARCH_OBJS = screen.o
 else
 CC = gcc
-CFLAGS = -g -Wall -I.
-LDFLAGS = 
-LDLIBS = -lreadline -lm
-ARCH_OBJS = wiringPi.o
+CFLAGS = -g -Wall -I. -fPIC
+LDFLAGS = -fPIC -rdynamic
 endif
 
-objs = \
-	daemon.o \
+OBJS = daemon.o
+
+libsel_OBJS = \
 	task.o \
 	interp.o \
-	model.o observer.o \
 	plugin.o \
-	utils.o \
-	$(ARCH_OBJS)
-
-$(objs): CFLAGS+=-fPIC
-$(objs): LDFLAGS+=-rdynamic
+	model.o observer.o \
+	utils.o
 
 other = \
 	train.o railway.o \
@@ -39,7 +34,17 @@ other = \
 	tracker.o anticollision.o \
 	time_operations.o
 
-all: daemon
+all: libwiringPi.so libsel.so daemon train.so
+
+daemon: LDLIBS = -L. -lsel -lwiringPi
+
+libsel.so: LDLIBS = -lreadline -lm -L. -lwiringPi
+libsel.so: $(libsel_OBJS)
+
+libwiringPi.so: wiringPi.o
+
+train.so: LDLIBS = -L. -lsel -lwiringPi
+train.so: train.o dcc.o
 
 test: daemon
 	@for i in test/*.test ; do \
@@ -52,9 +57,12 @@ test: daemon
 	  fi ; \
 	done
 
-daemon: $(objs)
+daemon: $(OBJS)
+
+%.so:
+	$(CC) -shared $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 clean:
-	$(RM) *.o *~ daemon test/*.out
+	$(RM) *.o *.so *~ daemon test/*.out
 
 .PHONY: test

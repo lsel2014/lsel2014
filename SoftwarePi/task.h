@@ -1,7 +1,10 @@
 #ifndef TASK_H
 #define TASK_H
 
+#include <time.h>
+#include <sys/time.h>
 #include <pthread.h>
+#include "utils.h"
 
 void task_setup (void);
 

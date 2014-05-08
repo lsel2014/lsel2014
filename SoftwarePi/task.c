@@ -186,7 +186,6 @@ mutex_init (pthread_mutex_t* m)
 
 /*
   Local variables:
-    mode: c
     c-file-style: stroustrup
   End:
 */

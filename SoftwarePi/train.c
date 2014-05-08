@@ -15,7 +15,7 @@
 
 #include "train.h"
 #include "dcc.h"
-#include "time_operations.h"
+#include "utils.h"
 #include "task.h"
 
 train_t* trains[MAXTRAINS];
@@ -42,13 +42,12 @@ static void* train_update_est(void* arg);
  *
  * @returns this    Malloc'd and initialized train_t object
  */
-train_t* train_new(char* name, char ID, char n_wagon, char length,
-		dcc_sender_t* dcc)
+train_t* train_new(char* name, char ID, char n_wagon, char length)
 {
 	train_t* this = (train_t*) malloc(sizeof(train_t));
 	telemetry_t* telemetry = (telemetry_t*) malloc(sizeof(telemetry_t));
 	
-	train_init(this, name, ID, n_wagon, length, dcc, telemetry);
+	train_init(this, name, ID, n_wagon, length, telemetry);
 
     /*
      * Add new train to global trains array
@@ -71,11 +70,10 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
  * @param ID        Train ID
  * @param n_wagon   Number of wagons attached to the train
  * @param length    Length of the train
- * @param dcc       DCC sender reference
  * @param telemetry Telemetry data
  */
 void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
-		dcc_sender_t* dcc, telemetry_t* telemetry)
+		telemetry_t* telemetry)
 {
 	observable_init(&this->observable);
 	
@@ -88,7 +86,6 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->length = length;
 	this->telemetry = telemetry;
 
-	this->dcc = dcc;
 	mutex_init (&this->mutex);
 
     /*
@@ -112,15 +109,15 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
  *
  * @ingroup train_t_object
  */
-void trains_setup(void)
+void train_setup (void)
 {
     /*
      * This will be integrated with the interpreter
      */
-	dcc_sender_t* dccobject = dcc_new(13, 63000);
+	dcc_setup ();
 
-	train_new("Diesel", 0b0000100, '0', 20, dccobject);
-	train_new("Renfe", 0b0000011, '0', 25, dccobject);
+	train_new("Diesel", 0b0000100, '0', 20);
+	train_new("Renfe", 0b0000011, '0', 25);
 	
 	/*for (i = 0; i < ntrains; i++) {
 	 for (j = 0; j < nsensors; j++) {
@@ -267,8 +264,7 @@ int train_cmd(char* arg)
 		int function, state;
 		sscanf(arg + strlen("function "), "%d %d", &function, &state);
 		if (function < 13 && function >= 0) {
-			dcc_add_function_packet(current_train->dcc, current_train->ID,
-					function, state);
+			dcc_add_function_packet(current_train->ID, function, state);
 			printf("Train %d %s function %d\n", current_train->ID,
 					current_train->name, function);
 			return 0;
@@ -326,7 +322,7 @@ int train_cmd(char* arg)
      */
 	if (0 == strncmp(arg, "wait_sector ", strlen("wait_sector ")))
 	{
-		int sector = atoi(arg + strlen("wait_sector"));
+		int sector = atoi(arg + strlen("wait_sector "));
 		if (sector < 0 || sector > 3)
 		{
 			printf("Sector must be between 0 and 3\n");
@@ -398,7 +394,7 @@ int train_emergency_cmd(char* arg)
 	
 	for (i = 0; i < ntrains; i++)
 	{
-		dcc_add_data_packet(trains[i]->dcc, trains[i]->ID, ESTOP_CMD);
+		dcc_add_data_packet(trains[i]->ID, ESTOP_CMD);
 	}
 
 	for (i = 0; i < ntrains; i++)
@@ -430,7 +426,7 @@ void train_emergency_stop(train_t* this)
     int i;
 	for (i = 0; i < 3; i++)
 	{
-		dcc_add_data_packet(this->dcc, this->ID, ESTOP_CMD);
+		dcc_add_data_packet(this->ID, ESTOP_CMD);
 	}
 
 }
@@ -709,7 +705,7 @@ void train_set_power(train_t* this, int power)
 
 	for (i = 0; i < 3; i++)
 	{
-		dcc_add_speed_packet(this->dcc, this->ID, this->power);
+		dcc_add_speed_packet(this->ID, this->power);
 	}
 
 	pthread_mutex_unlock (&this->mutex);
@@ -861,17 +857,29 @@ static
 void*
 train_update_est(void* arg)
 {
-	int i;
-	float est;
-	while (1) {
-		rt_task_wait_period(NULL);
-		for(i=0;i<ntrains;i++){
-			est=train_get_current_time_estimation(trains[i]);
-			est = (est-0.2)>0?est-0.2:0.0;
-			train_set_current_time_estimation(trains[i],est);
-		}
-	}
-        return NULL;
+  int i;
+  float est;
+
+  struct timeval next_activation;
+  struct timeval now, timeout, rtime;
+
+  gettimeofday (&next_activation, NULL);
+  while (1) {
+    struct timeval *period = task_get_period (pthread_self());
+    timeval_add (&next_activation, &next_activation, period);
+    gettimeofday (&now, NULL);
+    timeval_sub (&timeout, &next_activation, &now);
+    timeval_sub (&rtime, period, &timeout);
+    task_register_time (pthread_self(), &rtime);
+    select (0, NULL, NULL, NULL, &timeout) ;
+
+    for (i = 0; i < ntrains; i++) {
+      est=train_get_current_time_estimation(trains[i]);
+      est = (est-0.2)>0?est-0.2:0.0;
+      train_set_current_time_estimation(trains[i],est);
+    }
+  }
+  return NULL;
 }
 /*
  void train_notify(observer_t* this, observable_t* observed) {
@@ -906,7 +914,6 @@ train_update_est(void* arg)
 
 /*
   Local variables:
-    mode: c
     c-file-style: stroustrup
   End:
 */

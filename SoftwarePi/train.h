@@ -21,7 +21,6 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include "dcc.h"
 #include "interp.h"
 #include "observer.h"
 #include "sensorIR.h"
@@ -81,9 +80,6 @@ typedef enum
  * as runtime values like power, speed, current sector and a security
  * flag.
  *
- * It also has a reference to the dcc sender that physically sends
- * commands to the real world train scale model.
- *
  * @struct train_t
  */
 typedef struct
@@ -98,7 +94,6 @@ typedef struct
 	char n_wagon;
 	char length;
 	pthread_mutex_t mutex;
-	dcc_sender_t* dcc;
 	telemetry_t* telemetry;
 	char security_override;
 } train_t;
@@ -120,10 +115,9 @@ extern int ntrains;
  * @defgroup train_t_object train_t object functions
  * @{
  */
-train_t*    train_new(char* name, char ID, char n_wagon, char length,
-		        dcc_sender_t* dcc);
+train_t*    train_new(char* name, char ID, char n_wagon, char length);
 void    train_init(train_t* this, char* name, char ID, char n_wagon, char length,
-		    dcc_sender_t* dcc, telemetry_t* telemetry);
+		    telemetry_t* telemetry);
 void    trains_setup(void);
 void    train_destroy(train_t* this);
 /**@}*/
