@@ -9,9 +9,10 @@
  */
 
 #include <stdbool.h>
+#include <string.h>
 #include "trafficLight.h"
 #include "actuator.h"
-#include "../../train.h"
+#include "train.h"
 #include <wiringPi.h>
 
 static trafficLight_t* light;
@@ -172,3 +173,10 @@ void trafficLight_notify(observer_t* this, observable_t* observable) {
 
 }
 
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

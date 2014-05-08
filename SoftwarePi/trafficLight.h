@@ -60,3 +60,10 @@ void trafficLight_set_state(trafficLight_t* this, state_t state);
 void trafficLight_notify(observer_t* this, observable_t* observable);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

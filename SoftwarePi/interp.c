@@ -227,3 +227,10 @@ int com_quit(char *arg) {
 	done = 1;
 	return 0;
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

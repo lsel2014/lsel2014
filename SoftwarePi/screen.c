@@ -1,7 +1,28 @@
-#include "screen.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <linux/fb.h>
+#include <sys/mman.h>
 #include <sys/ioctl.h>
 #include "train.h"
+#include "screen.h"
+#include "train.h"
 #include "model.h"
+
+
+typedef struct {
+    observer_t observer;
+    int fbfd;
+    char* fb_pointer;
+    int bpp;
+    char* dev;
+    train_t* t[MAXTRAINS];
+    struct fb_var_screeninfo vinfo;
+    struct fb_fix_screeninfo finfo;
+    struct fb_var_screeninfo orig_vinfo;
+} screen_t;
 
 screen_t* mini_screen;
 static void screen_notify(observer_t* this, observable_t* foo);
@@ -435,3 +456,10 @@ void screen_destroy() {
 	close(mini_screen->fbfd);
 	free(mini_screen);
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

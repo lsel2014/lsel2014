@@ -13,3 +13,10 @@ int wiringPiISR (int pin, int edgeType, void (*isr)(void));
 void wiringPi_gen_interrupt (int pin);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

@@ -23,3 +23,10 @@ void task_delete_all();
 int task_cmd(char* arg);
 int task_cmp(const void* t1, const void* t2);
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

@@ -108,3 +108,10 @@ void task_delete_all() {
 }
 ;
 
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

@@ -105,3 +105,10 @@ if (speed_table[target_speed] <= 0)
 return acceleration_time + remaining_distance / speed_table[target_speed];
 }
 
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

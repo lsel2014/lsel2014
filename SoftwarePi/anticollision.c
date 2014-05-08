@@ -161,3 +161,10 @@ void anticollision_notify(observer_t* this, observable_t* observable) {
 	
 	}
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

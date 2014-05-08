@@ -1,51 +1,22 @@
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
-
-// WiringPi
 #include <wiringPi.h>
 
-// Tasks
-#include "dcc.h"
-//#include "poll.h"
-//#include "sunTasks.h"
-
-// Interpreter
-#include "interp.h"
-#include "daemon.h"
 #include "task.h"
-
-//Model
-#include "train.h"
-#include "sun.h"
+#include "interp.h"
 #include "model.h"
-#include "sensorIR.h"
-#include "railChange.h"
-#include "trafficLight.h"
-#include "crossingGate.h"
-#include "tracker.h"
-#include "railway.h"
-#include "anticollision.h"
-#include "screen.h"
+#include "plugin.h"
 
 #ifdef __XENO__
 #include <rtdk.h>
 #endif
 
 // Dummy function to catch signals
-void catch_signal() {
-}
+void catch_signal() { }
 
-void initializeModel(void) {
-	// TODO
-	int i;
-
-	for (i = 0; i < 4; i++) {
-		//IRsensors[i] = sensorIR_new(i);
-	}
-}
-
-void initializeXenomaiEnv(void)
+void
+initializeXenomaiEnv (void)
 {
 	// Catch signals
 	signal(SIGTERM, catch_signal);
@@ -58,7 +29,8 @@ void initializeXenomaiEnv(void)
 #endif
 }
 
-void initializeWiringPi(void)
+void
+initializeWiringPi (void)
 {
 	wiringPiSetup();
 
@@ -68,57 +40,37 @@ void initializeWiringPi(void)
 	//pinModes ....
 }
 
-int main(int argc, char* argv[]) {
+int
+main (int argc, char* argv[])
+{
+  // Initialize Xenomai RT enviroment
+  initializeXenomaiEnv();
 
-	// Initialize Xenomai RT enviroment
-	initializeXenomaiEnv();
+  // Initialize wiringPi lib, configure IO
+  initializeWiringPi();
 
-	// Initialize wiringPi lib, configure IO
-	initializeWiringPi();
+  task_setup ();
+  model_setup ();
+        
+  // Load plugins
+  plugin_load ("train");
+  plugin_load ("railway");
+  plugin_load ("irsensor");
+  plugin_load ("screen");
+  plugin_load ("sun");
+  plugin_load ("tracker");
+  plugin_load ("anticollision");
 
-	// Initialize the model
-	initializeModel();
+  task_setup_priorities ();
+  interp_run ();
 
-	// Initialize the train controller
-	//trainCtrl_init();
-
-	/*
-	 * Arguments: &task,
-	 * name,
-	 * stack size (0=default),
-	 * priority,
-	 * mode (FPU, start suspended, ...)
-	 */
-	//rt_task_create(&task_dcc, "dccSend", 0, TASK_DCC_PRIORITY, 0);
-	//rt_task_create(&task_poll, "polling", 0, TASK_POLL_PRIORITY, 0);
-	//rt_task_create(&task_sun, "sun", 0, TASK_SUN_PRIORITY, 0);
-	/*
-	 * Arguments: &task,
-	 * task function,
-	 * function argument*/
-	IRsensors_setup();
-	trains_setup();
-	railways_setup();
-	anticollision_setup();
-	model_init();
-	tracker_init();
-	screen_setup();
-	//setupRailChange();
-	sun_setup();
-	//setup_trafficLight();
-	//setup_crossingGate();
-	// TODO Hay que darle argumentos a la tarea!
-	//rt_task_start(&task_dcc, &dcc_send, NULL );
-	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
-	// rt_task_start(&task_sun, &daemon_update_sun, NULL );
-	task_start_all();
-	interp_run();
-
-	// Remove the permanent tasks
-	//rt_task_delete(&task_poll);
-	//rt_task_delete(&task_dcc);
-	//rt_task_delete(&task_sun);
-	task_delete_all();
-	screen_destroy();
-	return 0;
+  task_delete_all ();
+  return 0;
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

@@ -33,3 +33,10 @@ int anticollision_cmd(char* arg);
 void anticollision_notify(observer_t* this, observable_t* observable);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

@@ -215,3 +215,10 @@ void tracker_init(void) {
 		++n_railway;
 	}
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

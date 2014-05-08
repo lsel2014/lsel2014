@@ -49,3 +49,10 @@ void sensorIR_trainPassing(sensorIR_t* this);
 event_t* sensorIR_get_event(sensorIR_t* this);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

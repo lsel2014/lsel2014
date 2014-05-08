@@ -6,12 +6,10 @@
  */
 
 #include "sensorIR.h"
-#include <rtdk.h>
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
-#include <native/mutex.h>
 #include <wiringPi.h>
 
 /*
@@ -46,7 +44,7 @@
 sensorIR_t* sensors[MAXSENSORS];
 int nsensors = 0;
 
-void IRsensors_poll(void* arg) {
+void* IRsensors_poll(void* arg) {
 	sensorIR_t** sensors = (sensorIR_t**) arg;
 	rt_task_set_periodic(NULL, TM_NOW, IR_PERIOD);
 	while (1) {
@@ -56,6 +54,7 @@ void IRsensors_poll(void* arg) {
 			sensorIR_trainPassing(sensors[i]);
 		}
 	}
+        return NULL;
 }
 
 int sensors_cmd(char*arg) {
@@ -71,8 +70,8 @@ void IRsensors_setup(void) {
 	for (i = 0; i < 4; i++) {
 		sensorIR_new(i);
 	}
-	task_add("IR polling", IR_DEADLINE, IRsensors_poll, sensors);
-	interp_addcmd("sensors", sensors_cmd, "Lists IR sensors");
+	task_new ("IR polling", IRsensors_poll, IR_DEADLINE, sensors, 1024);
+	interp_addcmd ("sensors", sensors_cmd, "Lists IR sensors");
 }
 
 sensorIR_t*
@@ -158,3 +157,10 @@ event_t*
 sensorIR_get_event(sensorIR_t* this) {
 	return this->event;
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

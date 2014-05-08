@@ -55,3 +55,10 @@ int crossingGate_getIDIndex(crossingGate_t* this, char trainID);
 void crossingGate_notify(observer_t* this, observable_t* observable);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

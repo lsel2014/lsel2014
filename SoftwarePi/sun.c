@@ -148,3 +148,10 @@ int sun_get_simulated_time(sun_t* this) {
 void sun_destroy(sun_t* this) {
 	free(this);
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

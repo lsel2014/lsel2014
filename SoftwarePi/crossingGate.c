@@ -1,10 +1,6 @@
 #include <stdlib.h>
-
-#include <native/task.h>
-
-#include <native/mutex.h>
 #include <stdbool.h>
-#include "../../tasks.h"
+#include "task.h"
 #include "crossingGate.h"
 #include <wiringPi.h>
 #include <softPwm.h>
@@ -166,3 +162,10 @@ void crossingGate_notify(observer_t* this, observable_t* observable) {
 	}
 
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

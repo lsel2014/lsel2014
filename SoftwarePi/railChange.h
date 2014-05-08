@@ -34,3 +34,10 @@ direction_t railChange_get_direction();
 void railChange_set_direction(railChange_t* this, direction_t direction);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

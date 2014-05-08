@@ -16,11 +16,6 @@
 #ifndef RAILWAY_H
 #define RAILWAY_H
 
-<<<<<<< HEAD
-=======
-#include <native/mutex.h>
-
->>>>>>> 2b4c0379b8da28a6e852e2fbbe59f885a6037bda
 #include "train.h" 
 #include "observer.h"
 #include "interp.h"
@@ -70,13 +65,8 @@ typedef struct
 	observable_t observable;        /**< Inheritance */
 
 	int id;
-<<<<<<< HEAD
 	pthread_mutex_t mutex;
-=======
->>>>>>> 2b4c0379b8da28a6e852e2fbbe59f885a6037bda
 	sector_t* railwaySectors[NSECTORS];
-
-	RT_MUTEX mutex;
 } railway_t;
 /**@}*/
 
@@ -128,3 +118,10 @@ void railway_erase_train(railway_t* this, train_t* train);
 
 /**@}*/
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

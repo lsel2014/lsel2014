@@ -6,6 +6,7 @@
  * Implementation of railway_t and sector_t functions and declarations
  */
 
+#include <stdio.h>
 #include "railway.h"
 #include "train.h"
 
@@ -65,7 +66,7 @@ void railway_init(railway_t* this, int id)
 		int_sector = (int) char_sector;
 		railway_register_train(this, trains[j], int_sector);
 	}
-	rt_mutex_create(&this->mutex, NULL);
+	mutex_init (&this->mutex);
 }
 
 /**
@@ -184,11 +185,11 @@ void railway_register_train(railway_t* this, train_t* train, int sector)
 	rs = this->railwaySectors[sector]->nregisteredtrains;
 
 	if (rs < MAXTRAINS) {
-		rt_mutex_acquire(&this->mutex, TM_INFINITE);
+		pthread_mutex_lock (&this->mutex);
 		this->railwaySectors[sector]->registeredTrains[rs] = train;
 		this->railwaySectors[sector]->nregisteredtrains++;
 		observable_notify_observers((observable_t *) this);
-		rt_mutex_release(&this->mutex);
+		pthread_mutex_unlock (&this->mutex);
 	}
 }
 
@@ -210,14 +211,21 @@ void railway_erase_train(railway_t* this, train_t* train)
 			if (train_get_ID(train)
 					== train_get_ID(
 							this->railwaySectors[i]->registeredTrains[j])) {
-				rt_mutex_acquire(&this->mutex, TM_INFINITE);
+				pthread_mutex_lock (&this->mutex);
 				this->railwaySectors[i]->registeredTrains[j] = NULL;
 				for (k = j; k < MAXTRAINS - 1; k++)
 					this->railwaySectors[i]->registeredTrains[k] =
 							this->railwaySectors[i]->registeredTrains[k + 1];
 				this->railwaySectors[i]->nregisteredtrains--;
-				rt_mutex_release(&this->mutex);
+				pthread_mutex_unlock (&this->mutex);
 			}
 		}
 	}
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

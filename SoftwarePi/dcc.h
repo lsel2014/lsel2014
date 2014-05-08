@@ -110,3 +110,10 @@ void dcc_send(void* arg);
 
 /**@}*/
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

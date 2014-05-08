@@ -16,3 +16,10 @@ typedef struct actuator_t {
 void actuator_init (actuator_t* this, int id, actuator_notify_func_t notify);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

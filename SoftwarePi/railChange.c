@@ -65,3 +65,10 @@ void railChange_set_direction(railChange_t* this, direction_t direction) {
 	digitalWrite(this->GPIOline, direction == LEFT ? 1 : 0);
 	rt_mutex_release(&(this->mutex));
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

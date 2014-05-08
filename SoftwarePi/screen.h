@@ -1,28 +1,8 @@
 #ifndef FBTFT_H
 #define FBTFT_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-#include <linux/fb.h>
-#include <sys/mman.h>
-#include <sys/ioctl.h>
-#include "train.h"
-
-
-typedef struct {
-    observer_t observer;
-    int fbfd;
-    char* fb_pointer;
-    int bpp;
-    char* dev;
-    train_t* t[MAXTRAINS];
-    struct fb_var_screeninfo vinfo;
-    struct fb_fix_screeninfo finfo;
-    struct fb_var_screeninfo orig_vinfo;
-}screen_t;
+struct screen_t;
+typedef struct screen_t screen_t;
 
 //Functions 
 void screen_setup();
@@ -35,5 +15,13 @@ void draw_line_x2(screen_t* this,int nlinea, int color, char *c, int size);
 screen_t* screen_new(int bpp, char* dev);
 void screen_init(screen_t* this, int bpp, char* dev);
 void screen_destroy();
+
 #endif
 
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

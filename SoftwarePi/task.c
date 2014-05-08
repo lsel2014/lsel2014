@@ -1,8 +1,11 @@
 #include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <sys/time.h>
 #include <string.h>
 #include "task.h"
+#include "utils.h"
 #include "interp.h"
 
 #define MAXTASKS 20
@@ -122,9 +125,9 @@ task_cmp (const void* t1, const void* t2)
 {
   taskinfo_t* task1 = (taskinfo_t*) t1;
   taskinfo_t* task2 = (taskinfo_t*) t2;
-  if (timeval_less (task1->deadline, task2->deadline))
+  if (timeval_less (&task1->deadline, &task2->deadline))
     return -1;
-  if (timeval_equal (task1->deadline, task2->deadline))
+  if (timeval_equal (&task1->deadline, &task2->deadline))
     return 0;
   return 1;
 }
@@ -143,9 +146,12 @@ task_setup_priorities (void)
   int i;
   qsort (task, ntasks, sizeof(taskinfo_t*), task_cmp);
   for (i = 0; i < ntasks; ++i) {
-    task[i]->prio = i;
-    pthread_setschedprio (task[i]->tid,
-                          i + sched_get_priority_min (SCHED_FIFO));
+    int policy;
+    struct sched_param sparam;
+    pthread_getschedparam (task[i].tid, &policy, &sparam);
+    sparam.sched_priority = sched_get_priority_min (SCHED_FIFO) + i;
+    task[i].prio = i;
+    pthread_setschedparam (task[i].tid, policy, &sparam);
   }
 }
 
@@ -161,7 +167,7 @@ void
 task_delete_all (void)
 {
   while (ntasks) {
-    pthread_cancel (task[ntasks - 1]->tid);
+    pthread_cancel (task[ntasks - 1].tid);
     ntasks--;
   }
 }
@@ -176,41 +182,11 @@ mutex_init (pthread_mutex_t* m)
   pthread_mutex_init (m, &attr);
 }
 
-void
-timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b)
-{
-  res->tv_sec = a->tv_sec - b->tv_sec;
-  res->tv_usec = a->tv_usec - b->tv_usec;
-  if (res->tv_usec < 0) {
-    --res->tv_sec;
-    res->tv_usec += 1000000;
-  }
-}
 
-void
-timeval_add (struct timeval *res, struct timeval *a, struct timeval *b)
-{
-  res->tv_sec = a->tv_sec + b->tv_sec
-    + a->tv_usec / 1000000 + b->tv_usec / 1000000; 
-  res->tv_usec = a->tv_usec % 1000000 + b->tv_usec % 1000000;
-}
 
-int
-timeval_less (struct timeval *a, struct timeval *b)
-{
-  return (a->tv_sec < b->tv_sec) ||
-    ((a->tv_sec == b->tv_sec) && (a->tv_usec < b->tv_usec));
-}
-
-int
-timeval_equal (struct timeval *a, struct timeval *b)
-{
-  return (a->tv_sec == b->tv_sec) && (a->tv_usec == b->tv_usec);
-}
-
-int
-timeval_get_ms (struct timeval *a)
-{
-  return a->tv_sec * 1000 + a->tv_usec / 1000;
-}
-
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

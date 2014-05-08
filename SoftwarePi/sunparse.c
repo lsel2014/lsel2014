@@ -35,3 +35,10 @@ void sun_parse_data(sun_t* this) {
 	this->sunset.minutes = atoi(strtok(NULL, ":"));
 	this->sunset.seconds = atoi(strtok(NULL, ":"));
 }
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

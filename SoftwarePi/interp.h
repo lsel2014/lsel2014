@@ -30,3 +30,10 @@ int interp_addcmd(char* cmd, int (*cmd_func)(char*), char* doc);
 
 /**@}*/
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

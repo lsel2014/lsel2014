@@ -8,3 +8,10 @@
 #define TASK_INTERPRETER_PRIORITY 10
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

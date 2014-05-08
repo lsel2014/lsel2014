@@ -28,3 +28,10 @@ int observable_get_nobservers(observable_t* this);
 int observable_get_nevents(observable_t* this);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

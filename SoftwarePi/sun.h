@@ -34,3 +34,10 @@ void sun_destroy(sun_t* this);
 void sun_setup(void);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

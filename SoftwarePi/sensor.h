@@ -31,3 +31,10 @@ void sensor_set_id(sensor_t* this, int newid);
 void sensor_process_data(sensor_t* this);
 
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

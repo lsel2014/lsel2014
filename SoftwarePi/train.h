@@ -97,17 +97,10 @@ typedef struct
 	train_direction_t direction;
 	char n_wagon;
 	char length;
-<<<<<<< HEAD
 	pthread_mutex_t mutex;
 	dcc_sender_t* dcc;
 	telemetry_t* telemetry;
-=======
->>>>>>> 2b4c0379b8da28a6e852e2fbbe59f885a6037bda
 	char security_override;
-	telemetry_t* telemetry;
-
-    dcc_sender_t* dcc;
-    RT_MUTEX mutex;
 } train_t;
 /**@}*/
 
@@ -198,3 +191,10 @@ void    train_set_current_speed(train_t* this, float speed);
 
 /**@}*/
 #endif
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/

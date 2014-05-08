@@ -45,3 +45,10 @@ int main() {
 	return 0;
 }
 
+
+/*
+  Local variables:
+    mode: c
+    c-file-style: stroustrup
+  End:
+*/
