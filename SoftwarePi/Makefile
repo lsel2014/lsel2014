@@ -1,14 +1,32 @@
+ARCH = $(shell uname -m)
 
+ifeq ($ARCH,x86_64)
 CC = gcc
 CFLAGS = -g -Wall $(shell xeno-config --skin native --cflags)
 LDFLAGS = $(shell xeno-config --skin native --ldflags)
 LDLIBS = -lwiringPi -lreadline -lm
+ARCH_OBJS = screen.o
+else
+CC = gcc
+CFLAGS = -g -Wall -I.
+LDFLAGS = 
+LDLIBS = -lreadline -lm
+ARCH_OBJS = wiringPi.o
+endif
 
 objs = \
 	daemon.o \
 	task.o \
 	interp.o \
 	model.o observer.o \
+	plugin.o \
+	utils.o \
+	$(ARCH_OBJS)
+
+$(objs): CFLAGS+=-fPIC
+$(objs): LDFLAGS+=-rdynamic
+
+other = \
 	train.o railway.o \
 	sensor.o \
 	sensorIR.o \
@@ -19,7 +37,6 @@ objs = \
 	dcc.o \
 	sun.o sunparse.o \
 	tracker.o anticollision.o \
-	screen.o \
 	time_operations.o
 
 all: daemon
@@ -38,6 +55,6 @@ test: daemon
 daemon: $(objs)
 
 clean:
-	$(RM) *.o *~ daemon Tasks/*.o Tasks/*~ Interpreter/*.o Interpreter/*~ Model/*.o Model/*~ Model/Actuators/*.o Model/Actuators/*~ Model/Sensors/*.o Model/Sensors/*~ test/*.out
+	$(RM) *.o *~ daemon test/*.out
 
 .PHONY: test
