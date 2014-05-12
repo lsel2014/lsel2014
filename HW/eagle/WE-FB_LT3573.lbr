@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="6.2">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="53" name="tPadExt" color="7" fill="1" visible="no" active="no"/>
+<layer number="54" name="bPadExt" color="1" fill="1" visible="no" active="no"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="250" name="Descript" color="3" fill="1" visible="no" active="no"/>
+<layer number="251" name="SMDround" color="12" fill="11" visible="no" active="no"/>
+</layers>
+<library>
+<packages>
+<package name="WE_EP10_SMD_8PIN">
+<description>Transformer, EP10 SMD 8 Pin</description>
+<wire x1="-7.6" y1="-6.6" x2="7.6" y2="-6.6" width="0.127" layer="21"/>
+<wire x1="-7.6" y1="6.6" x2="7.6" y2="6.6" width="0.127" layer="21"/>
+<wire x1="7.6" y1="6.6" x2="7.6" y2="-6.6" width="0.127" layer="51"/>
+<wire x1="-7.6" y1="6.6" x2="-7.6" y2="-6.6" width="0.127" layer="51"/>
+<circle x="-5" y="-3.2" radius="0.4" width="0.127" layer="27"/>
+<smd name="5" x="6.78" y="3.735" dx="2.08" dy="1.07" layer="1"/>
+<smd name="8" x="6.78" y="-3.735" dx="2.08" dy="1.07" layer="1"/>
+<smd name="4" x="-6.78" y="3.735" dx="2.08" dy="1.07" layer="1"/>
+<smd name="1" x="-6.78" y="-3.735" dx="2.08" dy="1.07" layer="1"/>
+<smd name="6" x="6.78" y="1.245" dx="2.08" dy="1.07" layer="1"/>
+<smd name="7" x="6.78" y="-1.245" dx="2.08" dy="1.07" layer="1"/>
+<smd name="3" x="-6.78" y="1.245" dx="2.08" dy="1.07" layer="1"/>
+<smd name="2" x="-6.78" y="-1.245" dx="2.08" dy="1.07" layer="1"/>
+<text x="-7.27" y="7.04" size="1.27" layer="25">&gt;NAME</text>
+<text x="-7.27" y="-8.54" size="1.27" layer="27">&gt;VALUE</text>
+<wire x1="-9" y1="7" x2="9" y2="7" width="0.127" layer="39"/>
+<wire x1="9" y1="7" x2="9" y2="-7" width="0.127" layer="39"/>
+<wire x1="9" y1="-7" x2="-9" y2="-7" width="0.127" layer="39"/>
+<wire x1="-9" y1="-7" x2="-9" y2="7" width="0.127" layer="39"/>
+<wire x1="-5" y1="6" x2="5" y2="6" width="0.127" layer="43"/>
+<wire x1="5" y1="6" x2="5" y2="-6" width="0.127" layer="43"/>
+<wire x1="5" y1="-6" x2="-5" y2="-6" width="0.127" layer="43"/>
+<wire x1="-5" y1="-6" x2="-5" y2="6" width="0.127" layer="43"/>
+</package>
+<package name="WE_EP7_SMD_8PIN">
+<description>Transformer, EP7 SMD 8 Pin</description>
+<wire x1="-4.5" y1="-4.9" x2="4.5" y2="-4.9" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="4.9" x2="4.5" y2="4.9" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="4.9" x2="-4.5" y2="-4.9" width="0.127" layer="51"/>
+<wire x1="4.5" y1="4.9" x2="4.5" y2="-4.9" width="0.127" layer="51"/>
+<circle x="-2.8" y="-3.7" radius="0.2236" width="0.127" layer="21"/>
+<smd name="5" x="4.065" y="3.735" dx="1.91" dy="1.143" layer="1"/>
+<smd name="8" x="4.065" y="-3.735" dx="1.91" dy="1.143" layer="1"/>
+<smd name="4" x="-4.065" y="3.735" dx="1.91" dy="1.143" layer="1"/>
+<smd name="1" x="-4.065" y="-3.735" dx="1.91" dy="1.143" layer="1"/>
+<smd name="6" x="4.065" y="1.245" dx="1.91" dy="1.143" layer="1"/>
+<smd name="7" x="4.065" y="-1.245" dx="1.91" dy="1.143" layer="1"/>
+<smd name="2" x="-4.065" y="-1.245" dx="1.91" dy="1.143" layer="1"/>
+<smd name="3" x="-4.065" y="1.245" dx="1.91" dy="1.143" layer="1"/>
+<text x="-4.5" y="5.3" size="1.27" layer="25">&gt;NAME</text>
+<text x="-4.4" y="-6.6" size="1.27" layer="27">&gt;VALUE</text>
+<wire x1="-2.25" y1="4.5" x2="2.25" y2="4.5" width="0.127" layer="43"/>
+<wire x1="2.25" y1="4.5" x2="2.25" y2="-4.5" width="0.127" layer="43"/>
+<wire x1="2.25" y1="-4.5" x2="-2.25" y2="-4.5" width="0.127" layer="43"/>
+<wire x1="-2.25" y1="-4.5" x2="-2.25" y2="4.5" width="0.127" layer="43"/>
+<wire x1="-6" y1="5.25" x2="6" y2="5.25" width="0.127" layer="39"/>
+<wire x1="6" y1="5.25" x2="6" y2="-5.25" width="0.127" layer="39"/>
+<wire x1="6" y1="-5.25" x2="-6" y2="-5.25" width="0.127" layer="39"/>
+<wire x1="-6" y1="-5.25" x2="-6" y2="5.25" width="0.127" layer="39"/>
+</package>
+<package name="WE_EP7*_750370047">
+<description>Transformer, EP7* SMD 8Pin für WE-FB</description>
+<wire x1="-6.7" y1="5.4" x2="6.7" y2="5.4" width="0.127" layer="21"/>
+<wire x1="-6.7" y1="-5.4" x2="6.7" y2="-5.4" width="0.127" layer="21"/>
+<wire x1="-6.7" y1="5.4" x2="-6.7" y2="-5.4" width="0.127" layer="51"/>
+<wire x1="6.7" y1="5.4" x2="6.7" y2="-5.4" width="0.127" layer="51"/>
+<circle x="-4.4" y="-3.6" radius="0.2828" width="0.127" layer="21"/>
+<smd name="5" x="6.16" y="3.735" dx="1.96" dy="1.17" layer="1"/>
+<smd name="8" x="6.16" y="-3.735" dx="1.96" dy="1.17" layer="1"/>
+<smd name="1" x="-6.16" y="-3.735" dx="1.96" dy="1.17" layer="1"/>
+<smd name="4" x="-6.16" y="3.735" dx="1.96" dy="1.17" layer="1"/>
+<smd name="6" x="6.16" y="1.245" dx="1.96" dy="1.17" layer="1"/>
+<smd name="3" x="-6.16" y="1.245" dx="1.96" dy="1.17" layer="1"/>
+<smd name="2" x="-6.16" y="-1.245" dx="1.96" dy="1.17" layer="1"/>
+<smd name="7" x="6.16" y="-1.245" dx="1.96" dy="1.17" layer="1"/>
+<text x="-6.5" y="6" size="1.27" layer="25">&gt;NAME</text>
+<text x="-6.5" y="-7.5" size="1.27" layer="27">&gt;VALUE</text>
+<wire x1="-4.5" y1="4.5" x2="4.5" y2="4.5" width="0.127" layer="43"/>
+<wire x1="4.5" y1="4.5" x2="4.5" y2="-4.5" width="0.127" layer="43"/>
+<wire x1="4.5" y1="-4.5" x2="-4.5" y2="-4.5" width="0.127" layer="43"/>
+<wire x1="-4.5" y1="-4.5" x2="-4.5" y2="4.5" width="0.127" layer="43"/>
+<wire x1="-8.25" y1="6" x2="8.25" y2="6" width="0.127" layer="39"/>
+<wire x1="8.25" y1="6" x2="8.25" y2="-6" width="0.127" layer="39"/>
+<wire x1="8.25" y1="-6" x2="-8.25" y2="-6" width="0.127" layer="39"/>
+<wire x1="-8.25" y1="-6" x2="-8.25" y2="6" width="0.127" layer="39"/>
+</package>
+<package name="WE_EP7*_750370058_750370059">
+<description>Transformer, EP7* SMD 8Pin für WE-FB</description>
+<wire x1="-6.7" y1="5.4" x2="6.7" y2="5.4" width="0.127" layer="21"/>
+<wire x1="-6.7" y1="-5.4" x2="6.7" y2="-5.4" width="0.127" layer="21"/>
+<wire x1="-6.7" y1="5.4" x2="-6.7" y2="-5.4" width="0.127" layer="51"/>
+<wire x1="6.7" y1="5.4" x2="6.7" y2="-5.4" width="0.127" layer="51"/>
+<circle x="-4" y="-3.75" radius="0.25" width="0.127" layer="21"/>
+<smd name="5" x="5.83" y="3.75" dx="1.96" dy="1.17" layer="1"/>
+<smd name="8" x="5.83" y="-3.75" dx="1.96" dy="1.17" layer="1"/>
+<smd name="1" x="-5.83" y="-3.75" dx="1.96" dy="1.17" layer="1"/>
+<smd name="4" x="-5.83" y="3.75" dx="1.96" dy="1.17" layer="1"/>
+<smd name="6" x="5.83" y="1.25" dx="1.96" dy="1.17" layer="1"/>
+<smd name="3" x="-5.83" y="1.25" dx="1.96" dy="1.17" layer="1"/>
+<smd name="2" x="-5.83" y="-1.25" dx="1.96" dy="1.17" layer="1"/>
+<smd name="7" x="5.83" y="-1.25" dx="1.96" dy="1.17" layer="1"/>
+<text x="-6.5" y="6" size="1.27" layer="25">&gt;NAME</text>
+<text x="-6.5" y="-7.5" size="1.27" layer="27">&gt;VALUE</text>
+<wire x1="-7.5" y1="6" x2="7.5" y2="6" width="0.127" layer="39"/>
+<wire x1="7.5" y1="6" x2="7.5" y2="-6" width="0.127" layer="39"/>
+<wire x1="7.5" y1="-6" x2="-7.5" y2="-6" width="0.127" layer="39"/>
+<wire x1="-7.5" y1="-6" x2="-7.5" y2="6" width="0.127" layer="39"/>
+<wire x1="-3.75" y1="5.25" x2="3.75" y2="5.25" width="0.127" layer="43"/>
+<wire x1="3.75" y1="5.25" x2="3.75" y2="-5.25" width="0.127" layer="43"/>
+<wire x1="3.75" y1="-5.25" x2="-3.75" y2="-5.25" width="0.127" layer="43"/>
+<wire x1="-3.75" y1="-5.25" x2="-3.75" y2="5.25" width="0.127" layer="43"/>
+</package>
+<package name="WE_ER9.5_SMD_8PIN">
+<description>Transformer, ER9.5 SMD 8 Pin</description>
+<wire x1="-6.5" y1="-5.2" x2="6.5" y2="-5.2" width="0.127" layer="21"/>
+<wire x1="-6.5" y1="5.2" x2="6.5" y2="5.2" width="0.127" layer="21"/>
+<wire x1="6.5" y1="5.2" x2="6.5" y2="-5.2" width="0.127" layer="21"/>
+<wire x1="-6.5" y1="5.2" x2="-6.5" y2="-5.2" width="0.127" layer="21"/>
+<circle x="-4.2" y="3.1" radius="0.2236" width="0.127" layer="21"/>
+<smd name="8" x="5.46" y="3" dx="1.7" dy="1.12" layer="1"/>
+<smd name="5" x="5.46" y="-3" dx="1.7" dy="1.12" layer="1"/>
+<smd name="1" x="-5.46" y="3" dx="1.7" dy="1.12" layer="1"/>
+<smd name="4" x="-5.46" y="-3" dx="1.7" dy="1.12" layer="1"/>
+<smd name="7" x="5.46" y="1" dx="1.7" dy="1.12" layer="1"/>
+<smd name="6" x="5.46" y="-1" dx="1.7" dy="1.12" layer="1"/>
+<smd name="3" x="-5.46" y="-1" dx="1.7" dy="1.12" layer="1"/>
+<smd name="2" x="-5.46" y="1" dx="1.7" dy="1.12" layer="1"/>
+<text x="-6" y="6.5" size="1.27" layer="25">&gt;NAME</text>
+<text x="-6" y="-8" size="1.27" layer="27">&gt;VALUE</text>
+<wire x1="-4" y1="5" x2="4" y2="5" width="0.127" layer="43"/>
+<wire x1="4" y1="5" x2="4" y2="-5" width="0.127" layer="43"/>
+<wire x1="4" y1="-5" x2="-4" y2="-5" width="0.127" layer="43"/>
+<wire x1="-4" y1="-5" x2="-4" y2="5" width="0.127" layer="43"/>
+<wire x1="-7.5" y1="6" x2="7.5" y2="6" width="0.127" layer="39"/>
+<wire x1="7.5" y1="6" x2="7.5" y2="-6" width="0.127" layer="39"/>
+<wire x1="7.5" y1="-6" x2="-7.5" y2="-6" width="0.127" layer="39"/>
+<wire x1="-7.5" y1="-6" x2="-7.5" y2="6" width="0.127" layer="39"/>
+</package>
+</packages>
+<symbols>
+<symbol name="TRANSFORMER_8PIN">
+<wire x1="-5.08" y1="5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="5.08" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<text x="-5.08" y="6.35" size="1.778" layer="95">&gt;NAME</text>
+<text x="-5.08" y="-10.16" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="4" x="-7.62" y="2.54" visible="pad" length="short" direction="pas"/>
+<pin name="3" x="-7.62" y="0" visible="pad" length="short" direction="pas"/>
+<pin name="2" x="-7.62" y="-2.54" visible="pad" length="short" direction="pas"/>
+<pin name="1" x="-7.62" y="-5.08" visible="pad" length="short" direction="pas"/>
+<pin name="8" x="7.62" y="-5.08" visible="pad" length="short" direction="pas" rot="R180"/>
+<pin name="7" x="7.62" y="-2.54" visible="pad" length="short" direction="pas" rot="R180"/>
+<pin name="6" x="7.62" y="0" visible="pad" length="short" direction="pas" rot="R180"/>
+<pin name="5" x="7.62" y="2.54" visible="pad" length="short" direction="pas" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="WE-FB_LT3573" prefix="T" uservalue="yes">
+<description>&lt;b&gt;Flyback Converter WE-FB for LT3573&lt;/b&gt;&lt;p&gt;
+
+- Input voltage: 24 V&lt;br&gt;
+- Output power: 5 W&lt;br&gt;
+- Isolation voltage: 1.5 kV&lt;br&gt;
+- designd for LT3573&lt;br&gt;&lt;br&gt;
+
+-- Industrial input voltage</description>
+<gates>
+<gate name="G$1" symbol="TRANSFORMER_8PIN" x="0" y="0"/>
+</gates>
+<devices>
+<device name="_WE-FB_EP10" package="WE_EP10_SMD_8PIN">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
+</connects>
+<technologies>
+<technology name="-750310471">
+<attribute name="MPN" value="750310471" constant="no"/>
+<attribute name="OC_FARNELL" value="1748681" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6109" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750310559">
+<attribute name="MPN" value="750310559" constant="no"/>
+<attribute name="OC_FARNELL" value="1748680" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6110" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750310562">
+<attribute name="MPN" value="750310562" constant="no"/>
+<attribute name="OC_FARNELL" value="1748682" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6111" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750310563">
+<attribute name="MPN" value="750310563" constant="no"/>
+<attribute name="OC_FARNELL" value="1748685" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6112" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750310564">
+<attribute name="MPN" value="750310564" constant="no"/>
+<attribute name="OC_FARNELL" value="1748686" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6113" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311303">
+<attribute name="MPN" value="750311303" constant="no"/>
+<attribute name="OC_FARNELL" value="1895732" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5821" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311304">
+<attribute name="MPN" value="750311304" constant="no"/>
+<attribute name="OC_FARNELL" value="1895733" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5822" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311305">
+<attribute name="MPN" value="750311305" constant="no"/>
+<attribute name="OC_FARNELL" value="1895735" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5823" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311306">
+<attribute name="MPN" value="750311306" constant="no"/>
+<attribute name="OC_FARNELL" value="1895736" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5824" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311307">
+<attribute name="MPN" value="750311307" constant="no"/>
+<attribute name="OC_FARNELL" value="1895737" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5825" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311308">
+<attribute name="MPN" value="750311308" constant="no"/>
+<attribute name="OC_FARNELL" value="1895738" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5826" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311567">
+<attribute name="MPN" value="750311567" constant="no"/>
+<attribute name="OC_FARNELL" value="1895740" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5839" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311675">
+<attribute name="MPN" value="750311675" constant="no"/>
+<attribute name="OC_FARNELL" value="1895739" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5858" constant="no"/>
+<attribute name="PACKAGE" value="EP10" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="_WE-FB_EP7" package="WE_EP7_SMD_8PIN">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
+</connects>
+<technologies>
+<technology name="-750310799">
+<attribute name="MPN" value="750310799" constant="no"/>
+<attribute name="OC_FARNELL" value="1748689" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6114" constant="no"/>
+<attribute name="PACKAGE" value="EP7_SMD_8PIN" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750311692">
+<attribute name="MPN" value="750311692" constant="no"/>
+<attribute name="OC_FARNELL" value="1895728" constant="no"/>
+<attribute name="OC_NEWARK" value="47T5862" constant="no"/>
+<attribute name="PACKAGE" value="EP7_SMD_8PIN" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750370040">
+<attribute name="MPN" value="750370040" constant="no"/>
+<attribute name="OC_FARNELL" value="1748687" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6115" constant="no"/>
+<attribute name="PACKAGE" value="EP7_SMD_8PIN" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+<technology name="-750370041">
+<attribute name="MPN" value="750370041" constant="no"/>
+<attribute name="OC_FARNELL" value="1748688" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6116" constant="no"/>
+<attribute name="PACKAGE" value="EP7_SMD_8PIN" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="_WE-FB_750370047" package="WE_EP7*_750370047">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
+</connects>
+<technologies>
+<technology name="-750370047">
+<attribute name="MPN" value="750370047" constant="no"/>
+<attribute name="OC_FARNELL" value="1748690" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6118" constant="no"/>
+<attribute name="PACKAGE" value="EP7" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="_WE-FB_750370058_750370059" package="WE_EP7*_750370058_750370059">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="_WE-FB_ER9.5" package="WE_ER9.5_SMD_8PIN">
+<connects>
+<connect gate="G$1" pin="1" pad="4"/>
+<connect gate="G$1" pin="2" pad="3"/>
+<connect gate="G$1" pin="3" pad="2"/>
+<connect gate="G$1" pin="4" pad="1"/>
+<connect gate="G$1" pin="5" pad="8"/>
+<connect gate="G$1" pin="6" pad="7"/>
+<connect gate="G$1" pin="7" pad="6"/>
+<connect gate="G$1" pin="8" pad="5"/>
+</connects>
+<technologies>
+<technology name="-750370042">
+<attribute name="MPN" value="750370042" constant="no"/>
+<attribute name="OC_FARNELL" value="1748691" constant="no"/>
+<attribute name="OC_NEWARK" value="34R6117" constant="no"/>
+<attribute name="PACKAGE" value="ER9.5" constant="no"/>
+<attribute name="SUPPLIER" value="Würth Elektronik eiSos GmbH" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+</drawing>
+</eagle>
