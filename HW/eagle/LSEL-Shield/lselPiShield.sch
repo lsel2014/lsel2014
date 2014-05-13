@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="6.3">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -9,6 +9,20 @@
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
@@ -17522,6 +17536,64 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="TEORA">
+<packages>
+<package name="JST-XHA-2">
+<wire x1="-3.7" y1="2.35" x2="3.7" y2="2.35" width="0.127" layer="21"/>
+<wire x1="3.7" y1="2.35" x2="3.7" y2="1" width="0.127" layer="21"/>
+<wire x1="3.7" y1="1" x2="3.7" y2="0" width="0.127" layer="21"/>
+<wire x1="3.7" y1="0" x2="3.7" y2="-3.4" width="0.127" layer="21"/>
+<wire x1="3.7" y1="-3.4" x2="-3.7" y2="-3.4" width="0.127" layer="21"/>
+<wire x1="-3.7" y1="-3.4" x2="-3.7" y2="0" width="0.127" layer="21"/>
+<wire x1="-3.7" y1="0" x2="-3.7" y2="1" width="0.127" layer="21"/>
+<wire x1="-3.7" y1="1" x2="-3.7" y2="2.35" width="0.127" layer="21"/>
+<wire x1="-3.7" y1="0" x2="-3" y2="0" width="0.127" layer="21"/>
+<wire x1="-3" y1="0" x2="-3" y2="1" width="0.127" layer="21"/>
+<wire x1="-3" y1="1" x2="-3.7" y2="1" width="0.127" layer="21"/>
+<wire x1="3.7" y1="1" x2="3" y2="1" width="0.127" layer="21"/>
+<wire x1="3" y1="1" x2="3" y2="0" width="0.127" layer="21"/>
+<wire x1="3" y1="0" x2="3.7" y2="0" width="0.127" layer="21"/>
+<pad name="P$1" x="-1.25" y="0" drill="1" rot="R90"/>
+<pad name="P$2" x="1.25" y="0" drill="1" rot="R90"/>
+<text x="-3.8" y="2.8" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.8" y="-5.2" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="JST-XHA-2">
+<wire x1="-5.08" y1="2.54" x2="-5.08" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-5.08" x2="5.08" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-5.08" x2="5.08" y2="2.54" width="0.254" layer="94"/>
+<wire x1="5.08" y1="2.54" x2="-5.08" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="-2.54" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="-7.62" width="0.254" layer="94"/>
+<text x="-5.08" y="5.08" size="1.778" layer="96">&gt;NAME</text>
+<text x="-5.08" y="7.62" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="P1" x="-2.54" y="-7.62" visible="off" length="point" rot="R90"/>
+<pin name="P2" x="2.54" y="-7.62" visible="off" length="point" rot="R90"/>
+<wire x1="-2.54" y1="-2.54" x2="-2.54" y2="0" width="0.8128" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="0" width="0.8128" layer="94"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="JST-XHA-2">
+<gates>
+<gate name="G$1" symbol="JST-XHA-2" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="JST-XHA-2">
+<connects>
+<connect gate="G$1" pin="P1" pad="P$1"/>
+<connect gate="G$1" pin="P2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -17652,11 +17724,14 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <part name="C18" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="100n"/>
 <part name="GND26" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND27" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="U$6" library="TEORA" deviceset="JST-XHA-2" device=""/>
+<part name="GND-ISO14" library="SparkFun-Aesthetics" deviceset="GND-ISO" device=""/>
+<part name="U$7" library="TEORA" deviceset="JST-XHA-2" device=""/>
+<part name="GND-ISO15" library="SparkFun-Aesthetics" deviceset="GND-ISO" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
-<text x="-35.56" y="198.12" size="1.778" layer="91">ADD POWER CONNECTOR FOR SUN</text>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="53.34" y="30.48"/>
@@ -17785,6 +17860,10 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <instance part="C18" gate="G$1" x="157.48" y="88.9" rot="R270"/>
 <instance part="GND26" gate="1" x="162.56" y="86.36"/>
 <instance part="GND27" gate="1" x="170.18" y="73.66"/>
+<instance part="U$6" gate="G$1" x="-38.1" y="203.2" rot="R90"/>
+<instance part="GND-ISO14" gate="G$1" x="-30.48" y="203.2"/>
+<instance part="U$7" gate="G$1" x="-38.1" y="218.44" rot="R90"/>
+<instance part="GND-ISO15" gate="G$1" x="-30.48" y="218.44"/>
 </instances>
 <busses>
 </busses>
@@ -18423,6 +18502,14 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <pinref part="C8" gate="G$1" pin="1"/>
 <pinref part="GND-ISO13" gate="G$1" pin="GND-ISO"/>
 </segment>
+<segment>
+<pinref part="U$6" gate="G$1" pin="P2"/>
+<pinref part="GND-ISO14" gate="G$1" pin="GND-ISO"/>
+</segment>
+<segment>
+<pinref part="U$7" gate="G$1" pin="P2"/>
+<pinref part="GND-ISO15" gate="G$1" pin="GND-ISO"/>
+</segment>
 </net>
 <net name="N$26" class="0">
 <segment>
@@ -18634,6 +18721,13 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <wire x1="99.06" y1="195.58" x2="93.98" y2="195.58" width="0.1524" layer="91"/>
 <pinref part="C8" gate="G$1" pin="2"/>
 <junction x="-12.7" y="190.5"/>
+<pinref part="U$6" gate="G$1" pin="P1"/>
+<wire x1="-30.48" y1="200.66" x2="-17.78" y2="200.66" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="200.66" x2="-17.78" y2="190.5" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="P1"/>
+<wire x1="-30.48" y1="215.9" x2="-17.78" y2="215.9" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="215.9" x2="-17.78" y2="200.66" width="0.1524" layer="91"/>
+<junction x="-17.78" y="200.66"/>
 </segment>
 </net>
 <net name="N$25" class="0">
