@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="6.3">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -9855,6 +9855,39 @@ Source: http://www3.alps.co.jp/WebObjects/catalog.woa/PDF/E/Switch/Tact/SKHM/SKH
 <pad name="7" x="-9" y="0" drill="0.8128" diameter="1.6764" shape="octagon"/>
 <pad name="8" x="-11" y="0" drill="0.8128" diameter="1.6764" shape="octagon"/>
 </package>
+<package name="JST-PH4">
+<wire x1="-4.95" y1="-1.7" x2="-1.95" y2="-1.7" width="0.127" layer="21"/>
+<wire x1="-1.95" y1="-1.7" x2="1.95" y2="-1.7" width="0.127" layer="21"/>
+<wire x1="1.95" y1="-1.7" x2="4.95" y2="-1.7" width="0.127" layer="21"/>
+<wire x1="-4.95" y1="2.8" x2="4.95" y2="2.8" width="0.127" layer="21"/>
+<wire x1="4.95" y1="2.8" x2="4.95" y2="0.6" width="0.127" layer="21"/>
+<wire x1="4.95" y1="0.6" x2="4.95" y2="-0.3" width="0.127" layer="21"/>
+<wire x1="4.95" y1="-0.3" x2="4.95" y2="-1.7" width="0.127" layer="21"/>
+<wire x1="-4.95" y1="2.8" x2="-4.95" y2="0.6" width="0.127" layer="21"/>
+<wire x1="-4.95" y1="0.6" x2="-4.95" y2="-0.3" width="0.127" layer="21"/>
+<wire x1="-4.95" y1="-0.3" x2="-4.95" y2="-1.7" width="0.127" layer="21"/>
+<wire x1="-4.35" y1="2.2" x2="4.35" y2="2.2" width="0.127" layer="21"/>
+<wire x1="-4.35" y1="2.2" x2="-4.35" y2="0.6" width="0.127" layer="21"/>
+<wire x1="-4.35" y1="0.6" x2="-4.35" y2="-0.3" width="0.127" layer="21"/>
+<wire x1="-4.35" y1="-0.3" x2="-4.35" y2="-1.1" width="0.127" layer="21"/>
+<wire x1="-4.35" y1="-1.1" x2="-1.95" y2="-1.1" width="0.127" layer="21"/>
+<wire x1="4.35" y1="2.2" x2="4.35" y2="0.6" width="0.127" layer="21"/>
+<wire x1="4.35" y1="0.6" x2="4.35" y2="-0.3" width="0.127" layer="21"/>
+<wire x1="4.35" y1="-0.3" x2="4.35" y2="-1.1" width="0.127" layer="21"/>
+<wire x1="-4.95" y1="-0.3" x2="-4.35" y2="-0.3" width="0.127" layer="21"/>
+<wire x1="-4.95" y1="0.6" x2="-4.35" y2="0.6" width="0.127" layer="21"/>
+<wire x1="4.35" y1="0.6" x2="4.95" y2="0.6" width="0.127" layer="21"/>
+<wire x1="4.35" y1="-0.3" x2="4.95" y2="-0.3" width="0.127" layer="21"/>
+<wire x1="-1.95" y1="-1.1" x2="-1.95" y2="-1.7" width="0.127" layer="21"/>
+<wire x1="1.95" y1="-1.1" x2="1.95" y2="-1.7" width="0.127" layer="21"/>
+<wire x1="1.95" y1="-1.1" x2="4.35" y2="-1.1" width="0.127" layer="21"/>
+<pad name="4" x="-3" y="0" drill="0.8128" diameter="1.6764" shape="octagon"/>
+<pad name="3" x="-1" y="0" drill="0.8128" diameter="1.6764" shape="octagon"/>
+<pad name="2" x="1" y="0" drill="0.8128" diameter="1.6764" shape="octagon"/>
+<pad name="1" x="3" y="0" drill="0.8128" diameter="1.6764" shape="octagon"/>
+<text x="-5" y="3.5001" size="1.27" layer="25">&gt;NAME</text>
+<text x="2.9001" y="-3.4999" size="1.27" layer="21">1</text>
+</package>
 </packages>
 <symbols>
 <symbol name="CON08">
@@ -9873,6 +9906,18 @@ Source: http://www3.alps.co.jp/WebObjects/catalog.woa/PDF/E/Switch/Tact/SKHM/SKH
 <pin name="5" x="5.08" y="10.16" visible="pad" length="short" direction="pas" rot="R180"/>
 <pin name="8" x="5.08" y="2.54" visible="pad" length="short" direction="pas" rot="R180"/>
 </symbol>
+<symbol name="CON04">
+<wire x1="-2.54" y1="5.08" x2="-2.54" y2="-7.62" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-7.62" x2="5.08" y2="-7.62" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="5.08" y2="5.08" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="5.08" x2="-2.54" y2="5.08" width="0.1524" layer="94"/>
+<text x="-2.54" y="5.842" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-9.906" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="3" x="7.62" y="-2.54" visible="pad" length="short" direction="pas" rot="R180"/>
+<pin name="2" x="7.62" y="0" visible="pad" length="short" direction="pas" rot="R180"/>
+<pin name="1" x="7.62" y="2.54" visible="pad" length="short" direction="pas" rot="R180"/>
+<pin name="4" x="7.62" y="-5.08" visible="pad" length="short" direction="pas" rot="R180"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="JST-PH8" prefix="J">
@@ -9890,6 +9935,24 @@ Source: http://www3.alps.co.jp/WebObjects/catalog.woa/PDF/E/Switch/Tact/SKHM/SKH
 <connect gate="G$1" pin="6" pad="6"/>
 <connect gate="G$1" pin="7" pad="7"/>
 <connect gate="G$1" pin="8" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="JST-PH4" prefix="P" uservalue="yes">
+<gates>
+<gate name="A" symbol="CON04" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="JST-PH4">
+<connects>
+<connect gate="A" pin="1" pad="1"/>
+<connect gate="A" pin="2" pad="2"/>
+<connect gate="A" pin="3" pad="3"/>
+<connect gate="A" pin="4" pad="4"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -17588,6 +17651,9 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <part name="GND-ISO14" library="SparkFun-Aesthetics" deviceset="GND-ISO" device=""/>
 <part name="U$7" library="TEORA" deviceset="JST-XHA-2" device=""/>
 <part name="GND-ISO15" library="SparkFun-Aesthetics" deviceset="GND-ISO" device=""/>
+<part name="C19" library="SparkFun-Capacitors" deviceset="CAP" device="1206" value="10u"/>
+<part name="GND28" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="P1" library="jst-ph" deviceset="JST-PH4" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -17723,6 +17789,9 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <instance part="GND-ISO14" gate="G$1" x="-30.48" y="203.2"/>
 <instance part="U$7" gate="G$1" x="-38.1" y="218.44" rot="R90"/>
 <instance part="GND-ISO15" gate="G$1" x="-30.48" y="218.44"/>
+<instance part="C19" gate="G$1" x="231.14" y="182.88" rot="R180"/>
+<instance part="GND28" gate="1" x="231.14" y="175.26"/>
+<instance part="P1" gate="A" x="220.98" y="66.04"/>
 </instances>
 <busses>
 </busses>
@@ -17776,6 +17845,7 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <wire x1="236.22" y1="185.42" x2="231.14" y2="185.42" width="0.1524" layer="91"/>
 <junction x="236.22" y="185.42"/>
 <junction x="231.14" y="185.42"/>
+<pinref part="C19" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="LED1" gate="G$1" pin="A"/>
@@ -18124,6 +18194,10 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <pinref part="C17" gate="G$1" pin="2"/>
 <pinref part="GND27" gate="1" pin="GND"/>
 <wire x1="170.18" y1="76.2" x2="167.64" y2="76.2" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C19" gate="G$1" pin="1"/>
+<pinref part="GND28" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="N$9" class="0">
