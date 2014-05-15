@@ -209,7 +209,6 @@ UsedLibrary="/opt/eagle-6.5.0/lbr/linear.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/linx.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/logo.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/lprs.lbr"
-UsedLibrary="/opt/eagle-6.5.0/lbr/lsel2014.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/lsi-computer-systems.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/lumiled.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/marks.lbr"
@@ -360,12 +359,7 @@ UsedLibrary="/opt/eagle-6.5.0/lbr/xilinx-xc9.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/xilinx-xcv.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/zetex.lbr"
 UsedLibrary="/opt/eagle-6.5.0/lbr/zilog.lbr"
-UsedLibrary="/home/user/eagle/raspberry.lbr"
-UsedLibrary="/home/user/eagle/mcp1826.lbr"
-UsedLibrary="/home/user/eagle/LT3575.lbr"
-UsedLibrary="/home/user/eagle/WE-FB_LT3573.lbr"
-UsedLibrary="/home/user/eagle/txb0108.lbr"
-UsedLibrary="/home/user/eagle/PCA3515.lbr"
+UsedLibrary="/home/jose/eagle/lsel14/jst-ph.lbr"
 
 [Win_1]
 Type="Control Panel"
@@ -374,5 +368,5 @@ State=1
 Number=0
 
 [Desktop]
-Screen="1360 768"
+Screen="1600 900"
 Window="Win_1"
