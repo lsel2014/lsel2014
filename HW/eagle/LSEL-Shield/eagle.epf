@@ -363,8 +363,8 @@ UsedLibrary="/home/jose/eagle/lsel14/jst-ph.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="540 177 1139 576"
-State=1
+Loc="1033 447 1632 846"
+State=2
 Number=0
 
 [Desktop]
