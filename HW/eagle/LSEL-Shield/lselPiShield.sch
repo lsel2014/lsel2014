@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="6.3">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -17532,7 +17532,7 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <part name="U3" library="PCA3515" deviceset="PCA9515ADP" device=""/>
 <part name="U4" library="PCA3515" deviceset="PCA9515ADP" device=""/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
-<part name="GPIO_PWR" library="jumper" deviceset="JP2E" device=""/>
+<part name="IOLVL" library="jumper" deviceset="JP2E" device=""/>
 <part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
@@ -17609,13 +17609,11 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <part name="GND15" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="C12" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP"/>
 <part name="C13" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP"/>
-<part name="C14" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP"/>
-<part name="GND16" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND17" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND18" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY15" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="GND19" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="LED1" library="led" deviceset="LED" device="CHIP-LED0603"/>
+<part name="PGOOD" library="led" deviceset="LED" device="CHIP-LED0603"/>
 <part name="SUPPLY16" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="C15" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="220n"/>
 <part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
@@ -17639,15 +17637,17 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <part name="C18" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="100n"/>
 <part name="GND26" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND27" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="U$6" library="TEORA" deviceset="JST-XHA-2" device=""/>
+<part name="J4" library="TEORA" deviceset="JST-XHA-2" device=""/>
 <part name="GND-ISO14" library="SparkFun-Aesthetics" deviceset="GND-ISO" device=""/>
-<part name="U$7" library="TEORA" deviceset="JST-XHA-2" device=""/>
+<part name="J3" library="TEORA" deviceset="JST-XHA-2" device=""/>
 <part name="GND-ISO15" library="SparkFun-Aesthetics" deviceset="GND-ISO" device=""/>
 <part name="C19" library="SparkFun-Capacitors" deviceset="CAP" device="1206" value="10u"/>
 <part name="GND28" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="NRF24" library="SparkFun-Connectors" deviceset="M04X2" device=""/>
 <part name="I2C0" library="jst-ph" deviceset="JST-PH4" device=""/>
 <part name="I2C1" library="jst-ph" deviceset="JST-PH4" device=""/>
+<part name="RAILAMP" library="jst-ph" deviceset="JST-PH4" device=""/>
+<part name="GND16" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -17664,7 +17664,7 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <instance part="U3" gate="A" x="119.38" y="-2.54"/>
 <instance part="U4" gate="A" x="119.38" y="-73.66"/>
 <instance part="SUPPLY1" gate="G$1" x="154.94" y="88.9"/>
-<instance part="GPIO_PWR" gate="1" x="144.78" y="91.44"/>
+<instance part="IOLVL" gate="1" x="144.78" y="91.44"/>
 <instance part="SUPPLY2" gate="G$1" x="134.62" y="88.9"/>
 <instance part="GND1" gate="1" x="134.62" y="33.02"/>
 <instance part="GND2" gate="1" x="106.68" y="-25.4"/>
@@ -17741,13 +17741,11 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <instance part="GND15" gate="1" x="223.52" y="175.26"/>
 <instance part="C12" gate="G$1" x="276.86" y="180.34"/>
 <instance part="C13" gate="G$1" x="236.22" y="180.34"/>
-<instance part="C14" gate="G$1" x="266.7" y="170.18"/>
-<instance part="GND16" gate="1" x="266.7" y="165.1"/>
 <instance part="GND17" gate="1" x="276.86" y="175.26"/>
 <instance part="GND18" gate="1" x="236.22" y="175.26"/>
 <instance part="SUPPLY15" gate="G$1" x="276.86" y="185.42"/>
 <instance part="GND19" gate="1" x="25.4" y="71.12"/>
-<instance part="LED1" gate="G$1" x="25.4" y="91.44"/>
+<instance part="PGOOD" gate="G$1" x="25.4" y="91.44"/>
 <instance part="SUPPLY16" gate="G$1" x="25.4" y="99.06"/>
 <instance part="C15" gate="G$1" x="86.36" y="200.66" rot="R270"/>
 <instance part="GND10" gate="1" x="121.92" y="195.58" rot="R90"/>
@@ -17771,15 +17769,17 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <instance part="C18" gate="G$1" x="157.48" y="88.9" rot="R270"/>
 <instance part="GND26" gate="1" x="162.56" y="86.36"/>
 <instance part="GND27" gate="1" x="170.18" y="73.66"/>
-<instance part="U$6" gate="G$1" x="-38.1" y="203.2" rot="R90"/>
+<instance part="J4" gate="G$1" x="-38.1" y="203.2" rot="R90"/>
 <instance part="GND-ISO14" gate="G$1" x="-30.48" y="203.2"/>
-<instance part="U$7" gate="G$1" x="-38.1" y="218.44" rot="R90"/>
+<instance part="J3" gate="G$1" x="-38.1" y="218.44" rot="R90"/>
 <instance part="GND-ISO15" gate="G$1" x="-30.48" y="218.44"/>
 <instance part="C19" gate="G$1" x="231.14" y="182.88" rot="R180"/>
 <instance part="GND28" gate="1" x="231.14" y="175.26"/>
 <instance part="NRF24" gate="G$1" x="-53.34" y="50.8"/>
 <instance part="I2C0" gate="A" x="162.56" y="-2.54" rot="MR0"/>
 <instance part="I2C1" gate="A" x="162.56" y="-73.66" rot="MR0"/>
+<instance part="RAILAMP" gate="A" x="220.98" y="60.96" rot="MR0"/>
+<instance part="GND16" gate="1" x="205.74" y="55.88"/>
 </instances>
 <busses>
 </busses>
@@ -17787,7 +17787,7 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <net name="5V" class="0">
 <segment>
 <pinref part="SUPPLY2" gate="G$1" pin="5V"/>
-<pinref part="GPIO_PWR" gate="1" pin="1"/>
+<pinref part="IOLVL" gate="1" pin="1"/>
 <wire x1="134.62" y1="88.9" x2="142.24" y2="88.9" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -17836,14 +17836,14 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <pinref part="C19" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="LED1" gate="G$1" pin="A"/>
+<pinref part="PGOOD" gate="G$1" pin="A"/>
 <pinref part="SUPPLY16" gate="G$1" pin="5V"/>
 <wire x1="25.4" y1="99.06" x2="25.4" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
 <segment>
-<pinref part="GPIO_PWR" gate="1" pin="3"/>
+<pinref part="IOLVL" gate="1" pin="3"/>
 <pinref part="SUPPLY1" gate="G$1" pin="3.3V"/>
 <wire x1="147.32" y1="88.9" x2="154.94" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="U2" gate="A" pin="VCCA"/>
@@ -17919,7 +17919,7 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 </net>
 <net name="N$1" class="0">
 <segment>
-<pinref part="GPIO_PWR" gate="1" pin="2"/>
+<pinref part="IOLVL" gate="1" pin="2"/>
 <wire x1="144.78" y1="88.9" x2="144.78" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="144.78" y1="83.82" x2="129.54" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="129.54" y1="83.82" x2="129.54" y2="71.12" width="0.1524" layer="91"/>
@@ -17948,11 +17948,17 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <junction x="190.5" y="55.88"/>
 <wire x1="144.78" y1="83.82" x2="167.64" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="167.64" y1="83.82" x2="190.5" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="190.5" y1="83.82" x2="190.5" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="190.5" y1="83.82" x2="190.5" y2="76.2" width="0.1524" layer="91"/>
 <junction x="144.78" y="83.82"/>
 <junction x="190.5" y="71.12"/>
 <pinref part="C17" gate="G$1" pin="1"/>
 <junction x="167.64" y="83.82"/>
+<pinref part="RAILAMP" gate="A" pin="2"/>
+<wire x1="190.5" y1="76.2" x2="190.5" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="213.36" y1="60.96" x2="205.74" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="205.74" y1="60.96" x2="205.74" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="205.74" y1="76.2" x2="190.5" y2="76.2" width="0.1524" layer="91"/>
+<junction x="190.5" y="76.2"/>
 </segment>
 </net>
 <net name="N$4" class="0">
@@ -18013,9 +18019,9 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <wire x1="91.44" y1="43.18" x2="93.98" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="93.98" y1="40.64" x2="101.6" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="45.72" x2="121.92" y2="45.72" width="0.1524" layer="91"/>
-<wire x1="121.92" y1="45.72" x2="124.46" y2="48.26" width="0.1524" layer="91"/>
-<pinref part="U2" gate="A" pin="A6"/>
-<wire x1="124.46" y1="48.26" x2="134.62" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="121.92" y1="45.72" x2="121.92" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="U2" gate="A" pin="A1"/>
+<wire x1="121.92" y1="60.96" x2="134.62" y2="60.96" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -18096,10 +18102,6 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <segment>
 <pinref part="C11" gate="G$1" pin="2"/>
 <pinref part="GND15" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="C14" gate="G$1" pin="2"/>
-<pinref part="GND16" gate="1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="C12" gate="G$1" pin="2"/>
@@ -18204,6 +18206,11 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <segment>
 <pinref part="C19" gate="G$1" pin="1"/>
 <pinref part="GND28" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="RAILAMP" gate="A" pin="3"/>
+<pinref part="GND16" gate="1" pin="GND"/>
+<wire x1="213.36" y1="58.42" x2="205.74" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$9" class="0">
@@ -18426,11 +18433,11 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <pinref part="GND-ISO13" gate="G$1" pin="GND-ISO"/>
 </segment>
 <segment>
-<pinref part="U$6" gate="G$1" pin="P2"/>
+<pinref part="J4" gate="G$1" pin="P2"/>
 <pinref part="GND-ISO14" gate="G$1" pin="GND-ISO"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$1" pin="P2"/>
+<pinref part="J3" gate="G$1" pin="P2"/>
 <pinref part="GND-ISO15" gate="G$1" pin="GND-ISO"/>
 </segment>
 </net>
@@ -18579,13 +18586,6 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <junction x="154.94" y="195.58"/>
 </segment>
 </net>
-<net name="N$40" class="0">
-<segment>
-<pinref part="U5" gate="G$1" pin="BP"/>
-<pinref part="C14" gate="G$1" pin="1"/>
-<wire x1="266.7" y1="175.26" x2="264.16" y2="175.26" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="RESET" class="0">
 <segment>
 <pinref part="U6" gate="A" pin="PWRGD"/>
@@ -18608,7 +18608,7 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <net name="N$36" class="0">
 <segment>
 <pinref part="Q1" gate="G$1" pin="D"/>
-<pinref part="LED1" gate="G$1" pin="C"/>
+<pinref part="PGOOD" gate="G$1" pin="C"/>
 <wire x1="25.4" y1="86.36" x2="25.4" y2="83.82" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -18644,10 +18644,10 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <wire x1="99.06" y1="195.58" x2="93.98" y2="195.58" width="0.1524" layer="91"/>
 <pinref part="C8" gate="G$1" pin="2"/>
 <junction x="-12.7" y="190.5"/>
-<pinref part="U$6" gate="G$1" pin="P1"/>
+<pinref part="J4" gate="G$1" pin="P1"/>
 <wire x1="-30.48" y1="200.66" x2="-17.78" y2="200.66" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="200.66" x2="-17.78" y2="190.5" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$1" pin="P1"/>
+<pinref part="J3" gate="G$1" pin="P1"/>
 <wire x1="-30.48" y1="215.9" x2="-17.78" y2="215.9" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="215.9" x2="-17.78" y2="200.66" width="0.1524" layer="91"/>
 <junction x="-17.78" y="200.66"/>
@@ -18706,24 +18706,28 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <pinref part="GPIO" gate="G$1" pin="11"/>
 </segment>
 </net>
-<net name="N$49" class="0">
+<net name="GPIO30T" class="0">
 <segment>
 <pinref part="U2" gate="A" pin="B7"/>
 <wire x1="182.88" y1="55.88" x2="170.18" y2="55.88" width="0.1524" layer="91"/>
 <pinref part="GPIO" gate="G$1" pin="13"/>
 </segment>
+<segment>
+<pinref part="RAILAMP" gate="A" pin="1"/>
+<wire x1="213.36" y1="63.5" x2="210.82" y2="63.5" width="0.1524" layer="91"/>
+<label x="210.82" y="63.5" size="1.778" layer="95"/>
+</segment>
 </net>
-<net name="N$50" class="0">
+<net name="GPIO31T" class="0">
 <segment>
 <pinref part="U2" gate="A" pin="B8"/>
 <wire x1="182.88" y1="53.34" x2="170.18" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="GPIO" gate="G$1" pin="15"/>
 </segment>
-</net>
-<net name="N$56" class="0">
 <segment>
-<wire x1="198.12" y1="53.34" x2="198.12" y2="73.66" width="0.1524" layer="91"/>
-<wire x1="198.12" y1="73.66" x2="193.04" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="RAILAMP" gate="A" pin="4"/>
+<wire x1="213.36" y1="55.88" x2="210.82" y2="55.88" width="0.1524" layer="91"/>
+<label x="210.82" y="55.88" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SCK" class="0">
@@ -18808,14 +18812,14 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <wire x1="0" y1="12.7" x2="-25.4" y2="12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="GPIO30" class="0">
+<net name="GPIO31" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="GPIO30"/>
-<wire x1="91.44" y1="27.94" x2="119.38" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="119.38" y1="27.94" x2="119.38" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="25.4" x2="119.38" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="35.56" x2="127" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="U2" gate="A" pin="A8"/>
 <wire x1="127" y1="43.18" x2="134.62" y2="43.18" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="GPIO31"/>
+<wire x1="91.44" y1="25.4" x2="119.38" y2="25.4" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GPIO25+" class="0">
@@ -18832,19 +18836,6 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <wire x1="-43.18" y1="48.26" x2="-40.64" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="-40.64" y1="45.72" x2="-25.4" y2="45.72" width="0.1524" layer="91"/>
 <junction x="-25.4" y="45.72"/>
-</segment>
-</net>
-<net name="N$61" class="0">
-<segment>
-<wire x1="109.22" y1="43.18" x2="109.22" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="109.22" y1="66.04" x2="22.86" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="66.04" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="GPIO4/GPCLK0"/>
-<wire x1="22.86" y1="50.8" x2="27.94" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="109.22" y1="43.18" x2="121.92" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="121.92" y1="43.18" x2="124.46" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="U2" gate="A" pin="A7"/>
-<wire x1="124.46" y1="45.72" x2="134.62" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GPIO27" class="0">
@@ -18873,6 +18864,27 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <pinref part="U2" gate="A" pin="A5"/>
 <wire x1="134.62" y1="50.8" x2="96.52" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="96.52" y1="50.8" x2="91.44" y2="55.88" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="GPIO30" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="GPIO30"/>
+<wire x1="91.44" y1="27.94" x2="116.84" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="27.94" x2="116.84" y2="38.1" width="0.1524" layer="91"/>
+<pinref part="U2" gate="A" pin="A7"/>
+<wire x1="124.46" y1="45.72" x2="134.62" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="38.1" x2="124.46" y2="45.72" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="U2" gate="A" pin="A6"/>
+<wire x1="109.22" y1="48.26" x2="109.22" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="109.22" y1="66.04" x2="22.86" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="66.04" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="GPIO4/GPCLK0"/>
+<wire x1="22.86" y1="50.8" x2="27.94" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="134.62" y1="48.26" x2="109.22" y2="48.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
