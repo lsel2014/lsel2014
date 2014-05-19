@@ -50,7 +50,7 @@ void model_init(void) {
 		const char* name;
 	} trafficlight_names[] = { { "semaforotrafico0" }, { NULL } };
 	
-	static struct Semaphore_name_t {
+	static struct semaphore_name_t {
 		const char* name;
 	} semaphore_names[] = { { "semaforo0" }, { "semaforo1" }, { "semaforo2" },
                              { "semaforo3" }, { NULL } };
@@ -61,7 +61,7 @@ void model_init(void) {
 	struct railway_name_t* r;
 	struct crossingGate_name_t* cr;
 	struct trafficlight_name_t* tl;
-	struct Semaphore_name_t* sph;
+	struct semaphore_name_t* sph;
 	
 	for (s = ir_names; s->name; ++s) {
 		model_add_observable(s->name, (observable_t*) sensors[i]);
