@@ -97,8 +97,8 @@ int main(int argc, char* argv[]) {
 	trains_setup();
 	setupRailChange();
 	sun_setup();
-	setup_trafficLight();
-	setup_crossingGate();
+	trafficLight_setup();
+	crossingGate_setup();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
