@@ -29,7 +29,7 @@ void
 semaphore_setup(void)
 {
     int i;
-    for( i=0; 0<MAXSEMAFORES; i++){
+    for( i=0; i<MAXSEMAFORES; i++){
          semaphore_new(i);
          }
 }
