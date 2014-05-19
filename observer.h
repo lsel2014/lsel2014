@@ -22,7 +22,7 @@ typedef struct observable_t {
 } observable_t;
 
 void observable_init(observable_t* this);
-void observable_register_observer(observable_t* this, observer_t* observer);
+void observable_register_observer(observable_t* this, observer_t* obs);
 void observable_notify_observers(observable_t* this);
 int observable_get_nobservers(observable_t* this);
 int observable_get_nevents(observable_t* this);
