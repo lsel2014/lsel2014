@@ -61,8 +61,8 @@ main (int argc, char* argv[])
   // Initialize wiringPi lib, configure IO
   initializeWiringPi();
 
+  plugin_setup ();
   task_setup ();
-  model_setup ();
 
   if (argc > 1)
     load_config_file (argv[1]);

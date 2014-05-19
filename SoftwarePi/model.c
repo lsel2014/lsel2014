@@ -9,11 +9,6 @@ static struct object_ref_t {
 } objs[MAX_OBJS];
 static int n_objs = 0;
 
-void
-model_setup (void)
-{
-}
-
 int
 model_add (const char* name, observable_t* obs)
 {
@@ -39,8 +34,12 @@ model_get_next (const char* name, int* i)
 observable_t*
 model_get (const char* name)
 {
-  int i = 0;
-  return model_get_next (name, &i);
+  int i;
+  for (i = 0; i < n_objs; ++i) {
+    if (0 == strcmp (name, objs[i].name))
+      return objs[i].obs;
+  }
+  return NULL;
 }
 
 /*

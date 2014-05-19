@@ -52,10 +52,14 @@ plugin_load (const char* name)
   if (setup)
     setup ();
 
-  interp_addcmd("plugin", plugin_cmd, "load MODULE | list");
   return n_plugins;
 }
 
+void
+plugin_setup (void)
+{
+  interp_addcmd("plugin", plugin_cmd, "load MODULE | list");
+}
 
 /*
   Local variables:

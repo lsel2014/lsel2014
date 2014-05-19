@@ -38,10 +38,10 @@ all: libwiringPi.so libsel.so daemon train.so
 
 daemon: LDLIBS = -L. -lsel -lwiringPi
 
+libwiringPi.so: wiringPi.o
+
 libsel.so: LDLIBS = -lreadline -lm -L. -lwiringPi
 libsel.so: $(libsel_OBJS)
-
-libwiringPi.so: wiringPi.o
 
 train.so: LDLIBS = -L. -lsel -lwiringPi
 train.so: train.o dcc.o
