@@ -5,8 +5,8 @@
 #include "model.h"
 #include "trafficLight.h"
 #include "semaphore.h"
-#
-include <rtdk.h>
+#include <rtdk.h>
+
 static observer_t ctrlilu_observer;
 
 static struct railway_data_t {
