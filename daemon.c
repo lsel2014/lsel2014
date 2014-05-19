@@ -18,17 +18,17 @@
 //#include "sunTasks.h"
 
 // Interpreter
-#include "Interpreter/interp.h"
+#include "interp.h"
 #include "daemon.h"
 #include "tasks.h"
 
 //Model
 #include "train.h"
 #include "sun.h"
-#include "Model/Sensors/sensorIR.h"
-#include "Model/Actuators/railChange.h"
-#include "Model/Actuators/trafficLight.h"
-#include "Model/Actuators/crossingGate.h"
+#include "sensorIR.h"
+#include "railChange.h"
+#include "trafficLight.h"
+#include "crossingGate.h"
 
 // Dummy function to catch signals
 void catch_signal () {}
