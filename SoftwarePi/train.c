@@ -22,6 +22,13 @@ int ntrains = 0;
 
 static void train_update_est(void* arg);
 
+static void
+train_dump (observable_t* this, FILE* f)
+{
+	train_t* t = (train_t*) this;
+	fprintf (f, "Train %s: pos=\n", t->name);
+}
+
 // Object creation/destruction -----
 
 /**
@@ -75,7 +82,8 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
 void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc, telemetry_t* telemetry)
 {
-	observable_init(&this->observable);
+	observable_init((observable_t*) this);
+	((observable_t*) this)->dump = train_dump;
 	
 	this->name = name;
 	this->ID = ID;

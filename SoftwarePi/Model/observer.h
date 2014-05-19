@@ -1,6 +1,8 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
+#include <stdio.h>
+
 #define MAXOBSERVERS 10
 
 struct observable_t;
@@ -19,6 +21,7 @@ typedef struct observable_t {
 	observer_t* observer[MAXOBSERVERS];
 	int nobservers;
 	int nevents;
+	void (*dump) (struct observable_t*, FILE*);
 } observable_t;
 
 void observable_init(observable_t* this);
@@ -26,5 +29,6 @@ void observable_register_observer(observable_t* this, observer_t* observer);
 void observable_notify_observers(observable_t* this);
 int observable_get_nobservers(observable_t* this);
 int observable_get_nevents(observable_t* this);
+void observable_dump(observable_t* this, FILE* f);
 
 #endif

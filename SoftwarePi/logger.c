@@ -11,28 +11,35 @@ void setup_logger(void)
    interp_addcmd("log", logger_cmd, "Print in a file.\n");
 }
 
-static int logger_cmd(char* arg)
+static int logger_cmd (char* arg)
 {
-   logger_new(arg);
+   char* obs = strchr (arg, ' ');
+   if (obs == NULL)
+      return 1;
+   *obs++ = '\0';
+   logger_new (arg, obs);
    return 0;
 }
 
-logger_t* logger_new(const char* filename)
+logger_t* logger_new(const char* filename, const char* observable)
 {
    logger_t* logger = (logger_t*) malloc(sizeof(logger_t));
-   logger_init(logger, filename);
+   logger_init(logger, filename, observable);
    return logger;
 }
 
-void logger_init(logger_t* logger, const char* filename)
+void logger_init(logger_t* logger, const char* filename, const char* observable)
 {
    observer_init((observer_t*) logger, logger_notify);
-   (*logger).file = fopen(filename, "a");
+   logger->filename = strdup (filename);
+   logger->observable = model_get_observable (observable);
 }
 
 void logger_notify(observer_t* observer, observable_t* observable)
 {
    logger_t* this = (logger_t*) observer;
-   train_t* train = (train_t*) model_get_observable("Diesel");
-   fprintf(this->file, "Tren %d en sector %d\n", train->ID, train->telemetry->sector);
+   FILE* f = fopen(this->filename, "a");
+   // print timestamp
+   observable_dump (this->observable, f);
+   fclose (f);
 }
