@@ -1,0 +1,107 @@
+\hypertarget{group__train__t__actions}{\section{train\-\_\-t actions}
+\label{group__train__t__actions}\index{train\-\_\-t actions@{train\-\_\-t actions}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group__train__t__actions_ga67e55a3522e2048fb830b79e10fe6e3e}{train\-\_\-cmd} (char $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Train related interpreter commands. \end{DoxyCompactList}\item 
+int \hyperlink{group__train__t__actions_gadb4c7fe2bb0d4bb621d5f185d4a01638}{train\-\_\-emergency\-\_\-cmd} (char $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Emergency stop interpreter command. \end{DoxyCompactList}\item 
+void \hyperlink{group__train__t__actions_gad1e4327e0b58b796ee1a327a01a83994}{train\-\_\-emergency\-\_\-stop} (\hyperlink{structtrain__t}{train\-\_\-t} $\ast$this)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structtrain__t}{train\-\_\-t} emergency stop \end{DoxyCompactList}\item 
+\hypertarget{group__train__t__actions_gab86ee52704c14c0a3179a41ed607785f}{void {\bfseries train\-\_\-wait\-\_\-sector} (\hyperlink{structtrain__t}{train\-\_\-t} $\ast$this, char sector)}\label{group__train__t__actions_gab86ee52704c14c0a3179a41ed607785f}
+
+\item 
+void \hyperlink{group__train__t__actions_ga8057969f4229170fa28ef7b5afb60268}{timeval\-\_\-sub} (struct timeval $\ast$res, struct timeval $\ast$a, struct timeval $\ast$b)
+\begin{DoxyCompactList}\small\item\em timeval difference calculation \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Actions of \hyperlink{structtrain__t}{train\-\_\-t} 
+
+\subsection{Function Documentation}
+\hypertarget{group__train__t__actions_ga8057969f4229170fa28ef7b5afb60268}{\index{train\-\_\-t actions@{train\-\_\-t actions}!timeval\-\_\-sub@{timeval\-\_\-sub}}
+\index{timeval\-\_\-sub@{timeval\-\_\-sub}!train_t actions@{train\-\_\-t actions}}
+\subsubsection[{timeval\-\_\-sub}]{\setlength{\rightskip}{0pt plus 5cm}void timeval\-\_\-sub (
+\begin{DoxyParamCaption}
+\item[{struct timeval $\ast$}]{res, }
+\item[{struct timeval $\ast$}]{a, }
+\item[{struct timeval $\ast$}]{b}
+\end{DoxyParamCaption}
+)}}\label{group__train__t__actions_ga8057969f4229170fa28ef7b5afb60268}
+
+
+timeval difference calculation 
+
+Returns the difference in time between two timeval structures.
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$res} & Result of the operation \\
+\hline
+{\em $\ast$a} & First operand \\
+\hline
+{\em $\ast$b} & Second operand \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__train__t__actions_ga67e55a3522e2048fb830b79e10fe6e3e}{\index{train\-\_\-t actions@{train\-\_\-t actions}!train\-\_\-cmd@{train\-\_\-cmd}}
+\index{train\-\_\-cmd@{train\-\_\-cmd}!train_t actions@{train\-\_\-t actions}}
+\subsubsection[{train\-\_\-cmd}]{\setlength{\rightskip}{0pt plus 5cm}int train\-\_\-cmd (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}}\label{group__train__t__actions_ga67e55a3522e2048fb830b79e10fe6e3e}
+
+
+Train related interpreter commands. 
+
+Train related commands. Allows the user to manage and control the trains via the cmd interpreter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Second command argument to be executed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 
+\end{DoxyReturn}
+\hypertarget{group__train__t__actions_gadb4c7fe2bb0d4bb621d5f185d4a01638}{\index{train\-\_\-t actions@{train\-\_\-t actions}!train\-\_\-emergency\-\_\-cmd@{train\-\_\-emergency\-\_\-cmd}}
+\index{train\-\_\-emergency\-\_\-cmd@{train\-\_\-emergency\-\_\-cmd}!train_t actions@{train\-\_\-t actions}}
+\subsubsection[{train\-\_\-emergency\-\_\-cmd}]{\setlength{\rightskip}{0pt plus 5cm}int train\-\_\-emergency\-\_\-cmd (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}}\label{group__train__t__actions_gadb4c7fe2bb0d4bb621d5f185d4a01638}
+
+
+Emergency stop interpreter command. 
+
+Sends an emergency stop command to every train. This will cut off the power to the motors and enable the electric brake if available. Unrealistic deceleration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Second command parameter, dummy in this case \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 
+\end{DoxyReturn}
+\hypertarget{group__train__t__actions_gad1e4327e0b58b796ee1a327a01a83994}{\index{train\-\_\-t actions@{train\-\_\-t actions}!train\-\_\-emergency\-\_\-stop@{train\-\_\-emergency\-\_\-stop}}
+\index{train\-\_\-emergency\-\_\-stop@{train\-\_\-emergency\-\_\-stop}!train_t actions@{train\-\_\-t actions}}
+\subsubsection[{train\-\_\-emergency\-\_\-stop}]{\setlength{\rightskip}{0pt plus 5cm}void train\-\_\-emergency\-\_\-stop (
+\begin{DoxyParamCaption}
+\item[{{\bf train\-\_\-t} $\ast$}]{this}
+\end{DoxyParamCaption}
+)}}\label{group__train__t__actions_gad1e4327e0b58b796ee1a327a01a83994}
+
+
+\hyperlink{structtrain__t}{train\-\_\-t} emergency stop 
+
+Sends an emergency stop command to the train passed as a parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em this} & Train to be stopped \\
+\hline
+\end{DoxyParams}

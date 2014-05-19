@@ -29,12 +29,12 @@
 #include "Model/Sensors/sensorIR.h"
 #include "Model/Actuators/railChange.h"
 #include "Model/Actuators/trafficLight.h"
-#include "Model/Actuators/crossingGate.h"
+//#include "Model/Actuators/crossingGate.h"
 #include "tracker.h"
 #include "railway.h"
 #include "anticollision.h"
-#include "pruebaFB.h"
 #include "logger.h"
+#include "screen.h"
 
 // Dummy function to catch signals
 void catch_signal() {
@@ -103,15 +103,13 @@ int main(int argc, char* argv[]) {
 	trains_setup();
 	railways_setup();
 	anticollision_setup();
-	fbtft_init();
 	model_init();
-
 	tracker_init();
-
-	setupRailChange();
+	screen_setup();
+	//setupRailChange();
 	sun_setup();
-	setup_trafficLight();
-	setup_crossingGate();
+	//setup_trafficLight();
+	//setup_crossingGate();
 	setup_logger();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
@@ -125,6 +123,6 @@ int main(int argc, char* argv[]) {
 	//rt_task_delete(&task_dcc);
 	//rt_task_delete(&task_sun);
 	task_delete_all();
-	fbtft_destroy();
+	screen_destroy();
 	return 0;
 }
