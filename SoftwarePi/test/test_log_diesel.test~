@@ -1,0 +1,13 @@
+train select 4
+train speed 20
+train wait_sector 1
+log “fichero_adelante_diesel.txt”
+train wait_sector 0
+train estop
+train speed -20
+train wait_sector 3
+log “fichero_atras_diesel.txt”
+train wait_sector 0
+train estop
+
+

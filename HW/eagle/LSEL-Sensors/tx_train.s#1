@@ -1707,6 +1707,75 @@ In this library the device names are the same as the pin names of the symbols, t
 </deviceset>
 </devicesets>
 </library>
+<library name="diode">
+<description>&lt;b&gt;Diodes&lt;/b&gt;&lt;p&gt;
+Based on the following sources:
+&lt;ul&gt;
+&lt;li&gt;Motorola : www.onsemi.com
+&lt;li&gt;Fairchild : www.fairchildsemi.com
+&lt;li&gt;Philips : www.semiconductors.com
+&lt;li&gt;Vishay : www.vishay.de
+&lt;/ul&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="SOT23">
+<description>&lt;B&gt;DIODE&lt;/B&gt;</description>
+<wire x1="1.4224" y1="0.6604" x2="1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="1.4224" y1="-0.6604" x2="-1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="-0.6604" x2="-1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="0.6604" x2="1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="-0.1524" x2="-1.4224" y2="0.6604" width="0.1524" layer="21"/>
+<wire x1="-1.4224" y1="0.6604" x2="-0.8636" y2="0.6604" width="0.1524" layer="21"/>
+<wire x1="1.4224" y1="0.6604" x2="1.4224" y2="-0.1524" width="0.1524" layer="21"/>
+<wire x1="0.8636" y1="0.6604" x2="1.4224" y2="0.6604" width="0.1524" layer="21"/>
+<smd name="3" x="0" y="1.1" dx="1" dy="1.4" layer="1"/>
+<smd name="2" x="0.95" y="-1.1" dx="1" dy="1.4" layer="1"/>
+<smd name="1" x="-0.95" y="-1.1" dx="1" dy="1.4" layer="1"/>
+<text x="-1.905" y="1.905" size="1.27" layer="25">&gt;NAME</text>
+<text x="-1.905" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-0.2286" y1="0.7112" x2="0.2286" y2="1.2954" layer="51"/>
+<rectangle x1="0.7112" y1="-1.2954" x2="1.1684" y2="-0.7112" layer="51"/>
+<rectangle x1="-1.1684" y1="-1.2954" x2="-0.7112" y2="-0.7112" layer="51"/>
+</package>
+</packages>
+<symbols>
+<symbol name="SCHOTTKY">
+<wire x1="-1.27" y1="-1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="-1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.905" y1="1.27" x2="1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="1.27" x2="-1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="1.905" y1="1.27" x2="1.905" y2="1.016" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-1.27" x2="0.635" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="0.635" y1="-1.016" x2="0.635" y2="-1.27" width="0.254" layer="94"/>
+<text x="-2.286" y="1.905" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.286" y="-3.429" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="A" x="-2.54" y="0" visible="off" length="short" direction="pas"/>
+<pin name="C" x="2.54" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="BAT54" prefix="D">
+<description>&lt;b&gt;Schottky Diodes&lt;/b&gt;&lt;p&gt;
+Source: Fairchild .. BAT54.pdf</description>
+<gates>
+<gate name="G$1" symbol="SCHOTTKY" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT23">
+<connects>
+<connect gate="G$1" pin="A" pad="1"/>
+<connect gate="G$1" pin="C" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1736,6 +1805,10 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
 <part name="G1" library="battery" deviceset="CR2032H" device=""/>
 <part name="SW1" library="tx_train" deviceset="JS102011SAQN" device=""/>
+<part name="D1" library="diode" deviceset="BAT54" device=""/>
+<part name="D2" library="diode" deviceset="BAT54" device=""/>
+<part name="R4" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603" value="1k"/>
+<part name="R5" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603" value="1k"/>
 </parts>
 <sheets>
 <sheet>
@@ -1761,6 +1834,10 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="SUPPLY4" gate="GND" x="91.44" y="101.6"/>
 <instance part="G1" gate="1" x="-20.32" y="116.84" rot="R90"/>
 <instance part="SW1" gate="G$1" x="-20.32" y="129.54" rot="R90"/>
+<instance part="D1" gate="G$1" x="78.74" y="66.04" rot="R90"/>
+<instance part="D2" gate="G$1" x="78.74" y="78.74" rot="R270"/>
+<instance part="R4" gate="G$1" x="60.96" y="91.44" rot="R90"/>
+<instance part="R5" gate="G$1" x="50.8" y="91.44" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -1902,6 +1979,12 @@ In this library the device names are the same as the pin names of the symbols, t
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="113,1,91.7617,67.31,LED1,,,,,"/>
+<approved hash="113,1,-19.9983,74.93,LED2,,,,,"/>
+<approved hash="113,1,74.8877,113.161,JP1,,,,,"/>
+<approved hash="113,1,-21.8355,133.35,SW1,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>

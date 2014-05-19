@@ -1902,6 +1902,12 @@ In this library the device names are the same as the pin names of the symbols, t
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="113,1,91.7617,67.31,LED1,,,,,"/>
+<approved hash="113,1,-19.9983,74.93,LED2,,,,,"/>
+<approved hash="113,1,74.8877,113.161,JP1,,,,,"/>
+<approved hash="113,1,-21.8355,133.35,SW1,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>

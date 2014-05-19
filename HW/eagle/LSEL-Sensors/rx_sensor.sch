@@ -2329,11 +2329,11 @@ Source: Fairchild .. BAT54.pdf</description>
 </classes>
 <parts>
 <part name="U1" library="SparkFun-DigitalIC" deviceset="ATTINY45" device="TINY45-20-SMT" value="Tiny45-20-SMT"/>
-<part name="R1" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603"/>
-<part name="R2" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603"/>
-<part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603"/>
-<part name="C1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP"/>
-<part name="C2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP"/>
+<part name="R1" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603" value="1k"/>
+<part name="R2" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603" value="1k"/>
+<part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603" value="10k"/>
+<part name="C1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="100n"/>
+<part name="C2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="100n"/>
 <part name="JP1" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH"/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH"/>
 <part name="JP3" library="pinhead" deviceset="PINHD-2X3" device=""/>
@@ -2344,12 +2344,12 @@ Source: Fairchild .. BAT54.pdf</description>
 <part name="SUPPLY2" library="supply2" deviceset="GND" device=""/>
 <part name="P+3" library="supply1" deviceset="VCC" device=""/>
 <part name="P+4" library="supply1" deviceset="VCC" device=""/>
-<part name="U$1" library="tsop-1" deviceset="TSOP4836" device=""/>
+<part name="TSOP4836" library="tsop-1" deviceset="TSOP4836" device=""/>
 <part name="P+5" library="supply1" deviceset="VCC" device=""/>
-<part name="R4" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603"/>
+<part name="R4" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603" value="100"/>
 <part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
 <part name="D1" library="diode" deviceset="BAT54" device=""/>
-<part name="R5" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603"/>
+<part name="R5" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603" value="2.2k"/>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
@@ -2362,7 +2362,7 @@ Source: Fairchild .. BAT54.pdf</description>
 <instance part="R2" gate="G$1" x="-93.98" y="40.64" rot="R90"/>
 <instance part="R3" gate="G$1" x="17.78" y="60.96" rot="R90"/>
 <instance part="C1" gate="G$1" x="-76.2" y="48.26" rot="R180"/>
-<instance part="C2" gate="G$1" x="22.86" y="33.02" rot="R180"/>
+<instance part="C2" gate="G$1" x="22.86" y="25.4" rot="R180"/>
 <instance part="JP1" gate="G$1" x="45.72" y="68.58" rot="MR180"/>
 <instance part="JP2" gate="G$1" x="76.2" y="68.58" rot="R180"/>
 <instance part="JP3" gate="A" x="66.04" y="48.26"/>
@@ -2373,9 +2373,9 @@ Source: Fairchild .. BAT54.pdf</description>
 <instance part="SUPPLY2" gate="GND" x="-93.98" y="30.48"/>
 <instance part="P+3" gate="VCC" x="-93.98" y="60.96"/>
 <instance part="P+4" gate="VCC" x="17.78" y="71.12"/>
-<instance part="U$1" gate="G$1" x="35.56" y="30.48" rot="R180"/>
-<instance part="P+5" gate="VCC" x="2.54" y="25.4" rot="R90"/>
-<instance part="R4" gate="G$1" x="15.24" y="25.4"/>
+<instance part="TSOP4836" gate="G$1" x="45.72" y="30.48" rot="R180"/>
+<instance part="P+5" gate="VCC" x="-7.62" y="12.7" rot="R90"/>
+<instance part="R4" gate="G$1" x="5.08" y="12.7"/>
 <instance part="SUPPLY3" gate="GND" x="27.94" y="43.18"/>
 <instance part="D1" gate="G$1" x="2.54" y="50.8" rot="R180"/>
 <instance part="R5" gate="G$1" x="-10.16" y="45.72" rot="R90"/>
@@ -2392,6 +2392,7 @@ Source: Fairchild .. BAT54.pdf</description>
 <wire x1="-76.2" y1="53.34" x2="-76.2" y2="58.42" width="0.1524" layer="91"/>
 <pinref part="C1" gate="G$1" pin="2"/>
 <wire x1="-76.2" y1="53.34" x2="-76.2" y2="50.8" width="0.1524" layer="91"/>
+<junction x="-76.2" y="53.34"/>
 </segment>
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
@@ -2416,7 +2417,7 @@ Source: Fairchild .. BAT54.pdf</description>
 <segment>
 <pinref part="P+5" gate="VCC" pin="VCC"/>
 <pinref part="R4" gate="G$1" pin="1"/>
-<wire x1="5.08" y1="25.4" x2="10.16" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="-5.08" y1="12.7" x2="0" y2="12.7" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="JP2" gate="G$1" pin="2"/>
@@ -2433,6 +2434,7 @@ Source: Fairchild .. BAT54.pdf</description>
 <wire x1="-76.2" y1="40.64" x2="-71.12" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="SUPPLY1" gate="GND" pin="GND"/>
 <wire x1="-76.2" y1="40.64" x2="-76.2" y2="38.1" width="0.1524" layer="91"/>
+<junction x="-76.2" y="40.64"/>
 </segment>
 <segment>
 <pinref part="R2" gate="G$1" pin="1"/>
@@ -2445,14 +2447,15 @@ Source: Fairchild .. BAT54.pdf</description>
 <label x="78.74" y="45.72" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="GND"/>
 <pinref part="C2" gate="G$1" pin="2"/>
-<wire x1="27.94" y1="35.56" x2="22.86" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="35.56" x2="22.86" y2="48.26" width="0.1524" layer="91"/>
-<junction x="22.86" y="35.56"/>
+<wire x1="22.86" y1="27.94" x2="22.86" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="SUPPLY3" gate="GND" pin="GND"/>
+<wire x1="22.86" y1="35.56" x2="22.86" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="48.26" x2="27.94" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="48.26" x2="27.94" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="TSOP4836" gate="G$1" pin="GND"/>
+<wire x1="38.1" y1="35.56" x2="22.86" y2="35.56" width="0.1524" layer="91"/>
+<junction x="22.86" y="35.56"/>
 </segment>
 <segment>
 <pinref part="JP1" gate="G$1" pin="3"/>
@@ -2507,11 +2510,13 @@ Source: Fairchild .. BAT54.pdf</description>
 <net name="N$2" class="0">
 <segment>
 <pinref part="R4" gate="G$1" pin="2"/>
-<pinref part="U$1" gate="G$1" pin="V+"/>
-<wire x1="20.32" y1="25.4" x2="22.86" y2="25.4" width="0.1524" layer="91"/>
+<pinref part="TSOP4836" gate="G$1" pin="V+"/>
+<wire x1="10.16" y1="12.7" x2="22.86" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="12.7" x2="38.1" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="38.1" y1="12.7" x2="38.1" y2="25.4" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="1"/>
-<wire x1="22.86" y1="25.4" x2="27.94" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="27.94" x2="22.86" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="20.32" x2="22.86" y2="12.7" width="0.1524" layer="91"/>
+<junction x="22.86" y="12.7"/>
 </segment>
 </net>
 <net name="MISO" class="0">
@@ -2521,14 +2526,13 @@ Source: Fairchild .. BAT54.pdf</description>
 <label x="55.88" y="50.8" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="R3" gate="G$1" pin="1"/>
-<wire x1="17.78" y1="55.88" x2="17.78" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="OUT"/>
-<wire x1="17.78" y1="50.8" x2="17.78" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="30.48" x2="27.94" y2="30.48" width="0.1524" layer="91"/>
-<junction x="17.78" y="50.8"/>
-<pinref part="D1" gate="G$1" pin="A"/>
-<wire x1="5.08" y1="50.8" x2="17.78" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="D1" gate="G$1" pin="C"/>
+<pinref part="R5" gate="G$1" pin="2"/>
+<wire x1="0" y1="50.8" x2="-10.16" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="U1" gate="G$1" pin="PB1(MISO)"/>
+<wire x1="-10.16" y1="50.8" x2="-43.18" y2="50.8" width="0.1524" layer="91"/>
+<junction x="-10.16" y="50.8"/>
+<label x="-27.94" y="50.8" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SDA/MOSI" class="0">
@@ -2549,19 +2553,35 @@ Source: Fairchild .. BAT54.pdf</description>
 <label x="58.42" y="71.12" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$8" class="0">
+<net name="SENSOR_OUT" class="0">
 <segment>
-<pinref part="D1" gate="G$1" pin="C"/>
-<pinref part="R5" gate="G$1" pin="2"/>
-<wire x1="0" y1="50.8" x2="-10.16" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="U1" gate="G$1" pin="PB1(MISO)"/>
-<wire x1="-10.16" y1="50.8" x2="-43.18" y2="50.8" width="0.1524" layer="91"/>
-<junction x="-10.16" y="50.8"/>
+<pinref part="R3" gate="G$1" pin="1"/>
+<wire x1="17.78" y1="55.88" x2="17.78" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="TSOP4836" gate="G$1" pin="OUT"/>
+<wire x1="17.78" y1="50.8" x2="17.78" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="30.48" x2="38.1" y2="30.48" width="0.1524" layer="91"/>
+<junction x="17.78" y="50.8"/>
+<pinref part="D1" gate="G$1" pin="A"/>
+<wire x1="5.08" y1="50.8" x2="17.78" y2="50.8" width="0.1524" layer="91"/>
+<label x="17.78" y="50.8" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="113,1,-33.02,39.6452,R1,,,,,"/>
+<approved hash="113,1,-94.9748,40.64,R2,,,,,"/>
+<approved hash="113,1,16.7852,60.96,R3,,,,,"/>
+<approved hash="113,1,-77.8668,46.99,C1,,,,,"/>
+<approved hash="113,1,21.1932,24.13,C2,,,,,"/>
+<approved hash="113,1,47.5827,65.8453,JP1,,,,,"/>
+<approved hash="113,1,74.3373,65.8453,JP2,,,,,"/>
+<approved hash="113,1,67.2677,49.6612,JP3,,,,,"/>
+<approved hash="113,1,-93.6583,52.07,LED1,,,,,"/>
+<approved hash="113,1,5.08,13.6948,R4,,,,,"/>
+<approved hash="113,1,-11.1548,45.72,R5,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>
