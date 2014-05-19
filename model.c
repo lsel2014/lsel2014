@@ -8,7 +8,7 @@
 #include "semaphore.h"
 #include "trafficLight.h"
 
-#define MAXOBSERVABLES 20
+#define MAXOBSERVABLES 30
 
 static struct registered_observable_t {
 	observable_t* obs;
