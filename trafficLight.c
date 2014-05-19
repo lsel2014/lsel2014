@@ -45,7 +45,7 @@ int trafficLight_cmd(char* arg) {
 
 void trafficLight_init(trafficLight_t* this, int id, int GPIOline,
 		state_t state) {
-                
+        observable_init(&this->observable);        
 	this->state = state;
 	this->GPIOline = GPIOline;
 	rt_mutex_create(&this->mutex, NULL);
