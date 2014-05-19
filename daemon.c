@@ -103,6 +103,7 @@ int main(int argc, char* argv[]) {
 	sun_setup();
 	trafficLight_setup();
 	crossingGate_setup();
+	semaphore_setup();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
