@@ -5,7 +5,6 @@
 #include "model.h"
 #include "trafficLight.h"
 #include "semaphore.h"
-#include <rtdk.h>
 
 static observer_t ctrlilu_observer;
 
@@ -110,7 +109,6 @@ ctrlilumination_init(void)
 	}
 
 	for (sph = semaphore_names; sph->name; ++sph) {
-		rt_printf("registro el tren %c", sph->name);
 		observable_t* obs = model_get_observable(sph->name);
 		observable_register_observer(obs, &ctrlilu_observer);
 		ctrlilu_semaphore[n_semaphore].semaphore = (semaphore_t*) obs;
