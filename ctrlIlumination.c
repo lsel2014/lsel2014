@@ -42,14 +42,14 @@ ctrlilumination_notify(observer_t* this)
          rail= ctrlilu_railway[i].railway;
          for( j = 0; j < NSECTORS ; j++){
               if( rail->railwaySectors[j]->nregisteredtrains >0){
-                 // semaphore_switch_on();
+                 semaphore_switch_on();
                   for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
                        crossingGate_set_position(cross, DOWN);
                   }
                   }else{
-                //  semaphore_switch_off();
+                 semaphore_switch_off(void);
                   for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
