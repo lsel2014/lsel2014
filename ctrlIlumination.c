@@ -72,7 +72,7 @@ ctrlilumination_init(void)
 		const char* name;
 	} crossingGate_names[] = { { "barrera0" }, { NULL } };
 	
-	static struct Semaphore_name_t {
+	static struct semaphore_name_t {
 		const char* name;
 		int id;
 	} semaphore_names[] = { { "semaforo0",0 }, { "semaforo1",1 }, { "semaforo2",2 },
