@@ -50,7 +50,7 @@ crossingGate_new(int id, int GPIOline,int sensiblesectors[2]) {
 void 
 crossingGate_init(crossingGate_t* this, int id, int GPIOline,
 		                          position_t position, int sensiblesectors[2]) {
-
+	observable_init(&this->observable);
 	this->GPIOline = GPIOline;
 	this->position = position;
 	this->needsService = 0;
