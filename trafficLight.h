@@ -22,6 +22,8 @@ typedef enum {
 } state_t;
 
 typedef struct trafficLight_t {
+	observable_t observable;
+	
 	int GPIOline;
 	state_t state;
 
