@@ -4,7 +4,7 @@
 #include "model.h"
 
 screen_t* mini_screen;
-static void screen_notify(observer_t* this, observable_t* foo);
+static void screen_notify(observer_t* this);
 
 // 'global' variables to store screen info
 
@@ -131,7 +131,8 @@ char nine[] = { // :
 				0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
 				0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-void screen_setup(){
+void 
+screen_setup(){
 	mini_screen=screen_new(16,"/dev/fb1");
 	train_t* t;
 	for (t=mini_screen->t[0]; t->name; ++t) {
@@ -140,14 +141,16 @@ void screen_setup(){
 	}
 }
 
-screen_t* screen_new(int bpp, char* dev) {
+screen_t* 
+screen_new(int bpp, char* dev) {
 	screen_t* this = (screen_t*) malloc(sizeof(screen_t));
 	screen_init(this, bpp, dev);
 	return this;
 }
 
-void screen_init(screen_t* this, int bpp, char* dev) {
-	int i;
+void 
+screen_init(screen_t* this, int bpp, char* dev) {
+	//int i;
 	observer_init((observer_t*) this, screen_notify);
 	this->t[0] = (train_t*) model_get_observable("Diesel");
 	this->t[1] = (train_t*) model_get_observable("Renfe");
@@ -191,7 +194,7 @@ void screen_init(screen_t* this, int bpp, char* dev) {
 }
 
 static
-void screen_notify(observer_t* this, observable_t* foo) {
+void screen_notify(observer_t* this) {
 	screen_t* s = (screen_t*)this;
 	int i;
 	char line[20];

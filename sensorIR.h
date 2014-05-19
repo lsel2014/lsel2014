@@ -43,7 +43,7 @@ extern int nsensors;
 sensorIR_t* sensorIR_new(int id);
 void sensorIR_init(sensorIR_t* this, int id, event_t* event);
 void sensorIR_destroy(sensorIR_t* this);
-
+void IRsensors_setup(void);
 int sensorIR_readLine(sensorIR_t* this, int trainLine);
 void sensorIR_trainPassing(sensorIR_t* this);
 

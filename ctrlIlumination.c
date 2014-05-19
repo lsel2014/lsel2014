@@ -4,6 +4,7 @@
 #include "semaphore.h"
 #include "model.h"
 #include "trafficLight.h"
+#include "semaphore.h"
 
 static observer_t ctrlilu_observer;
 
@@ -31,25 +32,24 @@ static int n_crossingGate;
 static int n_semaphore;
 static int n_traficLight;
 
-static void 
+void 
 ctrlilumination_notify(observer_t* this)
 {
      int i,j,k;
-     int sensec[2];
      railway_t* rail;
      crossingGate_t* cross;
      for( i = 0 ; i < n_railway ; i++){
          rail= ctrlilu_railway[i].railway;
          for( j = 0; j < NSECTORS ; j++){
               if( rail->railwaySectors[j]->nregisteredtrains >0){
-                  semaphore_switch_on();
+                 // semaphore_switch_on();
                   for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
                        crossingGate_set_position(cross, DOWN);
                   }
                   }else{
-                  semaphore_switch_off();
+                //  semaphore_switch_off();
                   for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])

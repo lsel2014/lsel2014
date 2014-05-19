@@ -11,13 +11,13 @@
 crossingGate_t* crossingGates[MAXCROSINGGATES];
 int n_crossingGates;
 void 
-setup_crossingGate(void) 
+crossingGate_setup(void) 
 {
     int sensec[] = {2,3};
     n_crossingGates=0;
 	crossingGates[0] = crossingGate_new(0, 11,sensec);
 	interp_addcmd("barrier", crossingGate_cmd, "Set barrier state\n");
-	int i;
+	
 }
 
 int 
@@ -50,13 +50,12 @@ crossingGate_new(int id, int GPIOline,int sensiblesectors[2]) {
 void 
 crossingGate_init(crossingGate_t* this, int id, int GPIOline,
 		                          position_t position, int sensiblesectors[2]) {
-	int i;
 
 	this->GPIOline = GPIOline;
 	this->position = position;
 	this->needsService = 0;
-    this->sensiblesectors[0] = sensiblesectors[0];
-    this->sensiblesectors[1] = sensiblesectors[1];
+        this->sensiblesectors[0] = sensiblesectors[0];
+        this->sensiblesectors[1] = sensiblesectors[1];
 	pinMode(GPIOline, OUTPUT);
 	softPwmCreate(GPIOline, 0, 200);
 

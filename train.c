@@ -118,8 +118,8 @@ void trains_setup(void)
      */
 	dcc_sender_t* dccobject = dcc_new(13, 63000);
 
-	//train_new("Diesel", 0b0000100, '0', 20, dccobject);
-	//train_new("Renfe", 0b0000011, '0', 25, dccobject);
+	train_new("Diesel", 0b0000100, '0', 20, dccobject);
+	train_new("Renfe", 0b0000011, '0', 25, dccobject);
 	
 	/*for (i = 0; i < ntrains; i++) {
 	 for (j = 0; j < nsensors; j++) {
@@ -283,7 +283,7 @@ int train_cmd(char* arg)
 	{
 		struct timeval initial, current, diff;
 		train_get_timestamp(current_train, &initial);
-		float elapsed_time, final_time;
+		float elapsed_time;
 		char time_out = 0;
 		
 		float initial_estimation = train_get_time_estimation(current_train);

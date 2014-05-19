@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static
+
 char*
 xml_find(char* buf, const char* tag) {
 	static char hour[9];

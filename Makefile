@@ -13,6 +13,7 @@ objs = \
 	trafficLight.o \
 	crossingGate.o \
 	railChange.o \
+	semaphore.o \
 	dcc.o \
 	sun.o sunparse.o \
 	model.o \
@@ -21,7 +22,7 @@ objs = \
 	anticollision.o \
 	screen.o \
 	time_operations.o\
-    ctrlIlumination.o
+        ctrlIlumination.o
 all: daemon
 
 test: daemon

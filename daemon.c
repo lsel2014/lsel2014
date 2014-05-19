@@ -27,12 +27,13 @@
 #include "sensorIR.h"
 #include "railChange.h"
 #include "trafficLight.h"
+#include "semaphore.h"
 #include "crossingGate.h"
 #include "tracker.h"
 #include "railway.h"
 #include "anticollision.h"
 #include "screen.h"
-#include "semaphore.h"
+#include "ctrlIlumination.h"
 
 // Dummy function to catch signals
 void catch_signal() {
@@ -46,7 +47,7 @@ void initializeModel(void) {
 		//IRsensors[i] = sensorIR_new(i);
 	}
 }
-*
+
 void initializeXenomaiEnv(void) {
 	// Catch signals
 	signal(SIGTERM, catch_signal);
@@ -71,14 +72,16 @@ void initializeWiringPi(void) {
 
 int main(int argc, char* argv[]) {
 
+	rt_printf("xeno");
 	// Initialize Xenomai RT enviroment
 	initializeXenomaiEnv();
+	rt_printf("wiringpi");
 
 	// Initialize wiringPi lib, configure IO
 	initializeWiringPi();
 
 	// Initialize the model
-	initializeModel();
+	//initializeModel();
 
 	// Initialize the train controller
 	//trainCtrl_init();
@@ -98,18 +101,31 @@ int main(int argc, char* argv[]) {
 	 * task function,
 	 * function argument*/
 	IRsensors_setup();
+	rt_printf("IR");
 	trains_setup();
+	rt_printf("trains");
 	railways_setup();
+	rt_printf("railway");
 	semaphore_setup();
+	rt_printf("semaphore");
 	trafficLight_setup();
+	rt_printf("traffic Light");
 	crossingGate_setup();
+	rt_printf("Crossing Gate");
 	screen_setup();
+	rt_printf("screen");
 	setupRailChange();
+	rt_printf("rail change");
 	sun_setup();
+	rt_printf("sun");
 	model_init();
+	rt_printf("model");
 	anticollision_setup();
+	rt_printf("anti");
 	tracker_init();
+	rt_printf("tracker");
 	ctrlilumination_init();
+	rt_printf("crtl ilu");
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);

@@ -1,5 +1,6 @@
 #include "semaphore.h"
-
+#include <stdlib.h>
+#include <rtdk.h>
 
 semaphore_t* semaphores[MAXSEMAFORES];
 int nsemaphores;

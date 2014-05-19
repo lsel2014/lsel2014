@@ -37,10 +37,9 @@ static int n_railway;
 void anticollision_notify(observer_t* this) {
 
 	railway_t* rail = antic_railway[0].railway;
-	int i;
     int to_check;
     int new_power;
-    
+    int i;
 	if (security_enable == 1) {
 		for (i = 0; i < NSECTORS; i++) {
 			if ((rail->railwaySectors[i]->nregisteredtrains) > 0) {
@@ -95,7 +94,7 @@ void anticollision_notify(observer_t* this) {
 }
 
 void anticollision_setup(void) {
-	int i;
+	
 	static struct railway_name_t {
 		const char* name;
 		int platform;

@@ -59,14 +59,14 @@ train_direction_t tracker_gen_direction(int id) {
 	return FORWARD;
 }
 // Does all the operations to properly update the train
-//void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
-void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
+void 
+tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	struct timeval diff, now, last;
 	float speed;
-	static char estimation1_str[20];
-	static char estimation2_str[20];
+	//static char estimation1_str[20];
+	//static char estimation2_str[20];
 	struct train_data_t* t;
-	//rt_printf(" sector %d \n", sector);
+	
 	for (t = tracker_trains; t->train; ++t) {
 		if (train_get_ID(train) == t->IRsimbolicId) {
 			t->storedDirection = train_get_direction(train);
@@ -74,7 +74,6 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
 	}
 	char prevsector =train_get_sector(train);
 	train_set_current_sector(train, sector);
-	//last = train_get_timestamp(train);
 	train_get_timestamp(train, &last);
 	gettimeofday(&now, NULL);
 	train_set_timestamp(train, &now);
@@ -89,8 +88,8 @@ void tracker_updating_train(train_t* train, char sector, telemetry_t* tel) {
  
 // Notify checks registered sensors and if some of them
 // has an event and it's not a rebound updates the model.
-static
-void tracker_notify(observer_t* this) {
+void
+tracker_notify(observer_t* this) {
 	struct ir_sensor_data_t* sd;
 	telemetry_t* tel;
 	train_t* train;

@@ -3,6 +3,6 @@
 
 #include "observer.h"
 void ctrlilumination_init(void);
-static void ctrlilumination_notify(observer_t* this);
+void ctrlilumination_notify(observer_t* this);
 
 #endif

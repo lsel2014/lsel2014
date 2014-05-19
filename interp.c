@@ -19,10 +19,12 @@ typedef struct {
 	char *doc;
 } cmd_t;
 
-cmd_t commands[MAXCMDS] = { { "help", com_help, "Display this text" }, { "?",
-		com_help, "Synonym for `help'" }, { "sleep", com_sleep,
-		"Wait <n> seconds" }, { "quit", com_quit, "Quit" }, { (char *) NULL,
-		NULL, (char *) NULL }, };
+cmd_t commands[MAXCMDS] = { 
+		{ "help", com_help, "Display this text" },
+		{ "?",	com_help, "Synonym for `help'" },
+	        { "sleep", com_sleep,"Wait <n> seconds" },
+	        { "quit", com_quit, "Quit" }, 
+		{ (char *) NULL, NULL, (char *) NULL }, };
 
 char* stripwhite(char *string);
 cmd_t* find_command(char *name);
