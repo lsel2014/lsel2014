@@ -22,11 +22,13 @@ objs = \
 	railway.o \
 	anticollision.o \
 	pruebaFB.o \
-	time_operations.o
+	time_operations.o \
+	logger.o
 
 all: daemon
 
 test: daemon
+	@cat test/init.txt ; read foo
 	@for i in test/*.test ; do \
 	  printf "%-30s" $$i ; \
 	  LINES=24 COLUMNS=80 ./daemon < $$i 2>&1 > $$i.out ; \

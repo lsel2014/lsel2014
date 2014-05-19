@@ -34,6 +34,7 @@
 #include "railway.h"
 #include "anticollision.h"
 #include "pruebaFB.h"
+#include "logger.h"
 
 // Dummy function to catch signals
 void catch_signal() {
@@ -107,10 +108,11 @@ int main(int argc, char* argv[]) {
 
 	tracker_init();
 
-	//setupRailChange();
+	setupRailChange();
 	sun_setup();
 	setup_trafficLight();
 	setup_crossingGate();
+	setup_logger();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
