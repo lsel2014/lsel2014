@@ -35,15 +35,17 @@ static int n_railway;
  * Se deberia entrar aqui siempre que un tren cambie de sector o de sentido
  */
 void anticollision_notify(observer_t* this) {
-
-	railway_t* rail = antic_railway[0].railway;
+	
+    int i,j,k;
     int to_check;
     int new_power;
-    int i;
+    for(j=0; j<n_railway;j++){
+    railway_t* rail = antic_railway[j].railway;
 	if (security_enable == 1) {
 		for (i = 0; i < NSECTORS; i++) {
-			if ((rail->railwaySectors[i]->nregisteredtrains) > 0) {
-				train_t* train = rail->railwaySectors[i]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
+		    for(j=0; j<rail->railwaySectors[i]->nregisteredtrains;j++){
+			//if ((rail->railwaySectors[i]->nregisteredtrains) > 0) {
+				train_t* train = rail->railwaySectors[i]->registeredTrains[j]; //probablemente, registeredTrains[0] dara errores
 				to_check = 0;
 
 				//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
@@ -79,8 +81,8 @@ void anticollision_notify(observer_t* this) {
 				}
 			}
 		}
-	
-    if (overrides_activated == 2) {
+		}
+		if (overrides_activated == 2) {
 
 		new_power = -train_get_target_power(trains[0]);
 		train_set_target_power(trains[0], new_power);
@@ -89,9 +91,10 @@ void anticollision_notify(observer_t* this) {
 		train_set_security(trains[0], 0);
 
 		printf("Protocolo de mismo sentido");
-    }	
+    		}	
 	}
 }
+
 
 void anticollision_setup(void) {
 	
