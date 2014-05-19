@@ -1,3 +1,4 @@
+#include <rtdk.h>
 #include "ctrlIlumination.h"
 #include "railway.h"
 #include "crossingGate.h"
