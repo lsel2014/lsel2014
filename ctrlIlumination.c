@@ -107,7 +107,7 @@ ctrlilumination_init(void)
 		ctrlilu_crossingGate[n_crossingGate].crossingGate = (crossingGate_t*) obs;
 		++n_crossingGate;
 	}
-/*
+
 	for (sph = semaphore_names; sph->name; ++sph) {
 		observable_t* obs = model_get_observable(sph->name);
 		observable_register_observer(obs, &ctrlilu_observer);
@@ -122,6 +122,6 @@ ctrlilumination_init(void)
 		ctrlilu_trafficLight[n_traficLight].id = tl->id;
 		++n_traficLight;
 	}
-*/
+
 }
 
