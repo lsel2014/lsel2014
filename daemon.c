@@ -99,11 +99,17 @@ int main(int argc, char* argv[]) {
 	 * function argument*/
 	IRsensors_setup();
 	trains_setup();
-	setupRailChange();
-	sun_setup();
+	railways_setup();
+	semaphore_setup();
 	trafficLight_setup();
 	crossingGate_setup();
-	semaphore_setup();
+	screen_setup();
+	setupRailChange();
+	sun_setup();
+	model_init();
+	anticollision_setup();
+	tracker_init();
+	ctrlilumination_init();
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
