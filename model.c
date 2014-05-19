@@ -87,18 +87,19 @@ void model_init(void) {
 		++n_observable;
 		i++;
 	}
-
+	i = 0;
 	for (tl = trafficlight_names; tl->name; ++tl) {
 		model_add_observable(tl->name, (observable_t*) trafficLights[i]);
 		++n_observable;
 		i++;
 	}
-	
+	i = 0;
 	for (sph = semaphore_names; sph->name; ++sph) {
 		model_add_observable(sph->name, (observable_t*) semaphores[i]);
 		++n_observable;
 		i++;
 	}
+	i = 0;
 }
 
 observable_t*
