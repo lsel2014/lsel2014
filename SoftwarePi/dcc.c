@@ -22,8 +22,8 @@
 #include <pthread.h>
 
 #define PACKET_BUFFER_SIZE 32
-#define DCC_PERIOD 58000
-#define DCC_DEADLINE 63000 //DCC tolerates up to 63us half period
+#define DCC_PERIOD 58
+#define DCC_DEADLINE 63 //DCC tolerates up to 63us half period
 
 /**
  * DCC data structures

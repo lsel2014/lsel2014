@@ -1,15 +1,15 @@
 ARCH = $(shell uname -m)
 
-ifeq ($ARCH,x86_64)
+ifneq ($(ARCH),x86_64)
 CC = gcc
 CFLAGS = -g -Wall -fPIC $(shell xeno-config --skin native --cflags)
 LDFLAGS = -rdynamic $(shell xeno-config --skin native --ldflags)
-LDLIBS = -lwiringPi -lreadline -lm -ldl
 ARCH_OBJS = screen.o
 else
 CC = gcc
 CFLAGS = -g -Wall -I. -fPIC
 LDFLAGS = -fPIC -rdynamic
+ARCH_TARGETS = libwiringPi.so
 endif
 
 OBJS = daemon.o
@@ -38,13 +38,13 @@ other = \
 	time_operations.o \
 	logger.o
 
-all: libwiringPi.so libsel.so daemon train.so
+all: $(ARCH_TARGETS) libsel.so daemon train.so
 
 daemon: LDLIBS = -L. -lsel -lwiringPi
 
 libwiringPi.so: wiringPi.o
 
-libsel.so: LDLIBS = -lreadline -lm -L. -lwiringPi
+libsel.so: LDLIBS = -lreadline -lm -L. -lwiringPi -ldl
 libsel.so: $(libsel_OBJS)
 
 train.so: LDLIBS = -L. -lsel -lwiringPi

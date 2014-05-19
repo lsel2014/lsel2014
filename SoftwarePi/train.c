@@ -45,11 +45,10 @@ train_dump (observable_t* this, FILE* f)
  * @param ID        Train ID
  * @param n_wagon   Number of wagons attached to the train
  * @param length    Length of the train
- * @param dcc       DCC sender reference
  *
  * @returns this    Malloc'd and initialized train_t object
  */
-train_t* train_new(char* name, char ID, char n_wagon, char length)
+train_t* train_new (char* name, char ID, char n_wagon, char length)
 {
 	train_t* this = (train_t*) malloc(sizeof(train_t));
 	telemetry_t* telemetry = (telemetry_t*) malloc(sizeof(telemetry_t));
@@ -124,8 +123,8 @@ void train_setup (void)
      */
 	dcc_setup ();
 
-	train_new("Diesel", 0b0000100, '0', 20);
-	train_new("Renfe", 0b0000011, '0', 25);
+	train_new ("Diesel", 0b0000100, '0', 20);
+	train_new ("Renfe", 0b0000011, '0', 25);
 	
 	/*for (i = 0; i < ntrains; i++) {
 	 for (j = 0; j < nsensors; j++) {
