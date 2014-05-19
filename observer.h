@@ -1,7 +1,7 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-#define MAXOBSERVERS 10
+#define MAXOBSERVERS 20
 
 struct observable_t;
 struct observer_t;
