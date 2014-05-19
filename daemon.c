@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 	semaphore_setup();
 	trafficLight_setup();
 	crossingGate_setup();
-	screen_setup();
+	//screen_setup();
 	setupRailChange();
 	sun_setup();
 	model_init();
