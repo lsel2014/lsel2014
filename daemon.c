@@ -23,17 +23,20 @@
 #include "tasks.h"
 
 //Model
+
 #include "train.h"
 #include "sun.h"
+#include "model.h"
 #include "sensorIR.h"
 #include "railChange.h"
 #include "trafficLight.h"
 #include "crossingGate.h"
+#include "tracker.h"
+#include "railway.h"
 #include "anticollision.h"
-#include "ctrlIlumination.h"
 #include "screen.h"
 #include "semaphore.h"
-
+#include "ctrlIlumination.h"
 // Dummy function to catch signals
 void catch_signal () {}
 
