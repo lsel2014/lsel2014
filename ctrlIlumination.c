@@ -74,7 +74,7 @@ ctrlilumination_init(void)
 	
 	static struct semaphore_name_t {
 		const char* name;
-		int id;
+		int sector;
 	} semaphore_names[] = { { "semaforo0",0 }, { "semaforo1",1 }, { "semaforo2",2 },
                              { "semaforo3",3 }, { NULL } };
                              
