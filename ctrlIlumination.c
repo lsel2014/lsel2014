@@ -1,4 +1,3 @@
-#include <rtdk.h>
 #include "ctrlIlumination.h"
 #include "railway.h"
 #include "crossingGate.h"
@@ -51,9 +50,9 @@ ctrlilumination_notify(observer_t* this)
                        crossingGate_set_position(cross, DOWN);
                   }
                   }else{
-                 semaphore_switch_off();
                  rt_printf(" passing sector %d ",j);
-                  for( k = 0; k < n_crossingGate ; k++){
+                 semaphore_switch_off();
+                 for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
                        crossingGate_set_position(cross, UP);  
