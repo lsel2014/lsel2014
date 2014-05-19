@@ -31,8 +31,12 @@ other = \
 	railChange.o \
 	dcc.o \
 	sun.o sunparse.o \
+	model.o \
 	tracker.o anticollision.o \
-	time_operations.o
+	railway.o \
+	screen.o \
+	time_operations.o \
+	logger.o
 
 all: libwiringPi.so libsel.so daemon train.so
 
@@ -47,6 +51,7 @@ train.so: LDLIBS = -L. -lsel -lwiringPi
 train.so: train.o dcc.o
 
 test: daemon
+	@cat test/init.txt ; read foo
 	@for i in test/*.test ; do \
 	  printf "%-30s" $$i ; \
 	  LINES=24 COLUMNS=80 ./daemon < $$i 2>&1 > $$i.out ; \
