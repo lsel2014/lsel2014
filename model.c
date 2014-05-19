@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <rtdk.h>
 #include "sensorIR.h"
 #include "train.h"
 #include "model.h"
@@ -109,6 +108,6 @@ model_get_observable(const char* name) {
 		if (0 == strcmp(name, o->name))
 			return o->obs;
 	}
-	rt_printf("observable not found \n");
+	printf("observable not found \n");
 	return NULL;
 }
