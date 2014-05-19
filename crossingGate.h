@@ -14,7 +14,7 @@ typedef enum {
 
 typedef struct crossingGate_t {
 	//Inheritance
-	observer_t observer;
+	observable_t observable; 
 	//Attributes
 	int GPIOline;
 	position_t position;
