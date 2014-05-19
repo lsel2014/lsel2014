@@ -36,10 +36,10 @@ semaphore_setup(void)
 void 
 semaphore_switch_on(void)
 {
-    rt_printf(" switching on!!!");
+    rt_printf(" switching on!!! \n");
 }
 void 
 semaphore_switch_off(void)
 {
-    rt_printf(" switching on!!!");                          
+    rt_printf(" switching off!!! \n");                          
 }
