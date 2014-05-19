@@ -20,8 +20,8 @@ semaphore_new(int id)
 void 
 semaphore_init(semaphore_t* this, int id)
 {
-	this->id = id;
 	observable_init(&this->observable);
+	this->id = id;
 
 	rt_mutex_create(&this->mutex, NULL);
 }
