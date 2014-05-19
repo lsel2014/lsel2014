@@ -110,14 +110,14 @@ ctrlilumination_init(void)
 
 	for (sph = semaphore_names; sph->name; ++sph) {
 		observable_t* obs = model_get_observable(sph->name);
-		//observable_register_observer(obs, &ctrlilu_observer);
+		observable_register_observer(obs, &ctrlilu_observer);
 		ctrlilu_semaphore[n_semaphore].semaphore = (semaphore_t*) obs;
 		ctrlilu_semaphore[n_semaphore].sector = sph->sector;
 		++n_semaphore;
 	}
 	for (tl = trafficlight_names; tl->name; ++tl) {
 		observable_t* obs = model_get_observable(tl->name);
-		//observable_register_observer(obs, &ctrlilu_observer);
+		observable_register_observer(obs, &ctrlilu_observer);
 		ctrlilu_trafficLight[n_traficLight].trafficLight = (trafficLight_t*) obs;
 		ctrlilu_trafficLight[n_traficLight].id = tl->id;
 		++n_traficLight;
