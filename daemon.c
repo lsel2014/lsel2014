@@ -29,6 +29,10 @@
 #include "railChange.h"
 #include "trafficLight.h"
 #include "crossingGate.h"
+#include "anticollision.h"
+#include "ctrlIlumination.h"
+#include "screen.h"
+#include "semaphore.h"
 
 // Dummy function to catch signals
 void catch_signal () {}
