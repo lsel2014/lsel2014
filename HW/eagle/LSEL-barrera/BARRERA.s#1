@@ -1309,6 +1309,7 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <wire x1="40.64" y1="43.18" x2="40.64" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="45.72" y1="43.18" x2="40.64" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="GND1" gate="1" pin="GND"/>
+<junction x="40.64" y="43.18"/>
 </segment>
 <segment>
 <pinref part="PWM" gate="A" pin="3"/>
@@ -1339,6 +1340,7 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <wire x1="40.64" y1="55.88" x2="40.64" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="55.88" x2="40.64" y2="58.42" width="0.1524" layer="91"/>
 <pinref part="P+1" gate="VCC" pin="VCC"/>
+<junction x="40.64" y="55.88"/>
 </segment>
 <segment>
 <pinref part="R1" gate="G$1" pin="2"/>
@@ -1376,6 +1378,14 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="113,1,42.3068,49.53,C1,,,,,"/>
+<approved hash="113,1,83.82,36.5548,R1,,,,,"/>
+<approved hash="113,1,95.8427,91.6982,I2C,,,,,"/>
+<approved hash="113,1,126.323,91.6982,I2C_2,,,,,"/>
+<approved hash="113,1,95.8427,73.9182,PWM,,,,,"/>
+<approved hash="113,1,126.323,73.9182,LED,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>
