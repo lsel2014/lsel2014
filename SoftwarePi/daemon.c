@@ -33,6 +33,7 @@
 #include "tracker.h"
 #include "railway.h"
 #include "anticollision.h"
+#include "sectorsemaphore.h"
 #include "screen.h"
 
 // Dummy function to catch signals
@@ -102,6 +103,7 @@ int main(int argc, char* argv[]) {
 	trains_setup();
 	railways_setup();
 	anticollision_setup();
+	sectorsemaphore_setup();
 	model_init();
 	tracker_init();
 	screen_setup();

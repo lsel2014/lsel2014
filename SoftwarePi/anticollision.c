@@ -16,7 +16,6 @@ static anticollision_t *anticollision;
 char security_enable = 0;
 
 void anticollision_setup(void) {
-	int i;
 	anticollision = anticollision_new();
 	interp_addcmd("anti", anticollision_cmd,
 			"Shows the anticollisions security protocol status");

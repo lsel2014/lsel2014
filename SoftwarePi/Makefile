@@ -21,6 +21,7 @@ objs = \
 	tracker.o \
 	railway.o \
 	anticollision.o \
+	sectorsemaphore.o \
 	screen.o \
 	time_operations.o
 
