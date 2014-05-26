@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <readline.h>
 
 #define MAXCMDS 100
 
