@@ -44,6 +44,7 @@ ctrlilumination_notify(observer_t* this)
          for( j = 0; j < NSECTORS ; j++){
               if( rail->railwaySectors[j]->nregisteredtrains >0){
               	 rt_printf(" passing sector %d ",j);
+              	 if(semaphore_get_state(semaphores[j])!=1)
                  semaphore_switch_on(j);
                   for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
@@ -52,6 +53,7 @@ ctrlilumination_notify(observer_t* this)
                   }
                   }else{
                  rt_printf(" passing sector %d ",j);
+                 if(! semaphore_get_state(semaphores[j]) !=0)
                  semaphore_switch_off(j);
                  for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
