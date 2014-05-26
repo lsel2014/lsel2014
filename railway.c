@@ -80,8 +80,8 @@ void railway_init(railway_t* this, int id)
  */
 void railways_setup(void)
 {
-	railway_t* dummy = railway_new(0);
-
+	//railway_t* dummy = railway_new(0);
+	railway_new(0);
 	interp_addcmd("railway", railway_cmd, "Lists railway sectors");
 }
 
