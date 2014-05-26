@@ -18,11 +18,12 @@ typedef struct
     
 extern semaphore_t* semaphores[MAXSEMAFORES];
 
-semaphore_t* semaphore_new(int id, int state);
-void semaphore_init(semaphore_t* this, int id, int state);
-void semaphore_setup(void);
-int semaphore_get_state(semaphore_t* this);
-void semaphore_switch_on(int i);
-void semaphore_switch_off(int i);
+semaphore_t* semaphore_new (int id, int state);
+void semaphore_init (semaphore_t* this, int id, int state);
+void semaphore_setup (void);
+int semaphore_get_state (semaphore_t* this);
+void semaphore_switch (semaphore_t* this, int state);
+//void semaphore_switch_on(semaphore_t* this);
+//void semaphore_switch_off(semaphore_t* this);
 #endif
         
