@@ -19,7 +19,8 @@ int n_trafficLights;
 
 void trafficLight_setup(void) {
 
-	 trafficLight_t* dummy = trafficLight_new(0, 12);
+	 //trafficLight_t* dummy = trafficLight_new(0, 12);
+	 trafficLight_new(0, 13);
 	 interp_addcmd("semaphore", trafficLight_cmd, "Set semaphore state\n");
 	 
 	 
