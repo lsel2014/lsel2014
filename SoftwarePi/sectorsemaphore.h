@@ -57,6 +57,7 @@ typedef struct
 	observer_t observer;        /**< Inheritance */
 	
 	int sector;
+	char data;
 	
 	char i2c_address;
 	int i2c_fd;
@@ -86,7 +87,7 @@ void				sectorsemaphore_destroy(sectorsemaphore_t* this);
  * @{
  */
 int 	sectorsemaphore_cmd(char* arg);
-void    sectorsemaphore_send(sectorsemaphore_t* this, char data);
+void    sectorsemaphore_send_data(sectorsemaphore_t* this);
 void	sectorsemaphore_notify(observer_t* this, observable_t* observable);
 /**@}*/
 
@@ -99,6 +100,7 @@ void	sectorsemaphore_notify(observer_t* this, observable_t* observable);
  */
 int		sectorsemaphore_get_sector(sectorsemaphore_t* this);
 char    sectorsemaphore_get_address(sectorsemaphore_t* this);
+char    sectorsemaphore_get_data(sectorsemaphore_t* this);
 
 /**@}*/
 
@@ -111,6 +113,7 @@ char    sectorsemaphore_get_address(sectorsemaphore_t* this);
  */
 void    sectorsemaphore_set_sector(sectorsemaphore_t* this, int setor);
 void    sectorsemaphore_set_address(sectorsemaphore_t* this, char i2c_address);
+void    sectorsemaphore_set_data(sectorsemaphore_t* this, char data);
 /**@}*/
 
 

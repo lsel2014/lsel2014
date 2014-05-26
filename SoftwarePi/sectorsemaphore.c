@@ -121,9 +121,9 @@ int		sectorsemaphore_cmd(char* arg)
  * @param this sectorsemaphore_t object
  * @param data Data to be sent through I2C
  */
-void    sectorsemaphore_send(sectorsemaphore_t* this, char data)
+void    sectorsemaphore_send_data(sectorsemaphore_t* this)
 {
-	wiringPiI2CWrite(this->i2c_fd, data);
+	wiringPiI2CWrite(this->i2c_fd, this->data);
 }
 
 /**
@@ -141,8 +141,24 @@ void	sectorsemaphore_notify(observer_t* this, observable_t* observable)
 {
 	railway_t* rail = (railway_t*) observable;
 	sectorsemaphore_t* thisSS = (sectorsemaphore_t*) this;
+	char newData = sectorsemaphore_get_data(thisSS);
 	
-	//TODO: condiciones para un color u otro y mandar el dato correspondiente
+	if ((rail->railwaySectors[thisSS->sector]->nregisteredtrains) > 0) {
+		train_t* train = rail->railwaySectors[thisSS->sector]->registeredTrains[0]; //probablemente, registeredTrains[0] dara errores
+		
+		if (train_get_security(train) == 1) {
+			newData = 3;		//Blinking red
+		} else {
+			newData = 2;		//Yellow
+		}
+	} else {
+		newData = 1;			//Green
+	}
+	
+	if (newData != sectorsemaphore_get_data(thisSS)) {
+		sectorsemaphore_set_data(thisSS, newData);
+		sectorsemaphore_send_data(thisSS);
+	}
 }
 
 // Getters -----
@@ -171,6 +187,19 @@ int		sectorsemaphore_get_sector(sectorsemaphore_t* this)
 char    sectorsemaphore_get_address(sectorsemaphore_t* this)
 {
 	return this->i2c_address;
+}
+
+/**
+ * @brief sectorsemaphore_t data getter
+ *
+ * @ingroup sectorsemaphore_t_getters
+ *
+ * @param this sectorsemaphore_t object
+ * @return this->data Semaphore data
+ */
+char    sectorsemaphore_get_data(sectorsemaphore_t* this)
+{
+	return this->data;
 }
 
 // Setters -----
@@ -202,3 +231,15 @@ void    sectorsemaphore_set_address(sectorsemaphore_t* this, char i2c_address)
 	this->i2c_fd = wiringPiI2CSetup(i2c_address);
 }
 
+/**
+ * @brief sectorsemaphore_t data setter
+ *
+ * @ingroup sectorsemaphore_t_setters
+ *
+ * @param this sectorsemaphore_t object
+ * @param data Semaphore data
+ */
+void    sectorsemaphore_set_data(sectorsemaphore_t* this, char data)
+{
+	this->data = data;
+}
