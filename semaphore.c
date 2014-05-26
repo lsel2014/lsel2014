@@ -33,6 +33,11 @@ semaphore_setup(void)
          semaphore_new(i,0);
          }
 }
+int 
+semaphore_get_state(semaphore_t* this)
+{
+    return this->state;
+}
 void 
 semaphore_switch_on(int i)
 {
