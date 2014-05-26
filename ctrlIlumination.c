@@ -63,6 +63,7 @@ ctrlilumination_notify(observer_t* this)
                   }
                   }
               }
+              rt_printf("%d",check);
               if(check == 2)
               crossingGate_set_position(cross, UP); 
      }  
