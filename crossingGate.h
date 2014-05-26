@@ -18,6 +18,7 @@ typedef struct crossingGate_t {
 	//Attributes
 	int GPIOline;
 	position_t position;
+	int id;
 	//char sectorCrossing;
 	int needsService;
 	//Private
