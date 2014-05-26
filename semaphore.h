@@ -6,10 +6,6 @@
 
 #define MAXSEMAFORES 4
 
-typedef enum {
-	ON, OFF
-} state_t;
-
 typedef struct
 {
 	observable_t observable;        
