@@ -36,7 +36,7 @@ static int n_railway;
  */
 void anticollision_notify(observer_t* this) {
 	
-    int i,j,k;
+    int i,j;
     int to_check;
     int new_power;
     for(j=0; j<n_railway;j++){
