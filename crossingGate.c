@@ -13,7 +13,7 @@ int n_crossingGates;
 void 
 crossingGate_setup(void) 
 {
-    int i,sensec[] = {2,3};
+    int sensec[] = {2,3};
     n_crossingGates=0;
 	crossingGates[0] = crossingGate_new(0, 11,sensec);
 	
