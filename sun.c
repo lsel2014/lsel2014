@@ -7,10 +7,13 @@
 #include "sunparse.h"
 #include "tasks.h"
 #include "interp.h"
+
+#define I2C_ADRESS_SUN 0x20
 sun_t* sun;
 
 void sun_setup(void) {
-	sun = sun_new(DEFAULT_DATE, 0x20, SUN_DEADLINE);
+	//sun = sun_new(DEFAULT_DATE, 0x20, SUN_DEADLINE);
+	sun = sun_new(DEFAULT_DATE, I2C_ADRESS_SUN , SUN_DEADLINE);
 	interp_addcmd("sun", sun_cmd, "Set sun parameters\n");
 }
 
