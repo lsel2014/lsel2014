@@ -47,7 +47,7 @@ semaphore_switch_on(int i)
     rt_mutex_acquire(&local->mutex, TM_INFINITE);
     local->state = 1;
     rt_mutex_release(&local->mutex);
-    rt_printf(" semafore %d switched to %d (ON)\n", i , semaphores[i]->state);
+    //rt_printf(" semafore %d switched to %d (ON)\n", i , semaphores[i]->state);
 }
 void 
 semaphore_switch_off(int i)
@@ -56,5 +56,5 @@ semaphore_switch_off(int i)
     rt_mutex_acquire(&local->mutex, TM_INFINITE);
     local->state = 0;
     rt_mutex_release(&local->mutex);
-    rt_printf(" semafore %d switched to %d (OFF)\n", i , semaphores[i]->state);                        
+    //rt_printf(" semafore %d switched to %d (OFF)\n", i , semaphores[i]->state);                        
 }
