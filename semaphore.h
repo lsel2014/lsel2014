@@ -22,8 +22,8 @@ typedef struct
     
 extern semaphore_t* semaphores[MAXSEMAFORES];
 
-semaphore_t* semaphore_new(int id);
-void semaphore_init(semaphore_t* this, int id);
+semaphore_t* semaphore_new(int id, state_t state);
+void semaphore_init(semaphore_t* this, int id, state_t state);
 void semaphore_setup(void);
 void semaphore_switch_on(int i);
 void semaphore_switch_off(int i);
