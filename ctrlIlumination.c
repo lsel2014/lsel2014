@@ -41,9 +41,9 @@ ctrlilumination_notify(observer_t* this)
      crossingGate_t* cross;
      for( i = 0 ; i < n_railway ; i++){
          rail= ctrlilu_railway[i].railway;
+         check = 0;
          for( j = 0; j < NSECTORS ; j++){
-              check = 0;
-              if( rail->railwaySectors[j]->nregisteredtrains >0){
+                 if( rail->railwaySectors[j]->nregisteredtrains >0){
               	 rt_printf(" passing full sector %d \n",j);
               	 if( semaphore_get_state(semaphores[j]) != 1)
                  semaphore_switch(semaphores[j] , 1);
