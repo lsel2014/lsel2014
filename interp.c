@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <Readline.h>
+
 #define MAXCMDS 100
 
 static int done = 0;
