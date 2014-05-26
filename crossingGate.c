@@ -13,9 +13,10 @@ int n_crossingGates;
 void 
 crossingGate_setup(void) 
 {
-    int sensec[] = {2,3};
+    int i,sensec[] = {2,3};
     n_crossingGates=0;
 	crossingGates[0] = crossingGate_new(0, 11,sensec);
+	
 	interp_addcmd("barrier", crossingGate_cmd, "Set barrier state\n");
 	
 }
@@ -53,6 +54,7 @@ crossingGate_init(crossingGate_t* this, int id, int GPIOline,
 	observable_init(&this->observable);
 	this->GPIOline = GPIOline;
 	this->position = position;
+	this->id = id;
 	this->needsService = 0;
         this->sensiblesectors[0] = sensiblesectors[0];
         this->sensiblesectors[1] = sensiblesectors[1];
@@ -86,6 +88,7 @@ crossingGate_set_position(crossingGate_t* this, position_t position)
 		this->needsService = 1;
 	}
 	rt_mutex_release(&this->mutex);
+	rt_printf(" crossing gate %d switched to %s \n", this->id , this->position);              
 }
 
 void 
