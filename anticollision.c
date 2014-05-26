@@ -36,16 +36,16 @@ static int n_railway;
  */
 void anticollision_notify(observer_t* this) {
 	
-    int i,j;
+    int i,j,k;
     int to_check;
     int new_power;
     for(j=0; j<n_railway;j++){
     railway_t* rail = antic_railway[j].railway;
 	if (security_enable == 1) {
 		for (i = 0; i < NSECTORS; i++) {
-		    for(j=0; j<rail->railwaySectors[i]->nregisteredtrains;j++){
+		    for(k = 0; k < rail->railwaySectors[i]->nregisteredtrains ; k++){
 			//if ((rail->railwaySectors[i]->nregisteredtrains) > 0) {
-				train_t* train = rail->railwaySectors[i]->registeredTrains[j]; //probablemente, registeredTrains[0] dara errores
+				train_t* train = rail->railwaySectors[i]->registeredTrains[j]; 
 				to_check = 0;
 
 				//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
