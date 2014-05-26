@@ -44,9 +44,9 @@ void
 semaphore_switch (semaphore_t* this, int state)
 {
     rt_mutex_acquire(&this->mutex, TM_INFINITE);
-    local->state = state;
+    this->state = state;
     rt_mutex_release(&this->mutex);
-    //rt_printf(" semafore %d switched to %d (ON)\n", i , semaphores[i]->state);
+    rt_printf(" semafore %d switched to %d \n", this->id ,this->state);
 }
 /*
 void 
