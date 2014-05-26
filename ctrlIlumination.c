@@ -62,7 +62,8 @@ ctrlilumination_notify(observer_t* this)
                   }
                   }
               }  
-     }    
+     }  
+     rt_printf("\n\n");
 }
 
 void 
