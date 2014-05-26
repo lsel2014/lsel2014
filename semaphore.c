@@ -34,12 +34,16 @@ semaphore_setup(void)
          }
 }
 void 
-semaphore_switch_on(void)
+semaphore_switch_on(int i)
 {
-    rt_printf(" switching on!!! \n");
+    semaphore_t* local = semaphores[i];
+    local->state = ON;
+    rt_printf(" semafore %d switched to %s \n", i , semaphores[i]->state);
 }
 void 
-semaphore_switch_off(void)
+semaphore_switch_off(int i)
 {
-    rt_printf(" switching off!!! \n");                          
+    semaphore_t* local = semaphores[i];
+    local->state = ON;
+    rt_printf(" semafore %d switched to %s \n", i , semaphores[i]->state);                        
 }
