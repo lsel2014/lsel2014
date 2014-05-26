@@ -1,6 +1,8 @@
 #ifndef CROSSINGGATE_H
 #define CROSSINGGATE_H
 
+#include <rtdk.h>
+
 #include "observer.h"
 #include "train.h"
 
