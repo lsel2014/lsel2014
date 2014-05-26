@@ -88,7 +88,7 @@ crossingGate_set_position(crossingGate_t* this, position_t position)
 		this->needsService = 1;
 	}
 	rt_mutex_release(&this->mutex);
-	//printf("Gate\t%s\r\n", (crossingGates[0]->position) == UP ? "UP" : "DOWN");              
+	printf("Gate\t%s\r\n", (crossingGates[0]->position) == UP ? "UP" : "DOWN");            
 }
 
 void 
