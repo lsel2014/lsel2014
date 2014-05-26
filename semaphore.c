@@ -37,13 +37,13 @@ void
 semaphore_switch_on(int i)
 {
     semaphore_t* local = semaphores[i];
-    local->state = ON;
+    local->state = 0;
     rt_printf(" semafore %d switched to %s \n", i , semaphores[i]->state);
 }
 void 
 semaphore_switch_off(int i)
 {
     semaphore_t* local = semaphores[i];
-    local->state = OFF;
+    local->state = 1;
     rt_printf(" semafore %d switched to %s \n", i , semaphores[i]->state);                        
 }
