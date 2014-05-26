@@ -36,12 +36,13 @@ static int n_traficLight;
 void 
 ctrlilumination_notify(observer_t* this)
 {
-     int i,j,k;
+     int i,j,k,check;
      railway_t* rail;
      crossingGate_t* cross;
      for( i = 0 ; i < n_railway ; i++){
          rail= ctrlilu_railway[i].railway;
          for( j = 0; j < NSECTORS ; j++){
+              check = 0;
               if( rail->railwaySectors[j]->nregisteredtrains >0){
               	 rt_printf(" passing full sector %d \n",j);
               	 if( semaphore_get_state(semaphores[j]) != 1)
@@ -57,11 +58,13 @@ ctrlilumination_notify(observer_t* this)
                  semaphore_switch( semaphores[j] , 0);
                  for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
-                       if( j ==  cross->sensiblesectors[0] && j ==  cross->sensiblesectors[1])
-                       crossingGate_set_position(cross, UP);  
+                       if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
+                        check++;
                   }
                   }
-              }  
+              }
+              if(check == 2)
+              crossingGate_set_position(cross, UP); 
      }  
      rt_printf("\n\n");
 }
