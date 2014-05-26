@@ -11,7 +11,7 @@ typedef struct
 	observable_t observable;        
 
 	int id;
-	state_t state;
+	int state;
 	RT_MUTEX mutex;
 	
 }semaphore_t;
