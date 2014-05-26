@@ -57,7 +57,7 @@ ctrlilumination_notify(observer_t* this)
                  semaphore_switch( semaphores[j] , 0);
                  for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
-                       if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
+                       if( j ==  cross->sensiblesectors[0] && j ==  cross->sensiblesectors[1])
                        crossingGate_set_position(cross, UP);  
                   }
                   }
