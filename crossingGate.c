@@ -88,7 +88,7 @@ crossingGate_set_position(crossingGate_t* this, position_t position)
 		this->needsService = 1;
 	}
 	rt_mutex_release(&this->mutex);
-	rt_printf(" crossing gate %d switched to %s\n", this->id ,(crossingGates[0]->position) == UP ? "UP" : "DOWN");              
+	rt_printf("Gate\t%s\r\n", (crossingGates[0]->position) == UP ? "UP" : "DOWN");              
 }
 
 void 
