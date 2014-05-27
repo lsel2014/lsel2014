@@ -8,7 +8,8 @@
 #include <native/timer.h>
 // WiringPi
 #include <wiringPi.h>
-
+//i2c
+#include "lsquaredc.h"
 // RT compilant print library
 #include <rtdk.h>
 
@@ -38,8 +39,10 @@
 #include "semaphore.h"
 #include "ctrlIlumination.h"
 // Dummy function to catch signals
-void catch_signal () {}
+int i2c0handle,i2c1handle;
 
+void catch_signal () {}
+/*
 void initializeModel(void) {
 	// TODO
 	int i;
@@ -49,7 +52,7 @@ void initializeModel(void) {
 		//IRsensors[i] = sensorIR_new(i);
 	}
 }
-
+*/
 void initializeXenomaiEnv(void) {
 	// Catch signals
 	signal(SIGTERM, catch_signal);
@@ -72,6 +75,16 @@ void initializeWiringPi(void) {
 	//pinModes ....
 }
 
+void initializei2c(void) {
+
+	i2c0handle = i2c_open(0);
+	i2c1handle = i2c_open(1);
+
+	// Replace with proper I2C modules load on kernel
+	//system("gpio load i2c");
+
+	//pinModes ....
+}
 int main(int argc, char* argv[]) {
 
 	// Initialize Xenomai RT enviroment
@@ -79,10 +92,12 @@ int main(int argc, char* argv[]) {
 
 	// Initialize wiringPi lib, configure IO
 	initializeWiringPi();
-
+	
 	// Initialize the model
-	initializeModel();
-
+	//initializeModel();
+	
+	//Initialize the i2c
+	initializei2c();
 	// Initialize the train controller
 	//trainCtrl_init();
 
