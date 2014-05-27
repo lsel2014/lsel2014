@@ -44,7 +44,7 @@ ctrlilumination_notify(observer_t* this)
          check = 0;
          for( j = 0; j < NSECTORS ; j++){
                  if( rail->railwaySectors[j]->nregisteredtrains >0){
-              	 rt_printf(" passing full sector %d \n",j);
+              	 //rt_printf(" passing full sector %d \n",j);
               	 if( semaphore_get_state(semaphores[j]) != 1)
                  semaphore_switch(semaphores[j] , 1);
                   for( k = 0; k < n_crossingGate ; k++){
@@ -53,7 +53,7 @@ ctrlilumination_notify(observer_t* this)
                        crossingGate_set_position(cross, DOWN);
                   }
                   }else{
-                 rt_printf(" passing empty sector %d \n",j);
+                 //rt_printf(" passing empty sector %d \n",j);
                  if( semaphore_get_state(semaphores[j]) != 0)
                  semaphore_switch( semaphores[j] , 0);
                  for( k = 0; k < n_crossingGate ; k++){
@@ -63,11 +63,11 @@ ctrlilumination_notify(observer_t* this)
                   }
                   }
               }
-              rt_printf("%d",check);
+              //rt_printf("%d",check);
               if(check == 2)
               crossingGate_set_position(cross, UP); 
      }  
-     rt_printf("\n\n");
+     //rt_printf("\n\n");
 }
 
 void 
