@@ -3,7 +3,7 @@
 #include <time.h>
 #include <rtdk.h>
 
-#include "time_operations.h"
+#include "utils.h"
 #include "observer.h"
 #include "sensorIR.h"
 #include "model.h"
