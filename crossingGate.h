@@ -21,8 +21,8 @@ typedef struct crossingGate_t {
 	int id;
 	int needsService;
 	//i2c
-	char i2c_address;
-	int i2c_fd;
+	//char i2c_address;
+	//int i2c_fd;
 	//Private
 	int sensiblesectors[2];
 	RT_MUTEX mutex;
@@ -39,10 +39,14 @@ int crossingGate_cmd(char* arg);
 /*crossingGate_t* crossingGate_new(int id, int GPIOline, char sectorCrossing);
 void crossingGate_init(crossingGate_t* this, int id, int GPIOline,
 		char sectorCrossing, position_t position);*/
-crossingGate_t* crossingGate_new(int id, int GPIOline, int sensiblesectors[2], char i2c_address);
+/*crossingGate_t* crossingGate_new(int id, int GPIOline, int sensiblesectors[2], char i2c_address);
 
 void crossingGate_init(crossingGate_t* this, int id, int GPIOline,
-		                           position_t position,int sensiblesectors[2], char i2c_address);
+		                           position_t position,int sensiblesectors[2], char i2c_address);*/
+crossingGate_t* crossingGate_new(int id, int GPIOline, int sensiblesectors[2]);
+
+void crossingGate_init(crossingGate_t* this, int id, int GPIOline,
+		                           position_t position,int sensiblesectors[2]);		                           
 void crossingGate_destroy(crossingGate_t* this);
 
 /*
