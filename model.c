@@ -18,7 +18,7 @@ static struct object_ref_t {
 static int n_objs = 0;
 
 int model_add_observable(const char* name, observable_t* obs) {
-	if (n_observable <= MAXOBSERVABLES) {
+	if (n_objs <= MAX_OBJS) {
 		objs[n_objs].name = name;
 		objs[n_objs].obs = obs;
 		n_objs++;
@@ -55,7 +55,6 @@ void model_init(void) {
 		const char* name;
 	} semaphore_names[] = { { "semaforo0" }, { "semaforo1" }, { "semaforo2" },
                              { "semaforo3" }, { NULL } };
-	n_observable = 0;
 	int i = 0;
 	struct ir_name_t* s;
 	struct train_name_t* t;
@@ -99,7 +98,7 @@ void model_init(void) {
 
 observable_t*
 model_get_observable(const char* name) {
-	struct registered_observable_t* o;
+	struct object_ref_t* o;
 	for (o = observablesmodel; o->name; ++o) {
 		if (0 == strcmp(name, o->name))
 			return o->obs;
