@@ -4,7 +4,7 @@ LDFLAGS = $(shell xeno-config --skin native --ldflags)
 LDLIBS = -lwiringPi -lreadline -lm
 
 objs = \
-	 \
+	daemon.o \
 	tasks.o \
 	interp.o \
 	train.o \
