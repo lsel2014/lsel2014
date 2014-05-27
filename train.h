@@ -103,8 +103,8 @@ typedef struct
 	telemetry_t* telemetry;
 
 	 dcc_sender_t* dcc;
-	 //RT_MUTEX mutex;
-	 pthread_mutex_t mutex;
+	 RT_MUTEX mutex;
+	 //pthread_mutex_t mutex;
 } train_t;
 /**@}*/
 
