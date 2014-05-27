@@ -10,7 +10,7 @@
 #define railChange_H
 
 #include <stdlib.h>
-//#include <native/mutex.h>
+#include <native/mutex.h>
 #include "interp.h"
 
 typedef enum {
