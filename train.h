@@ -102,8 +102,9 @@ typedef struct
 	char security_override;
 	telemetry_t* telemetry;
 
-    dcc_sender_t* dcc;
-    RT_MUTEX mutex;
+	 dcc_sender_t* dcc;
+	 //RT_MUTEX mutex;
+	 pthread_mutex_t mutex;
 } train_t;
 /**@}*/
 
