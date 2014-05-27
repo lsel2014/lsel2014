@@ -23,7 +23,8 @@ objs = \
 	screen.o \
 	utils.o\
         ctrlIlumination.o\
-        lsquaredc.o
+        lsquaredc.o\
+        example.o
 all: daemon
 
 test: daemon
