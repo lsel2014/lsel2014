@@ -7,4 +7,5 @@
 #define TASK_SUN_PRIORITY 20
 #define TASK_INTERPRETER_PRIORITY 10
 
+extern int i2c0handle,i2c1handle;
 #endif
