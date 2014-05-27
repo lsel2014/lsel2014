@@ -8,9 +8,11 @@
 
 #ifndef railChange_H
 #define railChange_H
+
 #include <stdlib.h>
-#include <native/mutex.h>
+//#include <native/mutex.h>
 #include "interp.h"
+
 typedef enum {
 	LEFT, RIGHT
 } direction_t;
@@ -20,6 +22,7 @@ typedef struct railChange_t {
 	direction_t direction;
 
 	RT_MUTEX mutex;
+	//pthread_mutex_t mutex;
 
 } railChange_t;
 
