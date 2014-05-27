@@ -1,5 +1,5 @@
 #include <stdlib.h>
-//#include <native/mutex.h>
+#include <native/mutex.h>
 #include <stdbool.h>
 #include <wiringPi.h>
 #include <softPwm.h>
