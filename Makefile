@@ -21,8 +21,9 @@ objs = \
 	railway.o \
 	anticollision.o \
 	screen.o \
-	time_operations.o\
-        ctrlIlumination.o
+	utils.o\
+        ctrlIlumination.o\
+        lsquaredc.o
 all: daemon
 
 test: daemon
