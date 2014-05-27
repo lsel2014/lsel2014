@@ -15,7 +15,7 @@
 
 #include "train.h"
 #include "dcc.h"
-#include "time_operations.h"
+#include "utils.h"
 
 train_t* trains[MAXTRAINS];
 train_t* current_train;
