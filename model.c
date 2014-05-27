@@ -99,7 +99,7 @@ void model_init(void) {
 observable_t*
 model_get_observable(const char* name) {
 	struct object_ref_t* o;
-	for (o = observablesmodel; o->name; ++o) {
+	for (o = objs; o->name; ++o) {
 		if (0 == strcmp(name, o->name))
 			return o->obs;
 	}
