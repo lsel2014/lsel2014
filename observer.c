@@ -1,5 +1,6 @@
 #include "observer.h"
-#include <rtdk.h>
+
+
 void observer_init(observer_t* this, observer_notify_func_t notify) {
 	this->notify = notify;
 }
