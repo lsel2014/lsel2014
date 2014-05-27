@@ -1,4 +1,5 @@
 /**
+/**
  * @file    train.c
  * @date    2014-04-01
  * @brief   Train entity definition
@@ -6,23 +7,21 @@
  * Implementation of train_t functions and declarations
  */
 
+#include <rtdk.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
-#include <string.h>
-#include <stdio.h>
 
 #include "train.h"
 #include "dcc.h"
 #include "time_operations.h"
-#include "task.h"
 
 train_t* trains[MAXTRAINS];
 train_t* current_train;
 int ntrains = 0;
 
-static void* train_update_est(void* arg);
+static void train_update_est(void* arg);
 
 // Object creation/destruction -----
 
@@ -47,7 +46,7 @@ train_t* train_new(char* name, char ID, char n_wagon, char length,
 {
 	train_t* this = (train_t*) malloc(sizeof(train_t));
 	telemetry_t* telemetry = (telemetry_t*) malloc(sizeof(telemetry_t));
-	
+
 	train_init(this, name, ID, n_wagon, length, dcc, telemetry);
 
     /*
@@ -78,7 +77,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 		dcc_sender_t* dcc, telemetry_t* telemetry)
 {
 	observable_init(&this->observable);
-	
+
 	this->name = name;
 	this->ID = ID;
 	this->target_power = 0;
@@ -90,8 +89,8 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->telemetry = telemetry;
 
 	this->dcc = dcc;
-	//rt_mutex_create(&this->mutex, NULL);
-    mutex_init (&this->mutex);
+	rt_mutex_create(&this->mutex, NULL);
+
     /*
      * Initial power is 0
      */
@@ -120,19 +119,18 @@ void trains_setup(void)
      */
 	dcc_sender_t* dccobject = dcc_new(13, 63000);
 
-	//train_new("Diesel", 0b0000100, '0', 20, dccobject);
-	//train_new("Renfe", 0b0000011, '0', 25, dccobject);
-	
+	train_new("Diesel", 0b0000100, '0', 20, dccobject);
+	train_new("Renfe", 0b0000011, '0', 25, dccobject);
+
 	/*for (i = 0; i < ntrains; i++) {
 	 for (j = 0; j < nsensors; j++) {
 	 observable_register_observer((observable_t*) sensors[j],
 	 (observer_t*) trains[i]);
 	 }
 	 }*/
-	
+
 	current_train = trains[0];
 	task_add("Estimation updater", 200000000, train_update_est, NULL);
-	//task_new ("Estimation updater", train_update_est,200, 200, 1024);
 	interp_addcmd("train", train_cmd, "Set train parameters");
 	interp_addcmd("s", train_emergency_cmd, "Emergency stop all trains");
 }
@@ -182,13 +180,7 @@ int train_cmd(char* arg)
 					(trains[i]->direction) == FORWARD ? "FORWARD" : "REVERSE",
 					trains[i]->telemetry->sector, trains[i]->security_override,
 					(trains[i]->ID == current_train->ID) ? "<" : " ");
-			/*train_t* t = trains[i];
- +			printf("%d\t%s\t%d\t%d\t%s\t\t%d\t%d\t\t%s\r\n", t->ID,
- +					t->name, t->power, t->target_power,
- +					(t->direction) == FORWARD ? "FORWARD" : "REVERSE",
- +					t->telemetry->sector, t->security_override,
- +					(t->ID == current_train->ID) ? "<" : " ");
-		*/}
+		}
 		return 0;
 	}
 
@@ -294,7 +286,7 @@ int train_cmd(char* arg)
 		train_get_timestamp(current_train, &initial);
 		float elapsed_time;
 		char time_out = 0;
-		
+
 		float initial_estimation = train_get_time_estimation(current_train);
 		/*
 		 * Hardcoded 20%
@@ -401,7 +393,7 @@ int train_cmd(char* arg)
 int train_emergency_cmd(char* arg)
 {
 	int i;
-	
+
 	for (i = 0; i < ntrains; i++)
 	{
 		dcc_add_data_packet(trains[i]->dcc, trains[i]->ID, ESTOP_CMD);
@@ -413,7 +405,7 @@ int train_emergency_cmd(char* arg)
 	}
 
 	printf("All trains stopped\n");
-	
+
 	return 0;
 }
 
@@ -429,7 +421,7 @@ int train_emergency_cmd(char* arg)
  */
 void train_emergency_stop(train_t* this)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->power = 0;
 	rt_mutex_release(&this->mutex);
 
@@ -493,7 +485,7 @@ int train_get_target_power(train_t* this)
  */
 int train_get_power(train_t* this)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	int power = this->power;
 	rt_mutex_release(&this->mutex);
 	return power;
@@ -548,7 +540,7 @@ char train_get_length(train_t* this)
  */
 void train_get_timestamp(train_t* this, struct timeval *tv)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	tv->tv_sec = this->telemetry->timestamp.tv_sec;
 	tv->tv_usec = this->telemetry->timestamp.tv_usec;
 	rt_mutex_release(&this->mutex);
@@ -579,7 +571,7 @@ char train_get_security(train_t* this)
  */
 float train_get_time_estimation(train_t* this)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	float est = this->telemetry->time_est;
 	rt_mutex_release(&this->mutex);
 	return est;
@@ -595,7 +587,7 @@ float train_get_time_estimation(train_t* this)
  */
 float train_get_current_time_estimation(train_t* this)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	float est = this->telemetry->current_time_est;
 	rt_mutex_release(&this->mutex);
 	return est;
@@ -624,7 +616,7 @@ char train_get_sector(train_t* this)
  */
 float train_get_speed(train_t* this)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	float speed = this->telemetry->speed;
 	rt_mutex_release(&this->mutex);
 	return speed;
@@ -682,7 +674,7 @@ void train_set_ID(train_t* this, char ID)
  */
 void train_set_target_power(train_t* this, int power)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->target_power = power;
 
 	if (this->security_override == 0)
@@ -704,8 +696,8 @@ void train_set_power(train_t* this, int power)
 {
 	int i;
 
-	pthread_mutex_lock (&this->mutex);
-	
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+
 	this->power = power;
 	if (power < 0) {
 		train_set_direction(this, REVERSE);
@@ -771,7 +763,7 @@ void train_set_length(train_t* this, char length)
  */
 void train_set_timestamp(train_t* this, struct timeval *tv)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->timestamp.tv_sec = tv->tv_sec;
 	this->telemetry->timestamp.tv_usec = tv->tv_usec;
 	//copy_timeval( &(this->telemetry-> timestamp) ,tv);
@@ -788,7 +780,7 @@ void train_set_timestamp(train_t* this, struct timeval *tv)
  */
 void train_set_security(train_t* this, char newSecurity)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 
 	this->security_override = newSecurity;
 	if (newSecurity == 0) {
@@ -808,7 +800,7 @@ void train_set_security(train_t* this, char newSecurity)
  */
 void train_set_time_estimation(train_t* this, float estimation)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->time_est = estimation;
 	this->telemetry->current_time_est =estimation;
 	rt_mutex_release(&this->mutex);
@@ -826,7 +818,7 @@ void train_set_time_estimation(train_t* this, float estimation)
  */
 void train_set_current_time_estimation(train_t* this, float estimation)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->current_time_est = estimation;
 	rt_mutex_release(&this->mutex);
 	observable_notify_observers(&this->observable);
@@ -841,7 +833,7 @@ void train_set_current_time_estimation(train_t* this, float estimation)
  */
 void train_set_current_sector(train_t* this, char sector)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->sector = sector;
 	//rt_printf ("Starting notify\n");
 	rt_mutex_release(&this->mutex);
@@ -858,16 +850,13 @@ void train_set_current_sector(train_t* this, char sector)
  */
 void train_set_current_speed(train_t* this, float speed)
 {
-	pthread_mutex_lock (&this->mutex);
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->telemetry->speed = speed;
-	pthread_mutex_unlock (&this->mutex);
+	rt_mutex_release(&this->mutex);
 	observable_notify_observers(&this->observable);
 }
-
 static
-void*
-train_update_est(void* arg)
-{
+void train_update_est(void* arg){
 	int i;
 	float est;
 	rt_task_set_periodic(NULL, TM_NOW, 200000000);
@@ -879,12 +868,5 @@ train_update_est(void* arg)
 			train_set_current_time_estimation(trains[i],est);
 		}
 	}
-//return NULL;
 }
-/*
-  Local variables:
-    mode: c
-    c-file-style: stroustrup
-  End:
-*/
 
