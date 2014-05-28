@@ -24,7 +24,8 @@ typedef enum {
 typedef struct trafficLight_t {
 	observable_t observable;
 	
-	int GPIOline;
+	//int GPIOline;
+	uint16_t i2c_address;
 	state_t state;
 
 	RT_MUTEX mutex;
@@ -37,17 +38,21 @@ int trafficLight_cmd(char* arg);
 /*
  * Object creation / destruction
  */
-void trafficLight_init(trafficLight_t* this, int id, int GPIOline,
+/*void trafficLight_init(trafficLight_t* this, int id, int GPIOline,
 		state_t state);
 
-trafficLight_t* trafficLight_new(int id, int GPIOline);
+trafficLight_t* trafficLight_new(int id, int GPIOline);*/
+void trafficLight_init(trafficLight_t* this, int id, uint16_t i2c_address,
+		state_t state);
+
+trafficLight_t* trafficLight_new(int id, uint16_t i2c_address);
 
 /*
  * Getters / setters
  */
 state_t trafficLight_get_state(trafficLight_t* this);
-void trafficLight_set_sensibleSector(trafficLight_t* this, int sector,
-		train_direction_t sentido);
+/*void trafficLight_set_sensibleSector(trafficLight_t* this, int sector,
+		train_direction_t sentido);*/
 void trafficLight_set_state(trafficLight_t* this, state_t state);
 
 /*
@@ -55,6 +60,6 @@ void trafficLight_set_state(trafficLight_t* this, state_t state);
  *
  * Traffic lights behaviour belongs here
  */
-void trafficLight_notify(observer_t* this);
+//void trafficLight_notify(observer_t* this);
 
 #endif
