@@ -9,6 +9,7 @@
 #define SUN_PERIOD 1000000000
 #define SUN_DEADLINE 1000000000
 #define DEFAULT_DATE "11/11/2011"
+
 typedef const char* sun_date_t;
 typedef struct {
 	char hours;
@@ -19,8 +20,9 @@ typedef struct {
 #define sun_date_cmp strcmp
 
 typedef struct sun_t {
-	char i2c_address;
-	int i2c_fd;
+	//char i2c_address;
+	uint16_t i2c_address;
+	//int i2c_fd;
 	int current_simulated_time;
 	sun_date_t date;
 	sun_time_t sunrise;
@@ -28,14 +30,18 @@ typedef struct sun_t {
 	RT_MUTEX mutex;
 } sun_t;
 
-int sun_cmd(char* arg);
+int sun_cmd(char* arg);/*
 sun_t* sun_new(sun_date_t date, char i2c_address, int prio);
-void sun_init(sun_t* this, sun_date_t date, char i2c_address, int prio);
+void sun_init(sun_t* this, sun_date_t date, char i2c_address, int prio);*/
+sun_t* sun_new(sun_date_t date, uint16_t i2c_address, int deadline) ;
+void sun_init(sun_t* this, sun_date_t date, uint16_t i2c_address, int deadline);
+
 void sun_set_date(sun_t* this, sun_date_t date);
 void sun_update_simulated_time(sun_t* this);
 int sun_get_simulated_time(sun_t* this);
 void sendHour(sun_t* this);
 void sun_destroy(sun_t* this);
 void sun_setup(void);
-
+char* xml_find(char* buf, const char* tag);
+void sun_parse_data(sun_t* this);
 #endif
