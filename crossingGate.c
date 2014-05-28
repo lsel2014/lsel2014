@@ -7,8 +7,10 @@
 #include "tasks.h"
 #include "crossingGate.h"
 #include "interp.h"
+#include "lsquaredc.h"
+#include "daemon.h"
 // Random values, this will change to match the firmware of the barrier
-#define I2C_BARRIER_ADRESS 0x21
+#define I2C_BARRIER_ADDRESS 0x21
 #define I2C_BARRIER_UP 0x00
 #define I2C_BARRIER_DOWN 0x01
 #define I2C_BARRIER_STOP 0x02
@@ -20,10 +22,10 @@ crossingGate_setup(void)
 {
     int sensec[] = {2,3};
     n_crossingGates=0;
-	crossingGates[0] = crossingGate_new(0, 11,sensec,I2C_BARRIER_ADRESS);
-	
+	crossingGates[0] = crossingGate_new(0,sensec,I2C_BARRIER_ADDRESS);
+
 	interp_addcmd("barrier", crossingGate_cmd, "Set barrier state\n");
-	
+
 }
 
 int 
@@ -73,9 +75,9 @@ crossingGate_init(crossingGate_t* this, int id, int GPIOline,
 }
 */
 crossingGate_t*
-crossingGate_new(int id, int GPIOline,int sensiblesectors[2], uint16_t i2c_address) {
+crossingGate_new(int id, int sensiblesectors[2], uint16_t i2c_address) {
 	crossingGate_t* this = (crossingGate_t*) malloc(sizeof(crossingGate_t));
-	crossingGate_init(this, id, GPIOline, DOWN, sensiblesectors,i2c_address);
+	crossingGate_init(this, id, DOWN, sensiblesectors,i2c_address);
     if (n_crossingGates < MAXCROSINGGATES) {
 		crossingGates[n_crossingGates++] = this;
 	}
@@ -83,18 +85,15 @@ crossingGate_new(int id, int GPIOline,int sensiblesectors[2], uint16_t i2c_addre
 }
 
 void 
-crossingGate_init(crossingGate_t* this, int id, int GPIOline,
-		                          position_t position, int sensiblesectors[2], uint16_t i2c_address) {
+crossingGate_init(crossingGate_t* this, int id, position_t position,
+                                   int sensiblesectors[2], uint16_t i2c_address) {
 	observable_init(&this->observable);
-	this->GPIOline = GPIOline;
 	this->position = position;
 	this->id = id;
 	this->needsService = 0;
 	this->i2c_address=i2c_address;
         this->sensiblesectors[0] = sensiblesectors[0];
         this->sensiblesectors[1] = sensiblesectors[1];
-	pinMode(GPIOline, OUTPUT);
-	//softPwmCreate(GPIOline, 0, 200);
 
 	rt_mutex_create(&this->mutex, NULL);
 	task_add("Gate control", GATE_DEADLINE, crossingGate_move_task, this);
@@ -156,21 +155,20 @@ crossingGate_move_task(void *args)
 	rt_task_set_periodic(NULL, TM_NOW, GATE_PERIOD);
 	while (1) {
 		rt_task_wait_period(NULL);
-		//barrier_comand[0]=(this->i2c_address<<1);
 		if (this->needsService) {
-			rt_mutex_acquire(&(this->mutex), TM_INFINITE);
-
 			if (this->position == DOWN) {
 				barrier_comand[1]=I2C_BARRIER_DOWN;
 			} else {
 				barrier_comand[1]=I2C_BARRIER_UP;
 			}
-			i2c_send_sequence(i2c0handle, barrier_comand, 2, 0);
+			rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 			this->needsService = 0;
 			rt_mutex_release(&this->mutex);
 		} else {
-			barrier_comand[1]=I2C_BARRIER_STOP;
-			i2c_send_sequence(i2c0handle, barrier_comand, 2, 0);
+			barrier_comand[1]=I2C_BARRIER_STOP;	
 		}
+		rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+		i2c_send_sequence(i2chandler[0]->i2chandler, barrier_comand, 2, 0);
+		rt_mutex_release(&i2chandler[0]->mutex);
 	}
 }
