@@ -64,18 +64,18 @@ direction_t railCange_get_direction(railChange_t* this) {
 }
 
 void railChange_set_direction(railChange_t* this, direction_t direction) {
-	uint16_t barrier_comand[]={(this->i2c_address<<1),0x00};
+	uint16_t railChange_comand[]={(this->i2c_address<<1),0x00};
 	if( direction == LEFT ){
-	barrier_comand[1]=I2C_RAIL_CHANGE_LEFT;
+	railChange_comand[1]=I2C_RAIL_CHANGE_LEFT;
 	}else{
-	barrier_comand[1]=I2C_RAIL_CHANGE_RIGHT;
+	railChange_comand[1]=I2C_RAIL_CHANGE_RIGHT;
     	} 
              
-    	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
+	 rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
 	this->direction = direction;
 	//digitalWrite(this->GPIOline, direction == LEFT ? 1 : 0);
-	i2c_send_sequence(i2c0handle, barrier_comand, 2, 0);
+	i2c_send_sequence(i2c0handle, railChange_comand, 2, 0);
 	
 	rt_mutex_release(&(this->mutex));
 }
