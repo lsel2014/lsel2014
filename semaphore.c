@@ -13,7 +13,7 @@
 
 semaphore_t* semaphores[MAXSEMAFORES];
 int nsemaphores;
-uint16_t i2c_addresses[]={I2C_SEMAPHORE_ADRESS_0,I2C_SEMAPHORE_ADRESS_1,
+static uint16_t i2c_addresses[]={I2C_SEMAPHORE_ADRESS_0,I2C_SEMAPHORE_ADRESS_1,
 				I2C_SEMAPHORE_ADRESS_2,I2C_SEMAPHORE_ADRESS_3};
 
 semaphore_t* 
