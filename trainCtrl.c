@@ -7,7 +7,7 @@
 
 #include "trainCtrl.h"
 #include "trainCtrlTrama.h"
-#include "inclusiontotal.h"
+
 static TRM trama[N_TRENES];
 unsigned long long bufferSetVel = 0ULL;
 char tramaPendiente = 0;
