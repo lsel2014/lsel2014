@@ -20,8 +20,8 @@ int n_crossingGates;
 void 
 crossingGate_setup(void) 
 {
-    int sensec[] = {2,3};
-    n_crossingGates=0;
+        int sensec[] = {2,3};
+        n_crossingGates=0;
 	crossingGates[0] = crossingGate_new(0,sensec,I2C_BARRIER_ADDRESS);
 
 	interp_addcmd("barrier", crossingGate_cmd, "Set barrier state\n");
@@ -75,10 +75,11 @@ crossingGate_init(crossingGate_t* this, int id, int GPIOline,
 }
 */
 crossingGate_t*
-crossingGate_new(int id, int sensiblesectors[2], uint16_t i2c_address) {
+crossingGate_new(int id, int sensiblesectors[2], uint16_t i2c_address) 
+{
 	crossingGate_t* this = (crossingGate_t*) malloc(sizeof(crossingGate_t));
 	crossingGate_init(this, id, DOWN, sensiblesectors,i2c_address);
-    if (n_crossingGates < MAXCROSINGGATES) {
+        if (n_crossingGates < MAXCROSINGGATES) {
 		crossingGates[n_crossingGates++] = this;
 	}
 	return this;
@@ -86,7 +87,8 @@ crossingGate_new(int id, int sensiblesectors[2], uint16_t i2c_address) {
 
 void 
 crossingGate_init(crossingGate_t* this, int id, position_t position,
-                                   int sensiblesectors[2], uint16_t i2c_address) {
+                                   int sensiblesectors[2], uint16_t i2c_address) 
+{
 	observable_init(&this->observable);
 	this->position = position;
 	this->id = id;
