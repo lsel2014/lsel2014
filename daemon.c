@@ -39,8 +39,9 @@
 #include "semaphore.h"
 #include "ctrlIlumination.h"
 // Dummy function to catch signals
-int i2c0handle,i2c1handle;
 
+i2chandler_t* i2chandler[I2C_BUSES];
+static int n_i2c_handlers = 0;
 void catch_signal () {}
 /*
 void initializeModel(void) {
@@ -75,16 +76,31 @@ void initializeWiringPi(void) {
 	//pinModes ....
 }
 
+void i2chandler_init(i2chandler_t* this, int n_bus) {
+	
+	this->i2chandler = i2c_open(n_bus);
+	//rt_mutex_create(&this->mutex, NULL);
+
+}
+
+i2chandler_t*
+i2chandler_new(int n_bus) {
+	i2chandler_t* this = (i2chandler_t*) malloc(sizeof(i2chandler_t));
+	i2chandler_init(this, n_bus);
+	i2chandler[n_i2c_handlers++] = this;
+	
+	return this;
+}
+
+
 void initializei2c(void) {
 
-	i2c0handle = i2c_open(0);
-	i2c1handle = i2c_open(1);
-
-	// Replace with proper I2C modules load on kernel
-	//system("gpio load i2c");
-
-	//pinModes ....
+	int i;
+	for(i = 0 ; i < I2C_BUSES ; i++)
+		i2chandler_new(i);	
+	
 }
+
 int main(int argc, char* argv[]) {
 
 	// Initialize Xenomai RT enviroment
