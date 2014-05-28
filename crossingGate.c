@@ -148,6 +148,7 @@ crossingGate_move_task(void *args)
 	}
 }
 */
+void
 crossingGate_move_task(void *args) 
 {
 	crossingGate_t* this = (crossingGate_t*) args;
