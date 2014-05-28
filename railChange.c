@@ -9,8 +9,8 @@
  */
 
 #include "railChange.h"
-#include <wiringPi.h> 
-
+//#include <wiringPi.h> 
+#include "lsquaredc.h"
 // Random values, this will change to match the firmware of the barrier
 #define I2C_RAIL_CHANGE_ADRESS 0x22
 #define I2C_RAIL_CHANGE_LEFT 0x00
