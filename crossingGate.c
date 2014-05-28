@@ -156,20 +156,20 @@ crossingGate_move_task(void *args)
 	rt_task_set_periodic(NULL, TM_NOW, GATE_PERIOD);
 	while (1) {
 		rt_task_wait_period(NULL);
-		uint16_t barrier_comand[0]=(I2C_BARRIER_ADRESS<<1);
+		barrier_comand[0]=(I2C_BARRIER_ADRESS<<1);
 		if (this->needsService) {
 			rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
 			if (this->position == DOWN) {
-				uint16_t barrier_comand[0]=I2C_BARRIER_DOWN;
+				barrier_comand[0]=I2C_BARRIER_DOWN;
 			} else {
-				uint16_t barrier_comand[0]=I2C_BARRIER_UP;
+				barrier_comand[0]=I2C_BARRIER_UP;
 			}
 			i2c_send_sequence(i2c0handle, barrier_comand, 2, &status);
 			this->needsService = 0;
 			rt_mutex_release(&this->mutex);
 		} else {
-			uint16_t barrier_comand[0]=I2C_BARRIER_STOP;
+			barrier_comand[0]=I2C_BARRIER_STOP;
 			i2c_send_sequence(i2c0handle, barrier_comand, 2, &status);
 		}
 	}
