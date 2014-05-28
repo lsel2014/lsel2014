@@ -24,7 +24,6 @@ objs = \
 	utils.o\
         ctrlIlumination.o\
         lsquaredc.o\
-        example.o
 all: daemon
 
 test: daemon
