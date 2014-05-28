@@ -18,7 +18,9 @@ typedef enum {
 } direction_t;
 
 typedef struct railChange_t {
-	int GPIOline;
+	//int GPIOline;
+	uint16_t i2c_address;
+	
 	direction_t direction;
 
 	RT_MUTEX mutex;
@@ -27,12 +29,12 @@ typedef struct railChange_t {
 } railChange_t;
 
 //----------------------------
-void setupRailChange(void);
+void railChange_setup(void);
 int railChange_cmd(char* arg);
 
-void railChange_init(railChange_t* this, int GPIOline, direction_t direction);
+void railChange_init(railChange_t* this,  direction_t direction, uint16_t i2c_address);
 
-railChange_t* railChange_new(int GPIOline, direction_t direction);
+railChange_t* railChange_new(direction_t direction, uint16_t i2c_address);
 
 direction_t railChange_get_direction();
 
