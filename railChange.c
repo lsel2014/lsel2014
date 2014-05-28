@@ -11,10 +11,15 @@
 #include "railChange.h"
 #include <wiringPi.h> 
 
+// Random values, this will change to match the firmware of the barrier
+#define I2C_RAIL_CHANGE_ADRESS 0x22
+#define I2C_RAIL_CHANGE_LEFT 0x00
+#define I2C_RAIL_CHANGE_RIGHT 0x01
+
 static railChange_t* changer;
 
-void setupRailChange(void) {
-	changer = railChange_new(10, LEFT);
+void railChange_setup(void) {
+	changer = railChange_new( LEFT,I2C_RAIL_CHANGE_ADRESS);
 	interp_addcmd("changer", railChange_cmd, "Set rail state\n");
 }
 
@@ -35,20 +40,20 @@ int railChange_cmd(char* arg) {
 	return 1;
 }
 
-void railChange_init(railChange_t* this, int GPIOline, direction_t direction) {
+void railChange_init(railChange_t* this, direction_t direction, uint16_t i2c_address) {
 	this->direction = direction;
-	this->GPIOline = GPIOline;
-
-	pinMode(GPIOline, OUTPUT);
+	//this->GPIOline = GPIOline;
+    this->i2c_address= i2c_address;
+	//pinMode(GPIOline, OUTPUT);
 	rt_mutex_create(&this->mutex, NULL);
 	railChange_set_direction(this, direction);
 
 }
 
 railChange_t*
-railChange_new(int GPIOline, direction_t direction) {
+railChange_new(direction_t direction, uint16_t i2c_address) {
 	railChange_t* this = (railChange_t*) malloc(sizeof(railChange_t));
-	railChange_init(this, GPIOline, direction);
+	railChange_init(this, direction,i2c_address);
 
 	return this;
 
@@ -59,9 +64,18 @@ direction_t railCange_get_direction(railChange_t* this) {
 }
 
 void railChange_set_direction(railChange_t* this, direction_t direction) {
-	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
+	uint16_t barrier_comand[]={(this->i2c_address<<1),0x00};
+	if( direction == LEFT ){
+	barrier_comand[1]=I2C_RAIL_CHANGE_LEFT;
+	}else{
+	barrier_comand[1]=I2C_RAIL_CHANGE_RIGHT;
+    } 
+             
+    rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
 	this->direction = direction;
-	digitalWrite(this->GPIOline, direction == LEFT ? 1 : 0);
+	//digitalWrite(this->GPIOline, direction == LEFT ? 1 : 0);
+	i2c_send_sequence(i2c0handle, barrier_comand, 2, 0);
+	
 	rt_mutex_release(&(this->mutex));
 }
