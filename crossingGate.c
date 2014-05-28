@@ -161,15 +161,15 @@ crossingGate_move_task(void *args)
 			rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
 			if (this->position == DOWN) {
-				barrier_comand[0]=I2C_BARRIER_DOWN;
+				barrier_comand[1]=I2C_BARRIER_DOWN;
 			} else {
-				barrier_comand[0]=I2C_BARRIER_UP;
+				barrier_comand[1]=I2C_BARRIER_UP;
 			}
 			i2c_send_sequence(i2c0handle, barrier_comand, 2, &status);
 			this->needsService = 0;
 			rt_mutex_release(&this->mutex);
 		} else {
-			barrier_comand[0]=I2C_BARRIER_STOP;
+			barrier_comand[1]=I2C_BARRIER_STOP;
 			i2c_send_sequence(i2c0handle, barrier_comand, 2, &status);
 		}
 	}
