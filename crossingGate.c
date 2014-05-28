@@ -152,12 +152,11 @@ void
 crossingGate_move_task(void *args) 
 {
 	crossingGate_t* this = (crossingGate_t*) args;
-	uint16_t barrier_comand[2] ;
-	uint8_t status;
+	uint16_t barrier_comand[2]={(this->i2c_address<<1),0x00};
 	rt_task_set_periodic(NULL, TM_NOW, GATE_PERIOD);
 	while (1) {
 		rt_task_wait_period(NULL);
-		barrier_comand[0]=(I2C_BARRIER_ADRESS<<1);
+		//barrier_comand[0]=(this->i2c_address<<1);
 		if (this->needsService) {
 			rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
@@ -166,12 +165,12 @@ crossingGate_move_task(void *args)
 			} else {
 				barrier_comand[1]=I2C_BARRIER_UP;
 			}
-			i2c_send_sequence(i2c0handle, barrier_comand, 2, &status);
+			i2c_send_sequence(i2c0handle, barrier_comand, 2, 0);
 			this->needsService = 0;
 			rt_mutex_release(&this->mutex);
 		} else {
 			barrier_comand[1]=I2C_BARRIER_STOP;
-			i2c_send_sequence(i2c0handle, barrier_comand, 2, &status);
+			i2c_send_sequence(i2c0handle, barrier_comand, 2, 0);
 		}
 	}
 }
