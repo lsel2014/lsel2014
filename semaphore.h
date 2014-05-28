@@ -12,14 +12,15 @@ typedef struct
 
 	int id;
 	int state;
+	uint16_t i2c_address;
 	RT_MUTEX mutex;
 	
 }semaphore_t;
     
 extern semaphore_t* semaphores[MAXSEMAFORES];
 
-semaphore_t* semaphore_new (int id, int state);
-void semaphore_init (semaphore_t* this, int id, int state);
+semaphore_t* semaphore_new (int id, int state,uint16_t i2c_address);
+void semaphore_init (semaphore_t* this, int id, int state,uint16_t i2c_address);
 void semaphore_setup (void);
 int semaphore_get_state (semaphore_t* this);
 void semaphore_switch (semaphore_t* this, int state);
