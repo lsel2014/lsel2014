@@ -43,7 +43,7 @@ int railChange_cmd(char* arg) {
 void railChange_init(railChange_t* this, direction_t direction, uint16_t i2c_address) {
 	this->direction = direction;
 	//this->GPIOline = GPIOline;
-    this->i2c_address= i2c_address;
+    	this->i2c_address= i2c_address;
 	//pinMode(GPIOline, OUTPUT);
 	rt_mutex_create(&this->mutex, NULL);
 	railChange_set_direction(this, direction);
@@ -69,9 +69,9 @@ void railChange_set_direction(railChange_t* this, direction_t direction) {
 	barrier_comand[1]=I2C_RAIL_CHANGE_LEFT;
 	}else{
 	barrier_comand[1]=I2C_RAIL_CHANGE_RIGHT;
-    } 
+    	} 
              
-    rt_mutex_acquire(&(this->mutex), TM_INFINITE);
+    	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
 	this->direction = direction;
 	//digitalWrite(this->GPIOline, direction == LEFT ? 1 : 0);
