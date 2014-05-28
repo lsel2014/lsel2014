@@ -11,19 +11,24 @@
 #include "railChange.h"
 //#include <wiringPi.h> 
 #include "lsquaredc.h"
+#include "daemon.h"
 // Random values, this will change to match the firmware of the barrier
-#define I2C_RAIL_CHANGE_ADRESS 0x22
+#define I2C_RAIL_CHANGE_ADDRESS 0x22
 #define I2C_RAIL_CHANGE_LEFT 0x00
 #define I2C_RAIL_CHANGE_RIGHT 0x01
 
 static railChange_t* changer;
 
-void railChange_setup(void) {
-	changer = railChange_new( LEFT,I2C_RAIL_CHANGE_ADRESS);
+void 
+railChange_setup(void) 
+{
+	changer = railChange_new( LEFT,I2C_RAIL_CHANGE_ADDRESS);
 	interp_addcmd("changer", railChange_cmd, "Set rail state\n");
 }
 
-int railChange_cmd(char* arg) {
+int 
+railChange_cmd(char* arg) 
+{
 	if (0 == strcmp(arg, "list")) {
 		printf("Rail changer\t%s\r\n",
 				(changer->direction) == LEFT ?
@@ -40,11 +45,11 @@ int railChange_cmd(char* arg) {
 	return 1;
 }
 
-void railChange_init(railChange_t* this, direction_t direction, uint16_t i2c_address) {
+void 
+railChange_init(railChange_t* this, direction_t direction, uint16_t i2c_address) 
+{
 	this->direction = direction;
-	//this->GPIOline = GPIOline;
-    	this->i2c_address= i2c_address;
-	//pinMode(GPIOline, OUTPUT);
+        this->i2c_address= i2c_address;
 	rt_mutex_create(&this->mutex, NULL);
 	railChange_set_direction(this, direction);
 
@@ -59,23 +64,30 @@ railChange_new(direction_t direction, uint16_t i2c_address) {
 
 }
 
-direction_t railCange_get_direction(railChange_t* this) {
+direction_t 
+railCange_get_direction(railChange_t* this) 
+{
 	return this->direction;
 }
 
-void railChange_set_direction(railChange_t* this, direction_t direction) {
+void 
+railChange_set_direction(railChange_t* this, direction_t direction) 
+{
 	uint16_t railChange_comand[]={(this->i2c_address<<1),0x00};
 	if( direction == LEFT ){
 	railChange_comand[1]=I2C_RAIL_CHANGE_LEFT;
 	}else{
 	railChange_comand[1]=I2C_RAIL_CHANGE_RIGHT;
-    	} 
+        } 
              
-	 rt_mutex_acquire(&(this->mutex), TM_INFINITE);
+        rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
 	this->direction = direction;
 	//digitalWrite(this->GPIOline, direction == LEFT ? 1 : 0);
-	i2c_send_sequence(i2c0handle, railChange_comand, 2, 0);
 	
 	rt_mutex_release(&(this->mutex));
+	
+	rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
+	i2c_send_sequence(i2chandler[1]->i2chandler, railChange_comand, 2, 0);
+	rt_mutex_release(&i2chandler[1]->mutex);
 }
