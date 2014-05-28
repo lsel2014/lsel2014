@@ -49,10 +49,12 @@ ctrlilumination_notify(observer_t* this)
                  semaphore_switch(semaphores[j] , 1);
                   for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
-                       if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
+                       if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1]){
                        crossingGate_set_position(cross, DOWN);
+                       trafficLight_set_state(trafficLights[0], ON);
+                       }
                   }
-                  }else{
+                 }else{
                  //rt_printf(" passing empty sector %d \n",j);
                  if( semaphore_get_state(semaphores[j]) != 0)
                  semaphore_switch( semaphores[j] , 0);
@@ -62,12 +64,14 @@ ctrlilumination_notify(observer_t* this)
                         check++;
                   }
                   }
-              }
-              //rt_printf("%d",check);
-              if(check == 2)
-              crossingGate_set_position(cross, UP); 
+              }            
+              
+        if(check == 2){
+        crossingGate_set_position(cross, UP); 
+        trafficLight_set_state(trafficLights[0], OFF);
+        }
      }  
-     //rt_printf("\n\n");
+
 }
 
 void 
