@@ -2,13 +2,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <wiringPiI2C.h>
+//#include <wiringPiI2C.h>
 #include "sun.h"
-#include "sunparse.h"
+//#include "sunparse.h"
 #include "tasks.h"
 #include "interp.h"
+#include "lsquaredc.h"
+#include "daemon.h"
 
 #define I2C_ADRESS_SUN 0x20
+
 sun_t* sun;
 
 void sun_setup(void) {
@@ -94,22 +97,36 @@ void sun_task(void* arg) {
 }
 
 sun_t*
-sun_new(sun_date_t date, char i2c_address, int deadline) {
+//sun_new(sun_date_t date, char i2c_address, int deadline)
+sun_new(sun_date_t date, uint16_t i2c_address, int deadline) 
+{
 	sun_t* this = (sun_t*) malloc(sizeof(sun_t));
 	sun_init(this, date, i2c_address, deadline);
 	return this;
 }
 
-void sun_init(sun_t* this, sun_date_t date, char i2c_address, int deadline) {
+void 
+//sun_init(sun_t* this, sun_date_t date, char i2c_address, int deadline)
+sun_init(sun_t* this, sun_date_t date, uint16_t i2c_address, int deadline)
+{
 	this->i2c_address = i2c_address;
-	this->i2c_fd = wiringPiI2CSetup(i2c_address);
+	//this->i2c_fd = wiringPiI2CSetup(i2c_address);
 	sun_set_date(this, date);
 	rt_mutex_create(&(this->mutex), "sun_mutex");
 	task_add("Sun", deadline, sun_task, this);
 }
 
-void sun_set_date(sun_t* this, sun_date_t date) {
-
+void 
+sun_set_date(sun_t* this, sun_date_t date) 
+{
+    
+        uint16_t sun_comand[21]={(this->i2c_address<<1), 0xFF, I2C_RESTART,
+                                 (this->i2c_address<<1), 0x00, I2C_RESTART,
+                                 (this->i2c_address<<1), 0x00, I2C_RESTART,
+                                 (this->i2c_address<<1), 0x00, I2C_RESTART,
+                                 (this->i2c_address<<1), 0x00, I2C_RESTART,
+                                 (this->i2c_address<<1), 0x00, I2C_RESTART,
+                                 (this->i2c_address<<1), 0x00, I2C_RESTART,};
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 	this->date = date;
 	rt_mutex_release(&(this->mutex));
@@ -125,29 +142,88 @@ void sun_set_date(sun_t* this, sun_date_t date) {
 			"http://www.earthtools.org/sun/40.4521/-3.7266/%s/1/0", aux);
 	system(cmd);
 	sun_parse_data(this);
-	wiringPiI2CWrite(this->i2c_fd, 0xFF);
+	/*wiringPiI2CWrite(this->i2c_fd, 0xFF);
 	wiringPiI2CWrite(this->i2c_fd, this->sunrise.hours);
 	wiringPiI2CWrite(this->i2c_fd, this->sunrise.minutes);
 	wiringPiI2CWrite(this->i2c_fd, this->sunrise.seconds);
 	wiringPiI2CWrite(this->i2c_fd, this->sunset.hours);
 	wiringPiI2CWrite(this->i2c_fd, this->sunset.minutes);
-	wiringPiI2CWrite(this->i2c_fd, this->sunset.seconds);
+	wiringPiI2CWrite(this->i2c_fd, this->sunset.seconds);*/
+	sun_comand[4]=this->sunrise.hours;
+	sun_comand[7]=this->sunrise.minutes;
+	sun_comand[10]=this->sunrise.seconds;
+	sun_comand[13]=this->sunset.hours;
+	sun_comand[16]=this->sunset.minutes;
+	sun_comand[19]=this->sunset.seconds;
+	
+	rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
+        i2c_send_sequence(i2chandler[1]->i2chandler, sun_comand, 21, 0);
+	rt_mutex_release(&i2chandler[1]->mutex);
+	
 }
 
-void sun_update_simulated_time(sun_t* this) {
-	wiringPiI2CWrite(this->i2c_fd, 0xFE);
-	char byte1 = wiringPiI2CRead(this->i2c_fd);
-	char byte0 = wiringPiI2CRead(this->i2c_fd);
+void 
+sun_update_simulated_time(sun_t* this) 
+{
+	//wiringPiI2CWrite(this->i2c_fd, 0xFE);
+	uint16_t sun_read_comand[]={(this->i2c_address<<1), 0xFE, I2C_RESTART,
+                                (this->i2c_address<<1)|1, I2C_READ, I2C_READ};                 
+	uint8_t* buff = (uint8_t*) malloc(sizeof(uint8_t)*2);
+	
+	//char byte1,byte0;
+	//char byte1 = wiringPiI2CRead(this->i2c_fd);
+	//char byte0 = wiringPiI2CRead(this->i2c_fd);
+	rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
+        i2c_send_sequence(i2chandler[1]->i2chandler, sun_read_comand, 6, buff);
+	rt_mutex_release(&i2chandler[1]->mutex);
+	
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
-	this->current_simulated_time = (byte0 << 8) + byte1;
+	//this->current_simulated_time = (byte0 << 8) + byte1;
+	this->current_simulated_time = (buff[0] << 8) + buff[1];
 	rt_mutex_release(&(this->mutex));
 }
 
-int sun_get_simulated_time(sun_t* this) {
+int 
+sun_get_simulated_time(sun_t* this) 
+{
 	return this->current_simulated_time;
 }
 ;
 
-void sun_destroy(sun_t* this) {
+void 
+sun_destroy(sun_t* this) 
+{
 	free(this);
+}
+char*
+xml_find(char* buf, const char* tag) {
+	static char hour[9];
+	char* bufAux;
+	if ((bufAux = strstr(buf, tag))) {
+		hour[8] = '\0';
+		int i;
+		char* cursor = strchr(bufAux, '>');
+		cursor++;
+		for (i = 0; i < 8; i++) {
+			hour[i] = cursor[i];
+		}
+	}
+	return hour;
+}
+
+void 
+sun_parse_data(sun_t* this) 
+{
+	char buf[30000];
+	FILE* f = fopen("sunrise.xml", "r");
+	fread(buf, 1, 30000, f);
+	fclose(f);
+	remove("sunrise.xml");
+	/* TODO: ADD CHECKS or this WILL blow up*/
+	this->sunrise.hours = atoi(strtok(xml_find(buf, "<sunrise>"), ":"));
+	this->sunrise.minutes = atoi(strtok(NULL, ":"));
+	this->sunrise.seconds = atoi(strtok(NULL, ":"));
+	this->sunset.hours = atoi(strtok(xml_find(buf, "<sunset>"), ":"));
+	this->sunset.minutes = atoi(strtok(NULL, ":"));
+	this->sunset.seconds = atoi(strtok(NULL, ":"));
 }
