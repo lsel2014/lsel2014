@@ -64,8 +64,8 @@ semaphore_switch (semaphore_t* this, int state)
     this->state = state;
     rt_mutex_release(&this->mutex);
         
-    rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-    i2c_send_sequence(i2chandler[1]->i2chandler, semaphore_comand, 2, 0);
-   	rt_mutex_release(&i2chandler[1]->mutex);
+    //rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
+    //i2c_send_sequence(i2chandler[1]->i2chandler, semaphore_comand, 2, 0);
+    //rt_mutex_release(&i2chandler[1]->mutex);
 
 }
