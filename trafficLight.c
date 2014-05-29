@@ -100,7 +100,7 @@ trafficLight_set_state(trafficLight_t* this, state_t state)
         }	
         rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
         i2c_send_sequence(i2chandler[0]->i2chandler, trafficLight_comand, 2, 0);
-        rt_mutex_release(&i2chandler[0]->mutex);
+        rt_mutex_release(&(i2chandler[0]->mutex));
 	
 
 }
