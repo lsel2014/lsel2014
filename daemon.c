@@ -149,7 +149,7 @@ int main(int argc, char* argv[]) {
 	//screen_setup();
 	railChange_setup();
 	rt_printf("rc ok \n");
-	sun_setup();
+	//sun_setup();
 	rt_printf("sun ok \n");
 	model_init();
 	rt_printf("model ok \n");
