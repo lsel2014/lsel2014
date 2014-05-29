@@ -50,7 +50,7 @@ railChange_init(railChange_t* this, direction_t direction, uint16_t i2c_address)
 {
 	this->direction = direction;
         this->i2c_address= i2c_address;
-	rt_mutex_create(&this->mutex, "railchange");
+	rt_mutex_create(&this->mutex, NULL);
 	railChange_set_direction(this, direction);
 
 }
