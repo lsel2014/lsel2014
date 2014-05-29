@@ -134,7 +134,7 @@ int main(int argc, char* argv[]) {
 	 * Arguments: &task,
 	 * task function,
 	 * function argument*/
-	/*IRsensors_setup();
+	IRsensors_setup();
 	rt_printf("ir ok \n");
 	trains_setup();
 	rt_printf("train ok \n");
@@ -159,7 +159,7 @@ int main(int argc, char* argv[]) {
 	tracker_init();
 	rt_printf("tracker ok \n");
 	ctrlilumination_init();
-	rt_printf("ctrl ok \n");*/
+	rt_printf("ctrl ok \n");
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
