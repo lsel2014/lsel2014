@@ -90,7 +90,7 @@ sensorIR_init(sensorIR_t* this, int id, event_t* event, uint16_t i2c_address)
 //	this->last_reading = -1;
         this->i2c_address = i2c_address;
 	this->event = event;
-	rt_mutex_create(&this->mutex, "sensorIR");
+	rt_mutex_create(&this->mutex, NULL);
 
 }
 
