@@ -80,11 +80,13 @@ void i2chandler_init(i2chandler_t* this, int n_bus) {
 	
 	this->i2chandler = i2c_open(n_bus);
 	rt_mutex_create(&this->mutex, NULL);
+	rt_printf("mutex \n");
 
 }
 
 i2chandler_t*
-i2chandler_new(int n_bus) {
+i2chandler_new(int n_bus) 
+{
 	i2chandler_t* this = (i2chandler_t*) malloc(sizeof(i2chandler_t));
 	i2chandler_init(this, n_bus);
 	i2chandler[n_i2c_handlers++] = this;
@@ -133,14 +135,22 @@ int main(int argc, char* argv[]) {
 	 * task function,
 	 * function argument*/
 	IRsensors_setup();
+	rt_printf("ir ok \n");
 	trains_setup();
+	rt_printf("train ok \n");
 	railways_setup();
+	rt_printf("rail ok \n");
 	semaphore_setup();
+	rt_printf("semaphore ok \n");
 	trafficLight_setup();
+	rt_printf("tl ok \n");
 	crossingGate_setup();
+	rt_printf("cg ok \n");
 	//screen_setup();
 	railChange_setup();
+	rt_printf("rc ok \n");
 	sun_setup();
+	rt_printf("sun ok \n");
 	model_init();
 	anticollision_setup();
 	tracker_init();
