@@ -105,14 +105,14 @@ void
 sensorIR_readLine(sensorIR_t* this, uint8_t* buff) 
 {
 	//int r;
-    uint16_t read_IR_comand[]={(this->i2c_address<<1)|1 ,I2C_READ};
+        uint16_t read_IR_comand[]={(this->i2c_address<<1)|1 ,I2C_READ};
 	// Adquire mutex
 	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
 	// Read sensor
 	//r = digitalRead(this->GPIOlines[trainLine]);
-    i2c_send_sequence(i2chandler[0]->i2chandler, read_IR_comand, 2, buff);
+        //i2c_send_sequence(i2chandler[0]->i2chandler, read_IR_comand, 2, buff);
 	// Release mutex
-	rt_mutex_release(&i2chandler[0]->mutex);
+	rt_mutex_release(&(i2chandler[0]->mutex));
 	//return r;
 }
 /*
