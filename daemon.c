@@ -40,7 +40,7 @@
 #include "ctrlIlumination.h"
 // Dummy function to catch signals
 
-//i2chandler_t* i2chandler[I2C_BUSES];
+i2chandler_t* i2chandler[I2C_BUSES];
 static int n_i2c_handlers = 0;
 void catch_signal () {}
 /*
@@ -75,7 +75,7 @@ void initializeWiringPi(void) {
 
 	//pinModes ....
 }
-/*
+
 void i2chandler_init(i2chandler_t* this, int n_bus) {
 	
 	this->i2chandler = i2c_open(n_bus);
@@ -99,11 +99,12 @@ void initializei2c(void) {
 
 	//int i;
 	i2chandler_new(0);
+	i2chandler_new(0);
 	//for(i = 0 ; i < I2C_BUSES ; i++)
 	//	i2chandler_new(i);	
 	
 }
-*/
+
 int main(int argc, char* argv[]) {
 
 	// Initialize Xenomai RT enviroment
