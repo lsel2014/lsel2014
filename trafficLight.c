@@ -58,7 +58,7 @@ trafficLight_init(trafficLight_t* this, int id, uint16_t i2c_address,
 	this->state = state;
 	//this->GPIOline = GPIOline;
 	this->i2c_address = i2c_address;
-	rt_mutex_create(&this->mutex, "trafficlight");
+	rt_mutex_create(&this->mutex, NULL);
 
 	// Set GPIO line as output
 	//pinMode(this->GPIOline, OUTPUT);
