@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
 	//initializeModel();
 	
 	//Initialize the i2c
-	initializei2c();
+	//initializei2c();
 	// Initialize the train controller
 	//trainCtrl_init();
 
