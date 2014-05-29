@@ -126,7 +126,7 @@ sun_set_date(sun_t* this, sun_date_t date)
                                  (this->i2c_address<<1), 0x00, I2C_RESTART,
                                  (this->i2c_address<<1), 0x00, I2C_RESTART,
                                  (this->i2c_address<<1), 0x00, I2C_RESTART,
-                                 (this->i2c_address<<1), 0x00, I2C_RESTART,};
+                                 (this->i2c_address<<1), 0x00, I2C_RESTART};
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 	this->date = date;
 	rt_mutex_release(&(this->mutex));
@@ -167,7 +167,7 @@ sun_update_simulated_time(sun_t* this)
 {
 	//wiringPiI2CWrite(this->i2c_fd, 0xFE);
 	uint16_t sun_read_comand[]={(this->i2c_address<<1), 0xFE, I2C_RESTART,
-                                (this->i2c_address<<1)|1, I2C_READ, I2C_READ};                 
+                                    (this->i2c_address<<1)|1, I2C_READ, I2C_READ};                 
 	uint8_t* buff = (uint8_t*) malloc(sizeof(uint8_t)*2);
 	
 	//char byte1,byte0;
