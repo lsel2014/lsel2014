@@ -68,7 +68,7 @@ void initializeXenomaiEnv(void) {
 
 void initializeWiringPi(void) {
 
-	wiringPiSetup();
+	//wiringPiSetup();
 
 	// Replace with proper I2C modules load on kernel
 	//system("gpio load i2c");
