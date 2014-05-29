@@ -9,7 +9,7 @@
  */
 
 #include "railChange.h"
-//#include <wiringPi.h> 
+#include <wiringPi.h> 
 #include "lsquaredc.h"
 #include "daemon.h"
 // Random values, this will change to match the firmware of the barrier
