@@ -135,9 +135,9 @@ int main(int argc, char* argv[]) {
 	 * function argument*/
 	IRsensors_setup();
 	rt_printf("ir ok \n");
-	/*trains_setup();
+	trains_setup();
 	rt_printf("train ok \n");
-	railways_setup();
+	/*railways_setup();
 	rt_printf("rail ok \n");
 	semaphore_setup();
 	rt_printf("semaphore ok \n");
