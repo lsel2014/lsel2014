@@ -15,7 +15,7 @@ objs = \
 	railChange.o \
 	semaphore.o \
 	dcc.o \
-	sun.o sunparse.o \
+	sun.o \
 	model.o \
 	tracker.o \
 	railway.o \
@@ -23,7 +23,7 @@ objs = \
 	screen.o \
 	utils.o\
         ctrlIlumination.o\
-        lsquaredc.o\
+        lsquaredc.o
 all: daemon
 
 test: daemon

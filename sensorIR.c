@@ -15,6 +15,7 @@
 
 #include "lsquaredc.h"
 #include "daemon.h"
+#include "sensorIR.h"
 // Random values, this will change to match the firmware of the barrier
 #define I2C_IR_ADDRESS_0 0x22
 #define I2C_IR_ADDRESS_1 0x23
