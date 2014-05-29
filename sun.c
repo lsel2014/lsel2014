@@ -169,7 +169,8 @@ sun_update_simulated_time(sun_t* this)
 	uint16_t sun_read_comand[]={(this->i2c_address<<1), 0xFE, I2C_RESTART,
                                     (this->i2c_address<<1)|1, I2C_READ, I2C_READ};                 
 	uint8_t* buff = (uint8_t*) malloc(sizeof(uint8_t)*2);
-	
+	buff[0]=0;
+	buff[1]=1;
 	//char byte1,byte0;
 	//char byte1 = wiringPiI2CRead(this->i2c_fd);
 	//char byte0 = wiringPiI2CRead(this->i2c_fd);
