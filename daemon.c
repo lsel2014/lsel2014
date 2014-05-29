@@ -99,7 +99,6 @@ void initializei2c(void) {
 
 	//int i;
 	i2chandler_new(0);
-	i2chandler_new(0);
 	//for(i = 0 ; i < I2C_BUSES ; i++)
 	//	i2chandler_new(i);	
 	
@@ -117,7 +116,7 @@ int main(int argc, char* argv[]) {
 	//initializeModel();
 	
 	//Initialize the i2c
-	//initializei2c();
+	initializei2c();
 	// Initialize the train controller
 	//trainCtrl_init();
 
@@ -135,9 +134,9 @@ int main(int argc, char* argv[]) {
 	 * Arguments: &task,
 	 * task function,
 	 * function argument*/
-	IRsensors_setup();
+	/*IRsensors_setup();
 	rt_printf("ir ok \n");
-	/*trains_setup();
+	trains_setup();
 	rt_printf("train ok \n");
 	railways_setup();
 	rt_printf("rail ok \n");
