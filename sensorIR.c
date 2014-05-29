@@ -58,7 +58,7 @@ IRsensors_setup(void)
 	for (i = 0; i < 4; i++) {
 		sensorIR_new(i,i2c_addresses[i]);
 	}
-	task_add("IR polling", IR_DEADLINE, IRsensors_poll, sensors);
+	//task_add("IR polling", IR_DEADLINE, IRsensors_poll, sensors);
 	interp_addcmd("sensors", sensors_cmd, "Lists IR sensors");
 }
 
