@@ -76,7 +76,7 @@ sensorIR_new(int id, uint16_t i2c_address) {
 void 
 sensorIR_init(sensorIR_t* this, int id, event_t* event, uint16_t i2c_address) 
 {
-	int i;
+	//int i;
 	observable_init((observable_t *) this);
 	this->id = id;
 	/*for (i = 0; i < 2; i++) {
