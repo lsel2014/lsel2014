@@ -105,11 +105,11 @@ sensorIR_readLine(sensorIR_t* this, uint8_t* buff)
 {
         uint16_t read_IR_comand[]={(this->i2c_address<<1)|1 ,I2C_READ};
         buff[0]=0;
-	//rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
 
         //i2c_send_sequence(i2chandler[0]->i2chandler, read_IR_comand, 2, buff);
 	
-	//rt_mutex_release(&(i2chandler[0]->mutex));
+	rt_mutex_release(&(i2chandler[0]->mutex));
 	
 }
 
