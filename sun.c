@@ -112,7 +112,7 @@ sun_init(sun_t* this, sun_date_t date, uint16_t i2c_address, int deadline)
 	this->i2c_address = i2c_address;
 	//this->i2c_fd = wiringPiI2CSetup(i2c_address);
 	sun_set_date(this, date);
-	rt_mutex_create(&(this->mutex), "sun_mutex");
+	rt_mutex_create(&(this->mutex), NULL);
 	task_add("Sun", deadline, sun_task, this);
 }
 
