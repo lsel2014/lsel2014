@@ -138,7 +138,7 @@ int main(int argc, char* argv[]) {
 	trafficLight_setup();
 	crossingGate_setup();
 	//screen_setup();
-	setupRailChange();
+	railChange_setup();
 	sun_setup();
 	model_init();
 	anticollision_setup();
