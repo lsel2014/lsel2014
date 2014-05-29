@@ -79,7 +79,7 @@ void initializeWiringPi(void) {
 void i2chandler_init(i2chandler_t* this, int n_bus) {
 	
 	this->i2chandler = i2c_open(n_bus);
-	rt_mutex_create(&this->mutex, "i2c");
+	rt_mutex_create(&this->mutex, NULL);
 
 }
 
