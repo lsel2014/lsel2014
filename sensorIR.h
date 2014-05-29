@@ -12,7 +12,6 @@
 
 #include "observer.h"
 #include "tasks.h"
-#include "train.h"
 #include "interp.h"
 
 #define MAXSENSORS 4
