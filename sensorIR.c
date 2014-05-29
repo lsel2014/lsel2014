@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 //#include <wiringPi.h>
-
+#include "sensorIR.h"
 #include "lsquaredc.h"
 #include "daemon.h"
 #include "sensorIR.h"
