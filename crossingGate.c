@@ -97,7 +97,7 @@ crossingGate_init(crossingGate_t* this, int id, position_t position,
         this->sensiblesectors[0] = sensiblesectors[0];
         this->sensiblesectors[1] = sensiblesectors[1];
 
-	rt_mutex_create(&this->mutex, NULL);
+	rt_mutex_create(&this->mutex, "crossingGate");
 	task_add("Gate control", GATE_DEADLINE, crossingGate_move_task, this);
 	crossingGate_set_position(this, position);
 
