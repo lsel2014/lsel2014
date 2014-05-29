@@ -30,11 +30,11 @@ typedef struct sun_t {
 	RT_MUTEX mutex;
 } sun_t;
 
-int sun_cmd(char* arg);/*
+int sun_cmd(char* arg);
 sun_t* sun_new(sun_date_t date, char i2c_address, int prio);
-void sun_init(sun_t* this, sun_date_t date, char i2c_address, int prio);*/
-sun_t* sun_new(sun_date_t date, uint16_t i2c_address, int deadline) ;
-void sun_init(sun_t* this, sun_date_t date, uint16_t i2c_address, int deadline);
+void sun_init(sun_t* this, sun_date_t date, char i2c_address, int prio);
+//sun_t* sun_new(sun_date_t date, uint16_t i2c_address, int deadline) ;
+//void sun_init(sun_t* this, sun_date_t date, uint16_t i2c_address, int deadline);
 
 void sun_set_date(sun_t* this, sun_date_t date);
 void sun_update_simulated_time(sun_t* this);
