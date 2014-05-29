@@ -89,7 +89,7 @@ void train_init(train_t* this, char* name, char ID, char n_wagon, char length,
 	this->telemetry = telemetry;
 
 	this->dcc = dcc;
-	rt_mutex_create(&this->mutex, NULL
+	rt_mutex_create(&this->mutex, NULL);
 
     /*
      * Initial power is 0
