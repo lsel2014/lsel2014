@@ -141,8 +141,8 @@ int main(int argc, char* argv[]) {
 	rt_printf("rail ok \n");
 	semaphore_setup();
 	rt_printf("semaphore ok \n");
-	trafficLight_setup();
-	rt_printf("tl ok \n");
+	//trafficLight_setup();
+	//rt_printf("tl ok \n");
 	crossingGate_setup();
 	rt_printf("cg ok \n");
 	railChange_setup();
