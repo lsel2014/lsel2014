@@ -147,12 +147,12 @@ int main(int argc, char* argv[]) {
 	rt_printf("cg ok \n");
 	railChange_setup();
 	rt_printf("rc ok \n");
-	//sun_setup();
-	//rt_printf("sun ok \n");
+	sun_setup();
+	rt_printf("sun ok \n");
 	model_init();
 	rt_printf("model ok \n");
-	screen_setup();
-	rt_printf("screen ok \n");
+	//screen_setup();
+	//rt_printf("screen ok \n");
 	anticollision_setup();
 	rt_printf("anti ok \n");
 	tracker_init();
