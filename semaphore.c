@@ -34,7 +34,7 @@ semaphore_init(semaphore_t* this, int id, int state, uint16_t i2c_address)
 	this->id = id;
 	this->state = state;
 	this-> i2c_address=i2c_address;
-	rt_mutex_create(&this->mutex, NULL);
+	rt_mutex_create(&this->mutex, "semaphore");
 }
 void 
 semaphore_setup(void)
