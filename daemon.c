@@ -78,8 +78,8 @@ void initializeWiringPi(void) {
 
 void i2chandler_init(i2chandler_t* this, int n_bus) {
 	
-	//this->i2chandler = i2c_open(n_bus);
-	this->i2chandler = 0;
+	this->i2chandler = i2c_open(n_bus);
+	//this->i2chandler = 0;
 	rt_mutex_create(&this->mutex, NULL);
 
 }
@@ -97,8 +97,9 @@ i2chandler_new(int n_bus) {
 void initializei2c(void) {
 
 	int i;
-	for(i = 0 ; i < I2C_BUSES ; i++)
-		i2chandler_new(i);	
+	i2chandler_new(0);
+	/*for(i = 0 ; i < I2C_BUSES ; i++)
+		i2chandler_new(i);*/	
 	
 }
 
