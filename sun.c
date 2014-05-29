@@ -168,9 +168,9 @@ sun_update_simulated_time(sun_t* this)
 	//wiringPiI2CWrite(this->i2c_fd, 0xFE);
 	uint16_t sun_read_comand[]={(this->i2c_address<<1), 0xFE, I2C_RESTART,
                                     (this->i2c_address<<1)|1, I2C_READ, I2C_READ};                 
-	//uint8_t* buff = (uint8_t*) malloc(sizeof(uint8_t)*2);
-	//buff[0]=0;
-	//buff[1]=1;
+	uint8_t* buff = (uint8_t*) malloc(sizeof(uint8_t)*2);
+	buff[0]=0;
+	buff[1]=1;
 
 	//rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
         //i2c_send_sequence(i2chandler[1]->i2chandler, sun_read_comand, 6, buff);
@@ -179,7 +179,7 @@ sun_update_simulated_time(sun_t* this)
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 	//this->current_simulated_time = (byte0 << 8) + byte1;
 	
-	//this->current_simulated_time = (buff[0] << 8) + buff[1];
+	this->current_simulated_time = (buff[0] << 8) + buff[1];
 	rt_mutex_release(&(this->mutex));
 }
 
