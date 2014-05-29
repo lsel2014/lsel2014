@@ -7,7 +7,7 @@
 #include <native/task.h>
 #include <native/timer.h>
 // WiringPi
-#include <wiringPi.h>
+//#include <wiringPi.h>
 //i2c
 #include "lsquaredc.h"
 // RT compilant print library
