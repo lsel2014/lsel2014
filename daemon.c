@@ -97,8 +97,9 @@ i2chandler_new(int n_bus) {
 void initializei2c(void) {
 
 	int i;
-	for(i = 0 ; i < I2C_BUSES ; i++)
-		i2chandler_new(i);	
+	i2chandler_new(0);
+	/*for(i = 0 ; i < I2C_BUSES ; i++)
+		i2chandler_new(i);*/	
 	
 }
 
