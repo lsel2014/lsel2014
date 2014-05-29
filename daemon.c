@@ -7,7 +7,7 @@
 #include <native/task.h>
 #include <native/timer.h>
 // WiringPi
-//#include <wiringPi.h>
+#include <wiringPi.h>
 //i2c
 #include "lsquaredc.h"
 // RT compilant print library
@@ -68,7 +68,7 @@ void initializeXenomaiEnv(void) {
 
 void initializeWiringPi(void) {
 
-	//wiringPiSetup();
+	wiringPiSetup();
 
 	// Replace with proper I2C modules load on kernel
 	//system("gpio load i2c");
