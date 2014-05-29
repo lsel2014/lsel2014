@@ -87,7 +87,7 @@ sensorIR_init(sensorIR_t* this, int id, event_t* event, uint16_t i2c_address)
 		
 	}*/
 //	this->last_reading = -1;
-    this->i2c_address = i2c_address;
+        this->i2c_address = i2c_address;
 	this->event = event;
 	rt_mutex_create(&this->mutex, NULL);
 
@@ -103,50 +103,15 @@ sensorIR_destroy(sensorIR_t* this)
 void 
 sensorIR_readLine(sensorIR_t* this, uint8_t* buff) 
 {
-	//int r;
         uint16_t read_IR_comand[]={(this->i2c_address<<1)|1 ,I2C_READ};
-	// Adquire mutex
-	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
-	// Read sensor
-	//r = digitalRead(this->GPIOlines[trainLine]);
+	//rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+
         //i2c_send_sequence(i2chandler[0]->i2chandler, read_IR_comand, 2, buff);
-	// Release mutex
-	rt_mutex_release(&(i2chandler[0]->mutex));
-	//return r;
+	
+	//rt_mutex_release(&(i2chandler[0]->mutex));
+	
 }
-/*
-void 
-sensorIR_trainPassing(sensorIR_t* this) 
-{
-	int i, r;
-	r = -1;
 
-	// Adquire mutex
-	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
-	this->event->flag = 0;
-	for (i = 0; i < 2; i++) {
-		// Read sensor line and check its state
-		if (digitalRead(this->GPIOlines[i]) == HIGH) {
-			// 4 if diesel is passing, 3 if renfe is passing, or 2 if no one                                
-			r = i + 3;
-		}
-	}
-	if (r > 2) {
-
-		this->event->flag = 1;
-		this->event->passingTrain = r;
-	}
-	// Release mutex
-	rt_mutex_release(&this->mutex);
-
-	if (this->event->flag == 1) {
-		observable_notify_observers((observable_t*) this);
-		rt_mutex_acquire(&(this->mutex), TM_INFINITE);
-		this->event->flag = 0;
-		rt_mutex_release(&this->mutex);
-	}
-}
-*/
 void 
 sensorIR_trainPassing(sensorIR_t* this)
 {
