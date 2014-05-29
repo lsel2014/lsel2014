@@ -181,7 +181,6 @@ sun_update_simulated_time(sun_t* this)
 	//this->current_simulated_time = (byte0 << 8) + byte1;
 	
 	this->current_simulated_time = (buff[0] << 8) + buff[1];
-	rt_printf("simulated time ok");
 	rt_mutex_release(&(this->mutex));
 }
 
