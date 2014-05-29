@@ -156,9 +156,9 @@ sun_set_date(sun_t* this, sun_date_t date)
 	sun_comand[16]=this->sunset.minutes;
 	sun_comand[19]=this->sunset.seconds;
 	
-	//rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-        //i2c_send_sequence(i2chandler[1]->i2chandler, sun_comand, 21, 0);
-	//rt_mutex_release(&i2chandler[1]->mutex);
+	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+        i2c_send_sequence(i2chandler[0]->i2chandler, sun_comand, 21, 0);
+	rt_mutex_release(&i2chandler[0]->mutex);
 	
 }
 
@@ -172,9 +172,9 @@ sun_update_simulated_time(sun_t* this)
 	buff[0]=0;
 	buff[1]=1;
 
-	//rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-        //i2c_send_sequence(i2chandler[1]->i2chandler, sun_read_comand, 6, buff);
-	//rt_mutex_release(&i2chandler[1]->mutex);
+	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+        i2c_send_sequence(i2chandler[0]->i2chandler, sun_read_comand, 6, buff);
+	rt_mutex_release(&i2chandler[0]->mutex);
 	
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 	//this->current_simulated_time = (byte0 << 8) + byte1;
