@@ -80,7 +80,7 @@ void i2chandler_init(i2chandler_t* this, int n_bus) {
 	
 	this->i2chandler = i2c_open(n_bus);
 	rt_mutex_create(&this->mutex, NULL);
-	rt_printf("mutex \n");
+	rt_printf("mutex ok\n");
 
 }
 
@@ -152,9 +152,13 @@ int main(int argc, char* argv[]) {
 	sun_setup();
 	rt_printf("sun ok \n");
 	model_init();
+	rt_printf("model ok \n");
 	anticollision_setup();
+	rt_printf("anti ok \n");
 	tracker_init();
+	rt_printf("tracker ok \n");
 	ctrlilumination_init();
+	rt_printf("ctrl ok \n");
 	// TODO Hay que darle argumentos a la tarea!
 	//rt_task_start(&task_dcc, &dcc_send, NULL );
 	//rt_task_start(&task_poll, &daemon_poll_sensors, IRsensors);
