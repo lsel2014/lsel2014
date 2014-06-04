@@ -120,7 +120,7 @@ void
 sun_set_date(sun_t* this, sun_date_t date) 
 {
     
-        uint16_t sun_comand[21]={(this->i2c_address<<1), 0xFF, I2C_RESTART}/*,
+        uint16_t sun_comand[21]={(this->i2c_address<<1), 0xFF, I2C_RESTART};/*,
                                  (this->i2c_address<<1), 0x00, I2C_RESTART,
                                  (this->i2c_address<<1), 0x00, I2C_RESTART,
                                  (this->i2c_address<<1), 0x00, I2C_RESTART,
