@@ -44,36 +44,7 @@ crossingGate_cmd(char* arg)
 	}
 	return 1;
 }
-/*
-crossingGate_t*
-crossingGate_new(int id, int GPIOline,int sensiblesectors[2]) {
-	crossingGate_t* this = (crossingGate_t*) malloc(sizeof(crossingGate_t));
-	crossingGate_init(this, id, GPIOline, DOWN, sensiblesectors);
-    if (n_crossingGates < MAXCROSINGGATES) {
-		crossingGates[n_crossingGates++] = this;
-	}
-	return this;
-}
 
-void 
-crossingGate_init(crossingGate_t* this, int id, int GPIOline,
-		                          position_t position, int sensiblesectors[2]) {
-	observable_init(&this->observable);
-	this->GPIOline = GPIOline;
-	this->position = position;
-	this->id = id;
-	this->needsService = 0;
-        this->sensiblesectors[0] = sensiblesectors[0];
-        this->sensiblesectors[1] = sensiblesectors[1];
-	pinMode(GPIOline, OUTPUT);
-	softPwmCreate(GPIOline, 0, 200);
-
-	rt_mutex_create(&this->mutex, NULL);
-	task_add("Gate control", GATE_DEADLINE, crossingGate_move_task, this);
-	crossingGate_set_position(this, position);
-
-}
-*/
 crossingGate_t*
 crossingGate_new(int id, int sensiblesectors[2], uint16_t i2c_address) 
 {
@@ -125,30 +96,7 @@ crossingGate_set_position(crossingGate_t* this, position_t position)
 	rt_mutex_release(&this->mutex);
 	//rt_printf("gate switched");
 }
-/*
-void 
-crossingGate_move_task(void *args) 
-{
-	crossingGate_t* this = (crossingGate_t*) args;
-	rt_task_set_periodic(NULL, TM_NOW, GATE_PERIOD);
-	while (1) {
-		rt_task_wait_period(NULL);
-		if (this->needsService) {
-			rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
-			if (this->position == DOWN) {
-				softPwmWrite(this->GPIOline, 18);
-			} else {
-				softPwmWrite(this->GPIOline, 9);
-			}
-			this->needsService = 0;
-			rt_mutex_release(&this->mutex);
-		} else {
-			softPwmWrite(this->GPIOline, 0);
-		}
-	}
-}
-*/
 void
 crossingGate_move_task(void *args) 
 {
@@ -170,7 +118,7 @@ crossingGate_move_task(void *args)
 			barrier_comand[1]=I2C_BARRIER_STOP;	
 		}
 		rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
-		i2c_send_sequence(i2chandler[0]->i2chandler, barrier_comand, 2, 0);
+		//i2c_send_sequence(i2chandler[0]->i2chandler, barrier_comand, 2, 0);
 		rt_mutex_release(&(i2chandler[0]->mutex));
 	}
 }
