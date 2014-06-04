@@ -117,5 +117,7 @@ int main(int argc, char* argv[]) {
 	interp_run();
 
 	task_delete_all();
+	digitalWrite(19,0);
+	digitalWrite(20,0);
 	return 0;
 }

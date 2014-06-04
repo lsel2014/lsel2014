@@ -47,10 +47,10 @@ const char train_speed_codes[29] = { 0b00000, 0b00010, 0b10010, 0b00011,
  *
  * @returns this    Malloc'd and initialized dcc_sender_t object
  */
-dcc_sender_t* dcc_new(int gpio, int deadline)
+dcc_sender_t* dcc_new(int dcc_gpiop, int dcc_gpion, int deadline)
 {
 	dcc_sender_t* this = (dcc_sender_t*) malloc(sizeof(dcc_sender_t));
-	dcc_init(this, gpio, deadline);
+	dcc_init(this, dcc_gpiop,dcc_gpion, deadline);
 	return this;
 }
 
@@ -63,10 +63,11 @@ dcc_sender_t* dcc_new(int gpio, int deadline)
  * @param dcc_gpio  GPIO port to send packets through
  * @param deadline  Periodic task deadline
  */
-void dcc_init(dcc_sender_t* this, int dcc_gpio, int deadline)
+void dcc_init(dcc_sender_t* this, int dcc_gpiop, int dcc_gpion, int deadline)
 {
 	pinMode(dcc_gpio, OUTPUT);
-	this->dcc_gpio = dcc_gpio;
+	this->dcc_gpiop = dcc_gpiop;
+	this->dcc_gpion = dcc_gpion;
 	this->pending_packets = 0;
 	this->buffer.readPointer = 0;
 	this->buffer.writePointer = 0;
@@ -271,7 +272,8 @@ void dcc_send(void* arg) {
 			buffer_bit = (buffer & 0x8000000000000000ULL) ? 0xFD : 0xF3;
 			buffer = buffer << 1;
 		}
-		digitalWrite(this->dcc_gpio, (buffer_bit & 0x01));
+		digitalWrite(this->dcc_gpiop, (buffer_bit & 0x01));
+		digitalWrite(this->dcc_gpion, (buffer_bit & 0x01)?0:1);
 		buffer_bit = buffer_bit >> 1;
 		buffer_bit = buffer_bit | 0x80;
 	}
