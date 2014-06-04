@@ -143,12 +143,12 @@ sun_set_date(sun_t* this, sun_date_t date)
 	wiringPiI2CWrite(this->i2c_fd, this->sunset.hours);
 	wiringPiI2CWrite(this->i2c_fd, this->sunset.minutes);
 	wiringPiI2CWrite(this->i2c_fd, this->sunset.seconds);*/
-/*	sun_comand[2]=this->sunrise.hours;
+	sun_comand[2]=this->sunrise.hours;
 	sun_comand[3]=this->sunrise.minutes;
 	sun_comand[4]=this->sunrise.seconds;
 	sun_comand[5]=this->sunset.hours;
 	sun_comand[6]=this->sunset.minutes;
-	sun_comand[7]=this->sunset.seconds;*/
+	sun_comand[7]=this->sunset.seconds;
 	
 	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
         //i2c_send_sequence(i2chandler[0]->i2chandler, sun_comand, 8, 0);
