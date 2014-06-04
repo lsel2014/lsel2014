@@ -67,7 +67,8 @@ typedef struct
  */
 typedef struct
 {
-	int dcc_gpio;
+	int dcc_gpiop;
+	int dcc_gpion;
 	int pending_packets;
 	dcc_buffer buffer;
 
