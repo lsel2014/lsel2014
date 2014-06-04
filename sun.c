@@ -151,7 +151,7 @@ sun_set_date(sun_t* this, sun_date_t date)
 	sun_comand[7]=this->sunset.seconds;
 	
 	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
-        i2c_send_sequence(i2chandler[0]->i2chandler, sun_comand, 21, 0);
+        i2c_send_sequence(i2chandler[0]->i2chandler, sun_comand, 8, 0);
 	rt_mutex_release(&i2chandler[0]->mutex);
 	
 }
