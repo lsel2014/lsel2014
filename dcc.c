@@ -65,7 +65,8 @@ dcc_sender_t* dcc_new(int dcc_gpiop, int dcc_gpion, int deadline)
  */
 void dcc_init(dcc_sender_t* this, int dcc_gpiop, int dcc_gpion, int deadline)
 {
-	pinMode(dcc_gpio, OUTPUT);
+	pinMode(dcc_gpiop, OUTPUT);
+	pinMode(dcc_gpion, OUTPUT);
 	this->dcc_gpiop = dcc_gpiop;
 	this->dcc_gpion = dcc_gpion;
 	this->pending_packets = 0;
