@@ -136,13 +136,7 @@ sun_set_date(sun_t* this, sun_date_t date)
 			"http://www.earthtools.org/sun/40.4521/-3.7266/%s/1/0", aux);
 	system(cmd);
 	sun_parse_data(this);
-	/*wiringPiI2CWrite(this->i2c_fd, 0xFF);
-	wiringPiI2CWrite(this->i2c_fd, this->sunrise.hours);
-	wiringPiI2CWrite(this->i2c_fd, this->sunrise.minutes);
-	wiringPiI2CWrite(this->i2c_fd, this->sunrise.seconds);
-	wiringPiI2CWrite(this->i2c_fd, this->sunset.hours);
-	wiringPiI2CWrite(this->i2c_fd, this->sunset.minutes);
-	wiringPiI2CWrite(this->i2c_fd, this->sunset.seconds);*/
+	
 	sun_comand[2]=this->sunrise.hours;
 	sun_comand[3]=this->sunrise.minutes;
 	sun_comand[4]=this->sunrise.seconds;
