@@ -83,7 +83,7 @@ typedef struct
  * @defgroup dcc_t_object dcc_t object functions
  * @{
  */
-dcc_sender_t* dcc_new(int dcc_gpiop, int dcc_gpion,, int deadline);
+dcc_sender_t* dcc_new(int dcc_gpiop, int dcc_gpion, int deadline);
 void dcc_init(dcc_sender_t* this, int dcc_gpiop, int dcc_gpion, int deadline);
 /**@}*/
 
