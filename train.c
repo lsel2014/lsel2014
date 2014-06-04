@@ -117,7 +117,7 @@ void trains_setup(void)
     /*
      * This will be integrated with the interpreter
      */
-	dcc_sender_t* dccobject = dcc_new(13, 63000);
+	dcc_sender_t* dccobject = dcc_new(19,20, 63000);
 
 	train_new("Diesel", 0b0000100, '0', 20, dccobject);
 	train_new("Renfe", 0b0000011, '0', 25, dccobject);
