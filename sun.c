@@ -120,7 +120,7 @@ void
 sun_set_date(sun_t* this, sun_date_t date) 
 {
     
-        //uint16_t sun_comand[8]={(this->i2c_address<<1), 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+        uint16_t sun_comand[8]={(this->i2c_address<<1), 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 	this->date = date;
 	rt_mutex_release(&(this->mutex));
