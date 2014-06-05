@@ -5,7 +5,7 @@
 #define BCM2835_FSEL_ALT0 4
 
 void 
-i2csetup(void) 
+i2c_pins_setup(void) 
 {
 bcm2835_init();
 bcm2835_gpio_fsel(0,BCM2835_FSEL_INPT);
