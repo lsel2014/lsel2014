@@ -1,6 +1,7 @@
 #include <bcm2835.h>
 #include "i2c1.h"
 #include "interp.h"
+#include "daemon.h"
 #define BCM2835_FSEL_INPT 0
 #define BCM2835_FSEL_ALT0 4
 
