@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -g -Wall $(shell xeno-config --skin native --cflags)
 LDFLAGS = $(shell xeno-config --skin native --ldflags)
-LDLIBS = -lwiringPi -lreadline -lm
+LDLIBS = -lwiringPi -lreadline -lm -lbcm2835
 
 objs = \
 	daemon.o \
@@ -23,7 +23,8 @@ objs = \
 	screen.o \
 	utils.o\
         ctrlIlumination.o\
-        lsquaredc.o
+        lsquaredc.o\
+	i2c1.o
 all: daemon
 
 test: daemon
