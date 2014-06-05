@@ -32,22 +32,45 @@ int i2c_cmd(char* arg)
 {
   
 	if (0 == strcmp(arg, "test"))
-{
-  uint16_t i2c0_comand[]={};
-  uint16_t i2c1_comand[]={};
-  
-  uint8_t buff0[],buff1[];
-  
-  rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
-  i2c_send_sequence(i2chandler[0]->i2chandler, i2c0_comand, 8, buff0);
-  rt_mutex_release(&i2chandler[0]->mutex);
-  
-  rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-  i2c_send_sequence(i2chandler[1]->i2chandler, i2c1_comand, 8, buff1);
-  rt_mutex_release(&i2chandler[1]->mutex);
-}
-return 0;
-}
+	{
+	  uint16_t init_sequence1[] = {0x20<<1};
+	  uint16_t init_sequence2[] = {0x20<<1};
+	  uint16_t pn_query[] = {0x20<<1, 0x8a, I2C_RESTART, (0x20<<1)|1, I2C_READ};
+	  uint8_t status;
+	  int result;
+	
+	  printf("Opened bus, result=%d\n", i2chandler[0]->i2chandler );
+	  rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+	  result = i2c_send_sequence(i2chandler[0]->i2chandler , init_sequence1, 3, 0);
+	  rt_mutex_release(&i2chandler[0]->mutex);
+	  printf("Sequence processed, result=%d\n", result);
+	  rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+	  result = i2c_send_sequence(i2chandler[0]->i2chandler , init_sequence2, 3, 0);
+	  rt_mutex_release(&i2chandler[0]->mutex);
+	  printf("Sequence processed, result=%d\n", result);
+	  rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+	  result = i2c_send_sequence(i2chandler[0]->i2chandler , pn_query, 5, &status);
+	  rt_mutex_release(&i2chandler[0]->mutex);
+	  printf("Sequence processed, result=%d\n", result);
+	  printf("Status=%d\n", (int)(status));
+	  
+	  printf("Opened bus, result=%d\n", i2chandler[1]->i2chandler );
+	  rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
+	  result = i2c_send_sequence(i2chandler[1]->i2chandler , init_sequence1, 3, 0);
+	  rt_mutex_release(&i2chandler[1]->mutex);
+	  printf("Sequence processed, result=%d\n", result);
+	  rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
+	  result = i2c_send_sequence(i2chandler[1]->i2chandler , init_sequence2, 3, 0);
+	  rt_mutex_release(&i2chandler[1]->mutex);
+	  printf("Sequence processed, result=%d\n", result);
+	  rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
+	  result = i2c_send_sequence(i2chandler[1]->i2chandler , pn_query, 5, &status);
+	  rt_mutex_release(&i2chandler[1]->mutex);
+	  printf("Sequence processed, result=%d\n", result);
+	  printf("Status=%d\n", (int)(status));
+	}
+	return 0;
+	}
 	printf(
 "Incorrect command. Use train help to see a list of available commands\n");
 return 1;
