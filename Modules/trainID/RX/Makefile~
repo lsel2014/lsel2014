@@ -4,7 +4,7 @@
 #	@author Jose Martin
 #
 
-DEVICE  = attiny45
+DEVICE  = attiny85
 F_CPU   = 8000000	
 FUSE_L  = 0xe2
 FUSE_H  = 0xdf
