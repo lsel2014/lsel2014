@@ -1,7 +1,7 @@
 #
-#	LSEL 2014 
-#	@date June 2014
-#	@author 
+#	LSEL 2014 trainID RX module Makefile
+#	@date March 2014
+#	@author Jose Martin
 #
 
 DEVICE  = attiny45

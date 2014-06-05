@@ -1,9 +1,9 @@
 /************************************************************************
  *                                                                      
- * sectorsemaphore.c
+ * LSEL2014 sector semaphore module
  *
- * Created: 26/05/2014 21:16:49
- *  Author: Javier
+ * @date 26/05/2014 21:16:49
+ * @author Javier Gonzalez
  *
  *                             AT tiny 45
  *                 +--------------------------------+
@@ -29,21 +29,26 @@ uint8_t data;
 
 void setup(void)
 {
-	uint8_t address = I2C_SLAVE_ADDR;
-	_delay_ms(500);
-	usiTwiSlaveInit(address);				//Init I2C Slave mode
-	DDRB = (1<<DDB4)|(1<<DDB3)|(1<<DDB1);	//Pins 2, 3 and 6 (pb1, 2 and 4) as outputs
-	PORTB = (0<<PB4)|(0<<PB3)|(0<<PB1);		//Initialize to 0
-	data = 0;
 	sei();
+	
+	usiTwiSlaveInit(I2C_SLAVE_ADDR);		//Init I2C Slave mode
+	
+	DDRB |= (1<<DDB4);
+	DDRB |= (1<<DDB3);
+	DDRB |= (1<<DDB1);						//Pins 2, 3 and 6 (pb1, 2 and 4) as outputs
+	
+	PORTB &= (0<<PB4);
+	PORTB &= (0<<PB3);
+	PORTB &= (0<<PB1);			//Initialize to 0
+	data = 0;
 }
 
 void blink(void)
 {
 	_delay_ms(500);
-	PORTB = (0<<PB4);
+	PORTB &= (0<<PB4);
 	_delay_ms(500);
-	PORTB = (1<<PB4);
+	PORTB |= (1<<PB4);
 }
 
 int main(void)
@@ -53,26 +58,34 @@ int main(void)
 	
     while(1)
     {
-        while(usiTwiDataInReceiveBuffer()) {
+        if(usiTwiDataInReceiveBuffer()) {
         	byteRcvd = usiTwiReceiveByte();     // get the byte from master
         	
 	        switch (byteRcvd)							// the case is selected by a single
 	        {											// digit in the master code. (1,2 or 3)
 		        case 1:				//Green
 					data = 1;
-					PORTB = (0<<PB4)|(1<<PB3)|(0<<PB1);
+					PORTB &= (0<<PB4);
+					PORTB |= (1<<PB3);
+					PORTB &= (0<<PB1);
 					break;		
 		        case 2:				//Yellow
 					data = 2;
-					PORTB = (0<<PB4)|(0<<PB3)|(1<<PB1);
+					PORTB &= (0<<PB4);
+					PORTB &= (0<<PB3);
+					PORTB |= (1<<PB1);
 					break;
 		        case 3:				//Red
 					data = 3;
-					PORTB = (1<<PB4)|(0<<PB3)|(0<<PB1);
+					PORTB |= (1<<PB4);
+					PORTB &= (0<<PB3);
+					PORTB &= (0<<PB1);
 					break;
 				default:			//All of them, just if something goes wrong
 					data = 99;
-					PORTB = (1<<PB4)|(1<<PB3)|(1<<PB1);
+					PORTB |= (1<<PB4);
+					PORTB |= (1<<PB3);
+					PORTB |= (1<<PB1);
 					break;
 	        }
 
@@ -84,4 +97,6 @@ int main(void)
 		}
 		
     }
+    
+    return 1; //should never be reached
 }

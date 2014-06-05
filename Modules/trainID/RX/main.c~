@@ -14,7 +14,7 @@
 #define ID2 0b00101100
 #define ID2pin PB2
 
-#define I2C_ADDRESS 0x15 // Address must be different for each sensor
+#define I2C_ADDRESS 0x24 // Address must be different for each sensor
 
 #include <avr/interrupt.h>
 #include <util/delay.h>
@@ -39,19 +39,20 @@ int main(void)
 		
 		if (softuart_kbhit() != 0){	// Checks if a new byte is received from TX and stores it
 			byte = softuart_getchar();  
-			if (byte == ID1 || byte == ID2) { // When a train crosses the sensor, flag is set to 1
-				readPending = true;
-			}
+			usiTwiTransmitByte(byte);
+	//		if (byte == ID1 || byte == ID2) { // When a train crosses the sensor, flag is set to 1
+	//			readPending = true;
+	//		}
 		}
 		
-		if (usiTwiDataInReceiveBuffer() == true){ // Checks if master has asked for data 
+		*/*if (usiTwiDataInReceiveBuffer() == true){ // Checks if master has asked for data 
 			i2cbyte = usiTwiReceiveByte();
 			if (readPending == true){
 				uint8_t bufByte = byte; // Buffers the byte about to be sent to prevent fails
 				usiTwiTransmitByte(bufByte);
 				readPending = false;
 			}
-		}		
+		}*/		
 	}
 	return 0; /* never reached */
 }
