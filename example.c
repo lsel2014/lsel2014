@@ -62,6 +62,6 @@ int main(void) {
   printf("Sequence processed, result=%d\n", result);
   printf("Status=%d\n", (int)(status));
   i2c_close(i2c_handle_0 );
-
+  i2c_close(i2c_handle_1);
   return 0;
 }
