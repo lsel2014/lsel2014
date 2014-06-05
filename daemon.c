@@ -10,6 +10,7 @@
 #include <wiringPi.h>
 //i2c
 #include "lsquaredc.h"
+#include "i2c1.h"
 // RT compilant print library
 #include <rtdk.h>
 
@@ -81,10 +82,10 @@ i2chandler_new(int n_bus)
 
 void initializei2c(void) {
 
-	//int i;
-	i2chandler_new(0);
-	//for(i = 0 ; i < I2C_BUSES ; i++)
-	//	i2chandler_new(i);	
+	int i;
+	//i2chandler_new(0);
+	for(i = 0 ; i < I2C_BUSES ; i++)
+		i2chandler_new(i);	
 	
 }
 
@@ -97,6 +98,7 @@ int main(int argc, char* argv[]) {
 	initializeWiringPi();
 	
 	//Initialize the i2c
+	i2c_pins_setup();
 	initializei2c();
 
 	IRsensors_setup();
