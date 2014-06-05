@@ -70,10 +70,10 @@ int i2c_cmd(char* arg)
 	  rt_mutex_release(&i2chandler[1]->mutex);
 	  printf("Sequence processed, result=%d\n", result);
 	  printf("Status=%d\n", (int)(status));
+	  return 0;
 	}
-	return 0;
-	}
-	printf(
-"Incorrect command. Use train help to see a list of available commands\n");
-return 1;
+
+	
+	printf("Incorrect command. Use train help to see a list of available commands\n");
+	return 1;
 }
