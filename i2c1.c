@@ -41,13 +41,13 @@ int i2c_cmd(char* arg)
 	  uint8_t status;
 	  int result;
 	
-	  printf("Opened bus, result=%d\n", i2chandler[0]->i2chandler );
+	  printf("Opened bus, result=%d\n", (i2chandler[0]->i2chandler) );
 	  rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
-	  result = i2c_send_sequence(i2chandler[0]->i2chandler , init_sequence1, 3, 0);
+	  result = i2c_send_sequence(i2chandler[0]->i2chandler , init_sequence1, 1, 0);
 	  rt_mutex_release(&i2chandler[0]->mutex);
 	  printf("Sequence processed, result=%d\n", result);
 	  rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
-	  result = i2c_send_sequence(i2chandler[0]->i2chandler , init_sequence2, 3, 0);
+	  result = i2c_send_sequence(i2chandler[0]->i2chandler , init_sequence2, 1, 0);
 	  rt_mutex_release(&i2chandler[0]->mutex);
 	  printf("Sequence processed, result=%d\n", result);
 	  rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
@@ -56,13 +56,13 @@ int i2c_cmd(char* arg)
 	  printf("Sequence processed, result=%d\n", result);
 	  printf("Status=%d\n", (int)(status));
 	  
-	  printf("Opened bus, result=%d\n", i2chandler[1]->i2chandler );
+	  printf("Opened bus, result=%d\n", (i2chandler[1]->i2chandler) );
 	  rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-	  result = i2c_send_sequence(i2chandler[1]->i2chandler , init_sequence1, 3, 0);
+	  result = i2c_send_sequence(i2chandler[1]->i2chandler , init_sequence1, 1, 0);
 	  rt_mutex_release(&i2chandler[1]->mutex);
 	  printf("Sequence processed, result=%d\n", result);
 	  rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-	  result = i2c_send_sequence(i2chandler[1]->i2chandler , init_sequence2, 3, 0);
+	  result = i2c_send_sequence(i2chandler[1]->i2chandler , init_sequence2, 1, 0);
 	  rt_mutex_release(&i2chandler[1]->mutex);
 	  printf("Sequence processed, result=%d\n", result);
 	  rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
