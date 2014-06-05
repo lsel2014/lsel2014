@@ -40,7 +40,7 @@ int main(void) {
   uint16_t init_sequence2[] = {0x20<<1};
   uint16_t pn_query[] = {0x20<<1, 0x8a, I2C_RESTART, (0x20<<1)|1, I2C_READ};
   uint8_t status;
-  int i2c_handle;
+  int i2c_handle_0,i2c_handle_1;
   int result;
 
   i2c_handle_0 = i2c_open(0);
