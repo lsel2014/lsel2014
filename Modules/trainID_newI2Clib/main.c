@@ -20,6 +20,12 @@ static uint8_t byte = 0;
 static volatile uint8_t i2cReg0 = 0;
 static volatile uint8_t i2cReg1 = 0;
 
+// Duplicates a byte to prevent errors
+uint8_t bufferData (uint8_t data){
+	uint8_t bufferedByte = data;
+	return bufferedByte;
+}
+
 // A callback triggered when the i2c master attempts to read from a register.
 uint8_t i2cReadFromRegister(uint8_t reg)
 {
@@ -48,12 +54,6 @@ void i2cWriteToRegister(uint8_t reg, uint8_t value)
 			i2cReg1 = value;
 			break;
 	}
-}
-
-// Duplicates a byte to prevent errors
-uint8_t bufferData (uint8_t data){
-	uint8_t bufferedByte = data;
-	return bufferedByte;
 }
 	
 int main(void)
