@@ -119,6 +119,8 @@ int main(int argc, char* argv[]) {
 	interp_run();
 
 	task_delete_all();
+	i2c_close(i2chandler[0]->i2chandler );
+	i2c_close(i2chandler[1]->i2chandler );
 	digitalWrite(19,0);
 	digitalWrite(20,0);
 	return 0;
