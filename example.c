@@ -37,7 +37,7 @@
 */
 int main(void) {
   uint16_t init_sequence1[] = {0x20<<1};
-  uint16_t init_sequence2[] = {0x20<<1};
+  uint16_t init_sequence2[] = {(0x20<<1)|1};
   uint16_t pn_query[] = {0x20<<1, 0x8a, I2C_RESTART, (0x20<<1)|1, I2C_READ};
   uint8_t status;
   int i2c_handle_0,i2c_handle_1;
@@ -46,21 +46,21 @@ int main(void) {
   i2c_handle_0 = i2c_open(0);
   i2c_handle_1 = i2c_open(1);
   printf("Opened bus, result=%d\n", i2c_handle_0 );
-  result = i2c_send_sequence(i2c_handle_0 , init_sequence1, 1, 0);
+  result = i2c_send_sequence(i2c_handle_0 , init_sequence1, 3, 0);
   printf("Sequence processed, result=%d\n", result);
-  result = i2c_send_sequence(i2c_handle_0 , init_sequence2, 1, 0);
+  result = i2c_send_sequence(i2c_handle_0 , init_sequence2, 3, 0);
   printf("Sequence processed, result=%d\n", result);
-  result = i2c_send_sequence(i2c_handle_0 , pn_query, 5, &status);
-  printf("Sequence processed, result=%d\n", result);
-  printf("Status=%d\n", (int)(status));
+  //result = i2c_send_sequence(i2c_handle_0 , pn_query, 5, &status);
+  //printf("Sequence processed, result=%d\n", result);
+  //printf("Status=%d\n", (int)(status));
   printf("Opened bus, result=%d\n", i2c_handle_0 );
   result = i2c_send_sequence(i2c_handle_0 , init_sequence1, 1, 0);
   printf("Sequence processed, result=%d\n", result);
   result = i2c_send_sequence(i2c_handle_0 , init_sequence2, 1, 0);
   printf("Sequence processed, result=%d\n", result);
-  result = i2c_send_sequence(i2c_handle_0 , pn_query, 5, &status);
-  printf("Sequence processed, result=%d\n", result);
-  printf("Status=%d\n", (int)(status));
+  //result = i2c_send_sequence(i2c_handle_0 , pn_query, 5, &status);
+  //printf("Sequence processed, result=%d\n", result);
+  //printf("Status=%d\n", (int)(status));
   i2c_close(i2c_handle_0 );
   i2c_close(i2c_handle_1);
   return 0;
