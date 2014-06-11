@@ -7,7 +7,7 @@
 */
 
 
-#define I2C_ADDRESS 0x22 // Address must be different for each thing
+#define I2C_ADDRESS 0x21 // Address must be different for each thing
 
 #define trainIDmask 0b11000011
 
