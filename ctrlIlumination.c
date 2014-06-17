@@ -43,10 +43,30 @@ ctrlilumination_notify(observer_t* this)
          rail= ctrlilu_railway[i].railway;
          check = 0;
          for( j = 0; j < NSECTORS ; j++){
-                 if( rail->railwaySectors[j]->nregisteredtrains >0){
+                 if( rail->railwaySectors[j]->nregisteredtrains > 0) {
+                 	//there is a train with override activated
+                 	if (train_get_security(rail->railwaySectors[j]->registeredTrains[0]) == 1) {
+                 		if (semaphore_get_state(semaphores[j]) != I2C_SEMAPHORE_RED) {
+                 			semaphore_set_state(semaphores[j], I2C_SEMAPHORE_RED);
+                 			semaphore_switch(semaphores[j]);
+                 		}
+                 	} else {
+                 	//there is a train, but override is deactivated
+                 		if (semaphore_get_state(semaphores[j]) != I2C_SEMAPHORE_YELLOW) {
+                 			semaphore_set_state(semaphores[j], I2C_SEMAPHORE_YELLOW);
+                 			semaphore_switch(semaphores[j]);
+                 		}
+                 	}
+                 } else { //no trains
+                 	if (semaphore_get_state(semaphores[j]) != I2C_SEMAPHORE_GREEN) {
+                 		semaphore_set_state(semaphores[j], I2C_SEMAPHORE_GREEN);
+                 		semaphore_switch(semaphores[j]);
+                 	}
+                 }
+                 
               	 //rt_printf(" passing full sector %d \n",j);
-              	 if( semaphore_get_state(semaphores[j]) != 1)
-                 semaphore_switch(semaphores[j] , 1);
+              	 //if( semaphore_get_state(semaphores[j]) != 1)
+                 //semaphore_switch(semaphores[j] , 1);
                   for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1]){
@@ -56,8 +76,8 @@ ctrlilumination_notify(observer_t* this)
                   }
                  }else{
                  //rt_printf(" passing empty sector %d \n",j);
-                 if( semaphore_get_state(semaphores[j]) != 0)
-                 semaphore_switch( semaphores[j] , 0);
+                 //if( semaphore_get_state(semaphores[j]) != 0)
+                 //semaphore_switch( semaphores[j] , 0);
                  for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
