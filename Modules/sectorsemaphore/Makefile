@@ -1,5 +1,5 @@
 #
-#	LSEL 2014 trainID RX module Makefile
+#	LSEL 2014 Makefile
 #	@date March 2014
 #	@author Jose Martin
 #
@@ -8,7 +8,7 @@ DEVICE  = attiny45
 F_CPU   = 8000000	
 FUSE_L  = 0xe2
 FUSE_H  = 0xdf
-AVRDUDE = avrdude -c usbasp -p $(DEVICE) 
+AVRDUDE = avrdude -c usbasp -B 100 -p $(DEVICE) 
 
 CFLAGS  = -I. -DDEBUG_LEVEL=0
 OBJECTS = main.o usiTwiSlave.o

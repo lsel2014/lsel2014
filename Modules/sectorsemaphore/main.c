@@ -20,83 +20,95 @@
 #include <util/delay.h>
 #include "usiTwiSlave.h" 
 
-#define I2C_SLAVE_ADDR 0x30
-#define PIN_G 3
-#define PIN_R 4
-#define PIN_Y 1
+#define I2C_SLAVE_ADDR 0x33
+#define PIN_G PB3
+#define PIN_R PB4
+#define PIN_Y PB1
 
-uint8_t data;
+// write digital "high" to pin <pn> on port <prt>
+#define DIGIWRITE_H(prt, pn) prt |= (1<<pn)
 
-void setup(void)
+// write digital "low" to pin <pn> on port <prt>
+#define DIGIWRITE_L(prt, pn) prt &= ~(1<<pn)
+
+volatile char data;
+
+uint8_t i2cReadFromRegister(uint8_t reg)
 {
-	sei();
-	
-	usiTwiSlaveInit(I2C_SLAVE_ADDR);		//Init I2C Slave mode
-	
-	DDRB |= (1<<DDB4);
-	DDRB |= (1<<DDB3);
-	DDRB |= (1<<DDB1);						//Pins 2, 3 and 6 (pb1, 2 and 4) as outputs
-	
-	PORTB &= (0<<PB4);
-	PORTB &= (0<<PB3);
-	PORTB &= (0<<PB1);			//Initialize to 0
-	data = 0;
+	switch (reg)
+	{
+	}
+	return 0xff;
 }
 
-void blink(void)
+void i2cWriteToRegister(uint8_t reg, uint8_t value)
 {
-	_delay_ms(500);
-	PORTB &= (0<<PB4);
-	_delay_ms(500);
-	PORTB |= (1<<PB4);
+	switch (reg)
+	{
+		        case 0:
+		        	if (value == 1){				//Green
+						DIGIWRITE_H(PORTB,PIN_G);
+						DIGIWRITE_L(PORTB,PIN_Y);
+						DIGIWRITE_L(PORTB,PIN_R);
+						data = 1;
+					}else if (value == 2){			//Yellow
+						DIGIWRITE_L(PORTB,PIN_G);
+						DIGIWRITE_H(PORTB,PIN_Y);
+						DIGIWRITE_L(PORTB,PIN_R);
+						data = 2;
+					}else if (value == 3){			//Red
+						DIGIWRITE_L(PORTB,PIN_G);
+						DIGIWRITE_L(PORTB,PIN_Y);
+						DIGIWRITE_H(PORTB,PIN_R);
+						data = 3;
+					}else{							//Error
+						DIGIWRITE_H(PORTB,PIN_G);
+						DIGIWRITE_H(PORTB,PIN_Y);
+						DIGIWRITE_H(PORTB,PIN_R);
+						data = 0;
+					}
+					break;		
+				default:			//All of them, just if something goes wrong
+					DIGIWRITE_H(PORTB,PIN_G);
+					DIGIWRITE_H(PORTB,PIN_Y);
+					DIGIWRITE_H(PORTB,PIN_R);
+					data = 0;
+					break;
+        }
+		
+		
+}
+
+
+void setup(void)
+{	
+	usiTwiSlaveInit(I2C_SLAVE_ADDR, i2cReadFromRegister, i2cWriteToRegister);		//Init I2C Slave mode
+	
+	sei();
+	
+	DDRB |= (1<<PIN_G);
+	DDRB |= (1<<PIN_Y);
+	DDRB |= (1<<PIN_R);						//Pins 2, 3 and 6 (pb1, 2 and 4) as outputs
+	
+	
+	DIGIWRITE_L(PORTB,PIN_G);
+	DIGIWRITE_L(PORTB,PIN_Y);
+	DIGIWRITE_L(PORTB,PIN_R);
+	
 }
 
 int main(void)
 {
-	uint8_t byteRcvd = 0;
+	data = 0;
 	setup();
-	
-    while(1)
-    {
-        if(usiTwiDataInReceiveBuffer()) {
-        	byteRcvd = usiTwiReceiveByte();     // get the byte from master
-        	
-	        switch (byteRcvd)							// the case is selected by a single
-	        {											// digit in the master code. (1,2 or 3)
-		        case 1:				//Green
-					data = 1;
-					PORTB &= (0<<PB4);
-					PORTB |= (1<<PB3);
-					PORTB &= (0<<PB1);
-					break;		
-		        case 2:				//Yellow
-					data = 2;
-					PORTB &= (0<<PB4);
-					PORTB &= (0<<PB3);
-					PORTB |= (1<<PB1);
-					break;
-		        case 3:				//Red
-					data = 3;
-					PORTB |= (1<<PB4);
-					PORTB &= (0<<PB3);
-					PORTB &= (0<<PB1);
-					break;
-				default:			//All of them, just if something goes wrong
-					data = 99;
-					PORTB |= (1<<PB4);
-					PORTB |= (1<<PB3);
-					PORTB |= (1<<PB1);
-					break;
-	        }
-
-        }
-		
-		if (data == 3)
-		{
-			blink();
-		}
-		
-    }
+	while (1){
+		if (data == 3){
+			_delay_ms(500);
+			DIGIWRITE_L(PORTB,PIN_R);
+			_delay_ms(500);
+			DIGIWRITE_H(PORTB,PIN_R);
+		}	
+	};
+	return 0; // Never reached
     
-    return 1; //should never be reached
 }

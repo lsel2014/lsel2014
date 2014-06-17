@@ -4,6 +4,7 @@ USI TWI Slave driver.
 
 Created by Donald R. Blake. donblake at worldnet.att.net
 Adapted by Jochen Toppe, jochen.toppe at jtoee.com
+Adapted by Ben Galvin, bgalvin at fastmail.fm
 
 ---------------------------------------------------------------------------------
 
@@ -30,23 +31,28 @@ Change Activity:
   26 Apr 2007  Fixed ACK of slave address on a read.
   04 Jul 2007  Fixed USISIF in ATtiny45 def
   12 Dev 2009  Added callback functions for data requests
-
+  12 Apr 2011  Added read/write register callbacks
 ********************************************************************************/
 
 
+
 /********************************************************************************
+
                                     includes
+
 ********************************************************************************/
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-
+#include <stdbool.h>
 #include "usiTwiSlave.h"
-//#include "../common/util.h"
+
 
 
 /********************************************************************************
+
                             device dependent defines
+
 ********************************************************************************/
 
 #if defined( __AVR_ATtiny2313__ )
@@ -60,20 +66,6 @@ Change Activity:
 #  define USI_START_COND_INT  USISIF
 #  define USI_START_VECTOR    USI_START_vect
 #  define USI_OVERFLOW_VECTOR USI_OVERFLOW_vect
-#endif
-
-#if defined(__AVR_ATtiny84__) | \
-     defined(__AVR_ATtiny44__)
-#  define DDR_USI             DDRA
-#  define PORT_USI            PORTA
-#  define PIN_USI             PINA
-#  define PORT_USI_SDA        PORTA6
-#  define PORT_USI_SCL        PORTA4
-#  define PIN_USI_SDA         PINA6
-#  define PIN_USI_SCL         PINA4
-#  define USI_START_COND_INT  USISIF
-#  define USI_START_VECTOR    USI_START_vect
-#  define USI_OVERFLOW_VECTOR USI_OVF_vect
 #endif
 
 #if defined( __AVR_ATtiny25__ ) | \
@@ -151,7 +143,7 @@ Change Activity:
 #  define USI_OVERFLOW_VECTOR USI_OVERFLOW_vect
 #endif
 
-
+#define NO_CURRENT_REGISTER_SET 255
 
 /********************************************************************************
 
@@ -232,31 +224,7 @@ Change Activity:
        ( 0x0 << USICNT0 ); \
 }
 
-#define USI_RECEIVE_CALLBACK() \
-{ \
-    if (usi_onReceiverPtr) \
-    { \
-        if (usiTwiDataInReceiveBuffer()) \
-        { \
-            usi_onReceiverPtr(usiTwiAmountDataInReceiveBuffer()); \
-        } \
-    } \
-}
 
-#define ONSTOP_USI_RECEIVE_CALLBACK() \
-{ \
-    if (USISR & ( 1 << USIPF )) \
-    { \
-        USI_RECEIVE_CALLBACK(); \
-    } \
-}
-
-
-#define USI_REQUEST_CALLBACK() \
-{ \
-    USI_RECEIVE_CALLBACK(); \
-    if(usi_onRequestPtr) usi_onRequestPtr(); \
-}
 
 /********************************************************************************
 
@@ -282,46 +250,12 @@ typedef enum
 
 ********************************************************************************/
 
+static uint8_t	(*_onI2CReadFromRegister)(uint8_t reg);
+static void    	(*_onI2CWriteToRegister)(uint8_t reg, uint8_t value);
+
 static uint8_t                  slaveAddress;
 static volatile overflowState_t overflowState;
-
-
-static uint8_t          rxBuf[ TWI_RX_BUFFER_SIZE ];
-static volatile uint8_t rxHead;
-static volatile uint8_t rxTail;
-
-static uint8_t          txBuf[ TWI_TX_BUFFER_SIZE ];
-static volatile uint8_t txHead;
-static volatile uint8_t txTail;
-
-// data requested callback
-void (*_onTwiDataRequest)(void);
-
-
-
-/********************************************************************************
-
-                                local functions
-
-********************************************************************************/
-
-
-
-// flushes the TWI buffers
-
-static
-void
-flushTwiBuffers(
-  void
-)
-{
-  rxTail = 0;
-  rxHead = 0;
-  txTail = 0;
-  txHead = 0;
-} // end flushTwiBuffers
-
-
+static volatile uint8_t 		currentRegister = NO_CURRENT_REGISTER_SET;
 
 /********************************************************************************
 
@@ -335,13 +269,15 @@ flushTwiBuffers(
 
 void
 usiTwiSlaveInit(
-  uint8_t ownAddress
+  	uint8_t ownAddress,
+  	uint8_t	(*onI2CReadFromRegister)(uint8_t reg),
+	void (*onI2CWriteToRegister)(uint8_t reg, uint8_t value)
 )
 {
 
-  flushTwiBuffers( );
-
   slaveAddress = ownAddress;
+  _onI2CReadFromRegister = onI2CReadFromRegister;
+  _onI2CWriteToRegister = onI2CWriteToRegister;
 
   // In Two Wire mode (USIWM1, USIWM0 = 1X), the slave USI will pull SCL
   // low when a start condition is detected or a counter overflow (only
@@ -380,94 +316,6 @@ usiTwiSlaveInit(
 } // end usiTwiSlaveInit
 
 
-bool usiTwiDataInTransmitBuffer(void)
-{
-
-  // return 0 (false) if the receive buffer is empty
-  return txHead != txTail;
-
-} // end usiTwiDataInTransmitBuffer
-
-
-// put data in the transmission buffer, wait if buffer is full
-
-void
-usiTwiTransmitByte(
-  uint8_t data
-)
-{
-
-  uint8_t tmphead;
-
-  // calculate buffer index
-  tmphead = ( txHead + 1 ) & TWI_TX_BUFFER_MASK;
-
-  // wait for free space in buffer
-  while ( tmphead == txTail );
-
-  // store data in buffer
-  txBuf[ tmphead ] = data;
-
-  // store new index
-  txHead = tmphead;
-
-} // end usiTwiTransmitByte
-
-
-
-
-
-// return a byte from the receive buffer, wait if buffer is empty
-
-uint8_t
-usiTwiReceiveByte(
-  void
-)
-{
-
-  // wait for Rx data
-  while ( rxHead == rxTail );
-
-  // calculate buffer index
-  rxTail = ( rxTail + 1 ) & TWI_RX_BUFFER_MASK;
-
-  // return data from the buffer.
-  return rxBuf[ rxTail ];
-
-} // end usiTwiReceiveByte
-
-
-
-// check if there is data in the receive buffer
-
-bool
-usiTwiDataInReceiveBuffer(
-  void
-)
-{
-
-  // return 0 (false) if the receive buffer is empty
-  return rxHead != rxTail;
-
-} // end usiTwiDataInReceiveBuffer
-
-uint8_t usiTwiAmountDataInReceiveBuffer(void)
-{
-    if (rxHead == rxTail)
-    {
-        return 0;
-    }
-    if (rxHead < rxTail)
-    {
-        // Is there a better way ?
-        return ((int8_t)rxHead - (int8_t)rxTail) + TWI_RX_BUFFER_SIZE;
-    }
-    return rxHead - rxTail;
-}
- 
- 
-
-
 /********************************************************************************
 
                             USI Start Condition ISR
@@ -476,16 +324,6 @@ uint8_t usiTwiAmountDataInReceiveBuffer(void)
 
 ISR( USI_START_VECTOR )
 {
-
-  /*
-  // This triggers on second write, but claims to the callback there is only *one* byte in buffer
-  ONSTOP_USI_RECEIVE_CALLBACK();
-  */
-  /*
-  // This triggers on second write, but claims to the callback there is only *one* byte in buffer
-  USI_RECEIVE_CALLBACK();
-  */
-
   // set default starting conditions for new TWI package
   overflowState = USI_SLAVE_CHECK_ADDRESS;
 
@@ -507,9 +345,7 @@ ISR( USI_START_VECTOR )
 
   if ( !( PIN_USI & ( 1 << PIN_USI_SDA ) ) )
   {
-
     // a Stop Condition did not occur
-
     USICR =
          // keep Start Condition Interrupt enabled to detect RESTART
          ( 1 << USISIE ) |
@@ -526,8 +362,9 @@ ISR( USI_START_VECTOR )
   }
   else
   {
-    // a Stop Condition did occur
+    currentRegister = NO_CURRENT_REGISTER_SET;
 
+    // a Stop Condition did occur
     USICR =
          // enable Start Condition Interrupt
          ( 1 << USISIE ) |
@@ -550,7 +387,6 @@ ISR( USI_START_VECTOR )
        ( 1 << USIPF ) |( 1 << USIDC ) |
        // set USI to sample 8 bits (count 16 external SCL pin toggles)
        ( 0x0 << USICNT0);
-
 
 } // end ISR( USI_START_VECTOR )
 
@@ -577,8 +413,7 @@ ISR( USI_OVERFLOW_VECTOR )
     case USI_SLAVE_CHECK_ADDRESS:
       if ( ( USIDR == 0 ) || ( ( USIDR >> 1 ) == slaveAddress) )
       {
-         // callback
-         if(_onTwiDataRequest) _onTwiDataRequest();
+
          if ( USIDR & 0x01 )
         {
           overflowState = USI_SLAVE_SEND_DATA;
@@ -610,20 +445,9 @@ ISR( USI_OVERFLOW_VECTOR )
     // copy data from buffer to USIDR and set USI to shift byte
     // next USI_SLAVE_REQUEST_REPLY_FROM_SEND_DATA
     case USI_SLAVE_SEND_DATA:
-      USI_REQUEST_CALLBACK();
-      // Get data from Buffer
-      if ( txHead != txTail )
-      {
-        txTail = ( txTail + 1 ) & TWI_TX_BUFFER_MASK;
-        USIDR = txBuf[ txTail ];
-      }
-      else
-      {
-        // the buffer is empty
-        SET_USI_TO_READ_ACK( ); // This might be neccessary sometimes see http://www.avrfreaks.net/index.php?name=PNphpBB2&file=viewtopic&p=805227#805227
-        SET_USI_TO_TWI_START_CONDITION_MODE( );
-        return;
-      } // end if
+	
+	  USIDR = _onI2CReadFromRegister(currentRegister);
+      currentRegister = NO_CURRENT_REGISTER_SET;
       overflowState = USI_SLAVE_REQUEST_REPLY_FROM_SEND_DATA;
       SET_USI_TO_SEND_DATA( );
       break;
@@ -645,16 +469,24 @@ ISR( USI_OVERFLOW_VECTOR )
     // copy data from USIDR and send ACK
     // next USI_SLAVE_REQUEST_DATA
     case USI_SLAVE_GET_DATA_AND_SEND_ACK:
-      // put data into buffer
-      // Not necessary, but prevents warnings
-      rxHead = ( rxHead + 1 ) & TWI_RX_BUFFER_MASK;
-      // check buffer size
-      if (rxHead == rxTail) {
-        // overrun
-        rxHead = (rxHead + TWI_RX_BUFFER_SIZE - 1) & TWI_RX_BUFFER_MASK;
-      } else {
-        rxBuf[ rxHead ] = USIDR;
-      }
+
+	  // The master is writing a value. If we don't have a register yet, it 
+	  // must be writing the register value.
+	  if (currentRegister == NO_CURRENT_REGISTER_SET)
+	  {
+	  	// Store the value as the current register.
+	  	currentRegister = USIDR;
+	  }
+	  else
+	  {
+	  	// We already have a register value, so it must be storing some data.
+	  	_onI2CWriteToRegister(currentRegister, USIDR);
+
+		// Currently we only support writing a single value, so we assume that the
+		// transaction is over.
+		currentRegister = NO_CURRENT_REGISTER_SET;
+	  }
+
       // next USI_SLAVE_REQUEST_DATA
       overflowState = USI_SLAVE_REQUEST_DATA;
       SET_USI_TO_SEND_ACK( );
