@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
 	railChange_setup();
 	sun_setup();
 	model_init();
-	//screen_setup();
+	screen_setup();
 	anticollision_setup();
 	tracker_init();
 	ctrlilumination_init();
