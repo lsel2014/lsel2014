@@ -11,6 +11,9 @@
 #define UP 1
 #define DOWN 0
 
+#define LEDS_ON 1
+#define LEDS_OFF 0
+
 // Define pins
 #define PIN_LED1 PB3
 #define PIN_LED2 PB4
@@ -31,6 +34,8 @@
 #include <util/delay.h>
 #include "usiTwiSlave.h"
 
+
+volatile int enable_leds;
 
 // Define long delay function
 void long_delay_ms(uint16_t ms) {
@@ -76,6 +81,20 @@ void i2cWriteToRegister(uint8_t reg, uint8_t value)
 				}
 			}
 				
+			break;
+			
+		case 1: 
+			if (value == LEDS_ON)
+			{
+				enable_leds = 1;
+			}
+			else {
+				if (value == LEDS_OFF)
+				{
+					enable_leds = 0;
+				}
+			}
+			
 			break;
 	}
 }
@@ -148,9 +167,10 @@ int main(void)
 	// Initialize I2C module
 	usiTwiSlaveInit(I2C_ADDRESS, i2cReadFromRegister, i2cWriteToRegister);
 	sei();
+	enable_leds=0;
 	// Main loop, receive bytes all the time
 	for (;;) {
-		if (OCR0B == SET_90_DEG)
+		if (enable_leds == 1)
 		{
 			DIGIWRITE_H(PORTB,3);
 			DIGIWRITE_L(PORTB,4);
@@ -164,6 +184,21 @@ int main(void)
 			DIGIWRITE_L(PORTB,3);
 			DIGIWRITE_L(PORTB,4);
 		}
+		
+		/*if (OCR0B == SET_90_DEG)
+		{
+			DIGIWRITE_H(PORTB,3);
+			DIGIWRITE_L(PORTB,4);
+			long_delay_ms(500);
+			DIGIWRITE_L(PORTB,3);
+			DIGIWRITE_H(PORTB,4);
+			long_delay_ms(500);
+		}
+		else
+		{
+			DIGIWRITE_L(PORTB,3);
+			DIGIWRITE_L(PORTB,4);
+		}*/
 	}
 	return 0; /* never reached */
 }
