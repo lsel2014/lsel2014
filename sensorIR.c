@@ -17,10 +17,10 @@
 #include "daemon.h"
 #include "sensorIR.h"
 // Random values, this will change to match the firmware of the barrier
-#define I2C_IR_ADDRESS_0 0x30
-#define I2C_IR_ADDRESS_1 0x31
-#define I2C_IR_ADDRESS_2 0x32
-#define I2C_IR_ADDRESS_3 0x33
+#define I2C_IR_ADDRESS_0 0x21
+#define I2C_IR_ADDRESS_1 0x22
+#define I2C_IR_ADDRESS_2 0x23
+#define I2C_IR_ADDRESS_3 0x24
 #define I2C_RENFE_BYTE 0x2c
 #define I2C_DIESEL_BYTE 0x34
 
