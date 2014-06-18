@@ -4,10 +4,15 @@ Build-deps
 -libreadline-dev
 -xenomai kernel with headers
 
+I2C IDs
 
+- Sun: 0x20
+- Sensors: 0x21 - 0x24
 
+Train ID:
 
-
+- RENFE: 0x2C
+- Diesel: 0x34
 
 
 
