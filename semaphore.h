@@ -32,6 +32,7 @@ void semaphore_init (semaphore_t* this, int id, uint16_t state,uint16_t i2c_addr
 void semaphore_setup (void);
 uint16_t semaphore_get_state (semaphore_t* this);
 void semaphore_set_state(semaphore_t* this, uint16_t state);
+void semaphore_switch (semaphore_t* this);
 
 #endif
         
