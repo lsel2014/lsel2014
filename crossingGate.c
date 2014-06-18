@@ -118,7 +118,7 @@ crossingGate_move_task(void *args)
 			barrier_comand[1]=I2C_BARRIER_STOP;	
 		}
 		rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
-		//i2c_send_sequence(i2chandler[0]->i2chandler, barrier_comand, 2, 0);
+		i2c_send_sequence(i2chandler[0]->i2chandler, barrier_comand, 2, 0);
 		rt_mutex_release(&(i2chandler[0]->mutex));
 	}
 }
