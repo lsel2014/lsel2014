@@ -8,9 +8,9 @@
 #define I2C_SEMAPHORE_ADDRESS_1 0x31
 #define I2C_SEMAPHORE_ADDRESS_2 0x32
 #define I2C_SEMAPHORE_ADDRESS_3 0x33
-#define I2C_SEMAPHORE_GREEN		0x01
+#define I2C_SEMAPHORE_GREEN	0x01
 #define I2C_SEMAPHORE_YELLOW	0x02
-#define I2C_SEMAPHORE_RED 		0x03
+#define I2C_SEMAPHORE_RED 	0x03
 
 #define MAXSEMAFORES 4
 
@@ -32,8 +32,6 @@ void semaphore_init (semaphore_t* this, int id, uint16_t state,uint16_t i2c_addr
 void semaphore_setup (void);
 uint16_t semaphore_get_state (semaphore_t* this);
 void semaphore_set_state(semaphore_t* this, uint16_t state);
-void semaphore_switch (semaphore_t* this);
-//void semaphore_switch_on(semaphore_t* this);
-//void semaphore_switch_off(semaphore_t* this);
+
 #endif
         
