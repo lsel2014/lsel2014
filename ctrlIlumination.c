@@ -57,12 +57,6 @@ ctrlilumination_notify(observer_t* this)
                  			semaphore_switch(semaphores[j]);
                  		}
                  	}
-                 } else { //no trains
-                 	if (semaphore_get_state(semaphores[j]) != I2C_SEMAPHORE_GREEN) {
-                 		semaphore_set_state(semaphores[j], I2C_SEMAPHORE_GREEN);
-                 		semaphore_switch(semaphores[j]);
-                 	}
-                 }
                  
               	 //rt_printf(" passing full sector %d \n",j);
               	 //if( semaphore_get_state(semaphores[j]) != 1)
@@ -74,10 +68,14 @@ ctrlilumination_notify(observer_t* this)
                        trafficLight_set_state(trafficLights[0], ON);
                        }
                   }
-                 }else{
+                 }else{//no trains
                  //rt_printf(" passing empty sector %d \n",j);
                  //if( semaphore_get_state(semaphores[j]) != 0)
                  //semaphore_switch( semaphores[j] , 0);
+                 if (semaphore_get_state(semaphores[j]) != I2C_SEMAPHORE_GREEN) {
+                 	semaphore_set_state(semaphores[j], I2C_SEMAPHORE_GREEN);
+                 	semaphore_switch(semaphores[j]);
+                 }
                  for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
