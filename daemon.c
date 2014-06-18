@@ -100,16 +100,25 @@ int main(int argc, char* argv[]) {
 	//Initialize the i2c
 	i2c_pins_setup();
 	initializei2c();
-
+	//rt_printf("I2C \n");
 	IRsensors_setup();
+	//rt_printf("IR \n");
 	trains_setup();
+	//rt_printf("train \n");
 	railways_setup();
+	//rt_printf("rail\n");
 	semaphore_setup();
+	//rt_printf("sem \n");
 	trafficLight_setup();
+	//rt_printf("TL\n");
 	crossingGate_setup();
+	//rt_printf("CG \n");
 	railChange_setup();
-	sun_setup();
+	//rt_printf("RC \n");
+	//sun_setup();
+	//rt_printf("sun \n");
 	model_init();
+	//rt_printf("model \n");
 	screen_setup();
 	anticollision_setup();
 	tracker_init();

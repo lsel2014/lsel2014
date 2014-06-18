@@ -16,7 +16,7 @@
 #include "lsquaredc.h"
 #include "daemon.h"
 #include "sensorIR.h"
-// Random values, this will change to match the firmware of the barrier
+
 #define I2C_IR_ADDRESS_0 0x21
 #define I2C_IR_ADDRESS_1 0x22
 #define I2C_IR_ADDRESS_2 0x23
@@ -96,7 +96,7 @@ sensorIR_readLine(sensorIR_t* this, uint8_t* buff)
 {
         uint16_t read_IR_comand[]={(this->i2c_address<<1), 0x00 ,I2C_RESTART ,(this->i2c_address<<1)|1 ,I2C_READ};
         
-        if(this->i2c_address == I2C_IR_ADDRESS_0 || this->i2c_address == I2C_IR_ADDRESS_1)
+        if(this->i2c_address == I2C_IR_ADDRESS_0 || this->i2c_address == I2C_IR_ADDRESS_1){
 	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
         i2c_send_sequence(i2chandler[0]->i2chandler, read_IR_comand, 5, buff);
 	rt_mutex_release(&(i2chandler[0]->mutex));
@@ -105,23 +105,24 @@ sensorIR_readLine(sensorIR_t* this, uint8_t* buff)
         i2c_send_sequence(i2chandler[1]->i2chandler, read_IR_comand, 5, buff);
 	rt_mutex_release(&(i2chandler[1]->mutex));
 	}
+//	rt_printf(" tren %u \n", buff[0]);
 }
 
 void 
 sensorIR_trainPassing(sensorIR_t* this)
 {
-     //uint8_t* buff = (uint8_t*) malloc(sizeof(uint8_t));
-     uint8_t buff[]={0};
+     
+     uint8_t buff[1];
      rt_mutex_acquire(&(this->mutex), TM_INFINITE);
      
      this->event->flag = 0; 
-     sensorIR_readLine(this, buff); 
+     sensorIR_readLine(this,buff); 
      // 4 if diesel is passing, 3 if renfe is passing   
      if( buff[0] == I2C_RENFE_BYTE ){
          this->event->passingTrain = 3; 
          this->event->flag = 1;
      }else if(buff[0] == I2C_DIESEL_BYTE){
-         this->event->passingTrain = 3; 
+         this->event->passingTrain = 4; 
          this->event->flag = 1;   
      }             
      rt_mutex_release(&this->mutex);

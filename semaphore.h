@@ -19,19 +19,19 @@ typedef struct
 	observable_t observable;        
 
 	int id;
-	uint16_t state;
-	uint16_t i2c_address;
+	uint8_t state;
+	uint8_t i2c_address;
 	RT_MUTEX mutex;
 	
 }semaphore_t;
     
 extern semaphore_t* semaphores[MAXSEMAFORES];
 
-semaphore_t* semaphore_new (int id, uint16_t state, uint16_t i2c_address);
-void semaphore_init (semaphore_t* this, int id, uint16_t state,uint16_t i2c_address);
+semaphore_t* semaphore_new (int id, uint8_t state, uint16_t i2c_address);
+void semaphore_init (semaphore_t* this, int id, uint8_t state,uint16_t i2c_address);
 void semaphore_setup (void);
-uint16_t semaphore_get_state (semaphore_t* this);
-void semaphore_set_state(semaphore_t* this, uint16_t state);
+uint8_t semaphore_get_state (semaphore_t* this);
+void semaphore_set_state(semaphore_t* this, uint8_t state);
 void semaphore_switch (semaphore_t* this);
 
 #endif

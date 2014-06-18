@@ -36,7 +36,7 @@ static int n_traficLight;
 void 
 ctrlilumination_notify(observer_t* this)
 {
-     int i,j,k,check;
+     int i,j,k,check,l;
      railway_t* rail;
      crossingGate_t* cross;
      for( i = 0 ; i < n_railway ; i++){
@@ -45,22 +45,14 @@ ctrlilumination_notify(observer_t* this)
          for( j = 0; j < NSECTORS ; j++){
                  if( rail->railwaySectors[j]->nregisteredtrains > 0) {
                  	//there is a train with override activated
-                 	if (train_get_security(rail->railwaySectors[j]->registeredTrains[0]) == 1) {
-                 		if (semaphore_get_state(semaphores[j]) != I2C_SEMAPHORE_RED) {
+			for( l = 0 ; l < rail->railwaySectors[j]->nregisteredtrains ; l++){
+                 	  if (train_get_security(rail->railwaySectors[j]->registeredTrains[l]) == 1) {
                  			semaphore_set_state(semaphores[j], I2C_SEMAPHORE_RED);
-                 			semaphore_switch(semaphores[j]);
-                 		}
-                 	} else {
-                 	//there is a train, but override is deactivated
-                 		if (semaphore_get_state(semaphores[j]) != I2C_SEMAPHORE_YELLOW) {
+                 	  } else {
+                 	  //there is a train, but override is deactivated
                  			semaphore_set_state(semaphores[j], I2C_SEMAPHORE_YELLOW);
-                 			semaphore_switch(semaphores[j]);
-                 		}
-                 	}
-                 
-              	 //rt_printf(" passing full sector %d \n",j);
-              	 //if( semaphore_get_state(semaphores[j]) != 1)
-                 //semaphore_switch(semaphores[j] , 1);
+                 	  }
+                        }
                   for( k = 0; k < n_crossingGate ; k++){
                        cross = ctrlilu_crossingGate[k].crossingGate;
                        if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1]){
@@ -69,18 +61,12 @@ ctrlilumination_notify(observer_t* this)
                        }
                   }
                  }else{//no trains
-                 //rt_printf(" passing empty sector %d \n",j);
-                 //if( semaphore_get_state(semaphores[j]) != 0)
-                 //semaphore_switch( semaphores[j] , 0);
-                 if (semaphore_get_state(semaphores[j]) != I2C_SEMAPHORE_GREEN) {
-                 	semaphore_set_state(semaphores[j], I2C_SEMAPHORE_GREEN);
-                 	semaphore_switch(semaphores[j]);
-                 }
-                 for( k = 0; k < n_crossingGate ; k++){
-                       cross = ctrlilu_crossingGate[k].crossingGate;
-                       if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
-                        check++;
-                  }
+                      semaphore_set_state(semaphores[j], I2C_SEMAPHORE_GREEN);
+                      for( k = 0; k < n_crossingGate ; k++){
+                         cross = ctrlilu_crossingGate[k].crossingGate;
+                         if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
+                         check++;
+                      }
                   }
               }            
               
