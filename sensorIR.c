@@ -17,12 +17,12 @@
 #include "daemon.h"
 #include "sensorIR.h"
 // Random values, this will change to match the firmware of the barrier
-#define I2C_IR_ADDRESS_0 0x22
-#define I2C_IR_ADDRESS_1 0x23
-#define I2C_IR_ADDRESS_2 0x24
-#define I2C_IR_ADDRESS_3 0x25
-#define I2C_RENFE_BYTE 0x26
-#define I2C_DIESEL_BYTE 0x27
+#define I2C_IR_ADDRESS_0 0x30
+#define I2C_IR_ADDRESS_1 0x31
+#define I2C_IR_ADDRESS_2 0x32
+#define I2C_IR_ADDRESS_3 0x33
+#define I2C_RENFE_BYTE 0x2c
+#define I2C_DIESEL_BYTE 0x34
 
 sensorIR_t* sensors[MAXSENSORS];
 int nsensors = 0;
@@ -77,17 +77,8 @@ sensorIR_new(int id, uint16_t i2c_address) {
 void 
 sensorIR_init(sensorIR_t* this, int id, event_t* event, uint16_t i2c_address) 
 {
-	//int i;
 	observable_init((observable_t *) this);
 	this->id = id;
-	/*for (i = 0; i < 2; i++) {
-		// Set the associated train line for that sensor
-		this->GPIOlines[i] = (id * 2) + i;
-		// Set the line as input
-		//pinMode(this->GPIOlines[i], INPUT);
-		
-	}*/
-//	this->last_reading = -1;
         this->i2c_address = i2c_address;
 	this->event = event;
 	rt_mutex_create(&this->mutex, NULL);
@@ -100,25 +91,27 @@ sensorIR_destroy(sensorIR_t* this)
 	free(this);
 }
 
-//int sensorIR_readLine(sensorIR_t* this, int trainLine)
 void 
 sensorIR_readLine(sensorIR_t* this, uint8_t* buff) 
 {
-        uint16_t read_IR_comand[]={(this->i2c_address<<1)|1 ,I2C_READ};
-        buff[0]=0;
+        uint16_t read_IR_comand[]={(this->i2c_address<<1), 0x00 ,I2C_RESTART ,(this->i2c_address<<1)|1 ,I2C_READ};
+        
+        if(this->i2c_address == I2C_IR_ADDRESS_0 || this->i2c_address == I2C_IR_ADDRESS_1)
 	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
-
-        //i2c_send_sequence(i2chandler[0]->i2chandler, read_IR_comand, 2, buff);
-	
+        i2c_send_sequence(i2chandler[0]->i2chandler, read_IR_comand, 5, buff);
 	rt_mutex_release(&(i2chandler[0]->mutex));
-	
+	}else{
+	rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
+        i2c_send_sequence(i2chandler[1]->i2chandler, read_IR_comand, 5, buff);
+	rt_mutex_release(&(i2chandler[1]->mutex));
+	}
 }
 
 void 
 sensorIR_trainPassing(sensorIR_t* this)
 {
-     uint8_t* buff = (uint8_t*) malloc(sizeof(uint8_t));
-     
+     //uint8_t* buff = (uint8_t*) malloc(sizeof(uint8_t));
+     uint8_t buff[]={0};
      rt_mutex_acquire(&(this->mutex), TM_INFINITE);
      
      this->event->flag = 0; 
