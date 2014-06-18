@@ -23,7 +23,8 @@ typedef struct crossingGate_t {
 	//i2c
 	uint16_t i2c_address;
 	//Private
-	int sensiblesectors[2];
+	//int sensiblesectors[2];
+	int sensiblesector;
 	RT_MUTEX mutex;
 
 } crossingGate_t;
@@ -38,10 +39,10 @@ int crossingGate_cmd(char* arg);
 /*crossingGate_t* crossingGate_new(int id, int GPIOline, char sectorCrossing);
 void crossingGate_init(crossingGate_t* this, int id, int GPIOline,
 		char sectorCrossing, position_t position);*/
-crossingGate_t* crossingGate_new(int id, int sensiblesectors[2], uint16_t i2c_address);
+crossingGate_t* crossingGate_new(int id,/* int sensiblesectors[2],*/int sensiblesector, uint16_t i2c_address);
 
 void crossingGate_init(crossingGate_t* this, int id, position_t position,
-                                       int sensiblesectors[2], uint16_t i2c_address);
+                                       /*int sensiblesectors[2],*/ int sensiblesector, uint16_t i2c_address);
 /*crossingGate_t* crossingGate_new(int id, int GPIOline, int sensiblesectors[2]);
 
 void crossingGate_init(crossingGate_t* this, int id, int GPIOline,
@@ -53,7 +54,8 @@ void crossingGate_destroy(crossingGate_t* this);
  */
 position_t crossingGate_get_position(crossingGate_t* this);
 void crossingGate_set_position(crossingGate_t* this, position_t position);
+void crossingGate_set_light(crossingGate_t* this, int state);
 void crossingGate_move_task(void *args);
-int* crossingGate_get_sensiblesector(crossingGate_t* this);
+int crossingGate_get_sensiblesector(crossingGate_t* this);
 
 #endif

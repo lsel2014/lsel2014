@@ -421,16 +421,13 @@ int train_emergency_cmd(char* arg)
  */
 void train_emergency_stop(train_t* this)
 {
-	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-	this->power = 0;
-	rt_mutex_release(&this->mutex);
 
-    int i;
+        int i;
 	for (i = 0; i < 3; i++)
 	{
 		dcc_add_data_packet(this->dcc, this->ID, ESTOP_CMD);
-	}
-
+	}	
+	train_set_power(this,0);  	
 }
 
 

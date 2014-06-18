@@ -137,8 +137,8 @@ void tracker_init(void) {
 		const char* name;
 		char sectorForward;
 		char sectorReverse;
-	} ir_names[] = { { "IRsensor0", 0, 3 }, { "IRsensor1", 1, 0 }, {
-			"IRsensor2", 2, 1 }, { "IRsensor3", 3, 2 }, { NULL, 0 } };
+	} ir_names[] = { { "IRsensor0", 3, 0 }, { "IRsensor1", 0, 1 }, {
+			"IRsensor2", 1, 2 }, { "IRsensor3", 2, 3 }, { NULL, 0 } };
 			
 	// Struct with the names and the ID of each train in the IR sensors
 	static struct train_name_t {

@@ -338,6 +338,7 @@ char *char_to_bitmap(char a) {
 	case ('L'):
 	case ('l'):
 		return L;
+		break;
 	case ('D'):
 	case ('d'):
 		return D;

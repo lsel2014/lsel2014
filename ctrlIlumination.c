@@ -36,46 +36,63 @@ static int n_traficLight;
 void 
 ctrlilumination_notify(observer_t* this)
 {
-     int i,j,k,check,l;
+     int i,j,k,l;
      railway_t* rail;
      crossingGate_t* cross;
      for( i = 0 ; i < n_railway ; i++){
-         rail= ctrlilu_railway[i].railway;
-         check = 0;
-         for( j = 0; j < NSECTORS ; j++){
-                 if( rail->railwaySectors[j]->nregisteredtrains > 0) {
-                 	//there is a train with override activated
-			for( l = 0 ; l < rail->railwaySectors[j]->nregisteredtrains ; l++){
-                 	  if (train_get_security(rail->railwaySectors[j]->registeredTrains[l]) == 1) {
-                 			semaphore_set_state(semaphores[j], I2C_SEMAPHORE_RED);
-                 	  } else {
-                 	  //there is a train, but override is deactivated
-                 			semaphore_set_state(semaphores[j], I2C_SEMAPHORE_YELLOW);
-                 	  }
-                        }
-                  for( k = 0; k < n_crossingGate ; k++){
-                       cross = ctrlilu_crossingGate[k].crossingGate;
-                       if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1]){
+     rail= ctrlilu_railway[i].railway;
+    // check = 0;
+       for( j = 0; j < NSECTORS ; j++){
+          if( rail->railwaySectors[j]->nregisteredtrains > 0) {
+                 //there is a train with override activated
+	         for( l = 0 ; l < rail->railwaySectors[j]->nregisteredtrains ; l++){
+               	    if (train_get_security(rail->railwaySectors[j]->registeredTrains[l]) == 1) {
+              			semaphore_set_state(semaphores[j], I2C_SEMAPHORE_RED);
+               	    } else {
+               	    //there is a train, but override is deactivated
+               			semaphore_set_state(semaphores[j], I2C_SEMAPHORE_YELLOW);
+                    }
+                 }
+                 for( k = 0; k < n_crossingGate ; k++){
+                    cross = ctrlilu_crossingGate[k].crossingGate;
+                    if( j ==  cross->sensiblesector){
                        crossingGate_set_position(cross, DOWN);
-                       trafficLight_set_state(trafficLights[0], ON);
-                       }
-                  }
-                 }else{//no trains
-                      semaphore_set_state(semaphores[j], I2C_SEMAPHORE_GREEN);
-                      for( k = 0; k < n_crossingGate ; k++){
-                         cross = ctrlilu_crossingGate[k].crossingGate;
-                         if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
-                         check++;
-                      }
-                  }
-              }            
+                      //trafficLight_set_state(trafficLights[0], ON);
+		    }
+		    if( j == cross->sensiblesector - 1){
+		       if(train_get_direction(rail->railwaySectors[j]->registeredTrains[0]) == FORWARD) {
+ 		         crossingGate_set_position(cross, UP);
+		         crossingGate_set_light(cross, 0);
+		       }else{
+		         crossingGate_set_light(cross, 1);
+		       }
+		    }
+		    if( j == cross->sensiblesector + 1){
+		       if(train_get_direction(rail->railwaySectors[j]->registeredTrains[0]) == REVERSE) {
+		         crossingGate_set_position(cross, UP);
+		         crossingGate_set_light(cross, 0);
+                       }else{
+			 crossingGate_set_light(cross, 1);
+		       }
+		    }
+               }
+          }else{//no trains
+               semaphore_set_state(semaphores[j], I2C_SEMAPHORE_GREEN);
+	  }
+               /*for( k = 0; k < n_crossingGate ; k++){
+                   cross = ctrlilu_crossingGate[k].crossingGate;
+                   if( j ==  cross->sensiblesectors[0] || j ==  cross->sensiblesectors[1])
+                    check++;
+                   }
+               }
+     }            
               
         if(check == 2){
         crossingGate_set_position(cross, UP); 
         trafficLight_set_state(trafficLights[0], OFF);
-        }
+        }*/
      }  
-
+  }
 }
 
 void 

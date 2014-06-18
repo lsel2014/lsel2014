@@ -82,5 +82,5 @@ semaphore_switch (semaphore_t* this)
     i2c_send_sequence(i2chandler[0]->i2chandler, semaphore_comand2, 2, 0);
     rt_mutex_release(&i2chandler[0]->mutex);
     }
-    rt_printf( "semaphore %x to %u \n", this->i2c_address, semaphore_comand2[1]);
+   // rt_printf( "semaphore %x to %u \n", this->i2c_address, semaphore_comand2[1]);
 }
