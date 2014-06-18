@@ -340,7 +340,7 @@ char *char_to_bitmap(char a) {
 		return L;
 	case ('D'):
 	case ('d'):
-		return L;
+		return D;
 		break;
 	case ('0'):
 		return zero;
