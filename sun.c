@@ -131,12 +131,13 @@ sun_set_date(sun_t* this, sun_date_t date)
 	char *unparsedDate = strdup(this->date);
 	char *day = strtok(unparsedDate, "/");
 	char *month = strtok(NULL, "/");
+	int retval;
 	snprintf(aux, 6, "%s/%s", day, month);
 	snprintf(cmd, 1024, "wget -q --output-document=sunrise.xml "
 			"http://www.earthtools.org/sun/40.4521/-3.7266/%s/1/0", aux);
-	system(cmd);
+	retval=system(cmd);
+	if(retval) remove("sunrise.xml");
 	sun_parse_data(this);
-	
 	sun_comand[2]=this->sunrise.hours;
 	sun_comand[3]=this->sunrise.minutes;
 	sun_comand[4]=this->sunrise.seconds;
@@ -202,15 +203,25 @@ void
 sun_parse_data(sun_t* this) 
 {
 	char buf[30000];
-	FILE* f = fopen("sunrise.xml", "r");
-	fread(buf, 1, 30000, f);
-	fclose(f);
-	remove("sunrise.xml");
+	FILE* f=fopen("sunrise.xml","r");
+	if(!f){
+		rt_printf("Error downloading data. Using 6:00 AM and 8:00 PM as default...\n");
+		this->sunrise.hours = 6;
+		this->sunrise.minutes = 0;
+		this->sunrise.seconds = 0;
+		this->sunset.hours = 20;
+		this->sunset.minutes = 0;
+		this->sunset.seconds = 0;
+	}else{
+		fread(buf, 1, 30000, f);
+		fclose(f);
+		remove("sunrise.xml");
 	/* TODO: ADD CHECKS or this WILL blow up*/
-	this->sunrise.hours = atoi(strtok(xml_find(buf, "<sunrise>"), ":"));
-	this->sunrise.minutes = atoi(strtok(NULL, ":"));
-	this->sunrise.seconds = atoi(strtok(NULL, ":"));
-	this->sunset.hours = atoi(strtok(xml_find(buf, "<sunset>"), ":"));
-	this->sunset.minutes = atoi(strtok(NULL, ":"));
-	this->sunset.seconds = atoi(strtok(NULL, ":"));
+		this->sunrise.hours = atoi(strtok(xml_find(buf, "<sunrise>"), ":"));
+		this->sunrise.minutes = atoi(strtok(NULL, ":"));
+		this->sunrise.seconds = atoi(strtok(NULL, ":"));
+		this->sunset.hours = atoi(strtok(xml_find(buf, "<sunset>"), ":"));
+		this->sunset.minutes = atoi(strtok(NULL, ":"));
+		this->sunset.seconds = atoi(strtok(NULL, ":"));
+	}
 }
