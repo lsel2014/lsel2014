@@ -68,7 +68,7 @@ void anticollision_notify(observer_t* this) {
 							train_set_security(train, 1);
 						
 							rt_printf("Seguridad activada en el tren ID: %d\n", train->ID);
-							rt_printf("Overrides: %d\n", overrides_activated);
+							//rt_printf("Overrides: %d\n", overrides_activated);
 							//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
 							train_emergency_stop(train);
 						//	train_set_power(train, 0);
@@ -80,7 +80,7 @@ void anticollision_notify(observer_t* this) {
 							train_set_security(train, 0);
 							rt_printf("Seguridad desactivada en el tren ID: %d\n",
 									train->ID);
-							rt_printf("Overrides: %d\n", overrides_activated);
+							//rt_printf("Overrides: %d\n", overrides_activated);
 						}
 					}
 				}

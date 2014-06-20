@@ -106,9 +106,9 @@ crossingGate_set_light(crossingGate_t* this, int state){
         }else{
 	   barrier_comand[2]= 0x01;
 	}
-	rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-	i2c_send_sequence(i2chandler[1]->i2chandler, barrier_comand, 3, 0);
-	rt_mutex_release(&(i2chandler[1]->mutex));
+	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+	i2c_send_sequence(i2chandler[0]->i2chandler, barrier_comand, 3, 0);
+	rt_mutex_release(&(i2chandler[0]->mutex));
 
 
 }
@@ -132,8 +132,8 @@ crossingGate_move_task(void *args)
 		}// else {
 		//	barrier_comand[1]=I2C_BARRIER_STOP;	
 		//}
-		rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-		i2c_send_sequence(i2chandler[1]->i2chandler, barrier_comand, 3, 0);
-		rt_mutex_release(&(i2chandler[1]->mutex));
+		rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+		i2c_send_sequence(i2chandler[0]->i2chandler, barrier_comand, 3, 0);
+		rt_mutex_release(&(i2chandler[0]->mutex));
 	}
 }

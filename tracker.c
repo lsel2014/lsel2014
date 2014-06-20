@@ -38,7 +38,7 @@ static int n_trains;
 static int n_railway;
 static event_t* event;
 
-static int sector_lengths[] = { 92, 156, 89, 149 };
+static int sector_lengths[] = { 90, 149, 100, 149 };
 
 // Translate the ID ir sensors returns into the actual train pointer
 train_t*

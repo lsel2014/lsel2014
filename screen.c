@@ -206,9 +206,9 @@ void screen_notify(observer_t* this) {
 		est = train_get_current_time_estimation(t);
 		nsect = train_get_sector(t);
 		if (train_get_direction(t) == FORWARD) {
-			nsect = (nsect + 1) % 4;
-		} else {
 			nsect = (nsect > 0) ? nsect - 1 : 3;
+		} else {
+			nsect = (nsect + 1) % 4;
 		}
 		sprintf(line, "%6s %d %2.2f", train_get_name(t), nsect, est);
 		draw_line(s, i + 2, 0xFFFF, line, 20);

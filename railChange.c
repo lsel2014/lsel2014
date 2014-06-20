@@ -13,9 +13,12 @@
 #include "lsquaredc.h"
 #include "daemon.h"
 // Random values, this will change to match the firmware of the barrier
-#define I2C_RAIL_CHANGE_ADDRESS 0x22
-#define I2C_RAIL_CHANGE_LEFT 0x00
-#define I2C_RAIL_CHANGE_RIGHT 0x01
+#define I2C_RAIL_CHANGE_ADDRESS 0x69
+#define I2C_RAIL_CHANGE_LEFT 0x01
+#define I2C_RAIL_CHANGE_RIGHT 0x00
+#define I2C_RAIL_CHANGE_LIGHT_LEFT 0x01
+#define I2C_RAIL_CHANGE_LIGHT_RIGHT 0x02
+
 
 static railChange_t* changer;
 
@@ -74,20 +77,26 @@ void
 railChange_set_direction(railChange_t* this, direction_t direction) 
 {
 	uint16_t railChange_comand[]={(this->i2c_address<<1),0x00};
+	uint16_t railChange_comand2[]={(this->i2c_address<<1),0x00};
+	uint16_t railChange_comand3[]={(this->i2c_address<<1),0x01};
+	uint16_t railChange_comand4[]={(this->i2c_address<<1),0x00};
 	if( direction == LEFT ){
-	railChange_comand[1]=I2C_RAIL_CHANGE_LEFT;
+	railChange_comand2[1]=I2C_RAIL_CHANGE_LEFT;
+	railChange_comand4[1]=I2C_RAIL_CHANGE_LIGHT_LEFT;
+	
 	}else{
-	railChange_comand[1]=I2C_RAIL_CHANGE_RIGHT;
+
+	railChange_comand2[1]=I2C_RAIL_CHANGE_RIGHT;
+	railChange_comand4[1]=I2C_RAIL_CHANGE_LIGHT_RIGHT;
         } 
              
         rt_mutex_acquire(&(this->mutex), TM_INFINITE);
 
-	this->direction = direction;
-	//digitalWrite(this->GPIOline, direction == LEFT ? 1 : 0);
 	
-	rt_mutex_release(&(this->mutex));
-	
-	//rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-	//i2c_send_sequence(i2chandler[1]->i2chandler, railChange_comand, 2, 0);
-	//rt_mutex_release(&i2chandler[1]->mutex);
+	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
+	i2c_send_sequence(i2chandler[0]->i2chandler, railChange_comand, 2, 0);
+	i2c_send_sequence(i2chandler[0]->i2chandler, railChange_comand2, 2, 0);
+	i2c_send_sequence(i2chandler[0]->i2chandler, railChange_comand3, 2, 0);
+	i2c_send_sequence(i2chandler[0]->i2chandler, railChange_comand4, 2, 0);
+	rt_mutex_release(&i2chandler[0]->mutex);
 }
