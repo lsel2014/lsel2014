@@ -96,15 +96,15 @@ sensorIR_readLine(sensorIR_t* this, uint8_t* buff)
 {
         uint16_t read_IR_comand[]={(this->i2c_address<<1), 0x00 ,I2C_RESTART ,(this->i2c_address<<1)|1 ,I2C_READ};
         
-        if(this->i2c_address == I2C_IR_ADDRESS_0 || this->i2c_address == I2C_IR_ADDRESS_1){
+//        if(this->i2c_address == I2C_IR_ADDRESS_0 || this->i2c_address == I2C_IR_ADDRESS_1){
 	rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
         i2c_send_sequence(i2chandler[0]->i2chandler, read_IR_comand, 5, buff);
 	rt_mutex_release(&(i2chandler[0]->mutex));
-	}else{
+/*	}else{
 	rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
         i2c_send_sequence(i2chandler[1]->i2chandler, read_IR_comand, 5, buff);
 	rt_mutex_release(&(i2chandler[1]->mutex));
-	}
+	}*/
 //	rt_printf(" tren %u \n", buff[0]);
 }
 

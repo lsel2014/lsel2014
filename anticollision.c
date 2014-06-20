@@ -38,49 +38,53 @@ void anticollision_notify(observer_t* this) {
 	
     int i,j,k;
     int to_check;
-    int new_power;
+    //int new_power;
     for(j=0; j<n_railway;j++){
-    railway_t* rail = antic_railway[j].railway;
-	if (security_enable == 1) {
-		for (i = 0; i < NSECTORS; i++) {
-		    for(k = 0; k < rail->railwaySectors[i]->nregisteredtrains ; k++){
-			//if ((rail->railwaySectors[i]->nregisteredtrains) > 0) {
-				train_t* train = rail->railwaySectors[i]->registeredTrains[j]; 
-				to_check = 0;
-
-				//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
-				if (train_get_direction(train) == FORWARD) {
-					to_check = i - 1;
-					if (to_check == -1)
-						to_check = NSECTORS - 1;
-				} else {
-					to_check = i + 1;
-					if (to_check == NSECTORS)
-						to_check = 0;
-				}
-
-				if ((rail->railwaySectors[to_check]->nregisteredtrains) > 0) {
-
-					if (train_get_security(train) == 0) {
-						overrides_activated++;
-						train_set_security(train, 1);
-					
-						printf("Seguridad activada en el tren ID: %d\n", train->ID);
-						//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
-						train_emergency_stop(train);
-					//	train_set_power(train, 0);
+	    railway_t* rail = antic_railway[j].railway;
+		if (security_enable == 1) {
+			for (i = 0; i < NSECTORS; i++) {
+			    for(k = 0; k < rail->railwaySectors[i]->nregisteredtrains ; k++){
+				//if ((rail->railwaySectors[i]->nregisteredtrains) > 0) {
+					train_t* train = rail->railwaySectors[i]->registeredTrains[j]; 
+					to_check = 0;
+	
+					//Por ahora solo comprueba el sector siguiente segun el sentido. Habra que hacerlo mejor
+					if (train_get_direction(train) == FORWARD) {
+						to_check = i - 1;
+						if (to_check == -1)
+							to_check = NSECTORS - 1;
+					} else if (train_get_direction(train) == REVERSE) {
+						to_check = i + 1;
+						if (to_check == NSECTORS)
+							to_check = 0;
+					} else {
+						rt_printf("error");
 					}
-					
-				} else {
-					if (train_get_security(train) == 1) {
-						overrides_activated--;
-						train_set_security(train, 0);
-						printf("Seguridad desactivada en el tren ID: %d\n",
-								train->ID);
+	
+					if ((rail->railwaySectors[to_check]->nregisteredtrains) > 0) {
+	
+						if (train_get_security(train) == 0) {
+							overrides_activated++;
+							train_set_security(train, 1);
+						
+							rt_printf("Seguridad activada en el tren ID: %d\n", train->ID);
+							rt_printf("Overrides: %d\n", overrides_activated);
+							//// TODO: Aqui se debería hacer algo mas interesante, por ahora se para y no hace nada mas
+							train_emergency_stop(train);
+						//	train_set_power(train, 0);
+						}
+						
+					} else {
+						if (train_get_security(train) == 1) {
+							overrides_activated--;
+							train_set_security(train, 0);
+							rt_printf("Seguridad desactivada en el tren ID: %d\n",
+									train->ID);
+							rt_printf("Overrides: %d\n", overrides_activated);
+						}
 					}
 				}
 			}
-		}
 		}
 /*		if (overrides_activated == 2) {
 

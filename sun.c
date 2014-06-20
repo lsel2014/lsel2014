@@ -154,12 +154,13 @@ void
 sun_update_simulated_time(sun_t* this) 
 {
 	//wiringPiI2CWrite(this->i2c_fd, 0xFE);
-	uint16_t sun_read_comand[]={(this->i2c_address<<1), 0xFE, I2C_RESTART,
-                                    (this->i2c_address<<1)|1, I2C_READ, I2C_READ};                 
+	uint16_t sun_read_comand[]={(this->i2c_address<<1), 0xFE};
+        uint16_t sun_read_comand2[]={(this->i2c_address<<1)|1, I2C_READ, I2C_READ};                 
 	uint8_t buff[2];
 
 	rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
-        i2c_send_sequence(i2chandler[1]->i2chandler, sun_read_comand, 6, buff);
+        i2c_send_sequence(i2chandler[1]->i2chandler, sun_read_comand, 2, 0);
+        i2c_send_sequence(i2chandler[1]->i2chandler, sun_read_comand2, 3, buff);
 	rt_mutex_release(&i2chandler[1]->mutex);
 	
 	rt_mutex_acquire(&(this->mutex), TM_INFINITE);

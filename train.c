@@ -694,11 +694,13 @@ void train_set_power(train_t* this, int power)
 	int i;
 
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-
 	this->power = power;
+	rt_mutex_release(&this->mutex);
+	
 	if (power < 0) {
 		train_set_direction(this, REVERSE);
-	} else {
+	}
+	if (power > 0) {
 		train_set_direction(this, FORWARD);
 	}
 
@@ -707,7 +709,7 @@ void train_set_power(train_t* this, int power)
 		dcc_add_speed_packet(this->dcc, this->ID, this->power);
 	}
 
-	rt_mutex_release(&this->mutex);
+	
 }
 
 /**
@@ -720,7 +722,9 @@ void train_set_power(train_t* this, int power)
  */
 void train_set_direction(train_t* this, train_direction_t direction)
 {
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->direction = direction;
+	rt_mutex_release(&this->mutex);
 	observable_notify_observers(&this->observable);
 }
 

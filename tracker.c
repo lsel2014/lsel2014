@@ -105,24 +105,14 @@ tracker_notify(observer_t* this) {
 			storedDirection = tracker_gen_direction(event->passingTrain);
 			tel = train_get_telemetry(train);
 			if (train_get_direction(train) == FORWARD) {
-				if (train_get_direction(train) == storedDirection
-						&& sd->sectorForward != train_get_sector(train)) {
-					tracker_updating_train(train, sd->sectorForward, tel);
-					railway_erase_train(rail, train);
-					railway_register_train(rail, train, sd->sectorForward);
-				} else if (train_get_direction(train) != storedDirection) {
+				if (sd->sectorForward != train_get_sector(train)) {
 					tracker_updating_train(train, sd->sectorForward, tel);
 					railway_erase_train(rail, train);
 					railway_register_train(rail, train, sd->sectorForward);
 				}
 			}
 			if (train_get_direction(train) == REVERSE) {
-				if (train_get_direction(train) == storedDirection
-						&& sd->sectorReverse != train_get_sector(train)) {
-					tracker_updating_train(train, sd->sectorReverse, tel);
-					railway_erase_train(rail, train);
-					railway_register_train(rail, train, sd->sectorReverse);
-				} else if (train_get_direction(train) != storedDirection) {
+				if (sd->sectorReverse != train_get_sector(train)) {
 					tracker_updating_train(train, sd->sectorReverse, tel);
 					railway_erase_train(rail, train);
 					railway_register_train(rail, train, sd->sectorReverse);

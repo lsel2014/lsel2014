@@ -71,16 +71,16 @@ semaphore_switch (semaphore_t* this)
    uint16_t semaphore_comand2[2]={this->i2c_address<<1, semaphore_get_state(this)};
     
 
-    if(this->i2c_address == I2C_SEMAPHORE_ADDRESS_3 || this->i2c_address == I2C_SEMAPHORE_ADDRESS_2 ){     
+  /*  if(this->i2c_address == I2C_SEMAPHORE_ADDRESS_3 || this->i2c_address == I2C_SEMAPHORE_ADDRESS_2 ){     
     rt_mutex_acquire(&(i2chandler[1]->mutex), TM_INFINITE);
     i2c_send_sequence(i2chandler[1]->i2chandler, semaphore_comand, 2, 0);
    i2c_send_sequence(i2chandler[1]->i2chandler, semaphore_comand2, 2, 0);
     rt_mutex_release(&i2chandler[1]->mutex);
-    }else { 
+    }else { */
     rt_mutex_acquire(&(i2chandler[0]->mutex), TM_INFINITE);
     i2c_send_sequence(i2chandler[0]->i2chandler, semaphore_comand, 2, 0);
     i2c_send_sequence(i2chandler[0]->i2chandler, semaphore_comand2, 2, 0);
     rt_mutex_release(&i2chandler[0]->mutex);
-    }
+   // }
    // rt_printf( "semaphore %x to %u \n", this->i2c_address, semaphore_comand2[1]);
 }

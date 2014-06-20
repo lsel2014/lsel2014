@@ -90,13 +90,13 @@ void initializei2c(void) {
 }
 
 int main(int argc, char* argv[]) {
-
 	// Initialize Xenomai RT enviroment
 	initializeXenomaiEnv();
 
 	// Initialize wiringPi lib, configure IO
 	initializeWiringPi();
-	
+	digitalWrite(19,0);
+	digitalWrite(20,0);		
 	//Initialize the i2c
 	i2c_pins_setup();
 	initializei2c();
@@ -115,7 +115,7 @@ int main(int argc, char* argv[]) {
 	//rt_printf("CG \n");
 	railChange_setup();
 	//rt_printf("RC \n");
-	//sun_setup();
+	sun_setup();
 	//rt_printf("sun \n");
 	model_init();
 	//rt_printf("model \n");
