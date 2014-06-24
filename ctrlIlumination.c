@@ -4,7 +4,6 @@
 #include "crossingGate.h"
 #include "semaphore.h"
 #include "model.h"
-#include "trafficLight.h"
 #include "semaphore.h"
 
 static observer_t ctrlilu_observer;
@@ -23,15 +22,15 @@ static struct semaphore_data_t {
 	int sector;
 } ctrlilu_semaphore[MAXSEMAFORES];
 
-static struct trafficLight_data_t {
+/*static struct trafficLight_data_t {
 	trafficLight_t* trafficLight;
 	int id;
-} ctrlilu_trafficLight[MAXTRAFFICLIGHTS];
+} ctrlilu_trafficLight[MAXTRAFFICLIGHTS];*/
 
 static int n_railway;
 static int n_crossingGate;
 static int n_semaphore;
-static int n_traficLight;
+//static int n_traficLight;
 
 void 
 ctrlilumination_notify(observer_t* this)
@@ -57,6 +56,7 @@ ctrlilumination_notify(observer_t* this)
                     cross = ctrlilu_crossingGate[k].crossingGate;
                     if( j ==  cross->sensiblesector){
                        crossingGate_set_position(cross, DOWN);
+		         crossingGate_set_light(cross, 1);
                       //trafficLight_set_state(trafficLights[0], ON);
 		    }
 		    if( j == cross->sensiblesector - 1){
@@ -113,16 +113,16 @@ ctrlilumination_init(void)
 	} semaphore_names[] = { { "semaforo0",0 }, { "semaforo1",1 }, { "semaforo2",2 },
                              { "semaforo3",3 }, { NULL } };
                              
-	static struct trafficlight_name_t {
+	/*static struct trafficlight_name_t {
 		const char* name;
 		int id;
-	} trafficlight_names[] = { { "semaforotrafico0" , 0}, { NULL, 0} };
+	} trafficlight_names[] = { { "semaforotrafico0" , 0}, { NULL, 0} };*/
 	
 
 	struct railway_name_t* r;
 	struct crossingGate_name_t* cr;
 	struct semaphore_name_t* sph;
-	struct trafficlight_name_t* tl;	
+	//struct trafficlight_name_t* tl;	
 	
 	observer_init(&ctrlilu_observer, ctrlilumination_notify);
 	n_railway=0;
@@ -150,13 +150,13 @@ ctrlilumination_init(void)
 		ctrlilu_semaphore[n_semaphore].sector = sph->sector;
 		++n_semaphore;
 	}
-	for (tl = trafficlight_names; tl->name; ++tl) {
+	/*for (tl = trafficlight_names; tl->name; ++tl) {
 		observable_t* obs = model_get_observable(tl->name);
 		observable_register_observer(obs, &ctrlilu_observer);
 		ctrlilu_trafficLight[n_traficLight].trafficLight = (trafficLight_t*) obs;
 		ctrlilu_trafficLight[n_traficLight].id = tl->id;
 		++n_traficLight;
-	}
+	}*/
 
 }
 

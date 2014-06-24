@@ -13,7 +13,7 @@ static void screen_notify(observer_t* this);
 char A[] = { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0,
 		1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0,
 		1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-char R[] = { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0,
+char R[] = { 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0,
 		1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0,
 		0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 char N[] = { 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
@@ -204,6 +204,7 @@ void screen_notify(observer_t* this) {
 	for (i = 0; s->t[i]; ++i) {
 		train_t* t = s->t[i];
 		est = train_get_current_time_estimation(t);
+		if(est <0 || est > 60) est=0;
 		nsect = train_get_sector(t);
 		if (train_get_direction(t) == FORWARD) {
 			nsect = (nsect > 0) ? nsect - 1 : 3;

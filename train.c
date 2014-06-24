@@ -498,7 +498,12 @@ int train_get_power(train_t* this)
  */
 train_direction_t train_get_direction(train_t* this)
 {
-	return this->direction;
+	train_direction_t dir;
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	dir=this->direction;	
+	rt_mutex_release(&this->mutex);
+	return dir;
+
 }
 
 /**
@@ -555,7 +560,11 @@ void train_get_timestamp(train_t* this, struct timeval *tv)
  */
 char train_get_security(train_t* this)
 {
-	return this->security_override;
+	char sec ;
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	sec =this->security_override;
+	rt_mutex_release(&this->mutex);
+	return sec;
 }
 
 /**
@@ -600,7 +609,11 @@ float train_get_current_time_estimation(train_t* this)
  */
 char train_get_sector(train_t* this)
 {
-	return this->telemetry->sector;
+	char sect;
+	rt_mutex_acquire(&this->mutex, TM_INFINITE);
+	sect = this->telemetry->sector;
+	rt_mutex_release(&this->mutex);
+	return sect;
 }
 
 /**
@@ -673,12 +686,11 @@ void train_set_target_power(train_t* this, int power)
 {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
 	this->target_power = power;
-
+	rt_mutex_release(&this->mutex);
 	if (this->security_override == 0)
 	{
 		train_set_power(this, power);
 	}
-	rt_mutex_release(&this->mutex);
 }
 
 /**
@@ -782,13 +794,13 @@ void train_set_timestamp(train_t* this, struct timeval *tv)
 void train_set_security(train_t* this, char newSecurity)
 {
 	rt_mutex_acquire(&this->mutex, TM_INFINITE);
-
 	this->security_override = newSecurity;
+	rt_mutex_release(&this->mutex);
+
 	if (newSecurity == 0) {
 		train_set_power(this, this->target_power);
 	}
 
-	rt_mutex_release(&this->mutex);
 }
 
 /**

@@ -16,7 +16,7 @@
 #ifndef DCC_H
 #define DCC_H
 
-#define PACKET_BUFFER_SIZE 32
+#define PACKET_BUFFER_SIZE 64
 #define DCC_PERIOD 58000
 #define DCC_DEADLINE 63000 //DCC tolerates up to 63us half period
 
